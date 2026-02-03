@@ -1,0 +1,197 @@
+@use 'sass:meta';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
+$font-family-base:
+  'Noto Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  'Noto Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+
+$color-black: #000000;
+:root {
+  /* ==========================================================================
+     COLORS - GovBR Palette
+     ========================================================================== */
+
+  /* Primary Colors */
+  --blue-warm-vivid-70: #1351b4;
+  --blue-warm-20: #c5d4eb;
+  --yellow-vivid-20: #fff5c2;
+  --yellow-vivid-5: #ffcd07;
+  --green-rs-60: #1a7235;
+  --green-rs-90: #04290f;
+  --green-rs-10: #1a723430;
+  --green-rs-50: #279b4a;
+  --green-rs-05: #ddf9e3;
+
+  /* Neutral Colors */
+  --pure-0: #ffffff;
+  --gray-2: #f8f8f8;
+  --gray-20: #cccccc;
+  --gray-80: #555555;
+  --pure-100: #000000;
+
+  /* Semantic Colors */
+  --red-vivid-50: #e52207;
+  --green-cool-vivid-50: #168821;
+  --gold-vivid-20: #ffcd07;
+  --blue-vivid-40: #0076d6;
+
+  /* ==========================================================================
+     COLOR TOKENS
+     ========================================================================== */
+
+  /* Interactive */
+  --interactive: var(--blue-warm-vivid-70);
+  --interactive-rgb: 19, 81, 180;
+  --interactive-light: var(--green-rs-60);
+  --interactive-dark: var(--blue-warm-20);
+  --interactive-dark-rgb: 197, 212, 235;
+
+  /* Text Colors */
+  --color: var(--gray-80);
+  --color-rgb: 85, 85, 85;
+  --color-dark: var(--pure-100);
+  --color-dark-rgb: 0, 0, 0;
+  --color-light: var(--pure-0);
+  --color-light-rgb: 255, 255, 255;
+  --text-color: var(--gray-80);
+
+  /* Background */
+  --background: var(--pure-0);
+  --background-rgb: 255, 255, 255;
+  --background-light: var(--gray-2);
+  --background-light-rgb: 248, 248, 248;
+  --background-dark: var(--pure-100);
+  --background-dark-rgb: 0, 0, 0;
+
+  /* Semantic States */
+  --danger: var(--red-vivid-50);
+  --success: var(--green-cool-vivid-50);
+  --warning: var(--gold-vivid-20);
+  --info: var(--blue-vivid-40);
+
+  /* Interactive States */
+  --visited: var(--blue-warm-vivid-70);
+  --visited-dark: var(--blue-warm-20);
+  --hover: 0.08;
+  --hover-dark: 0.16;
+  --hover-light: 0.04;
+  --pressed: 0.24;
+  --pressed-dark: 0.32;
+
+  /* Active State */
+  --active: var(--blue-warm-20);
+  --active-rgb: 197, 212, 235;
+
+  /* ==========================================================================
+     FOCUS
+     ========================================================================== */
+
+  --focus: var(--yellow-vivid-5);
+  --focus-color: var(--yellow-vivid-5);
+  --focus-color-dark: var(--yellow-vivid-5);
+  --focus-offset: 2px;
+  --focus-width: 2px;
+  --focus-style: solid;
+
+  /* ==========================================================================
+     SPACING SCALE
+     ========================================================================== */
+
+  --spacing-scale-base: 8px;
+  --spacing-scale-half: 4px;
+  --spacing-scale-1x: 8px;
+  --spacing-scale-2x: 16px;
+  --spacing-scale-3x: 24px;
+  --spacing-scale-4x: 32px;
+  --spacing-scale-5x: 40px;
+  --spacing-scale-6x: 48px;
+  --spacing-scale-7x: 56px;
+  --spacing-scale-8x: 64px;
+
+  /* ==========================================================================
+     TYPOGRAPHY
+     ========================================================================== */
+
+  /* Font Family */
+  --font-family-base: 'Rawline', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-secondary: 'Raleway', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+
+  /* Font Sizes */
+  --font-size-scale-base: 1rem;
+  --font-size-scale-down-01: 0.875rem; /* 14px */
+  --font-size-scale-down-02: 0.75rem; /* 12px */
+  --font-size-scale-up-01: 1rem; /* 16px */
+  --font-size-scale-up-02: 1.125rem; /* 18px */
+  --font-size-scale-up-03: 1.25rem; /* 20px */
+  --font-size-scale-up-04: 1.5rem; /* 24px */
+  --font-size-scale-up-05: 2rem; /* 32px */
+  --font-size-scale-up-06: 3rem; /* 48px */
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-medium: 1.5;
+  --line-height-loose: 1.75;
+
+  /* ==========================================================================
+     BORDERS & RADIUS
+     ========================================================================== */
+
+  --border-width-sm: 1px;
+  --border-width-md: 2px;
+  --border-width-lg: 4px;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-pill: 100em;
+  --border-radius-circle: 50%;
+
+  /* ==========================================================================
+     SHADOWS
+     ========================================================================== */
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* ==========================================================================
+     Z-INDEX SCALE
+     ========================================================================== */
+
+  --z-index-layer-1: 10;
+  --z-index-layer-2: 20;
+  --z-index-layer-3: 30;
+  --z-index-layer-4: 40;
+  --z-index-layer-5: 50;
+  --z-index-overlay: 1000;
+  --z-index-modal: 2000;
+  --z-index-toast: 3000;
+
+  /* ==========================================================================
+     TRANSITIONS
+     ========================================================================== */
+
+  --transition-base: all 0.3s ease;
+  --transition-fast: all 0.15s ease;
+  --transition-slow: all 0.5s ease;
+}

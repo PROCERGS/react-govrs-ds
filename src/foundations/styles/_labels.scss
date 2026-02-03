@@ -1,0 +1,18 @@
+@use './variables' as vars;
+
+.label-base,
+.label-base * {
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.label-tab,
+.label-tab * {
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+}

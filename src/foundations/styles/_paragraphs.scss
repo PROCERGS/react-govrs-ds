@@ -1,0 +1,68 @@
+@use './variables' as vars;
+
+.paragraphs {
+  &-demo {
+    display: grid;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 8px 16px;
+    grid-template-columns: 1fr 160px;
+  }
+
+  &-container {
+    max-width: 720px;
+    padding: 16px;
+  }
+}
+
+.paragraph-12-short {
+  margin: 0 0 16px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.paragraph-12-small {
+  margin: 0 0 12px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.paragraph-12-long {
+  margin: 0 0 18px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.paragraph-4-short,
+.paragraph-4-small {
+  margin: 0 0 12px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.paragraph-4-long {
+  margin: 0 0 14px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+@media (max-width: 420px) {
+  .paragraphs-demo {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,260 @@
+.high-contrast {
+  background-color: #000 !important;
+}
+
+.high-contrast body {
+  background-color: #000 !important;
+}
+
+//barra estado
+.high-contrast .barra-estado {
+  border-bottom: 1px solid #fff !important;
+  background-color: #000 !important;
+}
+
+.high-contrast .barra-estado__menu > li > a > #GurIA path {
+  fill: #fff !important;
+}
+
+.high-contrast .barra-estado__menu > li > a:focus {
+  box-shadow: inset 0 5px #fff !important;
+  color: #fff !important;
+}
+
+.high-contrast .barra-estado__menu > li > a:hover {
+  box-shadow: inset 0 5px #fff !important;
+  color: #fff !important;
+}
+
+.high-contrast #rs-gov > path {
+  fill: #fff !important;
+}
+
+//a
+.high-contrast a {
+  color: #fff !important;
+}
+
+.high-contrast a:hover {
+  color: #bababa !important;
+}
+
+//svg
+.high-contrast .acess-ul > li > a > svg {
+  color: #fff !important;
+}
+
+.high-contrast .acess-ul > * :hover {
+  fill: #bababa !important;
+}
+
+.high-contrast #btn-contraste {
+  color: #fff !important;
+}
+
+//p
+.high-contrast p {
+  color: #fff !important;
+}
+
+//h1
+.high-contrast h1 {
+  color: #fff !important;
+}
+
+//h2
+.high-contrast h2 {
+  color: #fff !important;
+}
+
+//h3
+.high-contrast h3 {
+  color: #fff !important;
+}
+
+//span
+.high-contrast span {
+  color: #fff !important;
+}
+
+//button
+.high-contrast button {
+  color: #fff !important;
+}
+
+//search
+.high-contrast .s-wrapper {
+  background-color: #000 !important;
+  box-shadow: unset;
+}
+
+.search button {
+  background-color: unset !important;
+}
+
+.high-contrast #buscageralTextBox {
+  color: #fff !important;
+}
+
+//navigation
+.high-contrast .btn-scroll {
+  border: 3px solid #000 !important;
+  background-color: #fff !important;
+  box-shadow: unset;
+  color: #000 !important;
+  &:hover {
+    border-color: #fff !important;
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+}
+
+.high-contrast .item.active::before {
+  border-color: #fff !important;
+}
+
+.high-contrast .breadcrumbs {
+  a {
+    color: #fff !important;
+  }
+  a:hover {
+    color: #bababa !important;
+  }
+  border-top: 2px #fff solid !important;
+  border-bottom: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+.high-contrast .section {
+  color: #fff !important;
+}
+
+.high-contrast .section.active {
+  color: #fff !important;
+}
+
+.high-contrast .home > svg {
+  fill: #fff !important;
+}
+
+.high-contrast .divider::before {
+  color: #fff !important;
+}
+
+//servicos grid item
+.high-contrast .servicos-grid-item {
+  border: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+.high-contrast .servicos-grid-image {
+  background-color: #000 !important;
+}
+
+.high-contrast .servicos-image {
+  border-color: #fff !important;
+}
+
+//prog grid item
+.high-contrast .prog-grid-item {
+  border: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+.high-contrast .prog-grid-image {
+  border: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+//footer
+.high-contrast #footer {
+  border-top: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+.high-contrast .footer-logo {
+  border-top: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+//sitemap
+.high-contrast #page-sitemap {
+  color: #fff !important;
+}
+
+.high-contrast #page-sitemap a {
+  color: #fff !important;
+}
+
+.high-contrast #page-sitemap a:hover {
+  color: #bababa !important;
+}
+
+//submenu
+.high-contrast .submenu {
+  border-top: 2px #fff solid !important;
+  border-bottom: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+.high-contrast .subitem-wrapper {
+  border-color: #fff !important;
+  background-color: #000 !important;
+}
+
+//card container
+.high-contrast .card-container {
+  border: 2px #fff solid !important;
+  background-color: #000 !important;
+}
+
+//ui
+.high-contrast .ui.label {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.high-contrast .ui.segment {
+  background-color: #000 !important;
+  label {
+    color: #fff !important;
+  }
+  input {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+  textarea {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+}
+
+//menu hamburguer
+.high-contrast .menu-hamburger-content {
+  border-bottom: 2px solid #fecd3a;
+  background: #000 !important;
+}
+
+.high-contrast .menu-hamburger-list {
+  border-right: 1px solid #333 !important;
+  background: #1a1a1a !important;
+}
+
+.high-contrast .menu-hamburger-item a {
+  color: #fff !important;
+}
+
+.high-contrast .menu-hamburger-item:hover {
+  background-color: #333 !important;
+}
+
+.menu-hamburger-expand-button {
+  background-color: transparent !important;
+}
+
+.menu-hamburger-item-content.level-odd {
+  background-color: #000 !important;
+}
+
+.menu-hamburger-item-content.level-even {
+  background-color: #1a1a1a !important;
+}

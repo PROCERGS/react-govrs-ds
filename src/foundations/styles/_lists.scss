@@ -1,0 +1,36 @@
+@use './variables' as vars;
+
+.listas {
+  &-demo {
+    display: grid;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 8px 16px;
+    grid-template-columns: 1fr 160px;
+  }
+
+  &-container {
+    max-width: 720px;
+    padding: 16px;
+  }
+}
+
+.listas-base ul,
+ul.listas-base {
+  margin: 0 0 16px 24px;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.listas-base li {
+  margin: 8px 0;
+}
+
+@media (max-width: 420px) {
+  .listas-demo {
+    grid-template-columns: 1fr;
+  }
+}

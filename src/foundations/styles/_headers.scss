@@ -1,0 +1,115 @@
+@use './variables' as vars;
+
+.headers {
+  &-demo {
+    display: grid;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 8px 16px;
+    grid-template-columns: 1fr 160px;
+  }
+
+  &-container {
+    max-width: 720px;
+    padding: 16px;
+  }
+}
+
+.headers-12 h1,
+h1.headers-12 {
+  margin: 0 0 12px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 41px;
+  font-weight: 400;
+  line-height: 58px;
+}
+
+.headers-12 h2,
+h2.headers-12 {
+  margin: 0 0 10px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 52px;
+}
+
+.headers-12 h3,
+h3.headers-12 {
+  margin: 0 0 8px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 42px;
+}
+
+.headers-12 h4,
+h4.headers-12 {
+  margin: 0 0 6px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+.headers-4 h1,
+h1.headers-4 {
+  margin: 0 0 12px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 42px;
+}
+
+.headers-4 h2,
+h2.headers-4 {
+  margin: 0 0 10px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+.headers-4 h3,
+h3.headers-4 {
+  margin: 0 0 8px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.headers-4 h4,
+h4.headers-4 {
+  margin: 0 0 6px 0;
+  color: vars.$color-black;
+  font-family: vars.$font-family-base;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+/* helper to layout label + measurement inline */
+.headers-demo {
+  display: grid;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 8px 16px;
+  grid-template-columns: 1fr 160px;
+}
+
+.headers-container {
+  max-width: 720px;
+  padding: 16px;
+}
+
+@media (max-width: 420px) {
+  .headers-demo {
+    grid-template-columns: 1fr;
+  }
+}
