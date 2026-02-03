@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": ["*.css", "*.scss"],
   "main": "./dist/react-govrs-ds.cjs",
   "module": "./dist/react-govrs-ds.es.js",
   "types": "./dist/types/index.d.ts",
@@ -12,8 +12,10 @@
       "import": "./dist/react-govrs-ds.es.js",
       "require": "./dist/react-govrs-ds.cjs",
       "types": "./dist/types/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
+  "style": "./dist/style.css",
   "files": [
     "dist"
   ],
