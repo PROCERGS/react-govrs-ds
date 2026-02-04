@@ -1,0 +1,49 @@
+@use '../../foundations/styles/variables' as vars;
+
+.govrs-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 8px;
+  font-family: vars.$font-family-base;
+  font-size: 14px;
+  font-weight: 400;
+  gap: 4px;
+}
+
+.govrs-badge__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.govrs-badge__icon svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.govrs-badge__text {
+  display: inline-block;
+}
+
+.govrs-badge--success {
+  background-color: #168821;
+  color: #fcfcfc;
+}
+.govrs-badge--error {
+  background-color: #e52207;
+  color: #fcfcfc;
+}
+.govrs-badge--warning {
+  background-color: #ffcd07;
+  color: #333333;
+}
+.govrs-badge--info {
+  background-color: #2d86d8;
+  color: #fcfcfc;
+}
+
+.govrs-badge--warning .govrs-badge__icon svg {
+  color: #333333;
+}

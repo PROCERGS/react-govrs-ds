@@ -8,3 +8,7 @@
 
 //CONTRASTE
 @use './contraste';
+
+body {
+	font-family: variables.$font-family-base;
+}

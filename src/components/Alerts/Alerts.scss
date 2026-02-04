@@ -1,0 +1,116 @@
+@use '../../foundations/styles/_variables.scss' as vars;
+
+.govrs-alert {
+  display: flex;
+  width: 100%;
+  max-width: 1045px;
+  height: 70px;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0 8px 0 16px;
+  border-radius: 8px;
+  color: var(--color-text, #222222);
+  font-family: vars.$font-family-base;
+  font-size: 16px;
+  font-weight: 400;
+  gap: 16px;
+}
+
+.govrs-alert__icon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.govrs-alert__content {
+  display: flex;
+  height: 100%;
+  flex: 1 1 auto;
+  align-items: center;
+}
+
+.govrs-alert__close {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-text, #222222);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.govrs-alert--success {
+  background-color: var(--green-cool-vivid-05, #e6f7ed);
+}
+.govrs-alert--success .govrs-alert__icon {
+  color: var(--green-cool-vivid-60, #168821);
+}
+
+.govrs-alert--warning {
+  background-color: var(--yellow-vivid-05, #fff8e6);
+}
+.govrs-alert--warning .govrs-alert__icon {
+  color: var(--gray-80, #333333);
+}
+
+.govrs-alert--error {
+  background-color: var(--red-vivid-10, #fdecea);
+}
+.govrs-alert--error .govrs-alert__icon {
+  color: var(--red-vivid-60, #e52207);
+}
+
+.govrs-alert--info {
+  background-color: var(--blue-cool-vivid-05, #e9f5ff);
+}
+.govrs-alert--info .govrs-alert__icon {
+  color: var(--blue-cool-vivid-60, #2b86d8);
+}
+
+.govrs-alert--info .govrs-alert__close {
+  color: var(--blue-cool-vivid-50, #2b86d8);
+}
+
+.govrs-alert__icon svg {
+  display: block;
+  width: 25px;
+  height: 21px;
+}
+
+.govrs-alert__icon svg path {
+  fill: currentColor;
+}
+
+.govrs-alert__close {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.govrs-alert__close svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.govrs-alert__close svg path {
+  fill: currentColor;
+}
+
+.govrs-alert--success .govrs-alert__close {
+  color: var(--green-cool-vivid-50, #168821);
+}
+
+.govrs-alert--warning .govrs-alert__close {
+  color: var(--gray-80, #333333);
+}
+
+.govrs-alert--error .govrs-alert__close {
+  color: var(--red-vivid-50, #e52207);
+}
