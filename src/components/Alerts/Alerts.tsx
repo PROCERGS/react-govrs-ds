@@ -1,4 +1,7 @@
 import { useState, type MouseEvent, type ReactNode } from 'react'
+
+import { Stack, Text } from '../../primitives'
+
 import './Alerts.scss'
 
 type AlertVariant = 'success' | 'warning' | 'error' | 'info'
@@ -68,7 +71,7 @@ export function Alerts({
   }
 
   return (
-    <div className={`govrs-alert govrs-alert--${variant}`} role={role}>
+    <Stack className={`govrs-alert govrs-alert--${variant}`} role={role} direction="row" align="center" gap={2}>
       <div className="govrs-alert__icon" aria-hidden>
         {variant === 'success' && <SuccessIcon />}
         {variant === 'warning' && <WarningIcon />}
@@ -76,7 +79,9 @@ export function Alerts({
         {variant === 'info' && <InfoIcon />}
       </div>
 
-      <div className="govrs-alert__content">{content}</div>
+      <Stack className="govrs-alert__content" justify="center">
+        <Text>{content}</Text>
+      </Stack>
 
       {dismissible && (
         <button
@@ -99,7 +104,7 @@ export function Alerts({
           </svg>
         </button>
       )}
-    </div>
+    </Stack>
   )
 }
 

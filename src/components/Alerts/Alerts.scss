@@ -1,26 +1,24 @@
-@use '../../foundations/styles/_variables.scss' as vars;
-
 .govrs-alert {
   display: flex;
   width: 100%;
-  max-width: 1045px;
-  height: 70px;
+  max-width: var(--govrs-size-container-story, 65.3125rem);
+  height: var(--govrs-size-alert-height, 4.375rem);
   box-sizing: border-box;
   align-items: center;
-  padding: 0 8px 0 16px;
-  border-radius: 8px;
-  color: var(--color-text, #222222);
-  font-family: vars.$font-family-base;
-  font-size: 16px;
-  font-weight: 400;
-  gap: 16px;
+  padding: 0 var(--govrs-space-2, 0.5rem) 0 var(--govrs-space-4, 1rem);
+  border-radius: var(--govrs-radius-md, 0.5rem);
+  color: var(--govrs-color-text-secondary, #333333);
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-body-md, 1rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  gap: var(--govrs-space-4, 1rem);
 }
 
 .govrs-alert__icon {
   display: flex;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: var(--govrs-size-control-lg, 2.5rem);
+  height: var(--govrs-size-control-lg, 2.5rem);
+  flex: 0 0 var(--govrs-size-control-lg, 2.5rem);
   align-items: center;
   justify-content: center;
 }
@@ -34,44 +32,44 @@
 
 .govrs-alert__close {
   flex: 0 0 auto;
-  padding: 4px 8px;
+  padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-2, 0.5rem);
   border: none;
   background: transparent;
-  color: var(--color-text, #222222);
+  color: var(--govrs-color-text-secondary, #333333);
   cursor: pointer;
-  font-size: 18px;
+  font-size: var(--govrs-font-size-18, 1.125rem);
 }
 
 .govrs-alert--success {
-  background-color: var(--green-cool-vivid-05, #e6f7ed);
+  background-color: var(--govrs-color-success-surface, #e6f7ed);
 }
 .govrs-alert--success .govrs-alert__icon {
-  color: var(--green-cool-vivid-60, #168821);
+  color: var(--govrs-color-success, #168821);
 }
 
 .govrs-alert--warning {
-  background-color: var(--yellow-vivid-05, #fff8e6);
+  background-color: var(--govrs-color-warning-surface, #fff8e6);
 }
 .govrs-alert--warning .govrs-alert__icon {
-  color: var(--gray-80, #333333);
+  color: var(--govrs-color-text-secondary, #333333);
 }
 
 .govrs-alert--error {
-  background-color: var(--red-vivid-10, #fdecea);
+  background-color: var(--govrs-color-error-surface, #fdecea);
 }
 .govrs-alert--error .govrs-alert__icon {
-  color: var(--red-vivid-60, #e52207);
+  color: var(--govrs-color-error, #e52207);
 }
 
 .govrs-alert--info {
-  background-color: var(--blue-cool-vivid-05, #e9f5ff);
+  background-color: var(--govrs-color-info-surface, #e9f5ff);
 }
 .govrs-alert--info .govrs-alert__icon {
-  color: var(--blue-cool-vivid-60, #2b86d8);
+  color: var(--govrs-color-info, #2b86d8);
 }
 
 .govrs-alert--info .govrs-alert__close {
-  color: var(--blue-cool-vivid-50, #2b86d8);
+  color: var(--govrs-color-info, #2b86d8);
 }
 
 .govrs-alert__icon svg {
@@ -86,8 +84,8 @@
 
 .govrs-alert__close {
   display: inline-flex;
-  width: 40px;
-  height: 40px;
+  width: var(--govrs-size-control-lg, 2.5rem);
+  height: var(--govrs-size-control-lg, 2.5rem);
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -95,8 +93,8 @@
 
 .govrs-alert__close svg {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: var(--govrs-size-icon-md, 2rem);
+  height: var(--govrs-size-icon-md, 2rem);
 }
 
 .govrs-alert__close svg path {
@@ -104,13 +102,13 @@
 }
 
 .govrs-alert--success .govrs-alert__close {
-  color: var(--green-cool-vivid-50, #168821);
+  color: var(--govrs-color-success, #168821);
 }
 
 .govrs-alert--warning .govrs-alert__close {
-  color: var(--gray-80, #333333);
+  color: var(--govrs-color-text-secondary, #333333);
 }
 
 .govrs-alert--error .govrs-alert__close {
-  color: var(--red-vivid-50, #e52207);
+  color: var(--govrs-color-error, #e52207);
 }

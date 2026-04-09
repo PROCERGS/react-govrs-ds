@@ -1,5 +1,3 @@
-import '../styles/_paragraphs.scss';
-
 export default {
   title: 'Typography/Paragraphs',
   parameters: { layout: 'padded' },

@@ -1,0 +1,26 @@
+.govrs-text {
+  margin: 0;
+}
+
+.govrs-text--size-sm {
+  font-size: var(--govrs-font-size-14, 0.875rem);
+  line-height: var(--govrs-line-height-24, 1.5rem);
+}
+
+.govrs-text--size-md {
+  font-size: var(--govrs-font-size-16, 1rem);
+  line-height: var(--govrs-line-height-24, 1.5rem);
+}
+
+.govrs-text--size-lg {
+  font-size: var(--govrs-font-size-18, 1.125rem);
+  line-height: var(--govrs-line-height-28, 1.75rem);
+}
+
+.govrs-text--tone-muted {
+  color: var(--govrs-color-text-muted, #555555);
+}
+
+.govrs-text--tone-inverse {
+  color: var(--govrs-color-text-inverse, #ffffff);
+}

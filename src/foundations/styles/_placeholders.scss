@@ -1,11 +1,9 @@
-@use './variables' as vars;
-
 .input-placeholder {
   &::placeholder {
-    color: vars.$color-black;
-    font-family: vars.$font-family-base;
-    font-size: 16px;
-    font-weight: 400;
+    color: var(--govrs-color-text-primary, #000000);
+    font-family: var(--govrs-font-family-base);
+    font-size: var(--govrs-font-size-16, 1rem);
+    font-weight: var(--govrs-font-weight-regular, 400);
     opacity: 1;
   }
 }
@@ -13,7 +11,7 @@
 .placeholder-demo {
   display: grid;
   align-items: center;
-  margin-bottom: 18px;
-  gap: 8px 16px;
+  margin-bottom: var(--govrs-space-4-5, 1.125rem);
+  gap: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
   grid-template-columns: 1fr 160px;
 }

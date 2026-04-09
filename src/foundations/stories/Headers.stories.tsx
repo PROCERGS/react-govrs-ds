@@ -1,5 +1,3 @@
-import '../styles/_headers.scss'
-
 export default {
   title: 'Typography/Headers',
   parameters: {

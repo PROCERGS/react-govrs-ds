@@ -1,0 +1,47 @@
+export const size = {
+  control: {
+    xs: '1.75rem',
+    sm: '2rem',
+    md: '2.25rem',
+    lg: '2.5rem',
+    xl: '2.625rem',
+    hero: '5rem',
+    heroMd: '4.375rem',
+    heroSm: '3.75rem',
+    heroXs: '3.125rem',
+  },
+  icon: {
+    xs: '1rem',
+    sm: '1.75rem',
+    md: '2rem',
+    lg: '2.5rem',
+    xl: '3rem',
+  },
+  media: {
+    card: '12.5rem',
+    cardSm: '9.375rem',
+    cardLg: '15.625rem',
+    carousel: '31.25rem',
+    carouselMd: '28.125rem',
+    carouselSm: '25rem',
+    carouselXs: '21.875rem',
+    carousel2xs: '18.75rem',
+  },
+  container: {
+    foundation: '45rem',
+    story: '65.3125rem',
+    content: '75rem',
+  },
+  card: {
+    minWidth: '15.625rem',
+    maxWidth: '25rem',
+    minHeight: '12.5rem',
+    smallMaxWidth: '18.75rem',
+    largeMaxWidth: '31.25rem',
+    iconWidth: '10.9375rem',
+    iconHeight: '9.6875rem',
+  },
+  alert: {
+    height: '4.375rem',
+  },
+} as const

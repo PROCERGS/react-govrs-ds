@@ -1,4 +1,3 @@
-@use 'sass:meta';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
 $font-family-base:
@@ -14,97 +13,293 @@ $font-family-base:
   'Segoe UI Symbol';
 
 $color-black: #000000;
+
+$font-family-display:
+  'Saira Semi Condensed',
+  'Noto Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
+
 :root {
-  /* ==========================================================================
-     COLORS - GovBR Palette
-     ========================================================================== */
+  /* Color tokens */
+  --govrs-color-brand-primary: #1a7235;
+  --govrs-color-brand-primary-strong: #04290f;
+  --govrs-color-brand-primary-hover: #135428;
+  --govrs-color-brand-primary-soft: #ddf9e3;
+  --govrs-color-brand-primary-soft-alt: #e6f2ea;
+  --govrs-color-brand-primary-alpha-08: rgba(26, 114, 53, 0.08);
+  --govrs-color-brand-primary-alpha-10: rgba(26, 114, 53, 0.1);
+  --govrs-color-brand-primary-alpha-20: rgba(26, 114, 53, 0.2);
+  --govrs-color-brand-primary-alpha-40: rgba(26, 114, 53, 0.4);
 
-  /* Primary Colors */
-  --blue-warm-vivid-70: #1351b4;
-  --blue-warm-20: #c5d4eb;
-  --yellow-vivid-20: #fff5c2;
-  --yellow-vivid-5: #ffcd07;
-  --green-rs-60: #1a7235;
-  --green-rs-90: #04290f;
-  --green-rs-10: #1a723430;
-  --green-rs-50: #279b4a;
-  --green-rs-05: #ddf9e3;
+  --govrs-color-interactive-link: #1351b4;
+  --govrs-color-interactive-link-subtle: #c5d4eb;
+  --govrs-color-focus: #ffcd07;
+  --govrs-color-warning-tint: #fff5c2;
 
-  /* Neutral Colors */
-  --pure-0: #ffffff;
-  --gray-2: #f8f8f8;
-  --gray-20: #cccccc;
-  --gray-80: #555555;
-  --pure-100: #000000;
+  --govrs-color-success: #168821;
+  --govrs-color-success-surface: #e6f7ed;
+  --govrs-color-warning: #ffcd07;
+  --govrs-color-warning-surface: #fff8e6;
+  --govrs-color-error: #e52207;
+  --govrs-color-error-surface: #fdecea;
+  --govrs-color-info: #2b86d8;
+  --govrs-color-info-surface: #e9f5ff;
 
-  /* Semantic Colors */
-  --red-vivid-50: #e52207;
-  --green-cool-vivid-50: #168821;
-  --gold-vivid-20: #ffcd07;
-  --blue-vivid-40: #0076d6;
+  --govrs-color-text-primary: #000000;
+  --govrs-color-text-secondary: #333333;
+  --govrs-color-text-muted: #555555;
+  --govrs-color-text-subtle: #666666;
+  --govrs-color-text-placeholder: #999999;
+  --govrs-color-text-inverse: #ffffff;
 
-  /* ==========================================================================
-     COLOR TOKENS
-     ========================================================================== */
+  --govrs-color-surface-base: #ffffff;
+  --govrs-color-surface-muted: #f8f8f8;
+  --govrs-color-surface-soft: #f6f6f6;
+  --govrs-color-surface-raised: #f5f5f5;
+  --govrs-color-surface-canvas: #fafafa;
+  --govrs-color-surface-alt: #f3f3f3;
+  --govrs-color-surface-alt-strong: #e9e9e9;
+  --govrs-color-surface-overlay: rgba(255, 255, 255, 0.85);
+  --govrs-color-surface-overlay-strong: rgba(255, 255, 255, 0.9);
 
-  /* Interactive */
-  --interactive: var(--blue-warm-vivid-70);
+  --govrs-color-border-subtle: #e6e6e6;
+  --govrs-color-border-default: #e5e5e5;
+  --govrs-color-border-muted: #dcdcdc;
+  --govrs-color-border-strong: #d8d8d8;
+  --govrs-color-border-emphasis: #cccccc;
+
+  --govrs-color-contrast-background: #000000;
+  --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-muted: #bababa;
+  --govrs-color-contrast-accent: #fecd3a;
+  --govrs-color-contrast-surface: #1a1a1a;
+  --govrs-color-contrast-surface-alt: #2d2d2d;
+  --govrs-color-contrast-border: #333333;
+
+  /* Spacing tokens */
+  --govrs-space-0: 0rem;
+  --govrs-space-1: 0.25rem;
+  --govrs-space-1-5: 0.375rem;
+  --govrs-space-2: 0.5rem;
+  --govrs-space-2-5: 0.625rem;
+  --govrs-space-3: 0.75rem;
+  --govrs-space-3-5: 0.875rem;
+  --govrs-space-3-75: 0.9375rem;
+  --govrs-space-4: 1rem;
+  --govrs-space-4-5: 1.125rem;
+  --govrs-space-5: 1.25rem;
+  --govrs-space-6: 1.5rem;
+  --govrs-space-7: 2rem;
+  --govrs-space-7-5: 2.5rem;
+  --govrs-space-8: 3rem;
+  --govrs-space-gutter: 5.25rem;
+
+  /* Typography tokens */
+  --govrs-font-family-base: #{$font-family-base};
+  --govrs-font-family-display: #{$font-family-display};
+
+  --govrs-font-size-12: 0.75rem;
+  --govrs-font-size-14: 0.875rem;
+  --govrs-font-size-16: 1rem;
+  --govrs-font-size-18: 1.125rem;
+  --govrs-font-size-20: 1.25rem;
+  --govrs-font-size-24: 1.5rem;
+  --govrs-font-size-28: 1.75rem;
+  --govrs-font-size-30: 1.875rem;
+  --govrs-font-size-32: 2rem;
+  --govrs-font-size-36: 2.25rem;
+  --govrs-font-size-40: 2.5rem;
+  --govrs-font-size-41: 2.5625rem;
+  --govrs-font-size-48: 3rem;
+
+  --govrs-line-height-24: 1.5rem;
+  --govrs-line-height-28: 1.75rem;
+  --govrs-line-height-30: 1.875rem;
+  --govrs-line-height-32: 2rem;
+  --govrs-line-height-36: 2.25rem;
+  --govrs-line-height-42: 2.625rem;
+  --govrs-line-height-52: 3.25rem;
+  --govrs-line-height-58: 3.625rem;
+
+  --govrs-font-size-body-sm: var(--govrs-font-size-14);
+  --govrs-font-size-body-md: var(--govrs-font-size-16);
+  --govrs-font-size-body-lg: var(--govrs-font-size-18);
+  --govrs-font-size-body-xl: var(--govrs-font-size-20);
+  --govrs-font-size-heading-sm: var(--govrs-font-size-18);
+  --govrs-font-size-heading-md: var(--govrs-font-size-20);
+  --govrs-font-size-heading-lg: var(--govrs-font-size-24);
+  --govrs-font-size-heading-xl: var(--govrs-font-size-30);
+  --govrs-font-size-heading-2xl: var(--govrs-font-size-36);
+  --govrs-font-size-heading-3xl: var(--govrs-font-size-41);
+
+  --govrs-line-height-body-sm: var(--govrs-line-height-24);
+  --govrs-line-height-body-md: var(--govrs-line-height-24);
+  --govrs-line-height-body-lg: var(--govrs-line-height-28);
+  --govrs-line-height-body-xl: var(--govrs-line-height-32);
+  --govrs-line-height-heading-sm: var(--govrs-line-height-28);
+  --govrs-line-height-heading-md: var(--govrs-line-height-32);
+  --govrs-line-height-heading-lg: var(--govrs-line-height-36);
+  --govrs-line-height-heading-xl: var(--govrs-line-height-42);
+  --govrs-line-height-heading-2xl: var(--govrs-line-height-52);
+  --govrs-line-height-heading-3xl: var(--govrs-line-height-58);
+
+  --govrs-font-weight-regular: 400;
+  --govrs-font-weight-medium: 500;
+  --govrs-font-weight-semibold: 600;
+  --govrs-font-weight-bold: 700;
+
+  /* Radius and borders */
+  --govrs-border-width-sm: 1px;
+  --govrs-border-width-md: 2px;
+  --govrs-border-width-lg: 4px;
+
+  --govrs-radius-xs: 0.25rem;
+  --govrs-radius-sm: 0.375rem;
+  --govrs-radius-md: 0.5rem;
+  --govrs-radius-lg: 0.75rem;
+  --govrs-radius-xl: 1rem;
+  --govrs-radius-pill: 999px;
+  --govrs-radius-circle: 50%;
+
+  /* Shadow tokens */
+  --govrs-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --govrs-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --govrs-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --govrs-shadow-floating: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --govrs-shadow-carousel-card: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --govrs-shadow-overlay: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  /* Motion tokens */
+  --govrs-duration-fast: 0.2s;
+  --govrs-duration-base: 0.3s;
+  --govrs-duration-slow: 0.45s;
+  --govrs-duration-slower: 0.5s;
+  --govrs-easing-standard: ease;
+  --govrs-easing-emphasized: ease-in-out;
+  --govrs-motion-scale-hover: 1.1;
+  --govrs-motion-scale-subtle: 1.02;
+  --govrs-motion-offset-lift: -2px;
+  --govrs-motion-offset-slide: -10px;
+  --govrs-transition-base: all var(--govrs-duration-base) var(--govrs-easing-standard);
+  --govrs-transition-fast: all var(--govrs-duration-fast) var(--govrs-easing-standard);
+  --govrs-transition-slow: all var(--govrs-duration-slower) var(--govrs-easing-standard);
+
+  /* Size tokens */
+  --govrs-size-control-xs: 1.75rem;
+  --govrs-size-control-sm: 2rem;
+  --govrs-size-control-md: 2.25rem;
+  --govrs-size-control-lg: 2.5rem;
+  --govrs-size-control-xl: 2.625rem;
+  --govrs-size-control-hero: 5rem;
+  --govrs-size-control-hero-md: 4.375rem;
+  --govrs-size-control-hero-sm: 3.75rem;
+  --govrs-size-control-hero-xs: 3.125rem;
+
+  --govrs-size-icon-xs: 1rem;
+  --govrs-size-icon-sm: 1.75rem;
+  --govrs-size-icon-md: 2rem;
+  --govrs-size-icon-lg: 2.5rem;
+  --govrs-size-icon-xl: 3rem;
+
+  --govrs-size-media-card: 12.5rem;
+  --govrs-size-media-card-sm: 9.375rem;
+  --govrs-size-media-card-lg: 15.625rem;
+  --govrs-size-media-carousel: 31.25rem;
+  --govrs-size-media-carousel-md: 28.125rem;
+  --govrs-size-media-carousel-sm: 25rem;
+  --govrs-size-media-carousel-xs: 21.875rem;
+  --govrs-size-media-carousel-2xs: 18.75rem;
+
+  --govrs-size-container-foundation: 45rem;
+  --govrs-size-container-story: 65.3125rem;
+  --govrs-size-container-content: 75rem;
+  --govrs-size-card-min-width: 15.625rem;
+  --govrs-size-card-max-width: 25rem;
+  --govrs-size-card-min-height: 12.5rem;
+  --govrs-size-card-small-max-width: 18.75rem;
+  --govrs-size-card-large-max-width: 31.25rem;
+  --govrs-size-card-icon-width: 10.9375rem;
+  --govrs-size-card-icon-height: 9.6875rem;
+  --govrs-size-alert-height: 4.375rem;
+
+  /* Z-index tokens */
+  --govrs-z-index-base: 0;
+  --govrs-z-index-raised: 1;
+  --govrs-z-index-overlay: 5;
+  --govrs-z-index-navigation: 10;
+  --govrs-z-index-modal: 20;
+
+  /* Legacy aliases kept for compatibility */
+  --blue-warm-vivid-70: var(--govrs-color-interactive-link);
+  --blue-warm-20: var(--govrs-color-interactive-link-subtle);
+  --yellow-vivid-20: var(--govrs-color-warning-tint);
+  --yellow-vivid-5: var(--govrs-color-focus);
+  --yellow-vivid-05: var(--govrs-color-warning-surface);
+  --green-rs-60: var(--govrs-color-brand-primary);
+  --green-rs-90: var(--govrs-color-brand-primary-strong);
+  --green-rs-10: var(--govrs-color-brand-primary-alpha-20);
+  --green-rs-50: var(--govrs-color-success);
+  --green-rs-05: var(--govrs-color-brand-primary-soft);
+  --green-cool-vivid-05: var(--govrs-color-success-surface);
+  --green-cool-vivid-50: var(--govrs-color-success);
+  --green-cool-vivid-60: var(--govrs-color-success);
+  --pure-0: var(--govrs-color-surface-base);
+  --gray-2: var(--govrs-color-surface-muted);
+  --gray-20: var(--govrs-color-border-emphasis);
+  --gray-80: var(--govrs-color-text-muted);
+  --pure-100: var(--govrs-color-text-primary);
+  --red-vivid-10: var(--govrs-color-error-surface);
+  --red-vivid-50: var(--govrs-color-error);
+  --red-vivid-60: var(--govrs-color-error);
+  --gold-vivid-20: var(--govrs-color-warning);
+  --blue-vivid-40: var(--govrs-color-info);
+  --blue-cool-vivid-05: var(--govrs-color-info-surface);
+  --blue-cool-vivid-50: var(--govrs-color-info);
+  --blue-cool-vivid-60: var(--govrs-color-info);
+  --interactive: var(--govrs-color-interactive-link);
   --interactive-rgb: 19, 81, 180;
-  --interactive-light: var(--green-rs-60);
-  --interactive-dark: var(--blue-warm-20);
+  --interactive-light: var(--govrs-color-brand-primary);
+  --interactive-dark: var(--govrs-color-interactive-link-subtle);
   --interactive-dark-rgb: 197, 212, 235;
-
-  /* Text Colors */
-  --color: var(--gray-80);
+  --color: var(--govrs-color-text-muted);
   --color-rgb: 85, 85, 85;
-  --color-dark: var(--pure-100);
+  --color-dark: var(--govrs-color-text-primary);
   --color-dark-rgb: 0, 0, 0;
-  --color-light: var(--pure-0);
+  --color-light: var(--govrs-color-text-inverse);
   --color-light-rgb: 255, 255, 255;
-  --text-color: var(--gray-80);
-
-  /* Background */
-  --background: var(--pure-0);
+  --text-color: var(--govrs-color-text-muted);
+  --color-text: var(--govrs-color-text-secondary);
+  --background: var(--govrs-color-surface-base);
   --background-rgb: 255, 255, 255;
-  --background-light: var(--gray-2);
+  --background-light: var(--govrs-color-surface-muted);
   --background-light-rgb: 248, 248, 248;
-  --background-dark: var(--pure-100);
+  --background-dark: var(--govrs-color-contrast-background);
   --background-dark-rgb: 0, 0, 0;
-
-  /* Semantic States */
-  --danger: var(--red-vivid-50);
-  --success: var(--green-cool-vivid-50);
-  --warning: var(--gold-vivid-20);
-  --info: var(--blue-vivid-40);
-
-  /* Interactive States */
-  --visited: var(--blue-warm-vivid-70);
-  --visited-dark: var(--blue-warm-20);
+  --danger: var(--govrs-color-error);
+  --success: var(--govrs-color-success);
+  --warning: var(--govrs-color-warning);
+  --info: var(--govrs-color-info);
+  --visited: var(--govrs-color-interactive-link);
+  --visited-dark: var(--govrs-color-interactive-link-subtle);
   --hover: 0.08;
   --hover-dark: 0.16;
   --hover-light: 0.04;
   --pressed: 0.24;
   --pressed-dark: 0.32;
-
-  /* Active State */
-  --active: var(--blue-warm-20);
+  --active: var(--govrs-color-interactive-link-subtle);
   --active-rgb: 197, 212, 235;
-
-  /* ==========================================================================
-     FOCUS
-     ========================================================================== */
-
-  --focus: var(--yellow-vivid-5);
-  --focus-color: var(--yellow-vivid-5);
-  --focus-color-dark: var(--yellow-vivid-5);
+  --focus: var(--govrs-color-focus);
+  --focus-color: var(--govrs-color-focus);
+  --focus-color-dark: var(--govrs-color-focus);
   --focus-offset: 2px;
   --focus-width: 2px;
   --focus-style: solid;
-
-  /* ==========================================================================
-     SPACING SCALE
-     ========================================================================== */
-
   --spacing-scale-base: 8px;
   --spacing-scale-half: 4px;
   --spacing-scale-1x: 8px;
@@ -115,69 +310,36 @@ $color-black: #000000;
   --spacing-scale-6x: 48px;
   --spacing-scale-7x: 56px;
   --spacing-scale-8x: 64px;
-
-  /* ==========================================================================
-     TYPOGRAPHY
-     ========================================================================== */
-
-  /* Font Family */
-  --font-family-base: 'Rawline', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-family-secondary: 'Raleway', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-
-  /* Font Sizes */
-  --font-size-scale-base: 1rem;
-  --font-size-scale-down-01: 0.875rem; /* 14px */
-  --font-size-scale-down-02: 0.75rem; /* 12px */
-  --font-size-scale-up-01: 1rem; /* 16px */
-  --font-size-scale-up-02: 1.125rem; /* 18px */
-  --font-size-scale-up-03: 1.25rem; /* 20px */
-  --font-size-scale-up-04: 1.5rem; /* 24px */
-  --font-size-scale-up-05: 2rem; /* 32px */
-  --font-size-scale-up-06: 3rem; /* 48px */
-
-  /* Font Weights */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semi-bold: 600;
-  --font-weight-bold: 700;
-
-  /* Line Heights */
+  --font-family-base: var(--govrs-font-family-base);
+  --font-family-secondary: var(--govrs-font-family-display);
+  --font-size-scale-base: var(--govrs-font-size-16);
+  --font-size-scale-down-01: var(--govrs-font-size-14);
+  --font-size-scale-down-02: var(--govrs-font-size-12);
+  --font-size-scale-up-01: var(--govrs-font-size-16);
+  --font-size-scale-up-02: var(--govrs-font-size-18);
+  --font-size-scale-up-03: var(--govrs-font-size-20);
+  --font-size-scale-up-04: var(--govrs-font-size-24);
+  --font-size-scale-up-05: var(--govrs-font-size-32);
+  --font-size-scale-up-06: var(--govrs-font-size-48);
+  --font-weight-regular: var(--govrs-font-weight-regular);
+  --font-weight-medium: var(--govrs-font-weight-medium);
+  --font-weight-semi-bold: var(--govrs-font-weight-semibold);
+  --font-weight-bold: var(--govrs-font-weight-bold);
   --line-height-tight: 1.2;
   --line-height-medium: 1.5;
   --line-height-loose: 1.75;
-
-  /* ==========================================================================
-     BORDERS & RADIUS
-     ========================================================================== */
-
-  --border-width-sm: 1px;
-  --border-width-md: 2px;
-  --border-width-lg: 4px;
-
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 16px;
-  --border-radius-pill: 100em;
-  --border-radius-circle: 50%;
-
-  /* ==========================================================================
-     SHADOWS
-     ========================================================================== */
-
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-  /* ==========================================================================
-     Z-INDEX SCALE
-     ========================================================================== */
-
+  --border-width-sm: var(--govrs-border-width-sm);
+  --border-width-md: var(--govrs-border-width-md);
+  --border-width-lg: var(--govrs-border-width-lg);
+  --border-radius-sm: var(--govrs-radius-xs);
+  --border-radius-md: var(--govrs-radius-md);
+  --border-radius-lg: var(--govrs-radius-xl);
+  --border-radius-pill: var(--govrs-radius-pill);
+  --border-radius-circle: var(--govrs-radius-circle);
+  --shadow-sm: var(--govrs-shadow-sm);
+  --shadow-md: var(--govrs-shadow-card);
+  --shadow-lg: var(--govrs-shadow-carousel-card);
+  --shadow-xl: var(--govrs-shadow-overlay);
   --z-index-layer-1: 10;
   --z-index-layer-2: 20;
   --z-index-layer-3: 30;
@@ -186,12 +348,4 @@ $color-black: #000000;
   --z-index-overlay: 1000;
   --z-index-modal: 2000;
   --z-index-toast: 3000;
-
-  /* ==========================================================================
-     TRANSITIONS
-     ========================================================================== */
-
-  --transition-base: all 0.3s ease;
-  --transition-fast: all 0.15s ease;
-  --transition-slow: all 0.5s ease;
 }

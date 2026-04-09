@@ -1,25 +1,26 @@
 .govrs-card {
   display: flex;
   overflow: hidden;
-  min-width: 250px;
-  max-width: 400px;
-  min-height: 200px;
+  min-width: var(--govrs-size-card-min-width, 15.625rem);
+  max-width: var(--govrs-size-card-max-width, 25rem);
+  min-height: var(--govrs-size-card-min-height, 12.5rem);
   flex: 1;
   flex-direction: column;
-  padding: 16px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--govrs-space-4, 1rem);
+  border-radius: var(--govrs-radius-md, 0.5rem);
+  background-color: var(--govrs-color-surface-base, #ffffff);
+  box-shadow: var(--govrs-shadow-card, 0 2px 8px rgba(0, 0, 0, 0.1));
   color: inherit;
+  font-family: var(--govrs-font-family-base);
   cursor: pointer;
   text-decoration: none;
   transition:
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
+    box-shadow var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease),
+    transform var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
 
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    box-shadow: var(--govrs-shadow-card-hover, 0 4px 16px rgba(0, 0, 0, 0.15));
+    transform: translateY(var(--govrs-motion-offset-lift, -2px));
   }
 }
 
@@ -28,7 +29,7 @@
   opacity: 0.5;
   pointer-events: none;
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--govrs-shadow-card, 0 2px 8px rgba(0, 0, 0, 0.1));
     transform: none;
   }
   a {
@@ -44,16 +45,16 @@
   display: flex;
   min-height: 60px;
   align-items: center;
-  gap: 4px;
+  gap: var(--govrs-space-1, 0.25rem);
 
   & a {
-    color: var(--green-rs-60);
+    color: var(--govrs-color-brand-primary, #1a7235);
     text-decoration: none;
 
     &:hover,
     &:focus,
     &:visited {
-      color: var(--green-rs-60);
+      color: var(--govrs-color-brand-primary, #1a7235);
       text-decoration: none;
     }
   }
@@ -61,8 +62,8 @@
   & img {
     width: 50px;
     height: 50px;
-    border-radius: 200px;
-    margin-right: 10px;
+    border-radius: var(--govrs-radius-pill, 999px);
+    margin-right: var(--govrs-space-2-5, 0.625rem);
     object-fit: cover;
   }
 
@@ -71,8 +72,9 @@
     overflow: hidden;
     margin: 0;
     -webkit-box-orient: vertical;
-    color: var(--green-rs-60);
-    font-size: 1.25rem;
+    color: var(--govrs-color-brand-primary, #1a7235);
+    font-size: var(--govrs-font-size-20, 1.25rem);
+    font-weight: var(--govrs-font-weight-bold, 700);
     -webkit-line-clamp: 1;
     text-overflow: ellipsis;
     text-decoration: none;
@@ -80,11 +82,11 @@
 
   & a > h3 {
     text-decoration: none;
-    color: var(--green-rs-60);
+    color: var(--govrs-color-brand-primary, #1a7235);
     &:hover,
     &:focus,
     &:visited {
-      color: var(--green-rs-60);
+      color: var(--govrs-color-brand-primary, #1a7235);
       text-decoration: none;
     }
   }
@@ -92,48 +94,61 @@
   & .govrs-card-header-text {
     flex: 1;
     align-self: flex-start;
-    color: #666666;
-    font-size: 0.875rem;
+    color: var(--govrs-color-text-subtle, #666666);
+    font-size: var(--govrs-font-size-14, 0.875rem);
 
+    & .govrs-card-copy,
     & p {
       display: -webkit-box;
       overflow: hidden;
       margin: 0;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-      line-height: 1.5;
+      line-height: var(--govrs-line-height-body-sm, 1.5rem);
       text-overflow: ellipsis;
     }
   }
 
   & .govrs-card-header-menu {
     align-items: center;
-    padding: 0px 10px;
+    padding: 0 var(--govrs-space-2-5, 0.625rem);
     border: none;
-    border-radius: 60px;
+    border-radius: var(--govrs-radius-pill, 999px);
     margin-left: auto;
     background: transparent;
-    color: var(--green-rs-60);
+    color: var(--govrs-color-brand-primary, #1a7235);
     cursor: pointer;
-    font-size: 2rem;
-    transition: background-color 0.3s ease;
+    font-size: var(--govrs-font-size-32, 2rem);
+    transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
 
     &:hover {
-      background-color: rgba(26, 114, 53, 0.2);
+      background-color: var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2));
     }
   }
 }
 
+.govrs-card-title-link-disabled {
+  pointer-events: none;
+}
+
+.govrs-card-chevron {
+  transition: transform var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+}
+
+.govrs-card-chevron--open {
+  transform: rotate(180deg);
+}
+
 .govrs-card-body {
-  max-height: 200px;
-  margin-top: 12px;
+  max-height: var(--govrs-size-media-card, 12.5rem);
+  margin-top: var(--govrs-space-3, 0.75rem);
   overflow-y: auto;
 
   & p {
     margin: 0;
-    color: #333333;
-    font-size: 1rem;
-    line-height: 1.5;
+    color: var(--govrs-color-text-secondary, #333333);
+    font-size: var(--govrs-font-size-body-md, 1rem);
+    line-height: var(--govrs-line-height-body-sm, 1.5rem);
   }
 }
 
@@ -147,17 +162,17 @@
   margin-top: auto;
 
   & button {
-    padding: 8px 16px;
+    padding: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
     border: none;
-    border-radius: 60px;
+    border-radius: var(--govrs-radius-pill, 999px);
     background-color: transparent;
-    color: var(--green-rs-60);
+    color: var(--govrs-color-brand-primary, #1a7235);
     cursor: pointer;
     font-size: 1.2rem;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
 
     &:hover {
-      background-color: rgba(26, 114, 53, 0.2);
+      background-color: var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2));
     }
   }
 
@@ -165,9 +180,9 @@
     display: flex;
     align-items: center;
     margin-left: auto;
-    gap: 8px;
+    gap: var(--govrs-space-2, 0.5rem);
     & button {
-      padding: 4px;
+      padding: var(--govrs-space-1, 0.25rem);
       font-size: 1rem;
 
       & svg {
@@ -180,10 +195,10 @@
 
 .govrs-card-image {
   width: 100%;
-  height: 200px;
-  border-radius: 8px;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  height: var(--govrs-size-media-card, 12.5rem);
+  border-radius: var(--govrs-radius-md, 0.5rem);
+  margin-top: var(--govrs-space-3, 0.75rem);
+  margin-bottom: var(--govrs-space-3, 0.75rem);
   object-fit: cover;
 }
 
@@ -194,21 +209,20 @@
   align-items: center;
   align-self: end;
   justify-content: center;
-  padding: 10px 14px;
-  border: 1px solid var(--green-rs-60);
-  border: 1px solid var(--green-rs-60);
-  border-radius: 60px;
+  padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-3-5, 0.875rem);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-brand-primary, #1a7235);
+  border-radius: var(--govrs-radius-pill, 999px);
   margin-top: auto;
   background-color: transparent;
-  color: var(--green-rs-60);
+  color: var(--govrs-color-brand-primary, #1a7235);
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  gap: 8px;
-  transition: all 0.3s ease;
+  font-size: var(--govrs-font-size-body-md, 1rem);
+  font-weight: var(--govrs-font-weight-medium, 500);
+  gap: var(--govrs-space-2, 0.5rem);
+  transition: var(--govrs-transition-base, all 0.3s ease);
 
   &:hover {
-    background-color: rgba(26, 114, 53, 0.1);
+    background-color: var(--govrs-color-brand-primary-alpha-10, rgba(26, 114, 53, 0.1));
   }
 
   & svg {
@@ -219,15 +233,15 @@
 .govrs-card-list-items {
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  animation: slideDown 0.3s ease;
-  gap: 8px;
+  margin-top: var(--govrs-space-3, 0.75rem);
+  animation: slideDown var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+  gap: var(--govrs-space-2, 0.5rem);
 }
 
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(var(--govrs-motion-offset-slide, -10px));
   }
   to {
     opacity: 1;
@@ -237,9 +251,9 @@
 
 .govrs-card-list-item {
   display: flex;
-  padding: 8px 0;
-  border-bottom: 1px solid #e5e5e5;
-  gap: 8px;
+  padding: var(--govrs-space-2, 0.5rem) 0;
+  border-bottom: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-default, #e5e5e5);
+  gap: var(--govrs-space-2, 0.5rem);
 
   &:last-child {
     border-bottom: none;
@@ -247,26 +261,26 @@
 }
 
 .govrs-card-list-item-label {
-  color: var(--green-rs-60);
-  font-weight: 600;
+  color: var(--govrs-color-brand-primary, #1a7235);
+  font-weight: var(--govrs-font-weight-semibold, 600);
 }
 
 .govrs-card-list-item-value {
-  color: #333333;
+  color: var(--govrs-color-text-secondary, #333333);
 }
 
 .govrs-card-icon {
-  min-width: 175px !important;
-  max-width: 175px;
-  max-height: 155px;
+  min-width: var(--govrs-size-card-icon-width, 10.9375rem) !important;
+  max-width: var(--govrs-size-card-icon-width, 10.9375rem);
+  max-height: var(--govrs-size-card-icon-height, 9.6875rem);
 }
 
 .govrs-card-header-placeholder {
   width: 50px;
   height: 50px;
   flex-shrink: 0;
-  border-radius: 200px;
-  margin-right: 10px;
+  border-radius: var(--govrs-radius-pill, 999px);
+  margin-right: var(--govrs-space-2-5, 0.625rem);
   object-fit: cover;
 }
 
@@ -279,38 +293,38 @@
 }
 
 .small {
-  max-width: 300px;
-  padding: 12px;
+  max-width: var(--govrs-size-card-small-max-width, 18.75rem);
+  padding: var(--govrs-space-3, 0.75rem);
 
   .govrs-card-header {
     min-height: 45px;
 
     & img {
-      width: 40px;
-      height: 40px;
-      margin-right: 8px;
+      width: var(--govrs-size-icon-lg, 2.5rem);
+      height: var(--govrs-size-icon-lg, 2.5rem);
+      margin-right: var(--govrs-space-2, 0.5rem);
     }
 
     & h3 {
-      font-size: 1rem;
+      font-size: var(--govrs-font-size-16, 1rem);
     }
 
     & .govrs-card-header-text {
-      font-size: 0.75rem;
+      font-size: var(--govrs-font-size-12, 0.75rem);
     }
 
     & .govrs-card-header-menu {
-      padding: 0px 8px;
-      font-size: 1.5rem;
+      padding: 0 var(--govrs-space-2, 0.5rem);
+      font-size: var(--govrs-font-size-24, 1.5rem);
     }
   }
 
   .govrs-card-body {
-    max-height: 150px;
-    margin-top: 8px;
+    max-height: var(--govrs-size-media-card-sm, 9.375rem);
+    margin-top: var(--govrs-space-2, 0.5rem);
 
     & p {
-      font-size: 0.875rem;
+      font-size: var(--govrs-font-size-14, 0.875rem);
     }
   }
 
@@ -318,44 +332,44 @@
     min-height: 40px;
 
     & button {
-      padding: 6px 12px;
-      font-size: 1rem;
+      padding: var(--govrs-space-1-5, 0.375rem) var(--govrs-space-3, 0.75rem);
+      font-size: var(--govrs-font-size-16, 1rem);
     }
 
     & .govrs-card-footer-like-share {
       & button {
-        padding: 4px;
-        font-size: 0.875rem;
+        padding: var(--govrs-space-1, 0.25rem);
+        font-size: var(--govrs-font-size-14, 0.875rem);
 
         & svg {
-          width: 28px;
-          height: 28px;
+          width: var(--govrs-size-icon-sm, 1.75rem);
+          height: var(--govrs-size-icon-sm, 1.75rem);
         }
       }
     }
   }
 
   .govrs-card-image {
-    height: 150px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    height: var(--govrs-size-media-card-sm, 9.375rem);
+    margin-top: var(--govrs-space-2, 0.5rem);
+    margin-bottom: var(--govrs-space-2, 0.5rem);
   }
 
   .govrs-card-list-toggle {
     min-height: 40px;
-    padding: 8px 12px;
-    font-size: 0.875rem;
+    padding: var(--govrs-space-2, 0.5rem) var(--govrs-space-3, 0.75rem);
+    font-size: var(--govrs-font-size-14, 0.875rem);
   }
 
   .govrs-card-icon-img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: var(--govrs-size-control-hero, 5rem);
+    max-height: var(--govrs-size-control-hero, 5rem);
   }
 }
 
 .large {
-  max-width: 500px;
-  padding: 20px;
+  max-width: var(--govrs-size-card-large-max-width, 31.25rem);
+  padding: var(--govrs-space-5, 1.25rem);
 
   .govrs-card-header {
     min-height: 75px;
@@ -363,29 +377,29 @@
     & img {
       width: 60px;
       height: 60px;
-      margin-right: 12px;
+      margin-right: var(--govrs-space-3, 0.75rem);
     }
 
     & h3 {
-      font-size: 1.5rem;
+      font-size: var(--govrs-font-size-24, 1.5rem);
     }
 
     & .govrs-card-header-text {
-      font-size: 1rem;
+      font-size: var(--govrs-font-size-16, 1rem);
     }
 
     & .govrs-card-header-menu {
-      padding: 0px 12px;
-      font-size: 2.5rem;
+      padding: 0 var(--govrs-space-3, 0.75rem);
+      font-size: var(--govrs-font-size-40, 2.5rem);
     }
   }
 
   .govrs-card-body {
-    max-height: 250px;
-    margin-top: 16px;
+    max-height: var(--govrs-size-media-card-lg, 15.625rem);
+    margin-top: var(--govrs-space-4, 1rem);
 
     & p {
-      font-size: 1.125rem;
+      font-size: var(--govrs-font-size-18, 1.125rem);
     }
   }
 
@@ -393,60 +407,60 @@
     min-height: 60px;
 
     & button {
-      padding: 10px 20px;
+      padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-5, 1.25rem);
       font-size: 1.4rem;
     }
 
     & .govrs-card-footer-like-share {
       & button {
-        padding: 6px;
+        padding: var(--govrs-space-1-5, 0.375rem);
         font-size: 1.2rem;
 
         & svg {
-          width: 48px;
-          height: 48px;
+          width: var(--govrs-size-icon-xl, 3rem);
+          height: var(--govrs-size-icon-xl, 3rem);
         }
       }
     }
   }
 
   .govrs-card-image {
-    height: 250px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    height: var(--govrs-size-media-card-lg, 15.625rem);
+    margin-top: var(--govrs-space-4, 1rem);
+    margin-bottom: var(--govrs-space-4, 1rem);
   }
 
   .govrs-card-list-toggle {
     min-height: 60px;
-    padding: 12px 18px;
-    font-size: 1.125rem;
+    padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-4-5, 1.125rem);
+    font-size: var(--govrs-font-size-18, 1.125rem);
   }
 
   .govrs-card-icon-img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: var(--govrs-size-media-card, 12.5rem);
+    max-height: var(--govrs-size-media-card, 12.5rem);
   }
 }
 
 .govrs-card-body-image {
   width: 100%;
   height: auto;
-  border-radius: 6px;
-  margin-top: 12px;
+  border-radius: var(--govrs-radius-sm, 0.375rem);
+  margin-top: var(--govrs-space-3, 0.75rem);
   object-fit: cover;
 }
 
 .govrs-card-footer-action > a {
-  padding: 8px 16px;
+  padding: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
   border: none;
-  border-radius: 60px;
+  border-radius: var(--govrs-radius-pill, 999px);
   background-color: transparent;
-  color: var(--green-rs-60);
+  color: var(--govrs-color-brand-primary, #1a7235);
   cursor: pointer;
   font-size: 1.2rem;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
   &:hover {
-    background-color: rgba(26, 114, 53, 0.2);
-    color: var(--green-rs-60);
+    background-color: var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2));
+    color: var(--govrs-color-brand-primary, #1a7235);
   }
 }

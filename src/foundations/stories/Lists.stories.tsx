@@ -1,5 +1,3 @@
-import '../styles/_lists.scss';
-
 export default {
   title: 'Typography/Lists',
   parameters: { layout: 'padded' },

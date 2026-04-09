@@ -1,18 +1,16 @@
-@use './variables' as vars;
-
 .label-base,
 .label-base * {
-  color: vars.$color-black;
-  font-family: vars.$font-family-base;
-  font-size: 16px;
-  font-weight: 400;
+  color: var(--govrs-color-text-primary, #000000);
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-16, 1rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
 }
 
 .label-tab,
 .label-tab * {
-  color: vars.$color-black;
-  font-family: vars.$font-family-base;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
+  color: var(--govrs-color-text-primary, #000000);
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-20, 1.25rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  line-height: var(--govrs-line-height-30, 1.875rem);
 }

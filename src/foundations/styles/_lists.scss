@@ -1,32 +1,30 @@
-@use './variables' as vars;
-
 .listas {
   &-demo {
     display: grid;
     align-items: center;
-    margin-bottom: 18px;
-    gap: 8px 16px;
+    margin-bottom: var(--govrs-space-4-5, 1.125rem);
+    gap: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
     grid-template-columns: 1fr 160px;
   }
 
   &-container {
-    max-width: 720px;
-    padding: 16px;
+    max-width: var(--govrs-size-container-foundation, 45rem);
+    padding: var(--govrs-space-4, 1rem);
   }
 }
 
 .listas-base ul,
 ul.listas-base {
-  margin: 0 0 16px 24px;
-  color: vars.$color-black;
-  font-family: vars.$font-family-base;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 32px;
+  margin: 0 0 var(--govrs-space-4, 1rem) var(--govrs-space-6, 1.5rem);
+  color: var(--govrs-color-text-primary, #000000);
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-20, 1.25rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  line-height: var(--govrs-line-height-32, 2rem);
 }
 
 .listas-base li {
-  margin: 8px 0;
+  margin: var(--govrs-space-2, 0.5rem) 0;
 }
 
 @media (max-width: 420px) {

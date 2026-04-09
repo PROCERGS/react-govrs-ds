@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "sideEffects": ["*.css", "*.scss"],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "main": "./dist/react-govrs-ds.cjs",
   "module": "./dist/react-govrs-ds.es.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/react-govrs-ds.es.js",
-      "require": "./dist/react-govrs-ds.cjs",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/react-govrs-ds.cjs"
     },
     "./style.css": "./dist/style.css"
   },
@@ -22,7 +25,6 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
     "build": "npm run build:types && vite build",
     "lint": "eslint ."
@@ -33,10 +35,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@storybook/addon-a11y": "^8.6.14",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-interactions": "^8.6.14",
-    "@storybook/react-vite": "^8.6.14",
+    "@storybook/addon-a11y": "^8.6.18",
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/react-vite": "^8.6.18",
+    "@storybook/test": "^8.6.18",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
@@ -49,9 +52,14 @@
     "react-dom": "^19.2.0",
     "sass": "^1.83.1",
     "sass-embedded": "^1.97.3",
-    "storybook": "^8.6.14",
+    "storybook": "^8.6.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^5.4.21"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1"
   }
 }

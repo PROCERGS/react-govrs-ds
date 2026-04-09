@@ -1,7 +1,16 @@
-import { useState, type ReactNode, type MouseEvent } from 'react';
+import { useState, type MouseEvent, type ReactNode } from 'react';
+
+import { Stack, Text } from '../../primitives';
+
 import './Card.scss';
 
 type CardVariant = 'post' | 'list' | 'news' | 'icon';
+type CardSize = 'small' | 'large';
+
+type CardAction = {
+  label: string;
+  url?: string;
+};
 
 type CardProps = {
   title: string;
@@ -9,14 +18,11 @@ type CardProps = {
   description?: string;
   image?: string;
   imageAlt?: string;
-  size?: 'small' | 'large';
+  size?: CardSize;
   disabled?: boolean;
   href?: string;
   children?: ReactNode;
-  acao?: {
-    label: string;
-    url?: string;
-  };
+  acao?: CardAction;
   onLike?: () => void;
   onShare?: () => void;
   itens?: Array<{
@@ -62,15 +68,12 @@ const ShareIcon = () => (
 
 const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
   <svg
+    className={`govrs-card-chevron ${isOpen ? 'govrs-card-chevron--open' : ''}`}
     width="20"
     height="20"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    style={{
-      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-      transition: 'transform 0.3s ease',
-    }}
   >
     <path
       d="M6 9L12 15L18 9"
@@ -84,6 +87,77 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
 
 const PLACEHOLDER_IMAGE =
   "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23E8F5E9'/%3E%3Cpath d='M100 60C88.95 60 80 68.95 80 80C80 91.05 88.95 100 100 100C111.05 100 120 91.05 120 80C120 68.95 111.05 60 100 60ZM140 120H60L75 95L90 115L110 85L140 120Z' fill='%231A7235' opacity='0.3'/%3E%3C/svg%3E";
+
+function getCardClassName(size?: CardSize, disabled?: boolean, extraClassName?: string) {
+  return ['govrs-card', extraClassName, size, disabled ? 'govrs-card-disabled' : undefined]
+    .filter(Boolean)
+    .join(' ');
+}
+
+function handleDisabledAnchorClick(disabled?: boolean) {
+  return (event: MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      event.preventDefault();
+    }
+  };
+}
+
+function CardTitleLink({
+  title,
+  href,
+  disabled,
+}: {
+  title: string;
+  href?: string;
+  disabled?: boolean;
+}) {
+  return (
+    <a
+      className={`govrs-card-title-link ${disabled ? 'govrs-card-title-link-disabled' : ''}`}
+      href={disabled ? undefined : href}
+      onClick={handleDisabledAnchorClick(disabled)}
+      aria-disabled={disabled || undefined}
+      tabIndex={disabled ? -1 : undefined}
+    >
+      <h3>{title}</h3>
+    </a>
+  );
+}
+
+function CardHeaderText({
+  title,
+  description,
+  href,
+  disabled,
+}: {
+  title: string;
+  description?: string;
+  href?: string;
+  disabled?: boolean;
+}) {
+  return (
+    <Stack className="govrs-card-header-text" gap={1}>
+      <CardTitleLink title={title} href={href} disabled={disabled} />
+      {description ? (
+        <Text className="govrs-card-copy" size="sm" tone="muted">
+          {description}
+        </Text>
+      ) : null}
+    </Stack>
+  );
+}
+
+function CardBody({ children }: { children?: ReactNode }) {
+  if (!children) {
+    return null;
+  }
+
+  return (
+    <Stack className="govrs-card-body" gap={2}>
+      <Text>{children}</Text>
+    </Stack>
+  );
+}
 
 // ******************************************************************************************************************
 // POST / LIST
@@ -106,19 +180,10 @@ function PostList({
 }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (disabled) {
-      e.preventDefault();
-    }
-  };
-
   const hasListItems = itens && itens.length > 0;
-  const variantClass = hasListItems ? 'govrs-card-list' : '';
 
   return (
-    <div
-      className={`govrs-card ${variantClass} ${size ? `${size}` : ''} ${disabled ? 'govrs-card-disabled' : ''}`}
-    >
+    <div className={getCardClassName(size, disabled, hasListItems ? 'govrs-card-list' : undefined)}>
       <div className="govrs-card-header">
         {image && (
           <img
@@ -126,19 +191,11 @@ function PostList({
             alt={imageAlt || `Imagem de ${title || 'card'}`}
           />
         )}
-        <div className="govrs-card-header-text">
-          <a
-            href={href}
-            onClick={handleClick}
-            style={{ pointerEvents: disabled ? 'none' : 'auto' }}
-          >
-            <h3>{title}</h3>
-          </a>
-          {description && <p>{description}</p>}
-        </div>
+        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
         <button
+          type="button"
           className="govrs-card-header-menu"
-          aria-label="Options"
+          aria-label="Opcoes do card"
           disabled={disabled}
         >
           <span>⋮</span>
@@ -151,14 +208,11 @@ function PostList({
           className="govrs-card-body-image"
         />
       )}
-      {children && (
-        <div className="govrs-card-body">
-          <p>{children}</p>
-        </div>
-      )}
+      <CardBody>{children}</CardBody>
       {hasListItems ? (
         <>
           <button
+            type="button"
             className="govrs-card-list-toggle"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Fechar lista' : 'Abrir lista'}
@@ -167,7 +221,7 @@ function PostList({
             <ChevronIcon isOpen={isOpen} />
           </button>
           {isOpen && (
-            <div className="govrs-card-list-items">
+            <Stack className="govrs-card-list-items" gap={1}>
               {itens.map((item, index) => (
                 <div key={index} className="govrs-card-list-item">
                   <span className="govrs-card-list-item-label">*</span>
@@ -176,7 +230,7 @@ function PostList({
                   </span>
                 </div>
               ))}
-            </div>
+            </Stack>
           )}
         </>
       ) : (
@@ -186,14 +240,14 @@ function PostList({
               <a href={acao.url}>{acao.label}</a>
             </div>
           )}
-          <div className="govrs-card-footer-like-share">
-            <button aria-label="Like" onClick={onLike} disabled={disabled}>
+          <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
+            <button type="button" aria-label="Curtir" onClick={onLike} disabled={disabled}>
               <LikeIcon />
             </button>
-            <button aria-label="Share" onClick={onShare} disabled={disabled}>
+            <button type="button" aria-label="Compartilhar" onClick={onShare} disabled={disabled}>
               <ShareIcon />
             </button>
-          </div>
+          </Stack>
         </div>
       )}
     </div>
@@ -213,16 +267,8 @@ function News({
   href,
   children,
 }: CardProps) {
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (disabled) {
-      e.preventDefault();
-    }
-  };
-
   return (
-    <div
-      className={`govrs-card govrs-card-news ${size ? `${size}` : ''} ${disabled ? 'govrs-card-disabled' : ''}`}
-    >
+    <div className={getCardClassName(size, disabled, 'govrs-card-news')}>
       {!children && (
         <img
           src={image || PLACEHOLDER_IMAGE}
@@ -231,20 +277,12 @@ function News({
         />
       )}
       <div className="govrs-card-header">
-        <div className="govrs-card-header-text">
-          <a
-            href={href}
-            onClick={handleClick}
-            style={{ pointerEvents: disabled ? 'none' : 'auto' }}
-          >
-            <h3>{title}</h3>
-          </a>
-          {description && <p>{description}</p>}
-        </div>
+        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
         {children && (
           <button
+            type="button"
             className="govrs-card-header-menu"
-            aria-label="Options"
+            aria-label="Opcoes do card"
             disabled={disabled}
           >
             <span>⋮</span>
@@ -258,11 +296,7 @@ function News({
           className="govrs-card-image"
         />
       )}
-      {children && (
-        <div className="govrs-card-body">
-          <p>{children}</p>
-        </div>
-      )}
+      <CardBody>{children}</CardBody>
     </div>
   );
 }
@@ -270,33 +304,16 @@ function News({
 // ******************************************************************************************************************
 // ICON
 // ******************************************************************************************************************
-function Icon({ title, description, image, disabled, href }: CardProps) {
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (disabled) {
-      e.preventDefault();
-    }
-  };
-
+function Icon({ title, description, image, disabled, href, size }: CardProps) {
   return (
-    <div
-      className={`govrs-card govrs-card-icon ${disabled ? 'govrs-card-disabled' : ''}`}
-    >
+    <div className={getCardClassName(size, disabled, 'govrs-card-icon')}>
       <img
         src={image || PLACEHOLDER_IMAGE}
         alt=""
         className="govrs-card-icon-img"
       />
       <div className="govrs-card-header">
-        <div className="govrs-card-header-text">
-          <a
-            href={href}
-            onClick={handleClick}
-            style={{ pointerEvents: disabled ? 'none' : 'auto' }}
-          >
-            <h3>{title}</h3>
-          </a>
-          {description && <p>{description}</p>}
-        </div>
+        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
       </div>
     </div>
   );
@@ -320,6 +337,7 @@ export function Card({
   onShare,
   itens,
   bodyImg,
+  bodyImgAlt,
 }: CardProps) {
   if (variant === 'news') {
     return (
@@ -343,6 +361,7 @@ export function Card({
         variant={variant}
         description={description}
         image={image}
+        imageAlt={imageAlt}
         size={size}
         disabled={disabled}
         href={href}
@@ -367,6 +386,7 @@ export function Card({
       onShare={onShare}
       itens={itens}
       bodyImg={bodyImg}
+      bodyImgAlt={bodyImgAlt}
     />
   );
 }

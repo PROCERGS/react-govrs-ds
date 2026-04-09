@@ -1,5 +1,3 @@
-import '../styles/_placeholders.scss';
-
 export default {
   title: 'Typography/Placeholders',
   parameters: { layout: 'padded' },

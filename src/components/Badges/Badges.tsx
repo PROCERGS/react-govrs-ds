@@ -1,4 +1,7 @@
 import type { ReactNode } from 'react'
+
+import { Stack, Text } from '../../primitives'
+
 import './Badges.scss'
 
 type BadgeVariant = 'success' | 'warning' | 'error' | 'info'
@@ -107,12 +110,14 @@ export function Badges({
   }
 
   return (
-    <div className={classes.join(' ')}>
+    <Stack className={classes.join(' ')} direction="row" display="inline-flex" align="center" gap={1}>
       <span className="govrs-badge__icon" aria-hidden>
         {renderIcon()}
       </span>
-      <span className="govrs-badge__text">{content}</span>
-    </div>
+      <Text as="span" className="govrs-badge__text" size="sm">
+        {content}
+      </Text>
+    </Stack>
   )
 }
 

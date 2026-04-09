@@ -1,5 +1,3 @@
-import '../styles/_labels.scss';
-
 export default {
   title: 'Typography/Labels',
   parameters: { layout: 'padded' },
