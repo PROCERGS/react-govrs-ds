@@ -25,6 +25,7 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
     "build": "npm run build:types && vite build",
     "lint": "eslint ."
