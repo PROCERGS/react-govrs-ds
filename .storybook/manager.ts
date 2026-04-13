@@ -12,7 +12,7 @@ function remToPx(value: string) {
 const managerTheme = create({
   base: 'light',
   brandTitle: 'Matriz 3',
-  brandImage: '/matriz3-brand.svg',
+  brandImage: './matriz3-brand.svg',
   brandTarget: '_self',
   fontBase: fontFamilyBase,
   colorPrimary: colors.brand.primary,
