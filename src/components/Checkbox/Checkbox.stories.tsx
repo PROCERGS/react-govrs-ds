@@ -1,33 +1,122 @@
 import { useEffect, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
+import {
+  StoryDocsHero,
+  StoryDocsSection,
+  StoryPreviewCard,
+  StorySandboxExample,
+  storyDocsStyles,
+} from '../../../.storybook/docs/storyDocs'
 import { Button } from '../Button/Button'
 import { Checkbox } from './Checkbox'
 import './Checkbox.scss'
 import '../../foundations/styles/index.scss'
 
-const meta: Meta<typeof Checkbox> = {
+const basicUsageCode = `// Não controlado
+<Checkbox label="Receber novidades" defaultChecked />
+
+// Controlado
+<Checkbox
+  label="Aceito os termos"
+  checked={accepted}
+  onChange={(event) => setAccepted(event.target.checked)}
+/>`
+
+const propsExampleCode = `<Checkbox
+  name="terms"
+  value="accepted"
+  label="Aceito os termos de uso"
+  description="Necessário para concluir o envio."
+  variant="danger"
+/>`
+
+const statesExampleCode = `<Checkbox label="Normal" />
+<Checkbox label="Marcado" defaultChecked />
+<Checkbox label="Disabled" disabled />
+<Checkbox label="Danger" variant="danger" />
+<Checkbox label="Success" variant="success" defaultChecked />
+<Checkbox label="Intermediario" group indeterminate />`
+
+const descriptionExampleCode = `<Checkbox
+  label="Receber notificações"
+  description="Escolha esta opção para permitir o envio de notificações por e-mail."
+/>`
+
+const groupExampleCode = `const [checkedItems, setCheckedItems] = useState<string[]>([])
+
+<Checkbox
+  label="Selecionar todos"
+  checked={checkedItems.length === items.length}
+  indeterminate={checkedItems.length > 0 && checkedItems.length < items.length}
+  group
+  onChange={toggleAll}
+/>
+
+{items.map((item) => (
+  <Checkbox
+    key={item}
+    label={item}
+    checked={checkedItems.includes(item)}
+    onChange={() => toggleItem(item)}
+  />
+))}`
+
+const formExampleCode = `const [receiveEmail, setReceiveEmail] = useState(true)
+const [submittedValue, setSubmittedValue] = useState('Nenhum envio ainda')
+
+<div style={{ ...storyDocsStyles.previewStage, maxWidth: 520 }}>
+  <form
+    onSubmit={(event) => {
+      event.preventDefault()
+      const formData = new FormData(event.currentTarget)
+      setSubmittedValue(formData.get('notifications')?.toString() ?? 'Nenhum valor enviado')
+    }}
+    style={{ display: 'grid', gap: 12 }}
+  >
+    <div style={{ display: 'grid', gap: 8 }}>
+      <strong style={{ color: '#0f172a' }}>Preferências de contato</strong>
+      <p style={storyDocsStyles.text}>
+        Este bloco mostra como o componente continua aceitando <code>name</code>,
+        <code> value</code> e outras props nativas de formulário.
+      </p>
+    </div>
+
+    <Checkbox
+      name="notifications"
+      value="email"
+      label="Receber avisos por e-mail"
+      description="Você poderá alterar essa preferência depois."
+      checked={receiveEmail}
+      onChange={(event) => setReceiveEmail(event.target.checked)}
+    />
+
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+      <Button type="submit" variant="primary">
+        Enviar preferências
+      </Button>
+      <span style={storyDocsStyles.statText}>
+        <strong>Payload:</strong> {submittedValue}
+      </span>
+    </div>
+  </form>
+</div>`
+
+const meta = {
   title: 'Widgets/Checkbox',
   component: Checkbox,
-  parameters: { layout: 'padded' },
-}
+  parameters: {
+    layout: 'padded',
+    controls: {
+      expanded: true,
+      sort: 'requiredFirst',
+    },
+  },
+} satisfies Meta<typeof Checkbox>
 
 export default meta
 
-type Story = StoryObj<typeof Checkbox>
-
-const codeBlockStyle = {
-  background: '#f7f7f7',
-  padding: 12,
-  borderRadius: 4,
-  overflowX: 'auto' as const,
-  margin: 0,
-}
-
-const sectionTextStyle = {
-  color: '#444',
-  margin: '0 0 8px',
-}
+type Story = StoryObj<typeof meta>
 
 function CheckboxInteractivePreview(args: Checkbox.Props) {
   const [checked, setChecked] = useState(Boolean(args.checked))
@@ -80,8 +169,8 @@ function CheckboxGroupPreview() {
   }
 
   return (
-    <div style={{ padding: 12, maxWidth: 720 }}>
-      <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 12, maxWidth: 720 }}>
+      <div style={{ ...storyDocsStyles.previewStage, padding: 16 }}>
         <Checkbox
           label="Selecionar todos"
           checked={masterChecked}
@@ -101,19 +190,18 @@ function CheckboxGroupPreview() {
           ))}
         </div>
 
-        <div style={{ marginTop: 8 }}>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
           <Button variant="primary" onClick={() => setSubmitted(Array.from(checkedSet))}>
             Enviar
           </Button>
-        </div>
-
-        <div style={{ color: '#444' }}>
-          <strong>Valor submetido:</strong>{' '}
-          {submitted == null
-            ? 'Nenhum envio ainda'
-            : submitted.length === 0
-              ? 'Nenhum item selecionado'
-              : submitted.join(', ')}
+          <span style={storyDocsStyles.statText}>
+            <strong>Valor submetido:</strong>{' '}
+            {submitted == null
+              ? 'Nenhum envio ainda'
+              : submitted.length === 0
+                ? 'Nenhum item selecionado'
+                : submitted.join(', ')}
+          </span>
         </div>
       </div>
     </div>
@@ -124,223 +212,323 @@ function CheckboxControlledVsUncontrolledPreview() {
   const [accepted, setAccepted] = useState(false)
 
   return (
-    <div
-      style={{
-        padding: 12,
-        border: '1px solid #eee',
-        borderRadius: 6,
-        display: 'grid',
-        gap: 12,
-        maxWidth: 420,
-      }}
-    >
-      <Checkbox
-        label="Aceito os termos"
-        description="Controlado"
-        checked={accepted}
-        onChange={(event) => setAccepted(event.target.checked)}
-      />
+    <div style={storyDocsStyles.cardGrid}>
+      <StoryPreviewCard label="Controlado">
+        <Checkbox
+          label="Aceito os termos"
+          description="O estado é controlado pelo React."
+          checked={accepted}
+          onChange={(event) => setAccepted(event.target.checked)}
+        />
+      </StoryPreviewCard>
 
-      <Checkbox
-        label="Receber novidades"
-        description="Não controlado"
-        defaultChecked
-      />
+      <StoryPreviewCard label="Não controlado">
+        <Checkbox
+          label="Receber novidades"
+          description="Usa o estado inicial e delega a interação ao navegador."
+          defaultChecked
+        />
+      </StoryPreviewCard>
+    </div>
+  )
+}
+
+function CheckboxStatesPreview() {
+  return (
+    <div style={storyDocsStyles.previewGrid}>
+      <StoryPreviewCard label="Base">
+        <Checkbox label="Normal" />
+      </StoryPreviewCard>
+      <StoryPreviewCard label="Marcado">
+        <Checkbox label="Marcado" defaultChecked />
+      </StoryPreviewCard>
+      <StoryPreviewCard label="Disabled">
+        <Checkbox label="Disabled" disabled />
+      </StoryPreviewCard>
+      <StoryPreviewCard label="Danger">
+        <Checkbox label="Danger" variant="danger" />
+      </StoryPreviewCard>
+      <StoryPreviewCard label="Success">
+        <Checkbox label="Success" variant="success" defaultChecked />
+      </StoryPreviewCard>
+      <StoryPreviewCard label="Intermediario">
+        <Checkbox label="Intermediario" group indeterminate />
+      </StoryPreviewCard>
+    </div>
+  )
+}
+
+function CheckboxDescriptionPreview() {
+  return (
+    <div style={storyDocsStyles.cardGrid}>
+      <StoryPreviewCard label="Informativo">
+        <Checkbox
+          label="Receber notificações"
+          description="Escolha esta opção para permitir o envio de notificações por e-mail."
+        />
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Requer atenção">
+        <Checkbox
+          label="Termos e condições"
+          description="A aceitação dos termos é obrigatória para concluir o cadastro."
+          variant="danger"
+        />
+      </StoryPreviewCard>
+    </div>
+  )
+}
+
+function CheckboxFormPreview() {
+  const [receiveEmail, setReceiveEmail] = useState(true)
+  const [submittedValue, setSubmittedValue] = useState('Nenhum envio ainda')
+
+  return (
+    <div style={{ ...storyDocsStyles.previewStage, maxWidth: 520 }}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          const formData = new FormData(event.currentTarget)
+          setSubmittedValue(formData.get('notifications')?.toString() ?? 'Nenhum valor enviado')
+        }}
+        style={{ display: 'grid', gap: 12 }}
+      >
+        <div style={{ display: 'grid', gap: 8 }}>
+          <strong style={{ color: '#0f172a' }}>Preferências de contato</strong>
+          <p style={storyDocsStyles.text}>
+            Este bloco mostra como o componente continua aceitando <code>name</code>,
+            <code> value</code> e outras props nativas de formulário.
+          </p>
+        </div>
+
+        <Checkbox
+          name="notifications"
+          value="email"
+          label="Receber avisos por e-mail"
+          description="Você poderá alterar essa preferência depois."
+          checked={receiveEmail}
+          onChange={(event) => setReceiveEmail(event.target.checked)}
+        />
+
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+          <Button type="submit" variant="primary">
+            Enviar preferências
+          </Button>
+          <span style={storyDocsStyles.statText}>
+            <strong>Payload:</strong> {submittedValue}
+          </span>
+        </div>
+      </form>
     </div>
   )
 }
 
 export const CheckboxDocumentacao: Story = {
-  name: 'Documentação',
+  name: 'Documentacao',
   parameters: {
     controls: { disable: true },
   },
   render: () => (
-    <div style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 960 }}>
-      <h3 style={{ margin: 0 }}>Checkbox</h3>
-      <p style={{ color: '#444', margin: 0 }}>
-        O componente <code>Checkbox</code> permite selecionar uma ou mais opções de forma
-        independente. Ele cobre o estado base, os estados visuais <code>danger</code> e
-        <code>success</code>, suporte a <code>indeterminate</code> para checkboxes mestres em
-        grupos e descrição opcional junto ao rótulo para complementar o contexto. Como o
-        componente encapsula um <code>input type="checkbox"</code> nativo, ele se integra bem
-        com formulários HTML e mantém o comportamento esperado de teclado, foco e submissão.
-      </p>
+    <div style={storyDocsStyles.docsContainer}>
+      <StoryDocsHero
+        eyebrow="Documentação guiada"
+        title="Checkbox"
+        description={
+          <>
+            O componente <code>Checkbox</code> permite selecionar uma ou mais opções de
+            forma independente.
+          </>
+        }
+        variantTags={['default', 'danger', 'success']}
+        stats={[
+          {
+            title: 'Quando usar',
+            text: 'Quando cada opção pode ser marcada ou desmarcada sem interferir nas demais.',
+          },
+          {
+            title: 'Melhor exploração',
+            text: "Use o story 'Interativo' para visualizar o funcionamento de diferentes formas e o story 'Grupo Interativo' para explorar cenários com múltiplos checkboxes.",
+          },
+          {
+            title: 'Comportamento',
+            text: 'Mantém input nativo, foco previsível, espaço no teclado e integração com formulários HTML.',
+          },
+        ]}
+      />
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Como usar</h4>
-        <p style={sectionTextStyle}>
-          Use o checkbox quando cada opção puder ser marcada ou desmarcada sem excluir as
-          demais. Para estados iniciais com checkbox marcado, <code>defaultChecked</code> resolve bem; <br />
-          Quando o valor precisa refletir dados de formulário, validação ou store externa, prefira o modo
-          controlado com <code>checked</code> e <code>onChange</code>.
-        </p>
-        <ul style={{ color: '#444', margin: 0, paddingLeft: 20 }}>
-          <li><code>defaultChecked</code> define apenas o estado inicial marcado e deixa o navegador controlar a interação depois disso.</li>
-          <li><code>checked</code> e <code>onChange</code> permitem sincronizar o valor com estado React, validação ou regras do formulário.</li>
-          <li><code>group</code> e <code>indeterminate</code> são úteis para um checkbox mestre que representa seleção parcial de um conjunto de checkboxes.</li>
+      <StoryDocsSection
+        title="Como usar"
+        description={
+          <>
+            Use o checkbox quando cada escolha for independente. Quando se quer que o checkbox venha marcado por default, defaultChecked resolve bem. Quando o valor precisa refletir dados,
+            validação ou store externa, prefira o modo controlado com checked e
+            onChange.
+          </>
+        }
+      >
+        <ul style={storyDocsStyles.list}>
+          <li><code>defaultChecked</code> define apenas o estado inicial marcado.</li>
+          <li><code>checked</code> e <code>onChange</code> sincronizam o valor com estado React.</li>
+          <li><code>group</code> e <code>indeterminate</code> fazem mais sentido em um checkbox mestre.</li>
         </ul>
-        <pre style={codeBlockStyle}>
-          <code>{`// Não controlado
-<Checkbox label="Receber novidades" defaultChecked />
 
-// Controlado
-<Checkbox
-  label="Aceito os termos"
-  checked={accepted}
-  onChange={(event) => setAccepted(event.target.checked)}
-/>`}</code>
-        </pre>
-      </section>
+        <StorySandboxExample
+          title="Controle básico"
+          description="Um comparativo direto entre uso controlado e não controlado, com troca entre preview e código no mesmo bloco."
+          code={basicUsageCode}
+          notes={[
+            'No modo controlado, o valor precisa ser atualizado por quem consome o componente.',
+            'No modo não controlado, o browser assume a interação após o estado inicial.',
+          ]}
+        >
+          <CheckboxControlledVsUncontrolledPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Props principais</h4>
-        <ul style={{ color: '#444', margin: 0, paddingLeft: 20 }}>
+      <StoryDocsSection
+        title="Props principais"
+        description={
+          <>
+            A ideia aqui é deixar visível o que muda
+            o comportamento, o que muda apenas o tom visual e o que continua vindo do
+            input nativo.
+          </>
+        }
+      >
+        <ul style={storyDocsStyles.list}>
           <li><code>label</code> define o texto principal clicável associado ao campo.</li>
-          <li><code>description</code> adiciona contexto complementar e é ligado ao input por <code>aria-describedby</code>.</li>
+          <li><code>description</code> adiciona contexto complementar por <code>aria-describedby</code>.</li>
           <li><code>variant</code> ajusta o tom visual para <code>default</code>, <code>danger</code> ou <code>success</code>.</li>
-          <li><code>checked</code> e <code>onChange</code> são o par recomendado para controlar quando o valor muda caso precise de uma ação reativa; </li>
-          <li><code>defaultChecked</code> cobre casos simples onde o checkbox começa marcado por padrão.</li>
-          <li><code>group</code> e <code>indeterminate</code> ajudam a representar seleção parcial em checkboxes mestres.</li>
-          <li>Props nativas como <code>name</code>, <code>value</code>, <code>required</code> e <code>aria-label</code> continuam disponíveis.</li>
+          <li><code>checked</code> e <code>onChange</code> formam o par recomendado no modo controlado.</li>
+          <li><code>defaultChecked</code> cobre casos simples com estado inicial marcado.</li>
+          <li><code>group</code> e <code>indeterminate</code> representam seleção parcial em checkboxes mestres.</li>
+          <li>Props nativas como <code>name</code>, <code>value</code>, <code>required</code> e <code>aria-label</code> continuam disponiveis.</li>
         </ul>
-        <pre style={codeBlockStyle}>
-          <code>{`<Checkbox
-  name="terms"
-  value="accepted"
-  label="Aceito os termos de uso"
-  description="Necessário para concluir o envio."
-  variant="danger"
-/>`}</code>
-        </pre>
-      </section>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Estados básicos</h4>
-        <p style={sectionTextStyle}>
-          O checkbox usa o controle nativo do navegador, então foco, tecla de espaço e mudança de
-          estado continuam previsíveis. As variantes visuais ajudam a contextualizar o campo,
-          enquanto <code>disabled</code> bloqueia a interação e <code>indeterminate</code> representa
-          um estado parcial sem marcar o valor como selecionado integralmente.
-        </p>
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Checkbox label="Normal" />
-          <Checkbox label="Marcado" defaultChecked />
-          <Checkbox label="Disabled" disabled />
-          <Checkbox label="Danger" variant="danger" />
-          <Checkbox label="Success" variant="success" defaultChecked />
-          <Checkbox label="Intermediário" group indeterminate />
-        </div>
-        <pre style={codeBlockStyle}>
-          <code>{`
-          <Checkbox label="Normal" />
-          <Checkbox label="Marcado" defaultChecked />
-          <Checkbox label="Disabled" disabled />
-          <Checkbox label="Danger" variant="danger" />
-          <Checkbox label="Success" variant="success" defaultChecked />
-          <Checkbox label="Intermediário" group indeterminate />`}</code>
-        </pre>
-      </section>
+        <StorySandboxExample
+          title="Exemplo de composição"
+          description="Um recorte mínimo da assinatura mais comum para formulários com validação ou submissão tradicional."
+          code={propsExampleCode}
+        >
+          <div style={{ maxWidth: 420 }}>
+            <Checkbox
+              name="terms"
+              value="accepted"
+              label="Aceito os termos de uso"
+              description="Necessário para concluir o envio."
+              variant="danger"
+            />
+          </div>
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Com descrição</h4>
-        <p style={sectionTextStyle}>
-          Use <code>description</code> para complementar o rótulo com uma orientação curta ou uma
-          consequência da escolha. O texto continua separado do nome principal do campo, mas é
-          associado ao input por <code>aria-describedby</code>, o que ajuda tecnologias assistivas a
-          anunciar o contexto completo.
-        </p>
-        <div style={{ display: 'grid', gap: 12, maxWidth: 420 }}>
-          <Checkbox
-            label="Receber notificações"
-            description="Escolha esta opção para permitir o envio de notificações por e-mail."
-          />
-          <Checkbox
-            label="Termos e condições"
-            description="A aceitação dos termos é obrigatória para concluir o cadastro."
-            variant="danger"
-          />
-        </div>
-        <pre style={codeBlockStyle}>
-          <code>{`<Checkbox
-  label="Receber notificações"
-  description="Escolha esta opção para permitir o envio de notificações por e-mail."
-/>`}</code>
-        </pre>
-      </section>
+      <StoryDocsSection
+        title="Estados básicos"
+        description={
+          <>
+            Foco, tecla de espaço e mudança de estado continuam previsíveis porque o
+            componente usa o controle nativo. As variações visuais ajudam a contextualizar
+            o campo sem alterar o comportamento do dado.
+          </>
+        }
+      >
+        <StorySandboxExample
+          title="Galeria de estados"
+          description="Um snapshot visual rápido dos estados mais recorrentes para comparação lado a lado."
+          code={statesExampleCode}
+        >
+          <CheckboxStatesPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Grupo com estado intermediário</h4>
-        <p style={sectionTextStyle}>
-          Quando um checkbox mestre representa um conjunto de checkboxes, <code>indeterminate</code>
-          comunica que apenas parte do grupo está selecionada. O componente não gerencia os filhos
-          sozinho: a lógica para marcar todos, limpar todos ou calcular a seleção parcial continua
-          sendo responsabilidade de quem consome.
-        </p>
-        <CheckboxGroupPreview />
-        <pre style={codeBlockStyle}>
-          <code>{`const [checkedItems, setCheckedItems] = useState<string[]>([])
+      <StoryDocsSection
+        title="Com descrição"
+        description={
+          <>
+            Use description para complementar o rótulo com uma orientação curta ou uma
+            consequência da escolha. O texto continua separado do nome principal, mas é
+            anunciado junto ao campo.
+          </>
+        }
+      >
+        <StorySandboxExample
+          title="Contexto adicional"
+          description="Exemplos em que a descrição ajuda a reduzir ambiguidade sem sobrecarregar o label principal."
+          code={descriptionExampleCode}
+        >
+          <CheckboxDescriptionPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-<Checkbox
-  label="Selecionar todos"
-  checked={checkedItems.length === items.length}
-  indeterminate={checkedItems.length > 0 && checkedItems.length < items.length}
-  group
-  onChange={toggleAll}
-/>
+      <StoryDocsSection
+        title="Grupo com estado intermediário"
+        description={
+          <>
+            Quando um checkbox mestre representa um conjunto, indeterminate comunica que
+            apenas parte do grupo está selecionada. A lógica para marcar todos, limpar
+            todos ou calcular a seleção parcial continua sendo responsabilidade de quem
+            consome.
+          </>
+        }
+      >
+        <StorySandboxExample
+          title="Seleção parcial"
+          description="Este sandbox simula uma lista real, com um checkbox mestre e o retorno do valor submetido."
+          code={groupExampleCode}
+          notes={[
+            'O estado intermediário é apenas visual; ele não representa um valor enviado por si só.',
+            'A história Grupo Interativo mantém esse cenário disponível como uma história dedicada para exploração rápida.',
+          ]}
+        >
+          <CheckboxGroupPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-{items.map((item) => (
-  <Checkbox
-    key={item}
-    label={item}
-    checked={checkedItems.includes(item)}
-    onChange={() => toggleItem(item)}
-  />
-))}`}</code>
-        </pre>
-      </section>
+      <StoryDocsSection
+        title="Integração com formulário"
+        description={
+          <>
+            Como o componente expõe as props nativas do input, você pode usar name,
+            value, required e aria-label normalmente. O rótulo envolve o controle inteiro,
+            o que amplia a área clicável e melhora a usabilidade.
+          </>
+        }
+      >
+        <StorySandboxExample
+          title="Props nativas em ação"
+          description="O preview abaixo simula um envio simples para deixar explícito o payload gerado a partir de name e value."
+          code={formExampleCode}
+        >
+          <CheckboxFormPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Integração com formulário</h4>
-        <p style={sectionTextStyle}>
-          Como o componente expõe as props nativas do input, você pode usar atributos como
-          <code> name</code>, <code>value</code>, <code>required</code> e <code>aria-label </code>
-          normalmente. O rótulo envolve todo o controle, então a área clicável inclui texto e
-          descrição, o que melhora a usabilidade em listas e formulários maiores.
-        </p>
-        <pre style={codeBlockStyle}>
-          <code>{`<Checkbox
-  name="notifications"
-  value="email"
-  label="Receber avisos por e-mail"
-  description="Você poderá alterar essa preferência depois."
-/>`}</code>
-        </pre>
-      </section>
-
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Limitações e dependências</h4>
-        <ul style={{ color: '#444', margin: 0, paddingLeft: 20 }}>
-          <li><code>checked</code> no modo controlado depende de <code>onChange</code>. Para exemplos simples sem estado externo, prefira <code>defaultChecked</code>.</li>
-          <li><code>indeterminate</code> é apenas visual e faz mais sentido quando combinado com <code>group</code> em um checkbox mestre.</li>
-          <li><code>group</code> muda a aparência do checkbox, mas não sincroniza filhos automaticamente. A lógica do grupo continua sendo responsabilidade do consumidor.</li>
-          <li><code>description</code> não substitui o nome acessível. Quando não houver <code>label</code> visível, forneça pelo menos <code>aria-label</code>.</li>
-          <li><code>variant</code> altera apenas o tom visual do controle; ele não valida os dados nem mostra mensagem de erro sozinho.</li>
+      <StoryDocsSection
+        title="Limitações e dependências"
+        description={
+          <>
+            O componente cobre bem o contrato visual e a integração nativa com formulários,
+            mas não substitui a lógica de negócio do formulário nem gerencia grupos
+            automaticamente.
+          </>
+        }
+      >
+        <ul style={storyDocsStyles.list}>
+          <li><code>checked</code> no modo controlado depende de <code>onChange</code>.</li>
+          <li><code>indeterminate</code> é apenas visual e faz mais sentido em um checkbox mestre.</li>
+          <li><code>group</code> muda a aparência do checkbox, mas não sincroniza filhos automaticamente.</li>
+          <li><code>description</code> não substitui o nome acessível; sem label visível, forneça pelo menos <code>aria-label</code>.</li>
+          <li><code>variant</code> altera apenas o tom visual do controle; ele não valida dados sozinho.</li>
         </ul>
-        <pre style={codeBlockStyle}>
-          <code>{`// Controlado
-<Checkbox
-  label="Aceito os termos"
-  description="Controlado"
-  checked={accepted}
-  onChange={(event) => setAccepted(event.target.checked)}
-/>
 
-// Não controlado
-<Checkbox label="Receber novidades" description="Não controlado" defaultChecked />`}</code>
-        </pre>
-        <CheckboxControlledVsUncontrolledPreview />
-      </section>
+        <StorySandboxExample
+          title="Controlado x não controlado"
+          description="Este bloco reforça a principal diferença de responsabilidade entre o componente e o consumidor."
+          code={basicUsageCode}
+        >
+          <CheckboxControlledVsUncontrolledPreview />
+        </StorySandboxExample>
+      </StoryDocsSection>
     </div>
   ),
 }
@@ -348,22 +536,51 @@ export const CheckboxDocumentacao: Story = {
 export const CheckboxInterativo: Story = {
   name: 'Interativo',
   argTypes: {
-    label: { control: 'text', description: 'Texto principal associado ao checkbox e usado como nome acessível quando visível.' },
-    description: { control: 'text', description: 'Texto complementar anunciado junto ao campo por aria-describedby.' },
+    label: {
+      control: 'text',
+      description: 'Texto principal associado ao checkbox e usado como nome acessível quando visível.',
+      table: { category: 'Conteudo' },
+    },
+    description: {
+      control: 'text',
+      description: 'Texto complementar anunciado junto ao campo por aria-describedby.',
+      table: { category: 'Conteudo' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['default', 'danger', 'success'],
       description: 'Altera apenas o tom visual do checkbox.',
+      table: { category: 'Estado visual' },
     },
-    checked: { control: 'boolean', description: 'Use junto com onChange quando o componente for controlado.' },
-    disabled: { control: 'boolean', description: 'Bloqueia a interação e aplica o estado visual desabilitado.' },
-    indeterminate: { control: 'boolean', description: 'Estado visual parcial; normalmente usado com group em um checkbox mestre.' },
-    group: { control: 'boolean', description: 'Aplica a aparência de checkbox de grupo, mas não controla os filhos automaticamente.' },
-    onChange: { action: 'changed', description: 'Recebe o evento nativo quando o usuário altera o valor do controle.' },
+    checked: {
+      control: 'boolean',
+      description: 'Use junto com onChange quando o componente for controlado.',
+      table: { category: 'Controle' },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Bloqueia a interação e aplica o estado visual desabilitado.',
+      table: { category: 'Estado visual' },
+    },
+    indeterminate: {
+      control: 'boolean',
+      description: 'Estado visual parcial; normalmente usado com group em um checkbox mestre.',
+      table: { category: 'Grupo' },
+    },
+    group: {
+      control: 'boolean',
+      description: 'Aplica a aparência de checkbox de grupo, mas não controla os filhos automaticamente.',
+      table: { category: 'Grupo' },
+    },
+    onChange: {
+      action: 'changed',
+      description: 'Recebe o evento nativo quando o usuário altera o valor do controle.',
+      table: { category: 'Eventos' },
+    },
   },
   args: {
     label: 'Checkbox interativo',
-    description: '',
+    description: 'Altere os Controls para testar o componente em tempo real.',
     variant: 'default',
     checked: false,
     disabled: false,

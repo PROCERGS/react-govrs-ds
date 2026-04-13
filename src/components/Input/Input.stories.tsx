@@ -6,33 +6,142 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
 
+import {
+  DocsHero,
+  DocsStoryLayout,
+  SandboxExample,
+  SectionCard,
+  StoryPreviewCard,
+  storyDocsStyles,
+} from '../../../.storybook/docs/storyDocs'
 import { Badges } from '../Badges/Badges'
 import { Input } from './Input'
 import './Input.scss'
 import '../../foundations/styles/index.scss'
 
-const meta: Meta<typeof Input> = {
+const docsVariantTags = ['danger', 'success', 'warning', 'info']
+
+const docsHeroStats = [
+  {
+    title: 'Quando usar',
+    text: 'Quando o formulário precisa coletar texto curto com orientação visível, feedback contextual e estados de validação ou atenção.',
+  },
+  {
+    title: 'Melhor exploração',
+    text: "Use o story 'Interativo' para testar label, helperText, type, state e ícones. O story 'Exemplos Combinados' resume os casos mais recorrentes do componente.",
+  },
+  {
+    title: 'Comportamento',
+    text: 'O input é controlado externamente, o toggle de senha só atua em type=password e o feedback pode ser anunciado como status ou alert conforme o state.',
+  },
+] satisfies Array<{ title: string; text: string }>
+
+const anatomyExampleCode = `<Input
+  label="E-mail"
+  helperText="Use o endereço institucional."
+  feedback={<Badges variant="info" message="Não compartilhamos esse dado." />}
+  value={email}
+  onChange={(event) => setEmail(event.target.value)}
+/>`
+
+const basicExamplesCode = `<Input
+  label="Usuario"
+  value={value}
+  onChange={(event) => setValue(event.target.value)}
+  leftIcon={faUser}
+  placeholder="Digite seu nome"
+/>
+
+<Input
+  label="Senha"
+  type="password"
+  value={password}
+  onChange={(event) => setPassword(event.target.value)}
+/>`
+
+const feedbackExamplesCode = `<Input
+  label="Senha"
+  type="password"
+  value={password}
+  onChange={(event) => setPassword(event.target.value)}
+  feedback={<Badges variant="error" message="O campo não pode ser vazio." />}
+  state="danger"
+/>`
+
+const controlledPasswordCode = `const [email, setEmail] = useState('maria@exemplo.rs.gov.br')
+const [password, setPassword] = useState('segredo123')
+
+<Input
+  label="E-mail"
+  value={email}
+  onChange={(event) => setEmail(event.target.value)}
+  leftIcon={faUser}
+/>
+
+<Input
+  label="Senha"
+  type="password"
+  value={password}
+  onChange={(event) => setPassword(event.target.value)}
+  helperText="Use ao menos 8 caracteres."
+/>`
+
+const combinedExampleCode = `<Input
+  label="Busca"
+  value=""
+  onChange={() => {}}
+  leftIcon={faMagnifyingGlass}
+  placeholder="Pesquisar"
+/>
+
+<Input
+  label="Senha"
+  value="segredo123"
+  onChange={() => {}}
+  type="password"
+/>
+
+<Input
+  label="Campo com erro"
+  value=""
+  onChange={() => {}}
+  state="danger"
+  feedback={<Badges variant="error" message="Preencha este campo." />}
+/>`
+
+function renderFeedbackBadge(state?: Input.State) {
+  switch (state) {
+    case 'danger':
+      return <Badges variant="error" message="O campo não pode ficar vazio." />
+    case 'success':
+      return <Badges variant="success" message="Valor validado com sucesso." />
+    case 'warning':
+      return <Badges variant="warning" message="Revise este valor antes de continuar." />
+    case 'info':
+      return <Badges variant="info" message="Informação adicional sobre o preenchimento." />
+    default:
+      return undefined
+  }
+}
+
+const meta = {
   title: 'Widgets/Input',
   component: Input,
-  parameters: { layout: 'padded' },
-}
+  args: {
+    label: 'Campo base',
+  },
+  parameters: {
+    layout: 'padded',
+    controls: {
+      expanded: true,
+      sort: 'requiredFirst',
+    },
+  },
+} satisfies Meta<typeof Input>
 
 export default meta
 
-type Story = StoryObj<typeof Input>
-
-const codeBlockStyle = {
-  background: '#f7f7f7',
-  padding: 12,
-  borderRadius: 4,
-  overflowX: 'auto' as const,
-  margin: 0,
-}
-
-const sectionTextStyle = {
-  color: '#444',
-  margin: '0 0 8px',
-}
+type Story = StoryObj<typeof meta>
 
 function InputInteractivePreview(args: Input.Props) {
   const [value, setValue] = useState(typeof args.value === 'string' ? args.value : '')
@@ -41,18 +150,208 @@ function InputInteractivePreview(args: Input.Props) {
     setValue(typeof args.value === 'string' ? args.value : '')
   }, [args.value])
 
+  const feedback = renderFeedbackBadge(args.state)
+
   return (
-    <div style={{ padding: 16, maxWidth: 720 }}>
+    <div style={{ ...storyDocsStyles.previewStage, padding: 16, maxWidth: 720 }}>
       <Input
         {...args}
         value={value}
+        feedback={feedback}
         onChange={(event) => {
           setValue(event.target.value)
           args.onChange?.(event)
         }}
       />
-      <div style={{ marginTop: 8, fontSize: 13, color: '#444' }}>
-        Valor atual: <strong>{value || '—'}</strong>
+
+      <p style={storyDocsStyles.statText}>
+        <strong>Valor atual:</strong> {value || 'Nenhum valor digitado'}
+      </p>
+    </div>
+  )
+}
+
+function InputAnatomyPreview() {
+  return (
+    <div style={{ maxWidth: 480 }}>
+      <Input
+        label="E-mail"
+        value="maria@exemplo.rs.gov.br"
+        onChange={() => {}}
+        helperText="Use o endereço institucional."
+        feedback={<Badges variant="info" message="Não compartilhamos esse dado." />}
+        leftIcon={faUser}
+        placeholder="nome@dominio.rs.gov.br"
+      />
+    </div>
+  )
+}
+
+function InputBasicsPreview() {
+  return (
+    <div style={storyDocsStyles.cardGrid}>
+      <StoryPreviewCard label="Texto simples">
+        <Input
+          label="Default sem ícone"
+          value=""
+          onChange={() => {}}
+          placeholder="Placeholder"
+        />
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Com ícone">
+        <Input
+          label="Default com ícone"
+          value=""
+          onChange={() => {}}
+          leftIcon={faMagnifyingGlass}
+          placeholder="Pesquisar"
+        />
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Senha">
+        <Input
+          label="Senha"
+          value="segredo123"
+          onChange={() => {}}
+          type="password"
+          placeholder="Sua senha"
+        />
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Campo com calendário">
+        <Input
+          label="Data"
+          value="10/04/2026"
+          onChange={() => {}}
+          leftIcon={faCalendarDays}
+          placeholder="dd/mm/aaaa"
+        />
+      </StoryPreviewCard>
+    </div>
+  )
+}
+
+function InputStatesPreview() {
+  return (
+    <div style={{ display: 'grid', gap: 12 }}>
+      <Input
+        label="Danger"
+        value="Valor invalido"
+        onChange={() => {}}
+        state="danger"
+        helperText="Texto auxiliar para prevenir erros."
+        feedback={<Badges variant="error" message="O campo não pode ser vazio." />}
+      />
+
+      <Input
+        label="Success"
+        value="Valor válido"
+        onChange={() => {}}
+        state="success"
+        helperText="Texto auxiliar para confirmar o preenchimento."
+        feedback={<Badges variant="success" message="Valor validado com sucesso." />}
+      />
+
+      <Input
+        label="Info"
+        value="Detalhe informativo"
+        onChange={() => {}}
+        state="info"
+        feedback={<Badges variant="info" message="Esta é uma mensagem de informação." />}
+      />
+
+      <Input
+        label="Warning"
+        value="Atenção"
+        onChange={() => {}}
+        state="warning"
+        feedback={<Badges variant="warning" message="Esta é uma mensagem de aviso." />}
+      />
+
+      <Input
+        label="Disabled"
+        value="Campo desabilitado"
+        onChange={() => {}}
+        disabled
+        leftIcon={faUser}
+        helperText="Texto auxiliar para campo indisponível."
+      />
+    </div>
+  )
+}
+
+function InputControlledPasswordPreview() {
+  const [email, setEmail] = useState('maria@exemplo.rs.gov.br')
+  const [password, setPassword] = useState('segredo123')
+
+  return (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <div style={storyDocsStyles.cardGrid}>
+        <StoryPreviewCard label="Controlado">
+          <Input
+            label="E-mail"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            leftIcon={faUser}
+            helperText="Exemplo de valor controlado pelo React."
+          />
+        </StoryPreviewCard>
+
+        <StoryPreviewCard label="Senha com toggle">
+          <Input
+            label="Senha"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            helperText="Use ao menos 8 caracteres."
+          />
+        </StoryPreviewCard>
+      </div>
+
+      <p style={storyDocsStyles.statText}>
+        <strong>Valores atuais:</strong> email={email} | senha={password}
+      </p>
+    </div>
+  )
+}
+
+function InputCombinedPreview() {
+  return (
+    <div style={{ display: 'grid', gap: 16, maxWidth: 900 }}>
+      <div style={storyDocsStyles.cardGrid}>
+        <Input
+          label="Busca"
+          value=""
+          onChange={() => {}}
+          leftIcon={faMagnifyingGlass}
+          placeholder="Pesquisar"
+        />
+
+        <Input
+          label="Usuario"
+          value="Maria da Silva"
+          onChange={() => {}}
+          leftIcon={faUser}
+          helperText="Exemplo de texto auxiliar."
+        />
+      </div>
+
+      <div style={storyDocsStyles.cardGrid}>
+        <Input
+          label="Senha"
+          value="segredo123"
+          onChange={() => {}}
+          type="password"
+        />
+
+        <Input
+          label="Campo com erro"
+          value=""
+          onChange={() => {}}
+          state="danger"
+          feedback={<Badges variant="error" message="Preencha este campo." />}
+        />
       </div>
     </div>
   )
@@ -64,245 +363,144 @@ export const InputDocumentacao: Story = {
     controls: { disable: true },
   },
   render: () => (
-    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 960 }}>
-      <h3 style={{ margin: 0 }}>Input</h3>
-      <p style={{ color: '#444', margin: 0 }}>
-        O <code>Input</code> coleta texto em formulários com rótulo, texto auxiliar e
-        estados visuais para orientar o preenchimento. Ele suporta ícone à esquerda, campo de senha
-        com alternância de visibilidade e feedback customizado.
-      </p>
+    <DocsStoryLayout>
+      <DocsHero
+        eyebrow="Documentação guiada"
+        title={<h3 style={storyDocsStyles.heroTitle}>Input</h3>}
+        description={
+          <>
+            O componente <code>Input</code> coleta texto com rótulo, orientação e
+            feedback visual.
+          </>
+        }
+        variantTags={docsVariantTags}
+        stats={docsHeroStats}
+      />
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Anatomia e acessibilidade</h4>
-        <p style={sectionTextStyle}>
-          O <code>label</code> é sempre associado ao campo por <code>htmlFor</code>, enquanto
-          <code> helperText</code> e <code>feedback</code> entram no <code>aria-describedby </code>
-          quando presentes. No estado <code>danger</code>, o input também recebe 
-          <code>aria-invalid</code> e o feedback passa a ser anunciado como alerta; nos demais
-          estados, o feedback continua sendo comunicado como atualização de status.
-        </p>
-        <pre style={codeBlockStyle}>
-          <code>{`<Input
-  label="E-mail"
-  helperText="Use o endereço institucional."
-  feedback={<Badges variant="info" message="Nós não compartilhamos esse dado." />}
-  value={email}
-  onChange={(event) => setEmail(event.target.value)}
-/>`}</code>
-        </pre>
-      </section>
-
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Props principais</h4>
-        <ul style={{ color: '#444', margin: 0, paddingLeft: 20 }}>
-          <li><code>label</code> identifica o campo e deve descrever claramente o dado esperado.</li>
-          <li><code>helperText</code> mostra orientação persistente abaixo do input, útil para formato, regra ou contexto.</li>
-          <li><code>leftIcon</code> adiciona um ícone à esquerda.</li>
-          <li><code>type="password"</code> habilita o fluxo de senha; o toggle pode ser desligado com <code>showPasswordToggle={false}</code>.</li>
-          <li><code>state</code> altera apenas a aparência da borda e o estado de acessibilidade quando for <code>danger</code>.</li>
-          <li><code>feedback</code> aceita qualquer nó React para mensagens de erro, sucesso, aviso ou informação, sendo padrão e preferencialmente as badges do design system.</li>
-          <li><code>disabled</code> bloqueia edição e também remove a alternância de visibilidade da senha.</li>
+      <SectionCard
+        title="Anatomia e acessibilidade"
+        description="label, helperText e feedback estruturam a comunicação do campo com quem preenche o formulário e com tecnologias assistivas. Quando state for danger, o input também recebe aria-invalid e o feedback passa a ser anunciado como alerta."
+      >
+        <ul style={storyDocsStyles.list}>
+          <li><code>label</code> nomeia o campo e deve descrever claramente o dado esperado.</li>
+          <li><code>helperText</code> e <code>feedback</code> entram em <code>aria-describedby</code> quando presentes.</li>
+          <li><code>feedback</code> pode ser qualquer no React, preferencialmente badges do design system.</li>
         </ul>
-        <pre style={codeBlockStyle}>
-          <code>{`<Input
-  label="CPF"
-  helperText="Digite apenas números."
-  value={document}
-  onChange={(event) => setDocument(event.target.value)}
-  state="warning"
-/>`}</code>
-        </pre>
-      </section>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Exemplos básicos</h4>
-        <p style={sectionTextStyle}>
-          A base do componente é a mesma para entradas simples, campos com ícone e campos de senha.
-          O ícone à esquerda é decorativo e não altera o nome acessível do campo, enquanto o toggle
-          de senha aparece automaticamente quando <code>type="password"</code> e
-          <code> showPasswordToggle</code> não for desativado.
-        </p>
-        <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
-          <Input
-            label="Default sem ícone"
-            id="doc-input-default"
-            value=""
-            onChange={() => {}}
-            placeholder="Placeholder"
-          />
-          <Input
-            label="Default com ícone"
-            id="doc-input-icon"
-            value=""
-            onChange={() => {}}
-            leftIcon={faUser}
-            placeholder="Placeholder"
-          />
-          <Input
-            label="Password"
-            id="doc-input-password"
-            value="senha123"
-            onChange={() => {}}
-            type="password"
-            placeholder="Sua senha"
-          />
-          <Input
-            label="Password com ícone"
-            id="doc-input-password-icon"
-            value="senha123"
-            onChange={() => {}}
-            type="password"
-            leftIcon={faCalendarDays}
-            placeholder="Sua senha"
-          />
-        </div>
-        <pre style={codeBlockStyle}>
-          <code>{`const [value, setValue] = useState('')
+        <SandboxExample
+          title="Estrutura principal"
+          description="Um exemplo único com label, helperText, ícone e feedback para deixar explícita a anatomia recomendada do componente."
+          code={anatomyExampleCode}
+          notes={[
+            'No estado danger, o feedback é anunciado como alert; nos demais estados, como status.',
+            'O ícone é decorativo e não substitui o nome acessível do campo.',
+          ]}
+        >
+          <InputAnatomyPreview />
+        </SandboxExample>
+      </SectionCard>
 
-<Input
-  label="Usuário"
-  value={value}
-  onChange={(event) => setValue(event.target.value)}
-  leftIcon={faUser}
-  placeholder="Digite seu nome"
-/>`}</code>
-        </pre>
-      </section>
+      <SectionCard
+        title="Exemplos básicos"
+        description="A base do componente é a mesma para entradas simples, campos com ícone e campos de senha. O toggle de senha aparece automaticamente quando type=password e showPasswordToggle não for desativado."
+      >
+        <SandboxExample
+          title="Combinacoes mais comuns"
+          description="Galeria com texto simples, ícone, senha e um campo com ícone de calendário para explorar variações de composição sem mudar a base do componente."
+          code={basicExamplesCode}
+          notes={[
+            'leftIcon reforça contexto visual, mas continua sendo decorativo.',
+            'O mesmo campo pode ser reutilizado em diferentes fluxos sem mudar a semântica do input nativo.',
+          ]}
+        >
+          <InputBasicsPreview />
+        </SandboxExample>
+      </SectionCard>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Estados e feedback</h4>
-        <p style={sectionTextStyle}>
-          Use <code>state</code> para indicar o tom visual do campo e combine com
-          <code> feedback</code> quando for necessário exibir orientação, confirmação ou erro.<br />
-          <code> helperText</code> funciona melhor para instruções persistentes, enquanto
-          <code> feedback</code> costuma representar o retorno do preenchimento atual.
-        </p>
-        <div style={{ display: 'grid', gap: 12 }}>
-          <Input
-            label="Danger"
-            id="doc-input-danger"
-            value="Valor inválido"
-            onChange={() => {}}
-            state="danger"
-            helperText="Texto auxiliar. Função de prevenir erros."
-            feedback={<Badges variant="error" message="O campo não pode ser vazio." />}
-          />
-          <Input
-            label="Success"
-            id="doc-input-success"
-            value="Valor válido"
-            onChange={() => {}}
-            state="success"
-            helperText="Texto auxiliar. Função de prevenir erros."
-            feedback={<Badges variant="success" message="Valor validado com sucesso." />}
-          />
-          <Input
-            label="Info"
-            id="doc-input-info"
-            value="Detalhe informativo"
-            onChange={() => {}}
-            state="info"
-            feedback={<Badges variant="info" message="Esta é uma mensagem de informação." />}
-          />
-          <Input
-            label="Warning"
-            id="doc-input-warning"
-            value="Atenção"
-            onChange={() => {}}
-            state="warning"
-            feedback={<Badges variant="warning" message="Esta é uma mensagem de aviso." />}
-          />
-          <Input
-            label="Disabled"
-            id="doc-input-disabled"
-            value="Campo desabilitado"
-            onChange={() => {}}
-            disabled
-            leftIcon={faUser}
-            helperText="Texto auxiliar. Função de prevenir erros."
-          />
-        </div>
-        <pre style={codeBlockStyle}>
-          <code>{`<Input
-  label="Senha"
-  type="password"
-  value={password}
-  onChange={(event) => setPassword(event.target.value)}
-  feedback={<Badges variant="error" message="O campo não pode ser vazio." />}
-  state="danger"
-/>`}</code>
-        </pre>
-      </section>
+      <SectionCard
+        title="Estados e feedback"
+        description="Use state para indicar o tom visual do campo e combine com feedback quando for necessário exibir orientação, confirmação ou erro. helperText funciona melhor para instruções persistentes; feedback costuma representar o retorno do preenchimento atual."
+      >
+        <SandboxExample
+          title="Tons de validação"
+          description="Panorama com os estados visuais mais recorrentes, incluindo disabled, para comparar borda, feedback e comunicação do campo."
+          code={feedbackExamplesCode}
+          notes={[
+            'state e feedback são relacionados por convenção de uso, não por acoplamento automático no componente.',
+            'disabled bloqueia edição e também remove a alternância de visibilidade da senha.',
+          ]}
+        >
+          <InputStatesPreview />
+        </SandboxExample>
+      </SectionCard>
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Controle do valor e senha</h4>
-        <p style={sectionTextStyle}>
-          O componente foi pensado para uso controlado, então o valor exibido deve vir do estado da
-          aplicação e ser atualizado por <code>onChange</code>. Em campos de senha, o botão de
-          alternância troca apenas a visualização do conteúdo; ele não modifica o valor nem executa
-          validação por conta própria.
-        </p>
-        <pre style={codeBlockStyle}>
-          <code>{`const [password, setPassword] = useState('')
+      <SectionCard
+        title="Controle do valor e senha"
+        description="O componente foi pensado para uso controlado, então o valor exibido deve vir do estado da aplicação e ser atualizado por onChange. Em campos de senha, o botão de alternância troca apenas a visualização do conteúdo; ele não modifica o valor nem executa validação por conta própria."
+      >
+        <SandboxExample
+          title="Valor controlado e toggle"
+          description="Dois exemplos lado a lado para reforçar o contrato controlado do input e o comportamento específico de senha."
+          code={controlledPasswordCode}
+          notes={[
+            'Se o valor não puder mudar, prefira readOnly ou disabled em vez de manter onChange inoperante.',
+            'showPasswordToggle só tem efeito quando type=password.',
+          ]}
+        >
+          <InputControlledPasswordPreview />
+        </SandboxExample>
+      </SectionCard>
 
-<Input
-  label="Senha"
-  type="password"
-  value={password}
-  onChange={(event) => setPassword(event.target.value)}
-  helperText="Use ao menos 8 caracteres."
-/>`}</code>
-        </pre>
-      </section>
-
-      <section style={{ display: 'grid', gap: 12 }}>
-        <h4 style={{ margin: '0 0 6px' }}>Limitações e dependências</h4>
-        <ul style={{ color: '#444', margin: 0, paddingLeft: 20 }}>
-          <li><code>value</code> faz mais sentido no modo controlado junto com <code>onChange</code>. Se o valor não puder mudar, use <code>readOnly</code> ou <code>disabled</code>.</li>
-          <li><code>showPasswordToggle</code> só tem efeito quando <code>type="password"</code> e serve para mostrar ou ocultar a senha. Em outros tipos, a prop é ignorada.</li>
-          <li><code>state</code> controla apenas o estado visual da borda. Para mensagem de orientação ou erro, combine com <code>feedback</code>.</li>
-          <li><code>feedback</code> aceita qualquer nó React(preferencialmente badges do design system) e não cria relação automática com <code>state</code>; essa consistência deve ser definida por quem consome.</li>
-          <li><code>leftIcon</code> é um ícone decorativo a esquerda e não substitui o rótulo. Sempre use <code>label</code> ou outro nome acessível equivalente.</li>
+      <SectionCard
+        title="Limitações e dependências"
+        description="O componente cobre bem a entrada de texto e o feedback visual, mas continua dependendo do consumidor para controle de estado, consistência entre state e mensagem e regras de validação do formulário."
+      >
+        <ul style={storyDocsStyles.list}>
+          <li><code>value</code> faz mais sentido no modo controlado junto com <code>onChange</code>.</li>
+          <li><code>showPasswordToggle</code> só tem efeito quando <code>type=password</code>; em outros tipos, a prop é ignorada.</li>
+          <li><code>state</code> controla apenas o estado visual da borda; para mensagem de orientação ou erro, combine com <code>feedback</code>.</li>
+          <li><code>feedback</code> aceita qualquer no React e não cria relação automática com <code>state</code>; essa consistência deve ser definida por quem consome.</li>
+          <li><code>leftIcon</code> é decorativo e não substitui o rótulo. Sempre use <code>label</code> ou outro nome acessível equivalente.</li>
         </ul>
-        <pre style={codeBlockStyle}>
-          <code>{`// Toggle só funciona em type="password"
-<Input
-  label="Senha"
-  type="password"
-  showPasswordToggle
-  value={password}
-  onChange={(event) => setPassword(event.target.value)}
-/>
-
-// state e feedback são independentes
-<Input
-  label="E-mail"
-  state="danger"
-  feedback={<Badges variant="error" message="Formato inválido." />}
-  value={email}
-  onChange={(event) => setEmail(event.target.value)}
-/>`}</code>
-        </pre>
-      </section>
-    </div>
+      </SectionCard>
+    </DocsStoryLayout>
   ),
 }
 
 export const InputInterativo: Story = {
   name: 'Interativo',
   argTypes: {
-    label: { control: 'text', description: 'Rótulo visível associado ao campo; é o principal nome acessível do input.' },
-    placeholder: { control: 'text', description: 'Texto de sugestão exibido dentro do campo antes do preenchimento.' },
-    helperText: { control: 'text', description: 'Texto auxiliar persistente associado ao input por aria-describedby.' },
+    label: {
+      control: 'text',
+      description: 'Rótulo visível associado ao campo; e o principal nome acessível do input.',
+      table: { category: 'Conteudo' },
+    },
+    placeholder: {
+      control: 'text',
+      description: 'Texto de sugestão exibido dentro do campo antes do preenchimento.',
+      table: { category: 'Conteudo' },
+    },
+    helperText: {
+      control: 'text',
+      description: 'Texto auxiliar persistente associado ao input por aria-describedby.',
+      table: { category: 'Conteudo' },
+    },
+    value: {
+      control: 'text',
+      description: 'Valor atual do campo quando ele está sendo controlado externamente.',
+      table: { category: 'Conteudo' },
+    },
     state: {
       control: { type: 'radio' },
       options: [undefined, 'danger', 'success', 'warning', 'info'],
-      description: 'Define apenas o estado visual da borda; combine com feedback quando quiser mensagem auxiliar ou de erro.',
+      description: 'Define apenas o estado visual da borda; o preview gera um feedback sintético a partir desse valor.',
+      table: { category: 'Estado visual' },
     },
     type: {
       control: { type: 'radio' },
       options: ['text', 'password'],
       description: 'Define o tipo do campo. Em password, o toggle de visibilidade pode ser exibido automaticamente.',
+      table: { category: 'Composicao' },
     },
     leftIcon: {
       control: { type: 'select' },
@@ -315,28 +513,41 @@ export const InputInterativo: Story = {
       },
       labels: {
         faMagnifyingGlass: 'Pesquisa',
-        faCalendarDays: 'Calendário',
-        faUser: 'Usuário',
+        faCalendarDays: 'Calendario',
+        faUser: 'Usuario',
       },
       description: 'Ícone decorativo exibido à esquerda do campo para reforçar o contexto visual.',
+      table: { category: 'Composicao' },
     },
-    disabled: { control: 'boolean', description: 'Impede edição, desabilita o toggle de senha e aplica o estado visual correspondente.' },
     showPasswordToggle: {
       control: 'boolean',
-      description: 'Só tem efeito quando type="password".',
+      description: 'Só tem efeito quando type=password.',
+      table: { category: 'Composicao' },
     },
-    value: { control: 'text', description: 'Valor atual do campo quando ele está sendo controlado externamente.' },
-    feedback: { control: false, description: 'Aceita um nó React para mensagens de erro, sucesso, aviso ou informação.' },
-    onChange: { action: 'changed', description: 'Recebe o evento nativo sempre que o usuário altera o conteúdo do campo.' },
+    disabled: {
+      control: 'boolean',
+      description: 'Impede edição, desabilita o toggle de senha e aplica o estado visual correspondente.',
+      table: { category: 'Estado visual' },
+    },
+    feedback: {
+      control: false,
+      description: 'Aceita um nó React para mensagens de erro, sucesso, aviso ou informação.',
+      table: { category: 'Conteudo' },
+    },
+    onChange: {
+      action: 'changed',
+      description: 'Recebe o evento nativo sempre que o usuário altera o conteúdo do campo.',
+      table: { category: 'Eventos' },
+    },
   },
   args: {
     label: 'Campo interativo',
     placeholder: 'Digite para testar',
-    helperText: 'Use os controles para configurar o input.',
+    helperText: 'Use os Controls para configurar o input.',
     leftIcon: faMagnifyingGlass,
     state: undefined,
     type: 'text',
-    showPasswordToggle: false,
+    showPasswordToggle: true,
     disabled: false,
     value: '',
   },
@@ -348,44 +559,5 @@ export const InputCombinados: Story = {
   parameters: {
     controls: { disable: true },
   },
-  render: () => (
-    <div style={{ padding: 16, display: 'grid', gap: 16, maxWidth: 900 }}>
-      <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-        <Input
-          label="Busca"
-          id="example-input-search"
-          value=""
-          onChange={() => {}}
-          leftIcon={faMagnifyingGlass}
-          placeholder="Pesquisar"
-        />
-        <Input
-          label="Usuário"
-          id="example-input-user"
-          value="Maria da Silva"
-          onChange={() => {}}
-          leftIcon={faUser}
-          helperText="Exemplo de texto auxiliar."
-        />
-      </div>
-
-      <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-        <Input
-          label="Senha"
-          id="example-input-password"
-          value="segredo123"
-          onChange={() => {}}
-          type="password"
-        />
-        <Input
-          label="Campo com erro"
-          id="example-input-error"
-          value=""
-          onChange={() => {}}
-          state="danger"
-          feedback={<Badges variant="error" message="Preencha este campo." />}
-        />
-      </div>
-    </div>
-  ),
+  render: () => <InputCombinedPreview />,
 }

@@ -1,0 +1,153 @@
+<style>
+  :root {
+    --matriz-sidebar-bg: #e6f2ea;
+    --matriz-sidebar-surface: #ffffff;
+    --matriz-sidebar-border: #e5e5e5;
+    --matriz-sidebar-text: #333333;
+    --matriz-sidebar-text-muted: #666666;
+    --matriz-sidebar-accent: #1a7235;
+    --matriz-sidebar-accent-strong: #04290f;
+    --matriz-sidebar-hover: #ddf9e3;
+    --matriz-sidebar-active: rgba(26, 114, 53, 0.1);
+    --matriz-sidebar-active-border: rgba(26, 114, 53, 0.2);
+    --matriz-sidebar-focus: #ffcd07;
+    --matriz-sidebar-focus-ring: #fff5c2;
+  }
+
+  .sidebar-container {
+    background: var(--matriz-sidebar-bg);
+    border-right: 1px solid var(--matriz-sidebar-border);
+  }
+
+  .sidebar-header a[title='Matriz 3'] {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    color: var(--matriz-sidebar-accent-strong) !important;
+    text-decoration: none !important;
+  }
+
+  .sidebar-header a[title='Matriz 3']::after {
+    content: attr(title);
+    color: var(--matriz-sidebar-accent-strong);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .sidebar-header a[title='Matriz 3'] img {
+    width: 36px;
+    height: 36px;
+    max-width: none !important;
+    max-height: none !important;
+    flex: 0 0 auto;
+  }
+
+  .sidebar-subheading {
+    color: var(--matriz-sidebar-text-muted) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-item {
+    border-radius: 12px !important;
+    color: var(--matriz-sidebar-text) !important;
+    margin: 2px 8px !important;
+  }
+
+  .sidebar-item:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+
+  .sidebar-item[data-selected='true'] {
+    background: var(--matriz-sidebar-active) !important;
+    box-shadow: inset 0 0 0 1px var(--matriz-sidebar-active-border);
+    color: var(--matriz-sidebar-accent-strong) !important;
+    font-weight: 700 !important;
+  }
+
+  .search-field {
+    background: var(--matriz-sidebar-surface) !important;
+    border: 1px solid var(--matriz-sidebar-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-text) !important;
+  }
+
+  .search-field:focus-within {
+    border-color: var(--matriz-sidebar-focus) !important;
+    box-shadow: 0 0 0 4px var(--matriz-sidebar-focus-ring) !important;
+  }
+
+  .sidebar-container .search-field + * {
+    display: none !important;
+  }
+
+  .search-result-item:hover,
+  .search-result-item[aria-selected='true'] {
+    background: var(--matriz-sidebar-hover) !important;
+  }
+
+  .search-result-item--label {
+    color: var(--matriz-sidebar-text) !important;
+  }
+
+  #storybook-panel-root [role='tablist'] {
+    box-shadow: none !important;
+    padding: 6px 10px 4px !important;
+  }
+
+  #storybook-panel-root .tabbutton {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-text-muted) !important;
+    margin: 4px 6px 4px 0 !important;
+    padding: 6px 10px !important;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  #storybook-panel-root .tabbutton:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    border-color: var(--matriz-sidebar-active-border) !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+
+  #storybook-panel-root .tabbutton-active {
+    background: var(--matriz-sidebar-active) !important;
+    border-color: var(--matriz-sidebar-accent) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+    box-shadow: none !important;
+    font-weight: 700 !important;
+  }
+
+  #storybook-panel-root .tabbutton:focus-visible {
+    border-color: var(--matriz-sidebar-focus) !important;
+    box-shadow: 0 0 0 3px var(--matriz-sidebar-focus-ring) !important;
+    outline: none !important;
+  }
+
+  #storybook-panel-root .docblock-argstable input[type='checkbox'],
+  #storybook-panel-root .docblock-argstable input[type='radio'] {
+    accent-color: var(--matriz-sidebar-accent);
+  }
+
+  #storybook-panel-root button[title='Change addon orientation'],
+  #storybook-panel-root button[title*='Hide addons'] {
+    color: var(--matriz-sidebar-text-muted) !important;
+  }
+
+  #storybook-panel-root button[title='Change addon orientation']:hover,
+  #storybook-panel-root button[title*='Hide addons']:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+</style>

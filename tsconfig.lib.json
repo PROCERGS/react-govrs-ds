@@ -7,5 +7,14 @@
     "emitDeclarationOnly": true,
     "stripInternal": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    ".storybook/**/*",
+    "src/**/*.stories.ts",
+    "src/**/*.stories.tsx",
+    "src/**/*.story.ts",
+    "src/**/*.story.tsx",
+    "src/**/*.stories.mdx",
+    "src/**/*.story.mdx"
+  ]
 }

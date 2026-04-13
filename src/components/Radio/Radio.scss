@@ -1,0 +1,107 @@
+.govrs-radio-field {
+  display: inline-flex;
+  align-items: flex-start;
+  color: var(--govrs-color-text-primary, #000000);
+  cursor: pointer;
+  gap: var(--govrs-space-2, 0.5rem);
+}
+
+.govrs-radio-field--disabled {
+  cursor: not-allowed;
+}
+
+.govrs-radio-field__content {
+  display: grid;
+  gap: var(--govrs-space-1, 0.25rem);
+}
+
+.govrs-radio-field__label {
+  font-size: var(--govrs-font-size-body-md, 1rem);
+  line-height: var(--govrs-line-height-body-sm, 1.5rem);
+}
+
+.govrs-radio-field__description {
+  color: var(--govrs-color-text-muted, #555555);
+  font-size: var(--govrs-font-size-14, 0.875rem);
+  line-height: var(--govrs-line-height-body-sm, 1.5rem);
+}
+
+input[type='radio'].govrs-radio {
+  --govrs-radio-active-color: var(--govrs-color-brand-primary, #1a7235);
+  position: relative;
+  display: inline-block;
+  width: var(--govrs-space-6, 1.5rem);
+  height: var(--govrs-space-6, 1.5rem);
+  flex: 0 0 var(--govrs-space-6, 1.5rem);
+  padding: 0;
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-emphasis, #cccccc);
+  border-radius: var(--govrs-radius-circle, 50%);
+  margin: 0;
+  appearance: none;
+  background-color: var(--govrs-color-surface-base, #ffffff);
+  cursor: pointer;
+  transition:
+    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  vertical-align: middle;
+}
+
+input[type='radio'].govrs-radio::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--govrs-radius-circle, 50%);
+  background-color: transparent;
+  content: '';
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    transform var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+}
+
+input[type='radio'].govrs-radio:checked::after {
+  background-color: var(--govrs-radio-active-color);
+  opacity: 1;
+}
+
+input[type='radio'].govrs-radio:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--govrs-radio-active-color) 12%, transparent);
+}
+
+input[type='radio'].govrs-radio:focus {
+  outline: none;
+}
+
+input[type='radio'].govrs-radio:focus-visible {
+  border-color: var(--govrs-color-focus, #ffcd07);
+  box-shadow: 0 0 0 var(--govrs-border-width-lg, 4px)
+    color-mix(in srgb, var(--govrs-color-focus, #ffcd07) 12%, transparent);
+}
+
+input[type='radio'].govrs-radio.govrs-radio--danger {
+  --govrs-radio-active-color: var(--govrs-color-error, #e52207);
+  border-color: var(--govrs-color-error, #e52207);
+}
+
+input[type='radio'].govrs-radio.govrs-radio--success {
+  --govrs-radio-active-color: var(--govrs-color-success, #168821);
+  border-color: var(--govrs-color-success, #168821);
+}
+
+input[type='radio'].govrs-radio:disabled {
+  background-color: color-mix(in srgb, var(--govrs-color-surface-base, #ffffff) 30%, transparent);
+  cursor: not-allowed;
+}
+
+input[type='radio'].govrs-radio:disabled::after {
+  opacity: 0.45;
+}
+
+.govrs-radio-field--disabled .govrs-radio-field__content {
+  opacity: 0.55;
+}

@@ -1,96 +1,142 @@
-export default {
-  title: 'Typography/Labels',
-  parameters: { layout: 'padded' },
-};
+import type { Meta, StoryObj } from '@storybook/react';
 
-export const LabelsFull = () => (
-  <div>
-    <div style={{ padding: 0, maxWidth: 960 }}>
-      <h3 style={{ marginTop: 0 }}>Label</h3>
-      <div
-        style={{
-          display: 'flex',
-          gap: 24,
-          alignItems: 'flex-start',
-          flexWrap: 'wrap',
-        }}
-      >
-        <div style={{ flex: 1, minWidth: 280 }}>
-          <h4>Aplicar na tag</h4>
-          <pre
-            style={{
-              background: '#f7f7f7',
-              padding: 12,
-              borderRadius: 4,
-              marginTop: 12,
-            }}
-          >
-            <code>{`<label class="label-base">Label</label>`}</code>
-          </pre>
-          <div style={{ marginTop: 12 }}>
-            <label className="label-base">Label</label>
-          </div>
-        </div>
+import {
+  DocsHero,
+  DocsStoryLayout,
+  SandboxExample,
+  SectionCard,
+  StoryPreviewCard,
+  storyDocsStyles,
+} from '../../../.storybook/docs/storyDocs';
+import '../styles/index.scss';
 
-        <div style={{ flex: 1, minWidth: 280 }}>
-          <h4>Aplicar no wrapper (pai)</h4>
-          <pre
-            style={{
-              background: '#f7f7f7',
-              padding: 12,
-              borderRadius: 4,
-              marginTop: 12,
-            }}
-          >
-            <code>{`<div class="label-base">
+const baseLabelCode = `<label class="label-base">Label</label>`;
+
+const wrapperLabelCode = `<div class="label-base">
   <label>Label</label>
-</div>`}</code>
-          </pre>
-          <div
-            style={{ marginTop: 12, border: '1px dashed #ddd', padding: 12 }}
-          >
-            <div className="label-base">
-              <label>Label</label>
-            </div>
-          </div>
-        </div>
-      </div>
+</div>`;
 
-      <hr style={{ margin: '24px 0' }} />
+const tabLabelCode = `<label class="label-tab">Geral</label>
+<label class="label-tab">Conteúdo</label>
+<label class="label-tab">Permissões</label>`;
 
-      <h3>Label Tab</h3>
-      <div style={{ marginTop: 12 }}>
-        {/* Visual-only example: layout labels to look like tabs. */}
-        <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+function LabelsGalleryPreview() {
+  return (
+    <div style={storyDocsStyles.cardGrid}>
+      <StoryPreviewCard label="Label base">
+        <label className="label-base">Label</label>
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Label tab">
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <label className="label-tab">Geral</label>
           <label className="label-tab">Conteúdo</label>
           <label className="label-tab">Permissões</label>
         </div>
-      </div>
-
-      <div style={{ marginTop: 18 }}>
-        <p style={{ color: '#444' }}>
-          A classe <code>label-tab</code> fornece apenas a estilização visual do
-          rótulo de uma aba. Aplique-a diretamente no elemento{' '}
-          <code>&lt;label&gt;</code>
-          ou no contêiner que envolve o rótulo.
-        </p>
-        <p style={{ color: '#444' }}>
-          Exemplo abaixo: esta composição mostra como labels com a classe
-          <code>label-tab</code> podem ser colocadas lado a lado para formar a
-          barra de abas.
-        </p>
-        <div style={{ marginTop: 12 }}>
-          <h4>Exemplo (marcação)</h4>
-          <pre style={{ background: '#f7f7f7', padding: 12, borderRadius: 4 }}>
-            <code>{`<label class="label-tab">Geral</label>
-<label class="label-tab">Conteúdo</label>
-<label class="label-tab">Permissões</label>`}</code>
-          </pre>
-        </div>
-      </div>
+      </StoryPreviewCard>
     </div>
-  </div>
-);
+  );
+}
 
-LabelsFull.storyName = 'Labels';
+function LabelsUsagePreview() {
+  return (
+    <div style={storyDocsStyles.cardGrid}>
+      <StoryPreviewCard label="Aplicar na tag">
+        <label className="label-base">Label</label>
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Aplicar no wrapper">
+        <div style={{ border: '1px dashed #cbd5e1', padding: 12, borderRadius: 12 }}>
+          <div className="label-base">
+            <label>Label</label>
+          </div>
+        </div>
+      </StoryPreviewCard>
+    </div>
+  );
+}
+
+const meta = {
+  title: 'Typography/Labels',
+  parameters: {
+    layout: 'padded',
+  },
+} satisfies Meta;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Documentacao: Story = {
+  name: 'Documentação',
+  parameters: {
+    controls: { disable: true },
+  },
+  render: () => (
+    <DocsStoryLayout>
+      <DocsHero
+        eyebrow="Rótulos visuais"
+        title={<h3 style={storyDocsStyles.heroTitle}>Labels</h3>}
+        description="A fundação de labels cobre duas necessidades visuais distintas: o rótulo base e a aparência de aba. O comportamento continua sob responsabilidade do componente que consome essas classes."
+      />
+
+      <SectionCard
+        title="Label base"
+        description="Use o label base quando o objetivo for manter um rótulo simples, consistente e alinhado a formulários ou pequenas composições informativas."
+      >
+        <SandboxExample
+          title="Aplicação no elemento ou no wrapper"
+          description="As duas formas abaixo mostram a mesma aparência visual e deixam a composição mais flexível para outros componentes do sistema."
+          code={`${baseLabelCode}
+
+${wrapperLabelCode}`}
+          notes={[
+            'A semântica continua sendo do elemento label original.',
+            'A escolha entre aplicar na tag ou no wrapper depende da estrutura do componente consumidor.',
+          ]}
+        >
+          <LabelsUsagePreview />
+        </SandboxExample>
+      </SectionCard>
+
+      <SectionCard
+        title="Label tab"
+        description="A classe label-tab existe para reproduzir a aparência visual de uma barra de abas, sem assumir papéis ARIA ou navegação por teclado."
+      >
+        <SandboxExample
+          title="Composição visual de abas"
+          description="Exemplo de rótulos lado a lado para compor uma faixa visual semelhante a tabs."
+          code={tabLabelCode}
+          notes={[
+            'Quando houver um componente real de tabs, a semântica e a navegação devem ser implementadas por ele, não por esta fundação.',
+          ]}
+        >
+          <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
+            <label className="label-tab">Geral</label>
+            <label className="label-tab">Conteúdo</label>
+            <label className="label-tab">Permissões</label>
+          </div>
+        </SandboxExample>
+      </SectionCard>
+
+      <SectionCard
+        title="Boas práticas"
+        description="Labels são fundações visuais. Elas não devem esconder comportamento interativo que não esteja explicitamente implementado em um componente acima delas."
+      >
+        <ul style={storyDocsStyles.list}>
+          <li>Prefira <code>label-base</code> para rótulos de formulário e identificação simples.</li>
+          <li>Use <code>label-tab</code> apenas quando a interface já tiver um contrato claro de navegação por abas.</li>
+          <li>Evite usar labels como substituto de botões ou links quando a intenção for ação, não rotulagem.</li>
+        </ul>
+      </SectionCard>
+    </DocsStoryLayout>
+  ),
+};
+
+export const Galeria: Story = {
+  name: 'Galeria',
+  parameters: {
+    controls: { disable: true },
+  },
+  render: () => <LabelsGalleryPreview />,
+};

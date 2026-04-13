@@ -1,16 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
+import {
+  DocsHero,
+  DocsStoryLayout,
+  SandboxExample,
+  SectionCard,
+  storyDocsStyles,
+} from '../../../.storybook/docs/storyDocs';
 import { Carousel } from './Carousel';
 import type { CarouselCardItem, CarouselCardProps } from './CarouselCard';
-import type { CarouselDefaultItem } from './CarouselDefault';
+import type { CarouselDefaultItem, CarouselDefaultProps } from './CarouselDefault';
+import './CarouselCard.scss';
+import './CarouselDefault.scss';
+import '../../foundations/styles/index.scss';
 
 const meta = {
   title: 'Components/Carousel',
   component: Carousel,
-  argTypes: {
-    variante: {
-      control: { type: 'radio' },
-      options: ['default', 'card'],
-      description: 'Escolhe qual variante renderizar.',
+  parameters: {
+    layout: 'padded',
+    controls: {
+      expanded: true,
+      sort: 'requiredFirst',
     },
   },
 } satisfies Meta<typeof Carousel>;
@@ -22,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 const defaultItems: CarouselDefaultItem[] = [
   {
     title: 'Banner 1',
-    description: 'Descricao curta do primeiro banner.',
+    description: 'Descrição curta do primeiro banner.',
     image: 'https://picsum.photos/1200/500?random=1',
   },
   {
@@ -32,7 +43,7 @@ const defaultItems: CarouselDefaultItem[] = [
   },
   {
     title: 'Banner 3',
-    description: 'Exemplo de slide com video (YouTube).',
+    description: 'Exemplo de slide com vídeo (YouTube).',
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
   },
 ];
@@ -40,7 +51,7 @@ const defaultItems: CarouselDefaultItem[] = [
 const cardItemsPost: CarouselCardItem[] = [
   {
     title: 'Post 1',
-    description: 'Conteudo de post ou lista.',
+    description: 'Conteúdo de post ou lista.',
     image: 'https://picsum.photos/400/240?random=12',
     variant: 'post',
     href: '#',
@@ -60,25 +71,25 @@ const cardItemsPost: CarouselCardItem[] = [
   },
   {
     title: 'Post 4',
-    description: 'Conteudo extra para teste.',
+    description: 'Conteúdo extra para teste.',
     image: 'https://picsum.photos/400/240?random=32',
     variant: 'post',
   },
   {
     title: 'Post 5',
-    description: 'Conteudo extra para teste.',
+    description: 'Conteúdo extra para teste.',
     image: 'https://picsum.photos/400/240?random=33',
     variant: 'post',
   },
   {
     title: 'Post 6',
-    description: 'Conteudo extra para teste.',
+    description: 'Conteúdo extra para teste.',
     image: 'https://picsum.photos/400/240?random=34',
     variant: 'post',
   },
   {
     title: 'Post 7',
-    description: 'Conteudo extra para teste.',
+    description: 'Conteúdo extra para teste.',
     image: 'https://picsum.photos/400/240?random=35',
     variant: 'post',
   },
@@ -97,7 +108,7 @@ const cardItemsList: CarouselCardItem[] = [
       { value: 'Quarto' },
       { value: 'Quinto' },
       { value: 'Sexto' },
-      { value: 'Setimo' },
+      { value: 'Sétimo' },
     ],
   },
   {
@@ -123,7 +134,7 @@ const cardItemsList: CarouselCardItem[] = [
     itens: [
       { value: 'Um' },
       { value: 'Dois' },
-      { value: 'Tres' },
+      { value: 'Três' },
       { value: 'Quatro' },
       { value: 'Cinco' },
       { value: 'Seis' },
@@ -194,50 +205,50 @@ const cardItemsList: CarouselCardItem[] = [
 
 const cardItemsNews: CarouselCardItem[] = [
   {
-    title: 'Noticia 1',
-    description: 'Resumo rapido da materia.',
+    title: 'Notícia 1',
+    description: 'Resumo rápido da matéria.',
     image: 'https://picsum.photos/400/240?random=11',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 2',
+    title: 'Notícia 2',
     description: 'Chamada de destaque.',
     image: 'https://picsum.photos/400/240?random=21',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 3',
-    description: 'Mais um exemplo de noticia.',
+    title: 'Notícia 3',
+    description: 'Mais um exemplo de notícia.',
     image: 'https://picsum.photos/400/240?random=22',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 4',
-    description: 'Noticia extra para teste.',
+    title: 'Notícia 4',
+    description: 'Notícia extra para teste.',
     image: 'https://picsum.photos/400/240?random=23',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 5',
-    description: 'Noticia extra para teste.',
+    title: 'Notícia 5',
+    description: 'Notícia extra para teste.',
     image: 'https://picsum.photos/400/240?random=24',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 6',
-    description: 'Noticia extra para teste.',
+    title: 'Notícia 6',
+    description: 'Notícia extra para teste.',
     image: 'https://picsum.photos/400/240?random=25',
     variant: 'news',
     href: '#',
   },
   {
-    title: 'Noticia 7',
-    description: 'Noticia extra para teste.',
+    title: 'Notícia 7',
+    description: 'Notícia extra para teste.',
     image: 'https://picsum.photos/400/240?random=26',
     variant: 'news',
     href: '#',
@@ -246,50 +257,50 @@ const cardItemsNews: CarouselCardItem[] = [
 
 const cardItemsIcon: CarouselCardItem[] = [
   {
-    title: 'Icone 1',
-    description: 'Cartao focado em icone.',
+    title: 'Ícone 1',
+    description: 'Cartão focado em ícone.',
     image: 'https://picsum.photos/160/160?random=13',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 2',
-    description: 'Outro cartao de icone.',
+    title: 'Ícone 2',
+    description: 'Outro cartão de ícone.',
     image: 'https://picsum.photos/160/160?random=23',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 3',
-    description: 'Mais um cartao de icone.',
+    title: 'Ícone 3',
+    description: 'Mais um cartão de ícone.',
     image: 'https://picsum.photos/160/160?random=24',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 4',
-    description: 'Icone extra.',
+    title: 'Ícone 4',
+    description: 'Ícone extra.',
     image: 'https://picsum.photos/160/160?random=25',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 5',
-    description: 'Icone extra.',
+    title: 'Ícone 5',
+    description: 'Ícone extra.',
     image: 'https://picsum.photos/160/160?random=26',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 6',
-    description: 'Icone extra.',
+    title: 'Ícone 6',
+    description: 'Ícone extra.',
     image: 'https://picsum.photos/160/160?random=27',
     variant: 'icon',
     href: '#',
   },
   {
-    title: 'Icone 7',
-    description: 'Icone extra.',
+    title: 'Ícone 7',
+    description: 'Ícone extra.',
     image: 'https://picsum.photos/160/160?random=28',
     variant: 'icon',
     href: '#',
@@ -303,8 +314,120 @@ const cardItemsByVariant: Record<NonNullable<CarouselCardProps['cardVariant']>, 
   icon: cardItemsIcon,
 };
 
+type DefaultStoryArgs = CarouselDefaultProps & { variante?: 'default' };
+type CardStoryArgs = CarouselCardProps & { variante: 'card' };
+
+const carouselPreviewSurfaceStyle = {
+  ...storyDocsStyles.previewStage,
+  padding: 16,
+};
+
+const carouselPreviewInnerStyle = {
+  width: '100%',
+  maxWidth: 1200,
+  margin: '0 auto',
+};
+
+const defaultUsageCode = `<Carousel
+  variante="default"
+  data={defaultItems}
+  autoplay
+  autoplaySpeed={4000}
+  circular
+  width="default"
+  indicators="inside"
+  enableSwipe
+  noArrowsMobile={false}
+/>`;
+
+const defaultDataCode = `data={[
+  {
+    title: 'Banner',
+    description: 'Texto opcional',
+    image: 'https://...'
+  },
+  {
+    title: 'Video',
+    videoUrl: 'https://www.youtube.com/watch?v=...'
+  }
+]}`;
+
+const cardUsageCode = `<Carousel
+  variante="card"
+  cardVariant="news"
+  items={cardItemsNews}
+  cardsPerView={3}
+  cardsPerViewTablet={2}
+  cardsPerViewMobile={1}
+  gap={16}
+  showIndicators
+  showArrows
+/>`;
+
+const cardDataCode = `items={[
+  {
+    title: 'Notícia',
+    description: 'Resumo',
+    image: 'https://...',
+    variant: 'news',
+    href: '#'
+  },
+  {
+    title: 'Lista',
+    description: 'Com itens',
+    image: 'https://...',
+    variant: 'list',
+    itens: [{ value: 'Item 1' }, { value: 'Item 2' }]
+  }
+]}`;
+
+const cardResponsiveCode = `<Carousel
+  variante="card"
+  cardVariant="post"
+  items={cardItemsPost}
+  cardsPerView={3}
+  cardsPerViewTablet={2}
+  cardsPerViewMobile={1}
+  gap={16}
+  autoplay={false}
+  circular
+  showIndicators
+  showArrows
+/>`;
+
+function getCardDataset(cardVariant?: CarouselCardProps['cardVariant']) {
+  if (!cardVariant) {
+    return cardItemsPost;
+  }
+
+  return cardItemsByVariant[cardVariant] || cardItemsPost;
+}
+
+function renderDefaultCarousel(args: DefaultStoryArgs) {
+  return (
+    <div style={carouselPreviewSurfaceStyle}>
+      <div style={carouselPreviewInnerStyle}>
+        <Carousel {...args} variante="default" />
+      </div>
+    </div>
+  );
+}
+
+function renderCardCarousel(args: CardStoryArgs) {
+  const { cardVariant = 'post' } = args;
+  const dataset = getCardDataset(cardVariant);
+
+  return (
+    <div style={carouselPreviewSurfaceStyle}>
+      <div style={carouselPreviewInnerStyle}>
+        <Carousel {...args} variante="card" items={dataset} cardVariant={cardVariant} />
+      </div>
+    </div>
+  );
+}
+
 export const DefaultDocs: Story = {
-  name: 'Default Docs',
+  name: 'Default - Documentação',
   args: {
     variante: 'default',
     data: defaultItems,
@@ -316,124 +439,186 @@ export const DefaultDocs: Story = {
     enableSwipe: true,
     noArrowsMobile: false,
   },
-  render: (args) => (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '12px 0' }}>
-      <h1>Carousel — Variante Default</h1>
-
-      <div style={{ marginTop: 12 }}>
-        <Carousel {...args} />
-      </div>
-
-      <p style={{ margin: '12px 0' }}>
-        Use a prop <code>variante</code> para alternar entre a versao padrao
-        (default) e a versao de cards. Os <code>items</code> continuam na mesma
-        estrutura do bloco original, agora diretamente em <code>data</code>{' '}
-        (array). A prop <code>items</code>
-        tambem aceita um array, mas o formato antigo <code>data.items</code> foi
-        removido.
-      </p>
-      <section style={{ margin: '12px 0' }}>
-        <h3>Props de controle (top-level)</h3>
-        <ul>
-          <li>
-            <code>autoplay</code> e <code>autoplaySpeed</code>: liga e ajusta o
-            intervalo do play automatico.
-          </li>
-          <li>
-            <code>circular</code>: permite loop infinito; se false, bloqueia nas
-            extremidades.
-          </li>
-          <li>
-            <code>width</code>: ajusta largura do conteudo (<code>default</code>{' '}
-            ou <code>full</code>).
-          </li>
-          <li>
-            <code>indicators</code>: posiciona indicadores (<code>default</code>
-            , <code>inside</code> ou <code>numbers</code>).
-          </li>
-          <li>
-            <code>enableSwipe</code>: ativa swipe em mobile.
-          </li>
-          <li>
-            <code>noArrowsMobile</code>: esconde setas em telas pequenas.
-          </li>
-        </ul>
-      </section>
-
-      <section style={{ margin: '12px 0' }}>
-        <h3>Estrutura de items</h3>
-        <p>
-          <code>data</code> (ou <code>items</code>) deve ser um array de itens.
-        </p>
-        <pre
-          style={{
-            background: '#f7f7f7',
-            padding: 12,
-            borderRadius: 4,
-            overflowX: 'auto',
-          }}
-        >
-          <code>{`data=[
-  { title: 'Banner', description: 'Texto opcional', image: 'https://...' },
-  { title: 'Video', videoUrl: 'https://www.youtube.com/watch?v=...' },
-]`}</code>
-        </pre>
-      </section>
-
-      <section style={{ margin: '12px 0' }}>
-        <h3>Exemplo rapido</h3>
-        <pre
-          style={{
-            background: '#f7f7f7',
-            padding: 12,
-            borderRadius: 4,
-            overflowX: 'auto',
-          }}
-        >
-          <code>{`<Carousel
-  variante="default"
-  data={defaultItems}
-  autoplay
-  autoplaySpeed={4000}
-  circular
-  width="default"
-  indicators="inside"
-  enableSwipe
-  noArrowsMobile={false}
-/>`}</code>
-        </pre>
-      </section>
-    </div>
-  ),
   parameters: {
     controls: { disable: true },
+  },
+  render: (args) => {
+    const defaultArgs = args as DefaultStoryArgs;
+
+    return (
+      <DocsStoryLayout>
+        <DocsHero
+          eyebrow="Variante default"
+          title={<h3 style={storyDocsStyles.heroTitle}>Carousel default</h3>}
+          description={
+            <>
+              A variante default trabalha com um item por vez e é a opção certa
+              para destaque visual, banners e slides com imagem ou vídeo. Ela
+              aceita dados em <code>data</code> ou <code>items</code>, desde que
+              o valor final seja um array simples de itens.
+            </>
+          }
+          stats={[
+            {
+              title: 'Foco principal',
+              text: 'Um slide por vez com destaque visual amplo e navegação simples.',
+            },
+            {
+              title: 'Mídias aceitas',
+              text: 'Imagens, vídeos do YouTube, Vimeo e fontes diretas em videoUrl.',
+            },
+            {
+              title: 'Configuração mais comum',
+              text: 'Autoplay ativo, indicadores inside e width default para destaque editorial.',
+            },
+          ]}
+        />
+
+        <SectionCard
+          title="Quando usar"
+          description="Escolha a variante default quando o conteúdo pede leitura de um item por vez e a prioridade é destacar mídia e mensagem principal, não uma grade de cards."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li>Use para banners de home, destaques de campanha e chamadas com imagem ampla.</li>
+            <li>O componente mantém setas, indicadores e swipe como controles independentes.</li>
+            <li>Com <code>circular={false}</code>, a navegação bloqueia nas extremidades.</li>
+          </ul>
+
+          <SandboxExample
+            title="Exemplo recomendado"
+            description="Configuração comum para um carousel de destaque com autoplay e indicadores internos."
+            code={defaultUsageCode}
+            notes={[
+              'Os itens podem conter image, title e description, ou apenas videoUrl para mídia embarcada.',
+              'Se o array vier vazio, o componente mostra o empty state interno do carousel default.',
+            ]}
+          >
+            {renderDefaultCarousel(defaultArgs)}
+          </SandboxExample>
+        </SectionCard>
+
+        <SectionCard
+          title="Estrutura de dados e mídias"
+          description="O contrato da variante default foi simplificado para arrays diretos. O formato legado data.items nao faz mais parte da API do design system."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li><code>data</code> e <code>items</code> aceitam arrays de objetos com <code>title</code>, <code>description</code>, <code>image</code> e <code>videoUrl</code>.</li>
+            <li>Quando <code>videoUrl</code> aponta para YouTube ou Vimeo, o componente aplica o tratamento específico para embed.</li>
+            <li><code>imageAlt</code> pode ser usado para complementar acessibilidade quando a imagem exigir descrição específica.</li>
+          </ul>
+
+          <SandboxExample
+            title="Shape mínimo dos itens"
+            description="Exemplo direto do formato esperado na camada pública da variante default."
+            code={defaultDataCode}
+            notes={[
+              'A story usa uma combinação de slides com imagem e vídeo para exercitar os dois caminhos principais do componente.',
+            ]}
+          >
+            {renderDefaultCarousel({
+              ...defaultArgs,
+              autoplay: false,
+              indicators: 'numbers',
+            })}
+          </SandboxExample>
+        </SectionCard>
+
+        <SectionCard
+          title="Configurações principais"
+          description="As props top-level controlam navegação, ritmo do autoplay, largura visual e interação touch sem exigir adaptadores externos."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li><code>autoplay</code> e <code>autoplaySpeed</code> controlam avanço automático entre slides.</li>
+            <li><code>width</code> alterna entre conteúdo com largura padrão e a leitura full do slide.</li>
+            <li><code>indicators</code> aceita <code>default</code>, <code>inside</code> e <code>numbers</code>.</li>
+            <li><code>enableSwipe</code> e <code>noArrowsMobile</code> permitem ajustar a experiência em telas menores.</li>
+          </ul>
+        </SectionCard>
+
+        <SectionCard
+          title="Limitações e observações"
+          description="A variante default continua intencionalmente focada em destaque de um item por vez e não substitui galerias multi-coluna nem listas de cards."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li>O formato antigo <code>data.items</code> não deve ser reutilizado nas integrações novas.</li>
+            <li>Autoplay não avança quando existe apenas um item válido.</li>
+            <li>Ao desativar <code>circular</code>, as setas ficam bloqueadas no primeiro e no último slide.</li>
+          </ul>
+        </SectionCard>
+      </DocsStoryLayout>
+    );
   },
 };
 
 export const DefaultInterativo: Story = {
-  name: 'Default interativo',
+  name: 'Default - Interativo',
   args: {
     variante: 'default',
     data: defaultItems,
+    autoplay: false,
+    autoplaySpeed: 4000,
+    circular: true,
+    width: 'default',
     indicators: 'default',
     enableSwipe: true,
-    autoplay: false,
-    circular: true,
+    noArrowsMobile: false,
   },
   argTypes: {
+    variante: {
+      control: false,
+      table: { disable: true },
+    },
+    data: {
+      control: false,
+      table: { disable: true },
+    },
+    items: {
+      control: false,
+      table: { disable: true },
+    },
+    autoplay: {
+      control: 'boolean',
+      description: 'Liga ou desliga o avanço automático entre slides.',
+      table: { category: 'Comportamento' },
+    },
+    autoplaySpeed: {
+      control: { type: 'number', min: 1000, max: 10000, step: 500 },
+      description: 'Intervalo do autoplay em milissegundos.',
+      table: { category: 'Comportamento' },
+    },
+    circular: {
+      control: 'boolean',
+      description: 'Permite loop infinito entre primeiro e último slide.',
+      table: { category: 'Comportamento' },
+    },
+    width: {
+      control: { type: 'inline-radio' },
+      options: ['default', 'full'],
+      description: 'Ajusta a largura visual do conteúdo.',
+      table: { category: 'Layout' },
+    },
     indicators: {
       control: { type: 'select' },
       options: ['default', 'inside', 'numbers'],
-      description: 'Posicionamento dos indicadores',
+      description: 'Posicionamento ou formato dos indicadores.',
+      table: { category: 'Layout' },
     },
-    variante: {
-      control: false,
+    enableSwipe: {
+      control: 'boolean',
+      description: 'Ativa navegação por swipe em dispositivos touch.',
+      table: { category: 'Interação' },
+    },
+    noArrowsMobile: {
+      control: 'boolean',
+      description: 'Esconde as setas em telas pequenas.',
+      table: { category: 'Interação' },
     },
   },
+  render: (args) => renderDefaultCarousel(args as DefaultStoryArgs),
 };
 
 export const CardDocs: Story = {
-  name: 'Card Docs',
+  name: 'Card - Documentação',
   args: {
     variante: 'card',
     cardVariant: 'news',
@@ -442,103 +627,138 @@ export const CardDocs: Story = {
     cardsPerViewTablet: 2,
     cardsPerViewMobile: 1,
     gap: 16,
+    autoplay: false,
+    circular: true,
     showIndicators: true,
     showArrows: true,
   },
-  render: (args) => (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '12px 0' }}>
-      <h1>Carousel — Variante Card</h1>
-
-      <div style={{ marginTop: 12 }}>
-        <Carousel {...args} />
-      </div>
-
-      <p style={{ margin: '12px 0' }}>
-        Controle quantos cards aparecem em cada slide com{' '}
-        <code>cardsPerView</code>. O array <code>items</code> aceita as props do
-        Card (variant, description, image, href, itens etc.).
-      </p>
-
-      <section style={{ margin: '12px 0' }}>
-        <h3>Props de controle (top-level)</h3>
-        <ul>
-          <li>
-            <code>cardVariant</code>: força todas as cartas a usarem uma
-            variante especifica (<code>post</code>, <code>list</code>,
-            <code>news</code> ou <code>icon</code>).
-          </li>
-          <li>
-            <code>cardsPerView</code>, <code>cardsPerViewTablet</code>,
-            <code>cardsPerViewMobile</code>: quantidade de cards por slide em
-            cada breakpoint.
-          </li>
-          <li>
-            <code>gap</code>: espaco em pixels entre os cards.
-          </li>
-          <li>
-            <code>showIndicators</code> e <code>showArrows</code>: exibe ou
-            oculta indicadores e setas de navegacao.
-          </li>
-        </ul>
-      </section>
-
-      <section style={{ margin: '12px 0' }}>
-        <h3>Estrutura de items (Card)</h3>
-        <p>
-          <code>items</code> deve ser um array de objetos aceitos pelo
-          componente <code>Card</code>. Exemplos:
-        </p>
-        <pre
-          style={{
-            background: '#f7f7f7',
-            padding: 12,
-            borderRadius: 4,
-            overflowX: 'auto',
-          }}
-        >
-          <code>{`items=[
-  { title: 'Noticia', description: 'Resumo', image: 'https://...', variant: 'news', href: '#' },
-  { title: 'Lista', description: 'Com itens', image: 'https://...', variant: 'list', itens: [{ value: 'Item 1' }, { value: 'Item 2' }] },
-]`}</code>
-        </pre>
-        <p>
-          Quando <code>cardVariant</code> é fornecido, ele sobrescreve o
-          <code> variant</code> interno de cada item.
-        </p>
-      </section>
-
-      <section style={{ margin: '12px 0' }}>
-        <h3>Exemplo rapido</h3>
-        <pre
-          style={{
-            background: '#f7f7f7',
-            padding: 12,
-            borderRadius: 4,
-            overflowX: 'auto',
-          }}
-        >
-          <code>{`<Carousel
-  variante="card"
-  cardVariant="news"
-  items={cardItemsNews}
-  cardsPerView={3}
-  cardsPerViewTablet={2}
-  cardsPerViewMobile={1}
-  gap={16}
-  showIndicators
-  showArrows
-/>`}</code>
-        </pre>
-      </section>
-    </div>
-  ),
   parameters: {
     controls: { disable: true },
+  },
+  render: (args) => {
+    const cardArgs = args as CardStoryArgs;
+
+    return (
+      <DocsStoryLayout>
+        <DocsHero
+          eyebrow="Variante card"
+          title={<h3 style={storyDocsStyles.heroTitle}>Carousel card</h3>}
+          description={
+            <>
+              A variante card agrupa itens em slides responsivos e reaproveita o
+              contrato visual do componente <code>Card</code>. Ela foi pensada
+              para listar notícias, posts, listas e cartões com ícone dentro de
+              um fluxo de navegação horizontal.
+            </>
+          }
+          stats={[
+            {
+              title: 'Foco principal',
+              text: 'Listar múltiplos cards por slide sem perder controle sobre responsividade e navegação.',
+            },
+            {
+              title: 'Override útil',
+              text: 'cardVariant pode forçar todos os itens a renderizarem com a mesma variante de Card.',
+            },
+            {
+              title: 'Configuração mais comum',
+              text: 'cardsPerView=3 no desktop, 2 no tablet, 1 no mobile e indicadores ativos.',
+            },
+          ]}
+        />
+
+        <SectionCard
+          title="Quando usar"
+          description="A variante card é adequada para coleções editoriais e vitrines de conteúdo em que o usuário precisa comparar vários itens por slide."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li>Use para notícias, posts, listas de serviços ou cards com ícone.</li>
+            <li>O componente define grupos de cards por slide de acordo com o breakpoint ativo.</li>
+            <li>Quando houver apenas um slide, indicadores e setas deixam de ser necessários visualmente.</li>
+          </ul>
+
+          <SandboxExample
+            title="Exemplo recomendado"
+            description="Configuração comum com variante news e distribuição responsiva de cards por slide."
+            code={cardUsageCode}
+            notes={[
+              'A história interativa troca automaticamente o dataset conforme o valor de cardVariant.',
+              'Com poucos itens, o número real de slides pode diminuir e os controles visuais se ajustam a isso.',
+            ]}
+          >
+            {renderCardCarousel(cardArgs)}
+          </SandboxExample>
+        </SectionCard>
+
+        <SectionCard
+          title="Estrutura dos items"
+          description="Cada item aceita as mesmas props centrais de Card, com alias adicionais heading, text e url para facilitar tradução de contratos anteriores."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li><code>items</code> recebe objetos compatíveis com <code>Card</code>, incluindo <code>variant</code>, <code>image</code>, <code>href</code>, <code>itens</code> e ações.</li>
+            <li>Quando <code>cardVariant</code> está presente, ele sobrescreve o <code>variant</code> individual de cada item.</li>
+            <li>O dataset pode variar entre <code>post</code>, <code>list</code>, <code>news</code> e <code>icon</code> sem mudar o wrapper <code>Carousel</code>.</li>
+          </ul>
+
+          <SandboxExample
+            title="Shape de items compatíveis com Card"
+            description="Exemplo de como montar o array da variante card mantendo o contrato independente de aplicação consumidora."
+            code={cardDataCode}
+            notes={[
+              'A combinação entre items e cardVariant permite tanto dados heterogêneos quanto uma grade visual uniforme.',
+            ]}
+          >
+            {renderCardCarousel({
+              ...cardArgs,
+              cardVariant: 'list',
+            })}
+          </SandboxExample>
+        </SectionCard>
+
+        <SectionCard
+          title="Responsividade e navegação"
+          description="A variante card recalcula quantos itens entram em cada slide com base na largura da viewport e depois divide o array em grupos correspondentes."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li><code>cardsPerView</code> controla o desktop; <code>cardsPerViewTablet</code> e <code>cardsPerViewMobile</code> ajustam tablet e mobile.</li>
+            <li>Os breakpoints atuais consideram mobile abaixo de 640px e tablet abaixo de 1024px.</li>
+            <li><code>gap</code> é normalizado para a escala suportada internamente pelo componente.</li>
+            <li><code>showIndicators</code> e <code>showArrows</code> controlam a exposição dos mecanismos de navegação.</li>
+          </ul>
+
+          <SandboxExample
+            title="Configuração responsiva"
+            description="Base mínima para controlar quantidade por slide e ritmo de navegação da variante card."
+            code={cardResponsiveCode}
+          >
+            {renderCardCarousel({
+              ...cardArgs,
+              cardVariant: 'post',
+              cardsPerView: 3,
+              cardsPerViewTablet: 2,
+              cardsPerViewMobile: 1,
+              gap: 16,
+            })}
+          </SandboxExample>
+        </SectionCard>
+
+        <SectionCard
+          title="Limitações e observações"
+          description="A variante card organiza listas de cards, mas continua dependendo do contrato do componente Card e de datasets locais coerentes para uma experiência consistente."
+        >
+          <ul style={storyDocsStyles.list}>
+            <li>Se <code>items</code> vier vazio, o componente mostra o empty state interno do carousel card.</li>
+            <li>Com <code>showArrows</code> ou <code>showIndicators</code> ativos, o componente ainda pode ocultar esses controles quando existe apenas um slide.</li>
+            <li>Gap fora da escala suportada é aproximado para o valor mais próximo previsto pela implementação.</li>
+          </ul>
+        </SectionCard>
+      </DocsStoryLayout>
+    );
   },
 };
 
 export const CardInterativo: Story = {
-  name: 'Card interativo',
+  name: 'Card - Interativo',
   args: {
     variante: 'card',
     cardVariant: 'post',
@@ -548,40 +768,71 @@ export const CardInterativo: Story = {
     cardsPerViewMobile: 1,
     gap: 12,
     autoplay: false,
+    autoplaySpeed: 5000,
     circular: true,
     showIndicators: true,
     showArrows: true,
   },
   argTypes: {
+    variante: {
+      control: false,
+      table: { disable: true },
+    },
+    items: {
+      control: false,
+      table: { disable: true },
+    },
     cardVariant: {
       control: { type: 'select' },
       options: ['post', 'list', 'news', 'icon'],
-      description: 'Força todas as cartas a usarem a mesma variante de Card',
-    },
-    variante: {
-      control: false,
+      description: 'Força todos os cards a usarem a mesma variante visual.',
+      table: { category: 'Conteudo' },
     },
     cardsPerView: {
       control: { type: 'number', min: 1, max: 6, step: 1 },
-      description: 'Numero de cards por slide (desktop)',
+      description: 'Número de cards por slide em desktop.',
+      table: { category: 'Layout responsivo' },
     },
     cardsPerViewTablet: {
       control: { type: 'number', min: 1, max: 4, step: 1 },
-      description: 'Numero de cards por slide (tablet)',
+      description: 'Número de cards por slide em tablet.',
+      table: { category: 'Layout responsivo' },
     },
     cardsPerViewMobile: {
       control: { type: 'number', min: 1, max: 2, step: 1 },
-      description: 'Numero de cards por slide (mobile)',
+      description: 'Número de cards por slide em mobile.',
+      table: { category: 'Layout responsivo' },
     },
     gap: {
       control: { type: 'number', min: 0, max: 64, step: 2 },
-      description: 'Espaco entre cards (px)',
+      description: 'Espaço entre cards em pixels antes da normalização interna.',
+      table: { category: 'Layout responsivo' },
+    },
+    autoplay: {
+      control: 'boolean',
+      description: 'Liga ou desliga o autoplay entre grupos de cards.',
+      table: { category: 'Comportamento' },
+    },
+    autoplaySpeed: {
+      control: { type: 'number', min: 1000, max: 10000, step: 500 },
+      description: 'Intervalo do autoplay em milissegundos.',
+      table: { category: 'Comportamento' },
+    },
+    circular: {
+      control: 'boolean',
+      description: 'Permite loop infinito entre os grupos de cards.',
+      table: { category: 'Comportamento' },
+    },
+    showIndicators: {
+      control: 'boolean',
+      description: 'Exibe ou oculta indicadores de slide.',
+      table: { category: 'Navegacao' },
+    },
+    showArrows: {
+      control: 'boolean',
+      description: 'Exibe ou oculta setas laterais.',
+      table: { category: 'Navegacao' },
     },
   },
-  render: (args) => {
-    const { cardVariant = 'post' } = args as CarouselCardProps;
-    const dataset = cardItemsByVariant[cardVariant] || cardItemsPost;
-
-    return <Carousel {...args} variante="card" items={dataset} cardVariant={cardVariant} />;
-  },
+  render: (args) => renderCardCarousel(args as CardStoryArgs),
 };
