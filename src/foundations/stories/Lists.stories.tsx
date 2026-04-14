@@ -41,7 +41,7 @@ function ListsPreview() {
 }
 
 const meta = {
-  title: 'Typography/Lists',
+  title: 'Tipografia/Lists',
   parameters: {
     layout: 'padded',
   },

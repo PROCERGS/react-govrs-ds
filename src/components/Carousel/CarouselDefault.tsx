@@ -2,6 +2,7 @@ import { useEffect, useState, type TouchEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Stack, Text } from '../../primitives';
+import { breakpoints } from '../../tokens';
 import { CarouselEmptyState } from './CarouselEmptyState';
 import './CarouselDefault.scss';
 
@@ -50,7 +51,7 @@ export function CarouselDefault({
   width = 'default',
   indicators = 'default',
   enableSwipe = true,
-  noArrowsMobile = false,
+  noArrowsMobile = true,
 }: CarouselDefaultProps) {
   const items = Array.isArray(data)
     ? data
@@ -65,6 +66,19 @@ export function CarouselDefault({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isSmartphonePortrait, setIsSmartphonePortrait] = useState(false);
+
+  useEffect(() => {
+    const updateViewportState = () => {
+      setIsSmartphonePortrait(
+        window.matchMedia(`(max-width: ${breakpoints.smartphonePortraitMax})`).matches,
+      );
+    };
+
+    updateViewportState();
+    window.addEventListener('resize', updateViewportState);
+    return () => window.removeEventListener('resize', updateViewportState);
+  }, []);
 
   useEffect(() => {
     if (!autoplay || items.length <= 1) return undefined;
@@ -113,20 +127,21 @@ export function CarouselDefault({
   };
 
   const minSwipeDistance = 50;
+  const swipeEnabled = enableSwipe && items.length > 1;
 
   const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    if (!enableSwipe) return;
+    if (!swipeEnabled) return;
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    if (!enableSwipe) return;
+    if (!swipeEnabled) return;
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const onTouchEnd = () => {
-    if (!enableSwipe) return;
+    if (!swipeEnabled) return;
     if (touchStart == null || touchEnd == null) return;
 
     const distance = touchStart - touchEnd;
@@ -151,19 +166,22 @@ export function CarouselDefault({
 
   const isPrevDisabled = !circular && currentIndex === 0;
   const isNextDisabled = !circular && currentIndex === items.length - 1;
+  const shouldShowArrows = items.length > 1 && !(noArrowsMobile && isSmartphonePortrait);
 
   return (
     <div className="carousel-container carousel-default" aria-roledescription="carousel" aria-label="Carrossel padrão">
       <div className="carousel-wrapper">
-        <button
-          className={`carousel-button carousel-button-prev icon-${width} ${noArrowsMobile ? 'hide-on-mobile' : ''}`}
-          type="button"
-          onClick={goToPrevious}
-          disabled={isPrevDisabled}
-          aria-label="Slide anterior"
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
+        {shouldShowArrows ? (
+          <button
+            className={`carousel-button carousel-button-prev icon-${width}`}
+            type="button"
+            onClick={goToPrevious}
+            disabled={isPrevDisabled}
+            aria-label="Slide anterior"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+        ) : null}
 
         <div
           className={`carousel-content carousel-width-${width}`}
@@ -302,7 +320,7 @@ export function CarouselDefault({
                 ) : item.image ? (
                   <img
                     src={item.image}
-                    alt={item.title || `Slide ${index + 1}`}
+                    alt={item.imageAlt || item.title || `Slide ${index + 1}`}
                     className="carousel-image"
                   />
                 ) : (
@@ -336,15 +354,17 @@ export function CarouselDefault({
           })}
         </div>
 
-        <button
-          className={`carousel-button carousel-button-next icon-${width} ${noArrowsMobile ? 'hide-on-mobile' : ''}`}
-          type="button"
-          onClick={goToNext}
-          disabled={isNextDisabled}
-          aria-label="Próximo slide"
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
-        </button>
+        {shouldShowArrows ? (
+          <button
+            className={`carousel-button carousel-button-next icon-${width}`}
+            type="button"
+            onClick={goToNext}
+            disabled={isNextDisabled}
+            aria-label="Próximo slide"
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        ) : null}
       </div>
 
       <div className={`carousel-indicators carousel-indicators-${indicators}`}>

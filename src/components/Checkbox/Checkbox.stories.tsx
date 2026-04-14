@@ -103,7 +103,7 @@ const [submittedValue, setSubmittedValue] = useState('Nenhum envio ainda')
 </div>`
 
 const meta = {
-  title: 'Widgets/Checkbox',
+  title: 'Formulários/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'padded',

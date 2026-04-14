@@ -52,7 +52,7 @@ const combinedExampleCode = `<Badges variant="success" message="Campo correto" /
 <Badges variant="info" message="Informação" />`
 
 const meta = {
-  title: 'Widgets/Badges',
+  title: 'Feedback/Badges',
   component: Badges,
   parameters: {
     layout: 'padded',

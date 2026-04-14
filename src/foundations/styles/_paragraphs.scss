@@ -1,3 +1,5 @@
+@use './variables';
+
 .paragraphs {
   &-demo {
     display: grid;
@@ -59,7 +61,7 @@
   line-height: var(--govrs-line-height-28, 1.75rem);
 }
 
-@media (max-width: 420px) {
+@media (max-width: #{variables.$govrs-breakpoint-smartphone-portrait-max}) {
   .paragraphs-demo {
     grid-template-columns: 1fr;
   }

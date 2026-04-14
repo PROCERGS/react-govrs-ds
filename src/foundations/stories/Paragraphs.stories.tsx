@@ -80,7 +80,7 @@ function ParagraphsScalePreview() {
 }
 
 const meta = {
-  title: 'Typography/Paragraphs',
+  title: 'Tipografia/Paragraphs',
   parameters: {
     layout: 'padded',
   },

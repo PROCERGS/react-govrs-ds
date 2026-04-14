@@ -66,7 +66,7 @@ const formExampleCode = `const [enabled, setEnabled] = useState(false)
 />`
 
 const meta = {
-  title: 'Widgets/Switch',
+  title: 'Formulários/Switch',
   component: Switch,
   parameters: {
     layout: 'padded',

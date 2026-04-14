@@ -125,7 +125,7 @@ function renderFeedbackBadge(state?: Input.State) {
 }
 
 const meta = {
-  title: 'Widgets/Input',
+  title: 'Formulários/Input',
   component: Input,
   args: {
     label: 'Campo base',

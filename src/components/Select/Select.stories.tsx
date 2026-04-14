@@ -131,7 +131,7 @@ function formatValue(value: Select.Value) {
 }
 
 const meta = {
-  title: 'Widgets/Select',
+  title: 'Formulários/Select',
   component: Select,
   parameters: {
     layout: 'padded',

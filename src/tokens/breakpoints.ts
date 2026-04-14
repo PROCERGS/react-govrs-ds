@@ -1,4 +1,12 @@
 export const breakpoints = {
+  smartphonePortraitMax: '35.9375rem',
+  smartphoneLandscapeTabletPortraitMin: '36rem',
+  smartphoneLandscapeTabletPortraitMax: '61.9375rem',
+  tabletLandscapeMin: '62rem',
+  tabletLandscapeMax: '79.9375rem',
+  desktopMin: '80rem',
+  desktopMax: '99.9375rem',
+  tvMin: '100rem',
   xs: '25rem',
   xsWide: '26.25rem',
   sm: '36rem',

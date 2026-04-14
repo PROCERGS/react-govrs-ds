@@ -62,7 +62,7 @@ const descriptionExampleCode = `<Radio
 />`
 
 const meta = {
-  title: 'Widgets/Radio',
+  title: 'Formulários/Radio',
   component: Radio,
   args: {
     label: 'Opção A',

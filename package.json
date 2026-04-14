@@ -23,11 +23,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "storybook": "storybook dev -p 6006",
+    "dev": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "storybook": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
     "build-storybook": "storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
-    "build": "npm run build:types && vite build",
+    "build": "vite build && npm run build:types",
     "lint": "eslint ."
   },
   "peerDependencies": {

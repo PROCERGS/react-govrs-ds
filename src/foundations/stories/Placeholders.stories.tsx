@@ -24,7 +24,7 @@ function PlaceholderPreview() {
 }
 
 const meta = {
-  title: 'Typography/Placeholders',
+  title: 'Tipografia/Placeholders',
   parameters: {
     layout: 'padded',
   },

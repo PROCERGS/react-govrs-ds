@@ -1,3 +1,5 @@
+@use './variables';
+
 .listas {
   &-demo {
     display: grid;
@@ -27,7 +29,7 @@ ul.listas-base {
   margin: var(--govrs-space-2, 0.5rem) 0;
 }
 
-@media (max-width: 420px) {
+@media (max-width: #{variables.$govrs-breakpoint-smartphone-portrait-max}) {
   .listas-demo {
     grid-template-columns: 1fr;
   }

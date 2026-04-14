@@ -89,7 +89,7 @@ const darkPanelStyle: CSSProperties = {
 }
 
 const meta = {
-  title: 'Widgets/Button',
+  title: 'Ações/Button',
   component: Button,
   parameters: {
     layout: 'padded',

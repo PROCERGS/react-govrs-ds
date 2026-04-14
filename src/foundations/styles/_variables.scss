@@ -25,6 +25,15 @@ $font-family-display:
   Arial,
   sans-serif;
 
+$govrs-breakpoint-smartphone-portrait-max: 35.9375rem;
+$govrs-breakpoint-smartphone-landscape-tablet-portrait-min: 36rem;
+$govrs-breakpoint-smartphone-landscape-tablet-portrait-max: 61.9375rem;
+$govrs-breakpoint-tablet-landscape-min: 62rem;
+$govrs-breakpoint-tablet-landscape-max: 79.9375rem;
+$govrs-breakpoint-desktop-min: 80rem;
+$govrs-breakpoint-desktop-max: 99.9375rem;
+$govrs-breakpoint-tv-min: 100rem;
+
 :root {
   /* Color tokens */
   --govrs-color-brand-primary: #1a7235;
@@ -81,6 +90,16 @@ $font-family-display:
   --govrs-color-contrast-surface: #1a1a1a;
   --govrs-color-contrast-surface-alt: #2d2d2d;
   --govrs-color-contrast-border: #333333;
+
+  /* Breakpoint tokens */
+  --govrs-breakpoint-smartphone-portrait-max: #{$govrs-breakpoint-smartphone-portrait-max};
+  --govrs-breakpoint-smartphone-landscape-tablet-portrait-min: #{$govrs-breakpoint-smartphone-landscape-tablet-portrait-min};
+  --govrs-breakpoint-smartphone-landscape-tablet-portrait-max: #{$govrs-breakpoint-smartphone-landscape-tablet-portrait-max};
+  --govrs-breakpoint-tablet-landscape-min: #{$govrs-breakpoint-tablet-landscape-min};
+  --govrs-breakpoint-tablet-landscape-max: #{$govrs-breakpoint-tablet-landscape-max};
+  --govrs-breakpoint-desktop-min: #{$govrs-breakpoint-desktop-min};
+  --govrs-breakpoint-desktop-max: #{$govrs-breakpoint-desktop-max};
+  --govrs-breakpoint-tv-min: #{$govrs-breakpoint-tv-min};
 
   /* Spacing tokens */
   --govrs-space-0: 0rem;

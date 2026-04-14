@@ -15,7 +15,7 @@ import './CarouselDefault.scss';
 import '../../foundations/styles/index.scss';
 
 const meta = {
-  title: 'Components/Carousel',
+  title: 'Conteúdo/Carousel',
   component: Carousel,
   parameters: {
     layout: 'padded',
@@ -314,8 +314,8 @@ const cardItemsByVariant: Record<NonNullable<CarouselCardProps['cardVariant']>, 
   icon: cardItemsIcon,
 };
 
-type DefaultStoryArgs = CarouselDefaultProps & { variante?: 'default' };
-type CardStoryArgs = CarouselCardProps & { variante: 'card' };
+type DefaultStoryArgs = CarouselDefaultProps & { variant?: 'default' };
+type CardStoryArgs = CarouselCardProps & { variant?: 'card' };
 
 const carouselPreviewSurfaceStyle = {
   ...storyDocsStyles.previewStage,
@@ -329,7 +329,7 @@ const carouselPreviewInnerStyle = {
 };
 
 const defaultUsageCode = `<Carousel
-  variante="default"
+  variant="default"
   data={defaultItems}
   autoplay
   autoplaySpeed={4000}
@@ -337,7 +337,7 @@ const defaultUsageCode = `<Carousel
   width="default"
   indicators="inside"
   enableSwipe
-  noArrowsMobile={false}
+  noArrowsMobile
 />`;
 
 const defaultDataCode = `data={[
@@ -353,13 +353,15 @@ const defaultDataCode = `data={[
 ]}`;
 
 const cardUsageCode = `<Carousel
-  variante="card"
+  variant="card"
   cardVariant="news"
   items={cardItemsNews}
   cardsPerView={3}
   cardsPerViewTablet={2}
   cardsPerViewMobile={1}
   gap={16}
+  enableSwipe
+  noArrowsMobile
   showIndicators
   showArrows
 />`;
@@ -382,7 +384,7 @@ const cardDataCode = `items={[
 ]}`;
 
 const cardResponsiveCode = `<Carousel
-  variante="card"
+  variant="card"
   cardVariant="post"
   items={cardItemsPost}
   cardsPerView={3}
@@ -391,6 +393,8 @@ const cardResponsiveCode = `<Carousel
   gap={16}
   autoplay={false}
   circular
+  enableSwipe
+  noArrowsMobile
   showIndicators
   showArrows
 />`;
@@ -407,7 +411,7 @@ function renderDefaultCarousel(args: DefaultStoryArgs) {
   return (
     <div style={carouselPreviewSurfaceStyle}>
       <div style={carouselPreviewInnerStyle}>
-        <Carousel {...args} variante="default" />
+        <Carousel {...args} variant="default" />
       </div>
     </div>
   );
@@ -420,7 +424,7 @@ function renderCardCarousel(args: CardStoryArgs) {
   return (
     <div style={carouselPreviewSurfaceStyle}>
       <div style={carouselPreviewInnerStyle}>
-        <Carousel {...args} variante="card" items={dataset} cardVariant={cardVariant} />
+        <Carousel {...args} variant="card" items={dataset} cardVariant={cardVariant} />
       </div>
     </div>
   );
@@ -429,7 +433,7 @@ function renderCardCarousel(args: CardStoryArgs) {
 export const DefaultDocs: Story = {
   name: 'Default - Documentação',
   args: {
-    variante: 'default',
+    variant: 'default',
     data: defaultItems,
     autoplay: true,
     autoplaySpeed: 4000,
@@ -437,7 +441,7 @@ export const DefaultDocs: Story = {
     width: 'default',
     indicators: 'inside',
     enableSwipe: true,
-    noArrowsMobile: false,
+    noArrowsMobile: true,
   },
   parameters: {
     controls: { disable: true },
@@ -480,7 +484,7 @@ export const DefaultDocs: Story = {
         >
           <ul style={storyDocsStyles.list}>
             <li>Use para banners de home, destaques de campanha e chamadas com imagem ampla.</li>
-            <li>O componente mantém setas, indicadores e swipe como controles independentes.</li>
+            <li>O componente combina indicadores, setas e swipe, mas em mobile retrato a configuração recomendada é ocultar as setas e priorizar o arraste.</li>
             <li>Com <code>circular={false}</code>, a navegação bloqueia nas extremidades.</li>
           </ul>
 
@@ -490,6 +494,7 @@ export const DefaultDocs: Story = {
             code={defaultUsageCode}
             notes={[
               'Os itens podem conter image, title e description, ou apenas videoUrl para mídia embarcada.',
+              'Com noArrowsMobile ativo, o mobile retrato passa a depender de swipe e indicadores para navegação.',
               'Se o array vier vazio, o componente mostra o empty state interno do carousel default.',
             ]}
           >
@@ -531,7 +536,7 @@ export const DefaultDocs: Story = {
             <li><code>autoplay</code> e <code>autoplaySpeed</code> controlam avanço automático entre slides.</li>
             <li><code>width</code> alterna entre conteúdo com largura padrão e a leitura full do slide.</li>
             <li><code>indicators</code> aceita <code>default</code>, <code>inside</code> e <code>numbers</code>.</li>
-            <li><code>enableSwipe</code> e <code>noArrowsMobile</code> permitem ajustar a experiência em telas menores.</li>
+            <li><code>enableSwipe</code> e <code>noArrowsMobile</code> ajustam a experiência em telas menores; no mobile retrato, o comportamento recomendado é swipe com setas ocultas.</li>
           </ul>
         </SectionCard>
 
@@ -553,7 +558,7 @@ export const DefaultDocs: Story = {
 export const DefaultInterativo: Story = {
   name: 'Default - Interativo',
   args: {
-    variante: 'default',
+    variant: 'default',
     data: defaultItems,
     autoplay: false,
     autoplaySpeed: 4000,
@@ -561,10 +566,10 @@ export const DefaultInterativo: Story = {
     width: 'default',
     indicators: 'default',
     enableSwipe: true,
-    noArrowsMobile: false,
+    noArrowsMobile: true,
   },
   argTypes: {
-    variante: {
+    variant: {
       control: false,
       table: { disable: true },
     },
@@ -610,7 +615,7 @@ export const DefaultInterativo: Story = {
     },
     noArrowsMobile: {
       control: 'boolean',
-      description: 'Esconde as setas em telas pequenas.',
+      description: 'No mobile retrato, esconde as setas e prioriza a navegação por swipe.',
       table: { category: 'Interação' },
     },
   },
@@ -620,7 +625,7 @@ export const DefaultInterativo: Story = {
 export const CardDocs: Story = {
   name: 'Card - Documentação',
   args: {
-    variante: 'card',
+    variant: 'card',
     cardVariant: 'news',
     items: cardItemsNews,
     cardsPerView: 3,
@@ -629,6 +634,8 @@ export const CardDocs: Story = {
     gap: 16,
     autoplay: false,
     circular: true,
+    enableSwipe: true,
+    noArrowsMobile: true,
     showIndicators: true,
     showArrows: true,
   },
@@ -662,7 +669,7 @@ export const CardDocs: Story = {
             },
             {
               title: 'Configuração mais comum',
-              text: 'cardsPerView=3 no desktop, 2 no tablet, 1 no mobile e indicadores ativos.',
+              text: 'cardsPerView=3 no desktop, 2 no tablet, 1 no mobile, indicadores ativos e arraste no mobile retrato.',
             },
           ]}
         />
@@ -674,6 +681,7 @@ export const CardDocs: Story = {
           <ul style={storyDocsStyles.list}>
             <li>Use para notícias, posts, listas de serviços ou cards com ícone.</li>
             <li>O componente define grupos de cards por slide de acordo com o breakpoint ativo.</li>
+            <li>No mobile retrato, a configuração recomendada é navegar por arraste e esconder as setas laterais.</li>
             <li>Quando houver apenas um slide, indicadores e setas deixam de ser necessários visualmente.</li>
           </ul>
 
@@ -683,6 +691,7 @@ export const CardDocs: Story = {
             code={cardUsageCode}
             notes={[
               'A história interativa troca automaticamente o dataset conforme o valor de cardVariant.',
+              'Com noArrowsMobile ativo, o mobile retrato usa swipe como mecanismo principal de navegação.',
               'Com poucos itens, o número real de slides pode diminuir e os controles visuais se ajustam a isso.',
             ]}
           >
@@ -721,9 +730,9 @@ export const CardDocs: Story = {
         >
           <ul style={storyDocsStyles.list}>
             <li><code>cardsPerView</code> controla o desktop; <code>cardsPerViewTablet</code> e <code>cardsPerViewMobile</code> ajustam tablet e mobile.</li>
-            <li>Os breakpoints atuais consideram mobile abaixo de 640px e tablet abaixo de 1024px.</li>
+            <li>Os breakpoints atuais seguem a referencia do gov.br: mobile retrato ate 575px, faixa intermediaria de 576px a 1279px e desktop a partir de 1280px.</li>
             <li><code>gap</code> é normalizado para a escala suportada internamente pelo componente.</li>
-            <li><code>showIndicators</code> e <code>showArrows</code> controlam a exposição dos mecanismos de navegação.</li>
+            <li><code>enableSwipe</code>, <code>showIndicators</code> e <code>showArrows</code> controlam a navegação; em mobile retrato, a recomendação é manter o arraste e ocultar as setas com <code>noArrowsMobile</code>.</li>
           </ul>
 
           <SandboxExample
@@ -760,7 +769,7 @@ export const CardDocs: Story = {
 export const CardInterativo: Story = {
   name: 'Card - Interativo',
   args: {
-    variante: 'card',
+    variant: 'card',
     cardVariant: 'post',
     items: cardItemsPost,
     cardsPerView: 2,
@@ -770,11 +779,13 @@ export const CardInterativo: Story = {
     autoplay: false,
     autoplaySpeed: 5000,
     circular: true,
+    enableSwipe: true,
+    noArrowsMobile: true,
     showIndicators: true,
     showArrows: true,
   },
   argTypes: {
-    variante: {
+    variant: {
       control: false,
       table: { disable: true },
     },
@@ -822,6 +833,16 @@ export const CardInterativo: Story = {
       control: 'boolean',
       description: 'Permite loop infinito entre os grupos de cards.',
       table: { category: 'Comportamento' },
+    },
+    enableSwipe: {
+      control: 'boolean',
+      description: 'Ativa navegação por swipe e arraste em dispositivos touch.',
+      table: { category: 'Comportamento' },
+    },
+    noArrowsMobile: {
+      control: 'boolean',
+      description: 'No mobile retrato, esconde as setas e deixa a navegação por arraste.',
+      table: { category: 'Navegacao' },
     },
     showIndicators: {
       control: 'boolean',

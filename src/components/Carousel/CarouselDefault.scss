@@ -1,3 +1,5 @@
+@use '../../foundations/styles/variables' as vars;
+
 .carousel-container {
   position: relative;
   width: 100%;
@@ -395,13 +397,13 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: #{vars.$govrs-breakpoint-tablet-landscape-max}) {
   .carousel-text {
     max-width: calc(60% - var(--govrs-space-7-5, 2.5rem));
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
   .carousel-text {
     left: var(--govrs-space-8, 3rem);
     max-width: calc(70% - var(--govrs-space-7-5, 2.5rem));
@@ -414,17 +416,13 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
   .carousel-width-default {
     max-width: 80%;
   }
   .carousel-content {
     min-height: var(--govrs-size-media-carousel-2xs, 18.75rem);
     touch-action: pan-y pinch-zoom;
-  }
-
-  .hide-on-mobile {
-    display: none;
   }
 
   .carousel-image,
@@ -504,7 +502,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
   .carousel-container {
     margin: var(--govrs-space-4, 1rem) auto;
   }
@@ -595,7 +593,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
   .carousel-content {
     touch-action: pan-y pinch-zoom;
   }

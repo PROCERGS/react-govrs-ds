@@ -85,7 +85,7 @@ const combinedExampleCode = `<Alerts variant="success" message="Sucesso com aç�
 <Alerts variant="info" message="Informação importante exibida aqui." dismissible />`
 
 const meta = {
-  title: 'Widgets/Alerts',
+  title: 'Feedback/Alerts',
   component: Alerts,
   parameters: {
     layout: 'padded',

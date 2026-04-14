@@ -117,7 +117,7 @@ function HeadersUsagePreview() {
 }
 
 const meta = {
-  title: 'Typography/Headers',
+  title: 'Tipografia/Headers',
   parameters: {
     layout: 'padded',
   },

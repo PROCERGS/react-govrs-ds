@@ -1,3 +1,5 @@
+@use './variables';
+
 .headers {
   &-demo {
     display: grid;
@@ -106,7 +108,7 @@ h4.headers-4 {
   padding: var(--govrs-space-4, 1rem);
 }
 
-@media (max-width: 420px) {
+@media (max-width: #{variables.$govrs-breakpoint-smartphone-portrait-max}) {
   .headers-demo {
     grid-template-columns: 1fr;
   }

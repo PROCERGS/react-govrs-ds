@@ -3,12 +3,24 @@ import { CarouselCard, type CarouselCardProps } from './CarouselCard';
 
 export type CarouselVariant = 'default' | 'card';
 
-export type CarouselProps =
-  | ({ variante?: 'default' | undefined } & CarouselDefaultProps)
-  | ({ variante: 'card' } & CarouselCardProps);
+type CarouselDefaultVariantProps = CarouselDefaultProps & {
+  variant?: 'default';
+  /** @deprecated Use variant instead. */
+  variante?: 'default';
+};
 
-export function Carousel({ variante = 'default', ...props }: CarouselProps) {
-  const normalizedVariant = (variante || 'default').toString().toLowerCase() as CarouselVariant;
+type CarouselCardVariantProps = CarouselCardProps & {
+  variant?: 'card';
+  /** @deprecated Use variant instead. */
+  variante?: 'card';
+};
+
+export type CarouselProps = CarouselDefaultVariantProps | CarouselCardVariantProps;
+
+export function Carousel({ variant, variante, ...props }: CarouselProps) {
+  const normalizedVariant = (variant ?? variante ?? 'default')
+    .toString()
+    .toLowerCase() as CarouselVariant;
   const isCardVariant = normalizedVariant === 'card';
 
   if (isCardVariant) {

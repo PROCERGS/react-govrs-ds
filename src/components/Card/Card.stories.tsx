@@ -100,7 +100,7 @@ function resolveCardImage(variant: Card.Variant | undefined) {
 }
 
 const meta = {
-  title: 'Widgets/Card',
+  title: 'Conteúdo/Card',
   component: Card,
   args: {
     title: 'Título base do Card',

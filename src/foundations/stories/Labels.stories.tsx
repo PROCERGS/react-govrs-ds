@@ -57,7 +57,7 @@ function LabelsUsagePreview() {
 }
 
 const meta = {
-  title: 'Typography/Labels',
+  title: 'Tipografia/Labels',
   parameters: {
     layout: 'padded',
   },
