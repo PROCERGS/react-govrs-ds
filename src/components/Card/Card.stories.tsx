@@ -176,9 +176,11 @@ function CardVariantsPreview() {
   return (
     <div
       style={{
-        display: 'grid',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         gap: 16,
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        alignItems: 'stretch',
       }}
     >
       <CardPostPreview />
