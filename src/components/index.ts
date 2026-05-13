@@ -1,3 +1,4 @@
+export { Accordion } from './Accordion/Accordion';
 export { Alerts } from './Alerts/Alerts';
 export { Badges } from './Badges/Badges';
 export { Button } from './Button/Button';
@@ -11,5 +12,6 @@ export { Radio } from './Radio/Radio';
 export { Search } from './Search/Search';
 export { Select } from './Select/Select';
 export { Switch } from './Switch/Switch';
+export { Tooltip } from './Tooltip/Tooltip';
 export { Upload } from './Upload/Upload';
 
