@@ -1,0 +1,238 @@
+.govrs-tooltip {
+  --tooltip-surface: var(--govrs-color-surface-base, #ffffff);
+  --tooltip-text: var(--govrs-color-text-primary, #000000);
+  --tooltip-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
+  --tooltip-trigger-color: var(--govrs-color-brand-primary, #1a7235);
+  --tooltip-trigger-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
+  --tooltip-offset: var(--govrs-space-3, 0.75rem);
+
+  position: relative;
+  display: inline-flex;
+  justify-self: start;
+  align-items: center;
+}
+
+.govrs-tooltip[data-state='success'] {
+  --tooltip-surface: var(--govrs-color-success, #168821);
+  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+}
+
+.govrs-tooltip[data-state='error'] {
+  --tooltip-surface: var(--govrs-color-error, #e52207);
+  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+}
+
+.govrs-tooltip[data-state='warning'] {
+  --tooltip-surface: var(--govrs-color-warning, #ffcd07);
+  --tooltip-text: var(--govrs-color-text-secondary, #333333);
+}
+
+.govrs-tooltip[data-state='info'] {
+  --tooltip-surface: var(--govrs-color-info, #2b86d8);
+  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+}
+
+.govrs-tooltip__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--govrs-space-1, 0.25rem);
+  border: 0;
+  background: transparent;
+  color: var(--tooltip-trigger-color);
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--govrs-font-weight-semibold, 600);
+  text-decoration: none;
+}
+
+.govrs-tooltip__trigger:focus {
+  outline: none;
+}
+
+.govrs-tooltip__trigger-target:focus {
+  outline: none;
+}
+
+.govrs-tooltip__trigger:focus-visible,
+.govrs-tooltip__trigger-target:focus-visible {
+  outline: none;
+}
+
+.govrs-tooltip__trigger:focus-visible,
+.govrs-tooltip__trigger-target:focus-visible {
+  outline: var(--govrs-border-width-md, 2px) solid var(--govrs-color-focus, #ffcd07);
+  outline-offset: var(--govrs-border-width-md, 2px);
+  border-radius: var(--govrs-radius-xs, 0.25rem);
+}
+
+.govrs-tooltip__trigger-icon {
+  display: inline-flex;
+  width: 1.125rem;
+  height: 1.125rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--govrs-radius-circle, 50%);
+  background: var(--tooltip-trigger-surface);
+  color: var(--tooltip-trigger-color);
+  font-size: var(--govrs-font-size-12, 0.75rem);
+  line-height: 1;
+}
+
+.govrs-tooltip__box {
+  position: absolute;
+  z-index: var(--govrs-z-index-overlay, 5);
+  display: grid;
+  min-width: 10rem;
+  max-width: 20rem;
+  padding: var(--govrs-space-3, 0.75rem);
+  border-radius: var(--govrs-radius-sm, 0.375rem);
+  background: var(--tooltip-surface);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  color: var(--tooltip-text);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    visibility var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+}
+
+.govrs-tooltip__box,
+.govrs-tooltip__title,
+.govrs-tooltip__body {
+  color: inherit;
+}
+
+.govrs-tooltip__box:not(.govrs-tooltip__box--with-icon) {
+  text-align: center;
+}
+
+.govrs-tooltip__header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--govrs-space-2, 0.5rem);
+}
+
+.govrs-tooltip__title {
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-16, 1rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  line-height: var(--govrs-line-height-24, 1.5rem);
+}
+
+.govrs-tooltip__body {
+  font-family: var(--govrs-font-family-base);
+  font-size: var(--govrs-font-size-14, 0.875rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  line-height: 1.3;
+}
+
+.govrs-tooltip__body p {
+  margin: 0;
+}
+
+.govrs-tooltip__body p + p {
+  margin-top: var(--govrs-space-2, 0.5rem);
+}
+
+.govrs-tooltip__inner {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: var(--govrs-space-3, 0.75rem);
+}
+
+.govrs-tooltip__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.govrs-tooltip__main {
+  display: grid;
+  min-width: 7.5rem;
+  gap: var(--govrs-space-1-5, 0.375rem);
+}
+
+.govrs-tooltip__arrow {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--tooltip-surface);
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.govrs-tooltip:is(:hover, :focus-within) .govrs-tooltip__box {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.govrs-tooltip[data-position='top'] .govrs-tooltip__box {
+  bottom: calc(100% + var(--tooltip-offset));
+  left: 50%;
+  transform: translate(-50%, 0.375rem);
+}
+
+.govrs-tooltip[data-position='top']:is(:hover, :focus-within) .govrs-tooltip__box {
+  transform: translate(-50%, 0);
+}
+
+.govrs-tooltip[data-position='top'] .govrs-tooltip__arrow {
+  bottom: -0.375rem;
+  left: calc(50% - 0.375rem);
+}
+
+.govrs-tooltip[data-position='bottom'] .govrs-tooltip__box {
+  top: calc(100% + var(--tooltip-offset));
+  left: 50%;
+  transform: translate(-50%, -0.375rem);
+}
+
+.govrs-tooltip[data-position='bottom']:is(:hover, :focus-within) .govrs-tooltip__box {
+  transform: translate(-50%, 0);
+}
+
+.govrs-tooltip[data-position='bottom'] .govrs-tooltip__arrow {
+  top: -0.375rem;
+  left: calc(50% - 0.375rem);
+}
+
+.govrs-tooltip[data-position='left'] .govrs-tooltip__box {
+  top: 50%;
+  right: calc(100% + var(--tooltip-offset));
+  transform: translate(0.375rem, -50%);
+}
+
+.govrs-tooltip[data-position='left']:is(:hover, :focus-within) .govrs-tooltip__box {
+  transform: translate(0, -50%);
+}
+
+.govrs-tooltip[data-position='left'] .govrs-tooltip__arrow {
+  top: calc(50% - 0.375rem);
+  right: -0.375rem;
+}
+
+.govrs-tooltip[data-position='right'] .govrs-tooltip__box {
+  top: 50%;
+  left: calc(100% + var(--tooltip-offset));
+  transform: translate(-0.375rem, -50%);
+}
+
+.govrs-tooltip[data-position='right']:is(:hover, :focus-within) .govrs-tooltip__box {
+  transform: translate(0, -50%);
+}
+
+.govrs-tooltip[data-position='right'] .govrs-tooltip__arrow {
+  top: calc(50% - 0.375rem);
+  left: -0.375rem;
+}
+
+@media (max-width: 26.25rem) {
+  .govrs-tooltip__box {
+    max-width: 13.75rem;
+  }
+}
