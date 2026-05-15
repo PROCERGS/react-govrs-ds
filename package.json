@@ -25,6 +25,7 @@
   "scripts": {
     "dev": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
     "storybook": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "build:storybook": "storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
     "build": "vite build && npm run build:types",
     "lint": "eslint ."
