@@ -2,11 +2,13 @@ name: 'Dependency review'
 on:
   pull_request:
     branches: [ "main" ]
+  push:
 permissions:
   contents: read
 
 jobs:
   dependency-review:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout repository'
