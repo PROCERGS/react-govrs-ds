@@ -1,4 +1,6 @@
 export { Alerts } from './Alerts/Alerts';
+export { Avatar } from './Avatar/Avatar';
+export { Banner } from './Banner/Banner';
 export { Badges } from './Badges/Badges';
 export { Button } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
@@ -11,5 +13,7 @@ export { Radio } from './Radio/Radio';
 export { Search } from './Search/Search';
 export { Select } from './Select/Select';
 export { Switch } from './Switch/Switch';
+export { Tag } from './Tag/Tag';
 export { Upload } from './Upload/Upload';
+
 
