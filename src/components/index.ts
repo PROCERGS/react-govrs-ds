@@ -1,3 +1,4 @@
+export { Accordion } from './Accordion/Accordion';
 export { Alerts } from './Alerts/Alerts';
 export { Avatar } from './Avatar/Avatar';
 export { Banner } from './Banner/Banner';
@@ -14,6 +15,7 @@ export { Search } from './Search/Search';
 export { Select } from './Select/Select';
 export { Switch } from './Switch/Switch';
 export { Tag } from './Tag/Tag';
+export { Tooltip } from './Tooltip/Tooltip';
 export { Upload } from './Upload/Upload';
 
 
