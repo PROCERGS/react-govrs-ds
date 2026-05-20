@@ -23,11 +23,11 @@ const docsHeroStats = [
   },
   {
     title: 'Melhor exploração',
-    text: "Use o story 'Interativo' para testar limites, multiple, accept e disabled. O story 'Em formulários' mostra um fluxo simples de envio com submit HTML controlado no React.",
+    text: "Use o story 'Interativo' para testar limites, multiple, accept e disabled. O story 'Em formulários (controlado)' mostra o uso recomendado hoje, baseado em onChange e estado React.",
   },
   {
     title: 'Comportamento',
-    text: 'O componente preserva o input file nativo no DOM, mantém lista interna dos arquivos aceitos, pode executar onUpload assíncrono e expõe feedback customizável por callback.',
+    text: 'O componente mantém uma lista interna dos arquivos aceitos, pode executar onUpload assíncrono e expõe feedback customizável por callback. Atualmente, essa lista não é serializada automaticamente por FormData nativo.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -61,6 +61,9 @@ const feedbackExampleCode = `<Upload
 
 const formExampleCode = `const [files, setFiles] = useState<File[]>([])
 const [submittedValue, setSubmittedValue] = useState('Nenhum arquivo enviado')
+
+// Observação: hoje o Upload não participa automaticamente de FormData nativo.
+// O fluxo recomendado usa a lista recebida em onChange.
 
 <div style={{ ...storyDocsStyles.previewStage, maxWidth: 520 }}>
   <form
@@ -210,7 +213,8 @@ export const UploadDocumentacao: Story = {
         description={
           <>
             O <code>Upload</code> migra o controle visual do design system legado para um componente React puro,
-            mantendo o <code>input type=&quot;file&quot;</code> nativo no DOM e deixando a estratégia de envio real sob responsabilidade do produto consumidor.
+            mantendo a seleção e o feedback sob responsabilidade do componente e deixando a estratégia de envio real sob responsabilidade do produto consumidor.
+            Atualmente, a lista visual de arquivos aceitos não é serializada automaticamente por <code>FormData</code> nativo.
           </>
         }
         variantTags={docsVariantTags}
@@ -260,14 +264,21 @@ export const UploadDocumentacao: Story = {
 
       <SectionCard
         title="Uso em formulários"
-        description="O controle pode continuar dentro de formulários HTML ou React, com o consumidor decidindo como transformar a lista atual de arquivos em payload, upload remoto ou outra integração."
+        description="O controle pode continuar dentro de formulários HTML ou React, mas atualmente o uso recomendado é controlado por onChange ou onUpload. A lista visual de arquivos aceitos não entra automaticamente no FormData nativo do formulário."
       >
+        <ul style={storyDocsStyles.list}>
+          <li>Hoje o componente não garante que <code>new FormData(form)</code> inclua os arquivos exibidos na lista visual.</li>
+          <li>Para montar payload local, submit controlado ou upload remoto, use a lista entregue por <code>onChange</code>.</li>
+          <li>Se o produto precisar de submit HTML nativo com <code>FormData</code>, o componente ainda precisa evoluir para manter o <code>FileList</code> nativo sincronizado.</li>
+        </ul>
+
         <SandboxExample
           title="Submit controlado"
-          description="Exemplo simples de integração com formulário, reaproveitando a lista atual de arquivos selecionados como payload local após o submit."
+          description="Exemplo simples de integração com formulário, reaproveitando a lista atual de arquivos selecionados como payload local após o submit, sem depender de FormData nativo."
           code={formExampleCode}
           notes={[
-            'O design system não faz upload automático nem serialização de FormData por conta própria.',
+            'Este exemplo usa a lista recebida em onChange porque o componente ainda não participa automaticamente de FormData nativo.',
+            'O design system não faz upload automático nem serialização nativa de FormData por conta própria.',
             'Se a aplicação precisar enviar os arquivos para um backend, esse passo deve acontecer ao redor de onChange ou onUpload.',
           ]}
         >
@@ -342,7 +353,7 @@ export const UploadInterativo: Story = {
 }
 
 export const UploadEmFormularios: Story = {
-  name: 'Em formulários',
+  name: 'Em formulários (controlado)',
   parameters: {
     controls: { disable: true },
   },

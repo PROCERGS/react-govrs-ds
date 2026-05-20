@@ -13,6 +13,7 @@ export { Modal } from './Modal/Modal';
 export { Radio } from './Radio/Radio';
 export { Search } from './Search/Search';
 export { Select } from './Select/Select';
+export { Slider } from './Slider/Slider';
 export { Switch } from './Switch/Switch';
 export { Tag } from './Tag/Tag';
 export { Tooltip } from './Tooltip/Tooltip';
