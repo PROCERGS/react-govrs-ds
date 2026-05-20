@@ -13,7 +13,7 @@ import { DatePicker } from './DatePicker'
 import './DatePicker.scss'
 import '../../foundations/styles/index.scss'
 
-const docsVariantTags = ['date', 'time', 'datetime', 'selectionMode', 'showClearButton']
+const docsVariantTags = ['date', 'time', 'datetime', 'range', 'showClearButton']
 
 const docsHeroStats = [
   {
@@ -26,7 +26,7 @@ const docsHeroStats = [
   },
   {
     title: 'Comportamento',
-    text: 'As variantes date, time e datetime abrem painéis próprios do design system. No caso de datetime, o painel combina calendário e seletor de horário na mesma superfície.',
+    text: 'As variantes date, time e datetime abrem painéis próprios do design system. Em date, o selectionMode também pode reutilizar o calendário para escolher início e fim de um intervalo.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -57,7 +57,7 @@ const restrictionExampleCode = `<DatePicker
   onChange={setHora}
   min="08:00"
   max="18:00"
-  step={15}
+  step={900}
 />`
 
 const rangeExampleCode = `const [periodo, setPeriodo] = useState({
@@ -69,29 +69,8 @@ const rangeExampleCode = `const [periodo, setPeriodo] = useState({
   variant="date"
   selectionMode="range"
   name="periodo"
-  value={periodo}
-  onChange={setPeriodo}
-/>`
-
-const selectionModeExampleCode = `const [data, setData] = useState<string | null>(null)
-const [periodo, setPeriodo] = useState({
-  start: null,
-  end: null,
-})
-
-<DatePicker
-  variant="date"
-  selectionMode="single"
-  value={data}
-  onChange={setData}
-/>
-
-<DatePicker
-  variant="date"
-  selectionMode="range"
-  name="periodo"
-  value={periodo}
-  onChange={setPeriodo}
+  rangeValue={periodo}
+  onRangeChange={setPeriodo}
 />`
 
 function formatDateInputValue(date: Date) {
@@ -190,7 +169,7 @@ function DatePickerRangeDemo({
 
   return (
     <div style={{ display: 'grid', gap: 12, width: '100%' }}>
-      <DatePicker {...props} value={value} onChange={setValue} />
+      <DatePicker {...props} rangeValue={value} onRangeChange={setValue} />
       <DatePickerRangeValueSummary value={value} />
       {helperText ? <p style={storyDocsStyles.statText}>{helperText}</p> : null}
     </div>
@@ -205,19 +184,19 @@ const todayDate = formatDateInputValue(today)
 const thirtyDaysAgoDate = formatDateInputValue(thirtyDaysAgo)
 
 type DatePickerInteractiveArgs = {
-  variant: DatePicker.Variant
-  selectionMode: 'single' | 'range'
-  placeholder: string
-  min: string
-  max: string
-  step: DatePicker.StepMinutes
-  name: string
-  nameMode: DatePicker.RangeNameMode
-  startName: string
-  endName: string
-  ariaLabel: string
-  disabled: boolean
-  showClearButton: boolean
+  variant?: DatePicker.Variant
+  selectionMode?: 'single' | 'range'
+  placeholder?: string
+  min?: string
+  max?: string
+  step?: number
+  name?: string
+  nameMode?: DatePicker.RangeNameMode
+  startName?: string
+  endName?: string
+  ariaLabel?: string
+  disabled?: boolean
+  showClearButton?: boolean
 }
 
 const meta = {
@@ -229,7 +208,7 @@ const meta = {
     placeholder: 'Selecione a data',
     min: '',
     max: todayDate,
-    step: 15,
+    step: 900,
     name: 'periodo',
     nameMode: 'object',
     startName: '',
@@ -252,21 +231,22 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 function isInteractiveRangeMode(args: DatePickerInteractiveArgs) {
-  return args.variant === 'date' && args.selectionMode === 'range'
+  return (args.variant ?? 'date') === 'date' && (args.selectionMode ?? 'single') === 'range'
 }
 
 function buildInteractiveSingleProps(args: DatePickerInteractiveArgs): DatePicker.SingleProps {
+  const variant = args.variant ?? 'date'
   const baseProps = {
     placeholder: args.placeholder || undefined,
     ariaLabel: args.ariaLabel || undefined,
     name: args.name || undefined,
-    disabled: args.disabled,
-    showClearButton: args.showClearButton,
+    disabled: args.disabled ?? false,
+    showClearButton: args.showClearButton ?? true,
   }
 
-  if (args.variant === 'time' || args.variant === 'datetime') {
+  if (variant === 'time' || variant === 'datetime') {
     return {
-      variant: args.variant,
+      variant,
       min: args.min || undefined,
       max: args.max || undefined,
       step: args.step || undefined,
@@ -290,40 +270,13 @@ function buildInteractiveRangeProps(args: DatePickerInteractiveArgs): DatePicker
     placeholder: args.placeholder || undefined,
     ariaLabel: args.ariaLabel || undefined,
     name: args.name || undefined,
-    nameMode: args.nameMode,
+    nameMode: args.nameMode ?? 'object',
     startName: args.startName || undefined,
     endName: args.endName || undefined,
-    disabled: args.disabled,
-    showClearButton: args.showClearButton,
+    disabled: args.disabled ?? false,
+    showClearButton: args.showClearButton ?? true,
     min: args.min || undefined,
     max: args.max || undefined,
-  }
-}
-
-function getInteractiveRangeInputNames(args: DatePickerInteractiveArgs) {
-  const name = args.name || undefined
-  const startName = args.startName || undefined
-  const endName = args.endName || undefined
-
-  let derivedStartName: string | undefined
-  let derivedEndName: string | undefined
-
-  if (name) {
-    if (args.nameMode === 'suffix') {
-      derivedStartName = `${name}Start`
-      derivedEndName = `${name}End`
-    } else if (args.nameMode === 'indexed') {
-      derivedStartName = `${name}[0]`
-      derivedEndName = `${name}[1]`
-    } else {
-      derivedStartName = `${name}[start]`
-      derivedEndName = `${name}[end]`
-    }
-  }
-
-  return {
-    startName: startName ?? derivedStartName ?? null,
-    endName: endName ?? derivedEndName ?? null,
   }
 }
 
@@ -337,13 +290,12 @@ function DatePickerInteractiveCanvas({ args }: { args: DatePickerInteractiveArgs
 
   const singleProps = useMemo(() => buildInteractiveSingleProps(args), [args])
   const rangeProps = useMemo(() => buildInteractiveRangeProps(args), [args])
-  const rangeInputNames = useMemo(() => getInteractiveRangeInputNames(args), [args])
 
   return (
     <div style={{ ...storyDocsStyles.previewStage, padding: 16, maxWidth: 720 }}>
       <div style={{ width: 420, maxWidth: '100%' }}>
         {isRangeMode ? (
-          <DatePicker {...rangeProps} value={rangeValue} onChange={setRangeValue} />
+          <DatePicker {...rangeProps} rangeValue={rangeValue} onRangeChange={setRangeValue} />
         ) : (
           <DatePicker {...singleProps} value={singleValue} onChange={setSingleValue} />
         )}
@@ -352,19 +304,9 @@ function DatePickerInteractiveCanvas({ args }: { args: DatePickerInteractiveArgs
       {isRangeMode ? (
         <div style={{ display: 'grid', gap: 8 }}>
           <DatePickerRangeValueSummary value={rangeValue} />
-
-          <p style={storyDocsStyles.statText}>
-            <strong>Input inicial oculto:</strong>{' '}
-            {rangeInputNames.startName ?? 'Sem name configurado'}
-          </p>
-
-          <p style={storyDocsStyles.statText}>
-            <strong>Input final oculto:</strong>{' '}
-            {rangeInputNames.endName ?? 'Sem name configurado'}
-          </p>
         </div>
       ) : (
-        <DatePickerValueSummary value={singleValue} variant={args.variant} />
+        <DatePickerValueSummary value={singleValue} variant={args.variant ?? 'date'} />
       )}
     </div>
   )
@@ -372,11 +314,15 @@ function DatePickerInteractiveCanvas({ args }: { args: DatePickerInteractiveArgs
 
 function DatePickerInteractivePreview(args: DatePickerInteractiveArgs) {
   const previewKey = [
-    args.variant,
+    args.variant ?? 'date',
     isInteractiveRangeMode(args) ? 'range' : 'single',
-    args.min,
-    args.max,
-    args.step,
+    args.min ?? '',
+    args.max ?? '',
+    args.step ?? '',
+    args.name ?? '',
+    args.nameMode ?? 'object',
+    args.startName ?? '',
+    args.endName ?? '',
   ].join('|')
 
   return (
@@ -397,39 +343,19 @@ function DatePickerMainPreview() {
   )
 }
 
-function DatePickerRangePreview() {
-  return (
-    <div style={{ width: 420, maxWidth: '100%' }}>
-      <DatePickerRangeDemo
-        variant="date"
-        selectionMode="range"
-        name="periodo"
-        placeholder="Selecione o intervalo"
-        helperText="No modo range, o componente mantém dois inputs nativos ocultos, um para a data inicial e outro para a final, derivados do mesmo name base." 
-      />
-    </div>
-  )
-}
-
 function DatePickerVariantsPreview() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+    <div style={storyDocsStyles.cardGrid}>
       <StoryPreviewCard label="Date">
-        <div style={{ width: 420, maxWidth: '100%' }}>
-          <DatePickerDemo variant="date" placeholder="Selecione a data" />
-        </div>
+        <DatePickerDemo variant="date" placeholder="Selecione a data" />
       </StoryPreviewCard>
 
       <StoryPreviewCard label="Time">
-        <div style={{ width: 420, maxWidth: '100%' }}>
-          <DatePickerDemo variant="time" placeholder="Selecione o horário" />
-        </div>
+        <DatePickerDemo variant="time" placeholder="Selecione o horário" />
       </StoryPreviewCard>
 
       <StoryPreviewCard label="Datetime">
-        <div style={{ width: 420, maxWidth: '100%' }}>
-          <DatePickerDemo variant="datetime" placeholder="Selecione data e horário" />
-        </div>
+        <DatePickerDemo variant="datetime" placeholder="Selecione data e horário" />
       </StoryPreviewCard>
     </div>
   )
@@ -450,7 +376,7 @@ function DatePickerFormatGuidePreview() {
         <ul style={storyDocsStyles.list}>
           <li>Abre um painel próprio com horas e minutos segmentados.</li>
           <li>O valor retornado segue o formato <code>hh:mm</code>.</li>
-          <li><code>step</code> é informado em minutos e aceita apenas <code>5</code>, <code>10</code>, <code>15</code>, <code>20</code> ou <code>30</code>.</li>
+          <li><code>step</code> é interpretado como intervalo de minutos no painel.</li>
         </ul>
       </StoryPreviewCard>
 
@@ -458,32 +384,23 @@ function DatePickerFormatGuidePreview() {
         <ul style={storyDocsStyles.list}>
           <li>Abre um painel próprio que combina o calendário com o seletor segmentado de hora.</li>
           <li>O valor retornado segue o formato <code>aaaa-mm-ddThh:mm</code>.</li>
-          <li><code>min</code>, <code>max</code> e <code>step</code> seguem o contrato do tipo datetime; no caso de <code>step</code>, o valor continua sendo informado em minutos.</li>
+          <li><code>min</code>, <code>max</code> e <code>step</code> seguem o contrato do tipo datetime e são respeitados pelo painel composto.</li>
         </ul>
       </StoryPreviewCard>
     </div>
   )
 }
 
-function DatePickerSelectionModeGuidePreview() {
+function DatePickerRangePreview() {
   return (
-    <div style={storyDocsStyles.cardGrid}>
-      <StoryPreviewCard label="selectionMode='single'">
-        <ul style={storyDocsStyles.list}>
-          <li>É o comportamento padrão de <code>variant="date"</code>, então a prop pode ser omitida na maior parte dos casos.</li>
-          <li><code>value</code> e <code>onChange</code> trabalham com <code>string | null</code>.</li>
-          <li>O calendário escolhe uma única data e o campo continua serializando um único valor nativo.</li>
-        </ul>
-      </StoryPreviewCard>
-
-      <StoryPreviewCard label="selectionMode='range'">
-        <ul style={storyDocsStyles.list}>
-          <li>Disponível apenas quando <code>variant="date"</code>.</li>
-          <li><code>value</code> e <code>onChange</code> passam a usar um objeto com <code>start</code> e <code>end</code>.</li>
-          <li>O primeiro clique define o início do período e o segundo fecha a data final no mesmo calendário.</li>
-          <li>Quando <code>name</code> é informado, os nomes dos inputs ocultos podem ser refinados com <code>nameMode</code>, <code>startName</code> e <code>endName</code>.</li>
-        </ul>
-      </StoryPreviewCard>
+    <div style={{ width: 420, maxWidth: '100%' }}>
+      <DatePickerRangeDemo
+        variant="date"
+        selectionMode="range"
+        name="periodo"
+        placeholder="Selecione o intervalo"
+        helperText="Quando name é informado, o modo range serializa dois inputs nativos ocultos. Por padrão, eles usam o formato name[start] e name[end]."
+      />
     </div>
   )
 }
@@ -506,9 +423,9 @@ function DatePickerRestrictionPreview() {
           variant="time"
           min="08:00"
           max="18:00"
-          step={15}
+          step={900}
           placeholder="Horário comercial"
-          helperText="step={15} limita a escolha a intervalos de 15 minutos."
+          helperText="step=900 limita a escolha a intervalos de 15 minutos."
         />
       </StoryPreviewCard>
     </div>
@@ -586,26 +503,8 @@ export const DatePickerDocumentacao: Story = {
       </SectionCard>
 
       <SectionCard
-        title="selectionMode"
-        description="Na variante date, a prop selectionMode define se o componente trabalha com uma única data ou com um intervalo. O padrão é single; ao mudar para range, mudam também o formato de value, o contrato de onChange e a serialização usada para integração com formulários."
-      >
-        <SandboxExample
-          title="Comparando single e range"
-          description="A casca visual permanece a mesma, mas a forma de selecionar e o formato dos dados retornados mudam conforme o selectionMode." 
-          code={selectionModeExampleCode}
-          notes={[
-            'Em single, selectionMode pode ser omitido; esse é o comportamento padrão da variante date.',
-            'Em range, value deixa de ser string | null e passa a ser um objeto com start e end.',
-            'Se o campo participar de um formulário, o modo range serializa dois inputs nativos ocultos em vez de um único valor.',
-          ]}
-        >
-          <DatePickerSelectionModeGuidePreview />
-        </SandboxExample>
-      </SectionCard>
-
-      <SectionCard
         title="Intervalo de datas"
-        description="Quando selectionMode recebe range, a superfície visual continua sendo única, mas o componente passa a controlar data inicial e final separadamente e serializa esse par em dois inputs nativos ocultos para integração com formulários."
+        description="Na variante date, o selectionMode também pode operar em modo range. Nesse caso, o componente mantém uma única superfície visual, mas passa a controlar data inicial e final separadamente e serializa esse par em dois inputs nativos ocultos para formulários."
       >
         <SandboxExample
           title="Seleção de intervalo"
@@ -613,8 +512,8 @@ export const DatePickerDocumentacao: Story = {
           code={rangeExampleCode}
           notes={[
             'O primeiro clique define a data inicial e o segundo fecha a data final.',
-            'Quando o name é informado, o componente gera dois inputs nativos ocultos: um para o início e outro para o fim.',
-            'Cada instância isola seus próprios inputs ocultos, então múltiplos DatePickers no mesmo formulário não se sobrepõem.',
+            'No modo range, o contrato controlado usa rangeValue e onRangeChange com um objeto contendo start e end.',
+            'Quando name é informado, o componente gera dois inputs nativos ocultos; nameMode, startName e endName permitem ajustar essa serialização.',
           ]}
         >
           <DatePickerRangePreview />
@@ -623,7 +522,7 @@ export const DatePickerDocumentacao: Story = {
 
       <SectionCard
         title="Restrições nativas"
-        description="min e max são repassados ao input subjacente, e step é informado em minutos na API do componente. Internamente, o DatePicker converte esse valor para o formato nativo do browser sem expor segundos para quem consome a prop."
+        description="min, max e step são repassados ao input subjacente, então a validação de faixa e de granularidade segue o comportamento nativo do browser."
       >
         <SandboxExample
           title="Faixa e granularidade"
@@ -641,9 +540,9 @@ export const DatePickerDocumentacao: Story = {
         <ul style={storyDocsStyles.list}>
           <li><code>ariaLabel</code> é recomendado quando não houver um rótulo externo associado ao campo.</li>
           <li><code>min</code> e <code>max</code> precisam seguir o formato do tipo ativo; valores inválidos são ignorados pelo componente.</li>
-          <li><code>step</code> só faz sentido nas variantes <code>time</code> e <code>datetime</code>; ele deve ser informado em minutos e aceita apenas <code>5</code>, <code>10</code>, <code>15</code>, <code>20</code> ou <code>30</code>.</li>
-          <li>O modo <code>range</code> está disponível apenas para <code>variant="date"</code>; <code>time</code> e <code>datetime</code> seguem com seleção única.</li>
-          <li>Em formulários, o modo <code>range</code> cria dois inputs nativos ocultos derivados do mesmo <code>name</code>, um para início e outro para fim.</li>
+          <li><code>step</code> só faz sentido nas variantes <code>time</code> e <code>datetime</code>; nos dois painéis ele é interpretado como intervalo de minutos.</li>
+          <li><code>selectionMode="range"</code> está disponível apenas para <code>variant="date"</code> e usa <code>rangeValue</code>/<code>onRangeChange</code> com um objeto contendo <code>start</code> e <code>end</code>.</li>
+          <li>Em formulários, o modo range cria dois inputs nativos ocultos derivados do mesmo <code>name</code>; por padrão, usa <code>name[start]</code> e <code>name[end]</code>.</li>
           <li>Se a interface exigir uma experiência ainda mais complexa de calendário ou agenda, o caminho passa por evoluir esse painel controlado ou por um motor dedicado.</li>
         </ul>
       </SectionCard>
@@ -683,9 +582,8 @@ export const DatePickerInterativo: Story = {
       table: { category: 'Restrições' },
     },
     step: {
-      control: { type: 'select' },
-      options: [5, 10, 15, 20, 30],
-      description: 'Passo em minutos. Aceita apenas 5, 10, 15, 20 ou 30 e só tem efeito em time e datetime.',
+      control: { type: 'number', min: 1 },
+      description: 'Passo do input em segundos. Só tem efeito em time e datetime.',
       table: { category: 'Restrições' },
       if: { arg: 'variant', neq: 'date' },
     },
@@ -731,7 +629,7 @@ export const DatePickerInterativo: Story = {
   },
   parameters: {
     controls: {
-      exclude: ['className', 'id', 'onChange', 'value', 'defaultValue', 'clearButtonLabel'],
+      exclude: ['className', 'id', 'onChange', 'value', 'rangeValue', 'defaultValue', 'defaultRangeValue', 'onRangeChange', 'clearButtonLabel'],
     },
   },
   render: (args) => <DatePickerInteractivePreview {...args} />,

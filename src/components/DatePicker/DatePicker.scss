@@ -1,6 +1,5 @@
 .govrs-date-picker,
 .govrs-date-picker__date-panel,
-.govrs-date-picker__time-panel,
 .govrs-date-picker__datetime-panel {
   --govrs-date-picker-panel-scale: 0.8;
   --govrs-date-picker-panel-width: calc(28rem * var(--govrs-date-picker-panel-scale));
@@ -9,7 +8,6 @@
   --govrs-date-picker-panel-grid-gap: calc(0.25rem * var(--govrs-date-picker-panel-scale));
   --govrs-date-picker-panel-block-padding: calc(1rem * var(--govrs-date-picker-panel-scale));
   --govrs-date-picker-panel-inline-padding: calc(1.25rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-panel-block-padding-lg: calc(1.25rem * var(--govrs-date-picker-panel-scale));
   --govrs-date-picker-control-height: calc(
     var(--govrs-size-control-lg, 2.5rem) * var(--govrs-date-picker-panel-scale)
   );
@@ -29,18 +27,6 @@
   --govrs-date-picker-calendar-font-size: calc(1rem * var(--govrs-date-picker-panel-scale));
   --govrs-date-picker-weekday-font-size: calc(0.875rem * var(--govrs-date-picker-panel-scale));
   --govrs-date-picker-day-size: calc(2.625rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-column-gap: calc(0.5rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-step-size: calc(2rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-icon-size: calc(1.125rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-field-width: calc(4.25rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-field-height: calc(2.875rem * var(--govrs-date-picker-panel-scale));
-  --govrs-date-picker-time-field-padding-block: calc(
-    0.5rem * var(--govrs-date-picker-panel-scale)
-  );
-  --govrs-date-picker-time-field-padding-inline: calc(
-    0.75rem * var(--govrs-date-picker-panel-scale)
-  );
-  --govrs-date-picker-time-font-size: calc(1.5rem * var(--govrs-date-picker-panel-scale));
 }
 
 .govrs-date-picker {
@@ -58,7 +44,7 @@
   right: 5rem;
   z-index: 1;
   transform: translateY(-50%);
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: color-mix(in srgb, var(--govrs-color-text-primary, #000000) 60%, transparent);
   font-size: 0.875rem;
   pointer-events: none;
   white-space: nowrap;
@@ -140,10 +126,6 @@
   display: none;
 }
 
-.govrs-date-picker__input::placeholder {
-  color: var(--govrs-color-brand-primary, #1a7235);
-}
-
 .govrs-date-picker--disabled .govrs-date-picker__input {
   opacity: 0.55;
   cursor: not-allowed;
@@ -207,7 +189,7 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   z-index: 4;
-  padding: var(--govrs-date-picker-panel-block-padding);
+  padding: 1rem;
   border: var(--govrs-border-width-sm, 1px) solid color-mix(
     in srgb,
     var(--govrs-color-text-primary, #000000) 12%,
@@ -227,8 +209,8 @@
 
 .govrs-date-picker__datetime-panel {
   display: grid;
-  grid-template-columns: 1fr;
-  width: min(var(--govrs-date-picker-panel-width), calc(100vw - 2rem));
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: min(39rem, calc(100vw - 2rem));
   padding: 0;
   overflow: hidden;
 }
@@ -242,14 +224,13 @@
 }
 
 .govrs-date-picker__datetime-time-section {
-  display: flex;
-  width: 100%;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--govrs-date-picker-panel-control-gap);
+  gap: 0.75rem;
   min-width: 0;
-  padding: var(--govrs-date-picker-panel-block-padding-lg);
-  border-top: var(--govrs-border-width-sm, 1px) solid color-mix(
+  padding: 1rem;
+  border-left: var(--govrs-border-width-sm, 1px) solid color-mix(
     in srgb,
     var(--govrs-color-text-primary, #000000) 12%,
     transparent
@@ -463,23 +444,26 @@
 
 .govrs-date-picker__day-button--in-range {
   border-radius: var(--govrs-radius-sm, 0.25rem);
-  background-color: color-mix(in srgb, var(--govrs-color-brand-primary, #1a7235) 42%, white);
+  background-color: color-mix(
+    in srgb,
+    var(--govrs-color-brand-primary, #1a7235) 42%,
+    var(--govrs-color-surface-base, #ffffff)
+  );
   color: var(--govrs-color-surface-base, #ffffff);
 }
 
 .govrs-date-picker__day-button--in-range:hover {
-  background-color: color-mix(in srgb, var(--govrs-color-brand-primary, #1a7235) 42%, white);
+  background-color: color-mix(
+    in srgb,
+    var(--govrs-color-brand-primary, #1a7235) 48%,
+    var(--govrs-color-surface-base, #ffffff)
+  );
 }
 
 .govrs-date-picker__day-button--range-start,
 .govrs-date-picker__day-button--range-end {
   background-color: var(--govrs-color-brand-primary, #1a7235);
   color: var(--govrs-color-surface-base, #ffffff);
-}
-
-.govrs-date-picker__day-button--range-start:hover,
-.govrs-date-picker__day-button--range-end:hover {
-  background-color: var(--govrs-color-brand-primary, #1a7235);
 }
 
 .govrs-date-picker__day-button--range-start {
@@ -492,6 +476,11 @@
 
 .govrs-date-picker__day-button--range-start.govrs-date-picker__day-button--range-end {
   border-radius: 999px;
+}
+
+.govrs-date-picker__day-button--range-start:hover,
+.govrs-date-picker__day-button--range-end:hover {
+  background-color: var(--govrs-color-brand-primary, #1a7235);
 }
 
 .govrs-date-picker__day-button--disabled {
@@ -520,7 +509,7 @@
   width: max-content;
   max-width: calc(100vw - 2rem);
   align-items: center;
-  gap: var(--govrs-date-picker-panel-control-gap);
+  gap: 0.75rem;
 }
 
 @media (max-width: 48rem) {
@@ -530,13 +519,18 @@
   }
 
   .govrs-date-picker__datetime-time-section {
-    padding: var(--govrs-date-picker-panel-block-padding);
+    border-top: var(--govrs-border-width-sm, 1px) solid color-mix(
+      in srgb,
+      var(--govrs-color-text-primary, #000000) 12%,
+      transparent
+    );
+    border-left: none;
   }
 }
 
 .govrs-date-picker__time-column {
   display: grid;
-  gap: var(--govrs-date-picker-time-column-gap);
+  gap: 0.5rem;
   justify-items: center;
 }
 
@@ -544,8 +538,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--govrs-date-picker-time-step-size);
-  height: var(--govrs-date-picker-time-step-size);
+  width: 2rem;
+  height: 2rem;
   padding: 0;
   border: none;
   border-radius: 999px;
@@ -553,11 +547,6 @@
   color: var(--govrs-color-brand-primary, #1a7235);
   cursor: pointer;
   transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
-}
-
-.govrs-date-picker__time-step-button svg {
-  width: var(--govrs-date-picker-time-icon-size);
-  height: var(--govrs-date-picker-time-icon-size);
 }
 
 .govrs-date-picker__time-step-button:hover {
@@ -577,10 +566,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--govrs-date-picker-time-field-width);
-  min-height: var(--govrs-date-picker-time-field-height);
-  padding: var(--govrs-date-picker-time-field-padding-block)
-    var(--govrs-date-picker-time-field-padding-inline);
+  min-width: 4.25rem;
+  min-height: 2.875rem;
+  padding: 0.5rem 0.75rem;
   border: var(--govrs-border-width-sm, 1px) solid color-mix(
     in srgb,
     var(--govrs-color-text-primary, #000000) 18%,
@@ -589,16 +577,15 @@
   border-radius: var(--govrs-radius-sm, 0.25rem);
   background-color: var(--govrs-color-surface-base, #ffffff);
   color: var(--govrs-color-text-primary, #000000);
-  font-size: var(--govrs-date-picker-time-font-size);
+  font-size: 1.5rem;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .govrs-date-picker__time-input {
-  width: var(--govrs-date-picker-time-field-width);
-  min-height: var(--govrs-date-picker-time-field-height);
-  padding: var(--govrs-date-picker-time-field-padding-block)
-    var(--govrs-date-picker-time-field-padding-inline);
+  width: 4.25rem;
+  min-height: 2.875rem;
+  padding: 0.5rem 0.75rem;
   border: var(--govrs-border-width-sm, 1px) solid color-mix(
     in srgb,
     var(--govrs-color-text-primary, #000000) 18%,
@@ -608,7 +595,7 @@
   background-color: var(--govrs-color-surface-base, #ffffff);
   color: var(--govrs-color-text-primary, #000000);
   font-family: inherit;
-  font-size: var(--govrs-date-picker-time-font-size);
+  font-size: 1.5rem;
   font-variant-numeric: tabular-nums;
   line-height: 1;
   text-align: center;
@@ -634,7 +621,7 @@
 .govrs-date-picker__time-separator {
   align-self: center;
   color: var(--govrs-color-text-primary, #000000);
-  font-size: var(--govrs-date-picker-time-font-size);
+  font-size: 1.5rem;
   font-weight: var(--govrs-font-weight-bold, 700);
   line-height: 1;
 }

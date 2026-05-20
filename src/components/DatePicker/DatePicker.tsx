@@ -13,6 +13,12 @@ import './DatePicker.scss'
 
 type DatePickerVariant = 'date' | 'time' | 'datetime'
 type DatePickerValue = string | null
+type DatePickerRangeValue = {
+  start: DatePickerValue
+  end: DatePickerValue
+}
+type DatePickerSelectionMode = 'single' | 'range'
+type DatePickerRangeNameMode = 'object' | 'suffix' | 'indexed'
 
 type TimeSegments = {
   hours: number
@@ -35,14 +41,24 @@ type CalendarDayCell = {
   dayNumber: number
   isCurrentMonth: boolean
   isSelected: boolean
+  isRangeStart: boolean
+  isRangeEnd: boolean
+  isInRange: boolean
   isToday: boolean
   isDisabled: boolean
 }
 
 type DatePickerBaseProps = {
+  selectionMode?: DatePickerSelectionMode
   value?: DatePickerValue
   defaultValue?: string
   onChange?: (value: DatePickerValue) => void
+  rangeValue?: DatePickerRangeValue
+  defaultRangeValue?: DatePickerRangeValue
+  onRangeChange?: (value: DatePickerRangeValue) => void
+  nameMode?: DatePickerRangeNameMode
+  startName?: string
+  endName?: string
   id?: string
   name?: string
   className?: string
@@ -74,6 +90,28 @@ type DatePickerDateTimeProps = DatePickerBaseProps & {
 }
 
 type DatePickerProps = DatePickerDateProps | DatePickerTimeProps | DatePickerDateTimeProps
+type DatePickerSingleProps = DatePickerDateProps | DatePickerTimeProps | DatePickerDateTimeProps
+type DatePickerDateRangeProps = Omit<
+  DatePickerDateProps,
+  | 'selectionMode'
+  | 'value'
+  | 'defaultValue'
+  | 'onChange'
+  | 'rangeValue'
+  | 'defaultRangeValue'
+  | 'onRangeChange'
+  | 'nameMode'
+  | 'startName'
+  | 'endName'
+> & {
+  selectionMode: 'range'
+  rangeValue?: DatePickerRangeValue
+  defaultRangeValue?: DatePickerRangeValue
+  onRangeChange?: (value: DatePickerRangeValue) => void
+  nameMode?: DatePickerRangeNameMode
+  startName?: string
+  endName?: string
+}
 
 const monthLabels = [
   'Janeiro',
@@ -99,10 +137,6 @@ const accessibleDateFormatter = new Intl.DateTimeFormat('pt-BR', {
 
 function joinClassNames(...classNames: Array<string | false | null | undefined>) {
   return classNames.filter(Boolean).join(' ')
-}
-
-function getInputType() {
-  return 'text'
 }
 
 function getDefaultPlaceholder(variant: DatePickerVariant) {
@@ -290,9 +324,21 @@ function isDateOutsideRange(date: Date, minimumDate: Date | null, maximumDate: D
   return false
 }
 
+function isDateWithinRange(date: Date, rangeStartDate: Date | null, rangeEndDate: Date | null) {
+  if (!rangeStartDate || !rangeEndDate) {
+    return false
+  }
+
+  const timestamp = getDateTimestamp(date)
+
+  return timestamp > getDateTimestamp(rangeStartDate) && timestamp < getDateTimestamp(rangeEndDate)
+}
+
 function buildCalendarDays(
   calendarMonth: Date,
   selectedDate: Date | null,
+  rangeStartDate: Date | null,
+  rangeEndDate: Date | null,
   minimumDate: Date | null,
   maximumDate: Date | null,
 ) {
@@ -302,13 +348,18 @@ function buildCalendarDays(
 
   return Array.from({ length: 42 }, (_, index): CalendarDayCell => {
     const dayDate = addDays(firstCalendarDay, index)
+    const isRangeStart = isSameDay(dayDate, rangeStartDate)
+    const isRangeEnd = isSameDay(dayDate, rangeEndDate)
 
     return {
       date: dayDate,
       value: formatDateValue(dayDate),
       dayNumber: dayDate.getDate(),
       isCurrentMonth: dayDate.getMonth() === calendarMonth.getMonth(),
-      isSelected: isSameDay(dayDate, selectedDate),
+      isSelected: isSameDay(dayDate, selectedDate) || isRangeStart || isRangeEnd,
+      isRangeStart,
+      isRangeEnd,
+      isInRange: isDateWithinRange(dayDate, rangeStartDate, rangeEndDate),
       isToday: isSameDay(dayDate, today),
       isDisabled: isDateOutsideRange(dayDate, minimumDate, maximumDate),
     }
@@ -426,7 +477,15 @@ function getCalendarDayAccessibleLabel(day: CalendarDayCell) {
     labelParts.push('hoje')
   }
 
-  if (day.isSelected) {
+  if (day.isRangeStart && day.isRangeEnd) {
+    labelParts.push('início e fim do intervalo')
+  } else if (day.isRangeStart) {
+    labelParts.push('início do intervalo')
+  } else if (day.isRangeEnd) {
+    labelParts.push('fim do intervalo')
+  } else if (day.isInRange) {
+    labelParts.push('dentro do intervalo selecionado')
+  } else if (day.isSelected) {
     labelParts.push('selecionado')
   }
 
@@ -437,6 +496,125 @@ function getCalendarDayAccessibleLabel(day: CalendarDayCell) {
   }
 
   return labelParts.join(', ')
+}
+
+function sanitizeDateRangeValue(value?: Partial<DatePickerRangeValue> | null): DatePickerRangeValue {
+  const start = sanitizeValue('date', value?.start)
+  const end = sanitizeValue('date', value?.end)
+
+  if (!start && !end) {
+    return {
+      start: null,
+      end: null,
+    }
+  }
+
+  if (!start && end) {
+    return {
+      start: end,
+      end: null,
+    }
+  }
+
+  if (start && !end) {
+    return {
+      start,
+      end: null,
+    }
+  }
+
+  const startDate = parseDateValue(start)
+  const endDate = parseDateValue(end)
+
+  if (!startDate || !endDate) {
+    return {
+      start,
+      end,
+    }
+  }
+
+  return getDateTimestamp(startDate) <= getDateTimestamp(endDate)
+    ? { start, end }
+    : { start: end, end: start }
+}
+
+function formatDateRangeDisplayValue(rangeValue: DatePickerRangeValue) {
+  const startDate = parseDateValue(rangeValue.start)
+  const endDate = parseDateValue(rangeValue.end)
+
+  if (!startDate && !endDate) {
+    return ''
+  }
+
+  if (startDate && !endDate) {
+    return `${formatDateDisplayValue(startDate)} -`
+  }
+
+  if (startDate && endDate) {
+    return `${formatDateDisplayValue(startDate)} - ${formatDateDisplayValue(endDate)}`
+  }
+
+  return ''
+}
+
+function getDateRangeAccessibleAnnouncement(rangeValue: DatePickerRangeValue) {
+  const startDate = parseDateValue(rangeValue.start)
+  const endDate = parseDateValue(rangeValue.end)
+
+  if (!startDate && !endDate) {
+    return 'Nenhum intervalo selecionado.'
+  }
+
+  if (startDate && !endDate) {
+    return `Data inicial selecionada: ${formatDateAccessibleValue(startDate)}. Selecione a data final.`
+  }
+
+  if (startDate && endDate) {
+    return `Intervalo selecionado: de ${formatDateAccessibleValue(startDate)} até ${formatDateAccessibleValue(endDate)}.`
+  }
+
+  return 'Nenhum intervalo selecionado.'
+}
+
+function getNativeInputType(variant: DatePickerVariant) {
+  return variant === 'datetime' ? 'datetime-local' : variant
+}
+
+function getRangeInputNames({
+  inputId,
+  name,
+  startName,
+  endName,
+  nameMode = 'object',
+}: {
+  inputId: string
+  name?: string
+  startName?: string
+  endName?: string
+  nameMode?: DatePickerRangeNameMode
+}) {
+  let derivedStartName: string | undefined
+  let derivedEndName: string | undefined
+
+  if (name) {
+    if (nameMode === 'suffix') {
+      derivedStartName = `${name}Start`
+      derivedEndName = `${name}End`
+    } else if (nameMode === 'indexed') {
+      derivedStartName = `${name}[0]`
+      derivedEndName = `${name}[1]`
+    } else {
+      derivedStartName = `${name}[start]`
+      derivedEndName = `${name}[end]`
+    }
+  }
+
+  return {
+    startId: `${inputId}-start-native-input`,
+    endId: `${inputId}-end-native-input`,
+    startName: startName ?? derivedStartName,
+    endName: endName ?? derivedEndName,
+  }
 }
 
 function formatDisplayValue(variant: DatePickerVariant, value?: string | null) {
@@ -553,6 +731,13 @@ export function DatePicker(props: DatePickerProps) {
     value: controlledValue,
     defaultValue,
     onChange,
+    selectionMode,
+    rangeValue,
+    defaultRangeValue,
+    onRangeChange,
+    nameMode = 'object',
+    startName,
+    endName,
     variant = 'date',
     min,
     max,
@@ -565,6 +750,8 @@ export function DatePicker(props: DatePickerProps) {
     showClearButton = true,
     clearButtonLabel = 'Limpar valor',
   } = props
+
+  const isRangeMode = variant === 'date' && selectionMode === 'range'
 
   const step =
     props.variant === 'time' || props.variant === 'datetime' ? props.step : undefined
@@ -580,8 +767,12 @@ export function DatePicker(props: DatePickerProps) {
   const initialTimeInputRef = useRef<HTMLInputElement>(null)
   const previousPanelOpenRef = useRef(false)
   const isControlled = controlledValue !== undefined
+  const isRangeControlled = rangeValue !== undefined
   const [internalValue, setInternalValue] = useState<DatePickerValue>(() =>
     sanitizeValue(variant, defaultValue),
+  )
+  const [internalRangeValue, setInternalRangeValue] = useState<DatePickerRangeValue>(() =>
+    sanitizeDateRangeValue(defaultRangeValue),
   )
   const [isDatePanelOpen, setIsDatePanelOpen] = useState(false)
   const [isTimePanelOpen, setIsTimePanelOpen] = useState(false)
@@ -589,10 +780,13 @@ export function DatePicker(props: DatePickerProps) {
   const [timeDraft, setTimeDraft] = useState<TimeDraft | null>(null)
   const [floatingPanelStyle, setFloatingPanelStyle] = useState<CSSProperties | null>(null)
   const [calendarMonth, setCalendarMonth] = useState(() => {
+    const initialRangeValue = sanitizeDateRangeValue(rangeValue ?? defaultRangeValue)
     const initialDate =
-      (variant === 'datetime'
-        ? parseDateTimeValue(sanitizeValue('datetime', controlledValue ?? defaultValue))?.date ?? null
-        : parseDateValue(sanitizeValue('date', controlledValue ?? defaultValue))) ??
+      (isRangeMode
+        ? parseDateValue(initialRangeValue.end) ?? parseDateValue(initialRangeValue.start)
+        : variant === 'datetime'
+          ? parseDateTimeValue(sanitizeValue('datetime', controlledValue ?? defaultValue))?.date ?? null
+          : parseDateValue(sanitizeValue('date', controlledValue ?? defaultValue))) ??
       (variant === 'datetime'
         ? parseDateTimeValue(sanitizeConstraint('datetime', min))?.date ?? null
         : parseDateValue(sanitizeConstraint('date', min))) ??
@@ -601,14 +795,37 @@ export function DatePicker(props: DatePickerProps) {
     return startOfMonth(initialDate)
   })
 
-  const currentValue = isControlled
-    ? sanitizeValue(variant, controlledValue)
-    : internalValue
+  const currentValue = isRangeMode
+    ? null
+    : isControlled
+      ? sanitizeValue(variant, controlledValue)
+      : internalValue
+  const currentRangeValue = isRangeMode
+    ? isRangeControlled
+      ? sanitizeDateRangeValue(rangeValue)
+      : internalRangeValue
+    : null
+  const resolvedRangeValue = currentRangeValue ?? { start: null, end: null }
+  const rangeStartValue = resolvedRangeValue.start
+  const rangeEndValue = resolvedRangeValue.end
+  const rangeStartDate = parseDateValue(rangeStartValue)
+  const rangeEndDate = parseDateValue(rangeEndValue)
+  const hasCompletedRange = Boolean(rangeStartDate && rangeEndDate)
+  const rangeInputNames = isRangeMode
+    ? getRangeInputNames({
+        inputId,
+        name,
+        startName,
+        endName,
+        nameMode,
+      })
+    : null
 
-  const inputType = getInputType()
-  const displayValue = formatDisplayValue(variant, currentValue)
+  const displayValue = isRangeMode
+    ? formatDateRangeDisplayValue(resolvedRangeValue)
+    : formatDisplayValue(variant, currentValue)
   const resolvedPlaceholder = placeholder || getDefaultPlaceholder(variant)
-  const hasValue = Boolean(currentValue)
+  const hasValue = isRangeMode ? Boolean(rangeStartValue || rangeEndValue) : Boolean(currentValue)
   const normalizedMin = sanitizeConstraint(variant, min)
   const normalizedMax = sanitizeConstraint(variant, max)
   const selectedDateTime = variant === 'datetime' ? parseDateTimeValue(currentValue) : null
@@ -619,7 +836,9 @@ export function DatePicker(props: DatePickerProps) {
       ? null
       : variant === 'datetime'
         ? selectedDateTime?.date ?? null
-        : parseDateValue(currentValue)
+        : isRangeMode
+          ? rangeEndDate ?? rangeStartDate
+          : parseDateValue(currentValue)
   const minimumDate =
     variant === 'time'
       ? null
@@ -649,8 +868,15 @@ export function DatePicker(props: DatePickerProps) {
       return []
     }
 
-    return buildCalendarDays(calendarMonth, selectedDate, minimumDate, maximumDate)
-  }, [calendarMonth, maximumDate, minimumDate, selectedDate, variant])
+    return buildCalendarDays(
+      calendarMonth,
+      selectedDate,
+      rangeStartDate,
+      rangeEndDate,
+      minimumDate,
+      maximumDate,
+    )
+  }, [calendarMonth, maximumDate, minimumDate, rangeEndDate, rangeStartDate, selectedDate, variant])
   const previousMonth = addMonths(calendarMonth, -1)
   const nextMonth = addMonths(calendarMonth, 1)
   const isPreviousMonthDisabled =
@@ -668,7 +894,9 @@ export function DatePicker(props: DatePickerProps) {
         ? isTimePanelOpen
         : isDateTimePanelOpen
   const accessibilityHint = getAccessibilityHint(variant, isCustomPanelOpen)
-  const accessibleValueAnnouncement = getAccessibleValueAnnouncement(variant, currentValue)
+  const accessibleValueAnnouncement = isRangeMode
+    ? getDateRangeAccessibleAnnouncement(resolvedRangeValue)
+    : getAccessibleValueAnnouncement(variant, currentValue)
   const initialCalendarFocusValue = useMemo(() => {
     if (variant === 'time') {
       return null
@@ -740,12 +968,12 @@ export function DatePicker(props: DatePickerProps) {
   }, [isCustomPanelOpen, variant])
 
   useEffect(() => {
-    if (isControlled) {
+    if (isRangeMode || isControlled) {
       return
     }
 
     setInternalValue((current) => sanitizeValue(variant, current))
-  }, [isControlled, variant])
+  }, [isControlled, isRangeMode, variant])
 
   useEffect(() => {
     if (variant !== 'date' || disabled) {
@@ -766,7 +994,11 @@ export function DatePicker(props: DatePickerProps) {
       return
     }
 
-    const nextCalendarMonth = startOfMonth(selectedDate ?? minimumDate ?? new Date())
+    const nextCalendarMonth = startOfMonth(
+      isRangeMode
+        ? rangeEndDate ?? rangeStartDate ?? minimumDate ?? new Date()
+        : selectedDate ?? minimumDate ?? new Date(),
+    )
 
     setCalendarMonth((currentMonth) => {
       if (
@@ -778,7 +1010,7 @@ export function DatePicker(props: DatePickerProps) {
 
       return nextCalendarMonth
     })
-  }, [minimumDate, selectedDate, variant])
+  }, [isRangeMode, minimumDate, rangeEndDate, rangeStartDate, selectedDate, variant])
 
   const closeCustomPanels = () => {
     setIsDatePanelOpen(false)
@@ -875,6 +1107,16 @@ export function DatePicker(props: DatePickerProps) {
     }
 
     onChange?.(resolvedValue)
+  }
+
+  const handleRangeChange = (nextValue: Partial<DatePickerRangeValue>) => {
+    const resolvedValue = sanitizeDateRangeValue(nextValue)
+
+    if (!isRangeControlled) {
+      setInternalRangeValue(resolvedValue)
+    }
+
+    onRangeChange?.(resolvedValue)
   }
 
   const normalizeTimeDraft = (draft: TimeDraft) => {
@@ -1032,6 +1274,21 @@ export function DatePicker(props: DatePickerProps) {
   }
 
   const handleClearSelection = () => {
+    if (isRangeMode) {
+      const clearedRangeValue: DatePickerRangeValue = {
+        start: null,
+        end: null,
+      }
+
+      if (!isRangeControlled) {
+        setInternalRangeValue(clearedRangeValue)
+      }
+
+      onRangeChange?.(clearedRangeValue)
+      inputRef.current?.focus()
+      return
+    }
+
     if (!isControlled) {
       setInternalValue(null)
     }
@@ -1057,6 +1314,42 @@ export function DatePicker(props: DatePickerProps) {
 
   const handleSelectDate = (date: Date) => {
     if ((variant !== 'date' && variant !== 'datetime') || isDateOutsideRange(date, minimumDate, maximumDate)) {
+      return
+    }
+
+    if (isRangeMode) {
+      const nextValue = formatDateValue(date)
+
+      if (!rangeStartValue || rangeEndValue) {
+        handleRangeChange({
+          start: nextValue,
+          end: null,
+        })
+        return
+      }
+
+      if (!rangeStartDate) {
+        handleRangeChange({
+          start: nextValue,
+          end: null,
+        })
+        return
+      }
+
+      if (getDateTimestamp(date) < getDateTimestamp(rangeStartDate)) {
+        handleRangeChange({
+          start: nextValue,
+          end: rangeStartValue,
+        })
+      } else {
+        handleRangeChange({
+          start: rangeStartValue,
+          end: nextValue,
+        })
+      }
+
+      setIsDatePanelOpen(false)
+      inputRef.current?.focus()
       return
     }
 
@@ -1281,6 +1574,9 @@ export function DatePicker(props: DatePickerProps) {
               'govrs-date-picker__day-button',
               !day.isCurrentMonth && 'govrs-date-picker__day-button--outside-month',
               day.isToday && 'govrs-date-picker__day-button--today',
+              isRangeMode && hasCompletedRange && day.isInRange && 'govrs-date-picker__day-button--in-range',
+              isRangeMode && hasCompletedRange && day.isRangeStart && 'govrs-date-picker__day-button--range-start',
+              isRangeMode && hasCompletedRange && day.isRangeEnd && 'govrs-date-picker__day-button--range-end',
               day.isSelected && 'govrs-date-picker__day-button--selected',
               day.isDisabled && 'govrs-date-picker__day-button--disabled',
             )}
@@ -1288,7 +1584,7 @@ export function DatePicker(props: DatePickerProps) {
             disabled={day.isDisabled}
             aria-label={getCalendarDayAccessibleLabel(day)}
             aria-current={day.isToday ? 'date' : undefined}
-            aria-pressed={day.isSelected}
+            aria-pressed={day.isSelected || (hasCompletedRange && day.isInRange)}
             onKeyDown={(event) => handleCalendarDayKeyDown(index, event)}
             onClick={() => handleSelectDate(day.date)}
           >
@@ -1447,24 +1743,56 @@ export function DatePicker(props: DatePickerProps) {
           className,
         )}
       >
-        <input
-          type={variant === 'date' ? 'date' : variant === 'time' ? 'time' : 'datetime-local'}
-          name={name}
-          value={currentValue ?? ''}
-          min={normalizedMin}
-          max={normalizedMax}
-          step={variant === 'time' || variant === 'datetime' ? step : undefined}
-          disabled={disabled}
-          readOnly
-          tabIndex={-1}
-          aria-hidden="true"
-          className="govrs-date-picker__native-input"
-        />
+        {isRangeMode ? (
+          <>
+            <input
+              id={rangeInputNames?.startId}
+              type={getNativeInputType(variant)}
+              name={rangeInputNames?.startName}
+              value={rangeStartValue ?? ''}
+              min={normalizedMin}
+              max={normalizedMax}
+              disabled={disabled}
+              readOnly
+              tabIndex={-1}
+              aria-hidden="true"
+              className="govrs-date-picker__native-input"
+            />
+
+            <input
+              id={rangeInputNames?.endId}
+              type={getNativeInputType(variant)}
+              name={rangeInputNames?.endName}
+              value={rangeEndValue ?? ''}
+              min={normalizedMin}
+              max={normalizedMax}
+              disabled={disabled}
+              readOnly
+              tabIndex={-1}
+              aria-hidden="true"
+              className="govrs-date-picker__native-input"
+            />
+          </>
+        ) : (
+          <input
+            type={getNativeInputType(variant)}
+            name={name}
+            value={currentValue ?? ''}
+            min={normalizedMin}
+            max={normalizedMax}
+            step={variant === 'time' || variant === 'datetime' ? step : undefined}
+            disabled={disabled}
+            readOnly
+            tabIndex={-1}
+            aria-hidden="true"
+            className="govrs-date-picker__native-input"
+          />
+        )}
 
       <input
         ref={inputRef}
         id={inputId}
-        type={inputType}
+        type="text"
         value={displayValue}
         placeholder={resolvedPlaceholder}
         className="govrs-date-picker__input"
@@ -1479,7 +1807,7 @@ export function DatePicker(props: DatePickerProps) {
         onKeyDown={handleCustomInputKeyDown}
       />
 
-      {currentValue == null && resolvedPlaceholder ? (
+      {!hasValue && resolvedPlaceholder ? (
         <span className="govrs-date-picker__placeholder" aria-hidden>
           {resolvedPlaceholder}
         </span>
@@ -1551,7 +1879,12 @@ export namespace DatePicker {
   export type Props = DatePickerProps
   export type Variant = DatePickerVariant
   export type Value = DatePickerValue
+  export type RangeValue = DatePickerRangeValue
+  export type SelectionMode = DatePickerSelectionMode
+  export type RangeNameMode = DatePickerRangeNameMode
+  export type SingleProps = DatePickerSingleProps
   export type DateProps = DatePickerDateProps
+  export type DateRangeProps = DatePickerDateRangeProps
   export type TimeProps = DatePickerTimeProps
   export type DateTimeProps = DatePickerDateTimeProps
 }
