@@ -691,7 +691,7 @@ function TableExternalDocs() {
 
           <StoryPreviewCard label="O que o consumidor implementa">
             <ul style={storyDocsStyles.list}>
-              <li>Na API pública, use <code>queryMode=&quot;external&quot;</code>, <code>query</code>, <code>totalItems</code> e <code>onQueryChange</code>.</li>
+              <li>No contrato do componente, use <code>queryMode=&quot;external&quot;</code>, <code>query</code>, <code>totalItems</code> e <code>onQueryChange</code>.</li>
               <li>Mantenha o endpoint, o client HTTP, autenticação, debounce e deduplicação de requests fora da Table.</li>
               <li>Atualize <code>query</code>, <code>items</code> e <code>totalItems</code> no estado da aplicação quando uma nova consulta terminar.</li>
             </ul>
