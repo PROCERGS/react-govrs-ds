@@ -15,6 +15,7 @@ export { Search } from './Search/Search';
 export { Select } from './Select/Select';
 export { Slider } from './Slider/Slider';
 export { Switch } from './Switch/Switch';
+export { Table } from './Table/Table';
 export { Tag } from './Tag/Tag';
 export { Tooltip } from './Tooltip/Tooltip';
 export { Upload } from './Upload/Upload';
