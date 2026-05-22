@@ -409,13 +409,14 @@ function TableDefaultView<TItem extends TableItemBase>(props: TableDefaultViewPr
     const activeSortColumn = effectiveQuery.sort
       ? columns.find((column) => column.key === effectiveQuery.sort?.key && isColumnSortable(column))
       : null
+    const activeSort = effectiveQuery.sort && activeSortColumn ? effectiveQuery.sort : null
 
-    const sortedItems = effectiveQuery.sort && activeSortColumn
+    const sortedItems = activeSort
       ? [...filteredItems].sort((left, right) => {
-          const direction = effectiveQuery.sort?.direction === 'desc' ? -1 : 1
-          const type = columnTypes[effectiveQuery.sort.key] ?? 'string'
-          const leftValue = left[effectiveQuery.sort.key]
-          const rightValue = right[effectiveQuery.sort.key]
+          const direction = activeSort.direction === 'desc' ? -1 : 1
+          const type = columnTypes[activeSort.key] ?? 'string'
+          const leftValue = left[activeSort.key]
+          const rightValue = right[activeSort.key]
 
           if (type === 'number') {
             return (Number(leftValue) - Number(rightValue)) * direction
@@ -762,7 +763,6 @@ export namespace Table {
     TKey extends TableColumnKey<TItem> = TableColumnKey<TItem>,
   > = TableColumn<TItem, TKey>
   export type ColumnKey<TItem extends TableItemBase = TableItemBase> = TableColumnKey<TItem>
-  export type QueryInput<TItem extends TableItemBase = TableItemBase> = TableQueryInput<TItem>
   export type Query<TItem extends TableItemBase = TableItemBase> = TableQuery<TItem>
   export type QueryChangeContext<TItem extends TableItemBase = TableItemBase> = TableQueryChangeContext<TItem>
   export type QueryChangeHandler<TItem extends TableItemBase = TableItemBase> = TableQueryChangeHandler<TItem>

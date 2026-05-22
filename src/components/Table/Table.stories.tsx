@@ -37,23 +37,6 @@ type FormularioTableItem = {
   criadoEm: string
 }
 
-type FormularioApiItem = {
-  idFormulario: string
-  nomeFormulario: string
-  situacao: string
-  dataCriacao: string
-}
-
-type FormularioApiResponse = {
-  content: FormularioApiItem[]
-  totalElements: number
-}
-
-type FormularioTableResult = {
-  items: FormularioTableItem[]
-  totalItems: number
-}
-
 const defaultLocalVariantTags = ['default', 'local', 'seleção']
 
 const defaultLocalHeroStats = [
@@ -322,7 +305,7 @@ function makeActionItems(count = 6): TableStoryItem[] {
   }))
 }
 
-function makeFormularioApiItems(count = 40): FormularioApiItem[] {
+function makeFormularioItems(count = 40): FormularioTableItem[] {
   const baseDate = new Date('2026-05-20T12:00:00.000Z')
   const statuses = ['Rascunho', 'Publicado', 'Arquivado'] as const
 
@@ -330,21 +313,12 @@ function makeFormularioApiItems(count = 40): FormularioApiItem[] {
     const date = new Date(baseDate.getTime() - index * 24 * 60 * 60 * 1000)
 
     return {
-      idFormulario: `form-${index + 1}`,
-      nomeFormulario: `Formulario ${String(index + 1).padStart(3, '0')}`,
-      situacao: statuses[index % statuses.length],
-      dataCriacao: date.toISOString().slice(0, 10),
+      id: `form-${index + 1}`,
+      nome: `Formulario ${String(index + 1).padStart(3, '0')}`,
+      status: statuses[index % statuses.length],
+      criadoEm: date.toISOString().slice(0, 10),
     }
   })
-}
-
-function mapFormularioApiItem(item: FormularioApiItem): FormularioTableItem {
-  return {
-    id: item.idFormulario,
-    nome: item.nomeFormulario,
-    status: item.situacao,
-    criadoEm: item.dataCriacao,
-  }
 }
 
 function sortItems<TItem extends Table.ItemBase>(items: TItem[], sort: Table.SortState<TItem> | null) {
@@ -389,30 +363,6 @@ function applyExternalQuery<TItem extends Table.ItemBase>(items: TItem[], query:
   return {
     items: sortedItems.slice(startIndex, startIndex + query.pageSize),
     totalItems: sortedItems.length,
-  }
-}
-
-function createFormularioApiResponse(
-  items: FormularioApiItem[],
-  query: Table.Query<FormularioTableItem>,
-): FormularioApiResponse {
-  const result = applyExternalQuery(items.map(mapFormularioApiItem), query)
-
-  return {
-    content: result.items.map((item) => ({
-      idFormulario: item.id,
-      nomeFormulario: item.nome,
-      situacao: item.status,
-      dataCriacao: item.criadoEm,
-    })),
-    totalElements: result.totalItems,
-  }
-}
-
-function mapFormularioApiResponse(data: FormularioApiResponse): FormularioTableResult {
-  return {
-    items: data.content.map(mapFormularioApiItem),
-    totalItems: data.totalElements,
   }
 }
 
@@ -530,7 +480,7 @@ function TableSelectionPreview() {
 }
 
 function TableQueryPreview() {
-  const [sourceItems] = useState<FormularioApiItem[]>(() => makeFormularioApiItems(40))
+  const [sourceItems] = useState<FormularioTableItem[]>(() => makeFormularioItems(40))
   const formularioQuery: Table.Query<FormularioTableItem> = {
     search: '',
     searchColumn: 'nome',
@@ -539,17 +489,13 @@ function TableQueryPreview() {
     pageSize: 20,
   }
   const [query, setQuery] = useState<Table.Query<FormularioTableItem>>(formularioQuery)
-  const [tableResult, setTableResult] = useState<FormularioTableResult>(() => (
-    mapFormularioApiResponse(createFormularioApiResponse(sourceItems, formularioQuery))
-  ))
+  const [tableResult, setTableResult] = useState(() => applyExternalQuery(sourceItems, formularioQuery))
   const [lastQueryChange, setLastQueryChange] = useState<Table.QueryChangeContext<FormularioTableItem> | null>(null)
 
   const handleQueryChange: Table.QueryChangeHandler<FormularioTableItem> = (context) => {
     setLastQueryChange(context)
     setQuery(context.query)
-    const response = createFormularioApiResponse(sourceItems, context.query)
-
-    setTableResult(mapFormularioApiResponse(response))
+    setTableResult(applyExternalQuery(sourceItems, context.query))
   }
 
   return (
