@@ -100,12 +100,14 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-color-avatar-tone-14: #2a9d8f;
 
   --govrs-color-contrast-background: #000000;
-  --govrs-color-contrast-foreground: #ffffff;
-  --govrs-color-contrast-muted: #bababa;
-  --govrs-color-contrast-accent: #fecd3a;
-  --govrs-color-contrast-surface: #1a1a1a;
-  --govrs-color-contrast-surface-alt: #2d2d2d;
-  --govrs-color-contrast-border: #333333;
+  /* High contrast palette adjusted: use dark green for foreground and beige for dark surfaces */
+  --govrs-color-contrast-background: #f5efe6; /* light beige background */
+  --govrs-color-contrast-foreground: var(--govrs-color-brand-primary-strong, #04290f); /* dark green */
+  --govrs-color-contrast-muted: #cfc2ab; /* muted beige */
+  --govrs-color-contrast-accent: #fecd3a; /* keep accent */
+  --govrs-color-contrast-surface: #f7f2ea; /* surface beige */
+  --govrs-color-contrast-surface-alt: #efe6d5; /* alt surface beige */
+  --govrs-color-contrast-border: #e6dcc9; /* border beige */
 
   /* Breakpoint tokens */
   --govrs-breakpoint-smartphone-portrait-max: #{$govrs-breakpoint-smartphone-portrait-max};
