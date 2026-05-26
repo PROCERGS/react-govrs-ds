@@ -1,0 +1,172 @@
+@use '../../foundations/styles/variables' as vars;
+
+#rs-gov {
+  color: var(--green-matriz-link);
+  vertical-align: initial;
+}
+
+input.barra-estado__checkbox,
+.barra-estado__toggle {
+  display: none;
+}
+.barra-estado__menu > li {
+  float: left;
+  list-style: none;
+}
+
+@media only screen and (max-width: 991px) {
+  .barra-estado__menu {
+    position: absolute;
+    z-index: 999;
+    top: 32px;
+    right: 0;
+    display: none;
+    width: 280px;
+    opacity: 0;
+  }
+  .barra-estado__menu > li {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+  .barra-estado__menu > li > a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  .barra-estado__toggle {
+    position: relative;
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input.barra-estado__checkbox:checked ~ .barra-estado__menu {
+    display: block;
+    opacity: 1;
+  }
+}
+
+.barra-estado {
+  height: 32px;
+  background-color: #f8f8f8;
+  padding: 5px 12px;
+}
+
+.barra-estado__container {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  padding: 0 var(--padding-default);
+  margin: 0;
+  box-sizing: border-box;
+}
+.barra-estado__container a {
+  text-decoration: none;
+}
+
+.barra-estado__logo {
+  position: absolute;
+  width: 77px;
+  height: 16px;
+  margin-top: 6px;
+}
+
+.barra-estado__menu {
+  padding: 14px 0 20px;
+  border-top: 1px solid #fff;
+  margin-top: 0;
+  background: #f8f8f8;
+  font-family: Roboto, Arial, sans-serif;
+}
+.barra-estado__nav {
+  display: block;
+  float: right;
+}
+
+.barra-estado__menu,
+.barra-estado__menu > li,
+.barra-estado__menu > li > a,
+.barra-estado__nav {
+  height: 100%;
+}
+.barra-estado__nav__form {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+.barra-estado__menu > li > a {
+  display: block;
+  box-sizing: border-box;
+  padding: 13px 40px;
+  color: #1a7235;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  transition: box-shadow 0.25s linear;
+}
+
+.barra-estado__menu > li > a:hover > svg > path,
+.barra-estado__menu > li > a:focus > svg > path {
+  fill: #000000;
+}
+
+.barra-estado__menu > li > a:focus,
+.barra-estado__menu > li > a:hover {
+  box-shadow: inset 5px 0 var(--green-matriz-link-activated);
+  color: #000000;
+}
+.barra-estado__menu > li > a:active {
+  color: #e4e4e4 !important;
+}
+.barra-estado__menu,
+.barra-estado__menu > li,
+.barra-estado__menu > li > a {
+  height: auto;
+}
+.barra-estado__toggle {
+  z-index: 2;
+}
+.barra-estado__toggle:after {
+  color: #bcbcbb;
+  content: attr(data-open);
+  transition: all 0.5s linear;
+}
+.barra-estado__toggle:hover:after {
+  color: #fff;
+}
+input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
+  content: attr(data-close);
+}
+@media only screen and (min-width: 992px) {
+  .barra-estado__menu {
+    padding: 0;
+    border-top: none;
+    margin-top: 0;
+    background: #f8f8f8;
+  }
+  .barra-estado__menu > li > a {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+  .barra-estado__menu > li > a:focus,
+  .barra-estado__menu > li > a:hover {
+    box-shadow: inset 0 2px var(--green-matriz-link-activated);
+    color: #000000;
+  }
+}
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: -1px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+}

@@ -13,6 +13,8 @@ const preview: Preview = {
           ['Input', 'DatePicker', 'Select', 'Checkbox', 'Radio', 'Switch', 'Upload', '*'],
           'Busca',
           ['Search'],
+          'Navegação',
+          ['Header', 'MenuHamburger', 'Step', '*'],
           'Feedback',
           ['Alerts', 'Badges', 'Loader', '*'],
           'Conteúdo',

@@ -258,3 +258,25 @@
 .menu-hamburger-item-content.level-even {
   background-color: var(--govrs-color-contrast-surface, #1a1a1a) !important;
 }
+
+.high-contrast img,
+.high-contrast picture,
+.high-contrast video,
+.high-contrast svg,
+.high-contrast .no-contrast,
+.high-contrast [data-no-contrast] {
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  color: inherit !important;
+  fill: unset !important;
+  stroke: unset !important;
+}
+
+.high-contrast img *,
+.high-contrast svg * {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}

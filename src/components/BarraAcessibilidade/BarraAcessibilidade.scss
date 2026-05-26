@@ -1,0 +1,73 @@
+@use '../../foundations/styles/variables' as vars;
+
+@media (max-width: 767px) {
+  .acess-wrapper {
+    display: none !important;
+  }
+}
+
+.acess-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 12px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.acess-ul {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  gap: 20px;
+  list-style-type: none;
+}
+
+.acess-ul > li > a,
+.acess-ul > li > button {
+  color: #1a7235;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.acess-ul > li:hover > a,
+.acess-ul > li:hover > button {
+  color: #1a7235;
+  cursor: pointer;
+}
+
+.acess-left > li > a,
+.acess-left > li > button {
+  font-size: 16px;
+}
+
+/* Ensure SVG icons inherit color and align vertically */
+.acess-ul svg,
+.acess-ul .svg-inline--fa {
+  color: inherit;
+  fill: currentColor;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+}
+
+.acess-contrast-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.acess-contrast-btn:focus {
+  outline: 3px solid var(--govrs-color-focus, #ffcd07);
+  outline-offset: 2px;
+}
