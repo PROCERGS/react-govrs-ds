@@ -567,11 +567,14 @@ function StepVertical({
       return
     }
 
+    container.classList.add('govrs-step-vertical--measuring')
+
     const labels = container.querySelectorAll<HTMLElement>(
       '.govrs-step-vertical__label--right, .govrs-step-vertical__label--left',
     )
 
     if (labels.length === 0) {
+      container.classList.remove('govrs-step-vertical--measuring')
       setCssCustomProperty(container, '--govrs-step-vertical-label-slot', null)
       return
     }
@@ -591,6 +594,8 @@ function StepVertical({
       '--govrs-step-vertical-label-slot',
       `${Math.round(maximumWidth + 12)}px`,
     )
+
+    container.classList.remove('govrs-step-vertical--measuring')
   }, [labelPosition])
 
   const updateMeasurements = useCallback(() => {

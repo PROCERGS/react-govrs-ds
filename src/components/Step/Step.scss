@@ -416,6 +416,10 @@
 
 .govrs-step-vertical__label {
   max-width: 220px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  box-sizing: border-box;
 }
 
 .govrs-step-vertical__label--below {
@@ -434,6 +438,18 @@
 .govrs-step-vertical__label--right {
   position: absolute;
   left: calc(50% + (var(--govrs-step-vertical-size) / 2) + 8px);
+}
+
+/* During measurement we want the unwrapped natural width of each label
+   so the computed slot size is stable and not influenced by transient
+   active/focus styles. Rules here are only applied while the container
+   has the measuring helper class added from JS. */
+.govrs-step-vertical--measuring .govrs-step-vertical__label--right,
+.govrs-step-vertical--measuring .govrs-step-vertical__label--left {
+  width: auto !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
 }
 
 .govrs-step-vertical__label--left {
