@@ -27,4 +27,6 @@ export { Tag } from './Tag/Tag';
 export { Tooltip } from './Tooltip/Tooltip';
 export { Upload } from './Upload/Upload';
 
+export { Footer } from './Footer/Footer';
+
 
