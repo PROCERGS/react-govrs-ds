@@ -10,6 +10,7 @@ export { Carousel } from './Carousel/Carousel';
 export { DatePicker } from './DatePicker/DatePicker';
 export { Input } from './Input/Input';
 export { Header } from './Header/Header';
+export { Map } from './Map/Map';
 export { BarraEstado } from './BarraEstado/BarraEstado';
 export { BarraAcessibilidade } from './BarraAcessibilidade/BarraAcessibilidade';
 export { Loader } from './Loader/Loader';
