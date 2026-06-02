@@ -132,7 +132,7 @@ export default function MapWithMarkers({
             zoom={zoom}
             onClick={handleMapClick}
             options={mapOptions}
-            onLoad={(map) => {
+            onLoad={(map: any) => {
               mapRef.current = map
             }}
           >
@@ -141,7 +141,7 @@ export default function MapWithMarkers({
                 key={m.id}
                 position={{ lat: m.lat, lng: m.lng }}
                 draggable={editable}
-                onDragEnd={(e) => handleDragEnd(e, m.id)}
+                onDragEnd={(e: any) => handleDragEnd(e, m.id)}
                 title={m.title}
                 icon={m.icon}
               />
