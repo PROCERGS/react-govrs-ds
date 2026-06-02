@@ -14,7 +14,10 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons'
 
-import './Select.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Select.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type SelectState = 'danger' | 'success' | 'warning' | 'info'
 

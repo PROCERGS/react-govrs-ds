@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useMapContext } from './MapProvider'
-import './Map.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Map.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 export type MarkerItem = {
   id: string

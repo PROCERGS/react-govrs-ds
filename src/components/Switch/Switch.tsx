@@ -1,6 +1,9 @@
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 
-import './Switch.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Switch.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type SwitchProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> & {
   label?: ReactNode

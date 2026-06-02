@@ -2,7 +2,10 @@ import type { ReactNode } from 'react'
 
 import { Stack, Text } from '../../primitives'
 
-import './Badges.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Badges.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type BadgeVariant = 'success' | 'warning' | 'error' | 'info'
 

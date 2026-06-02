@@ -4,7 +4,10 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { Stack, Text } from '../../primitives';
 import { breakpoints } from '../../tokens';
 import { CarouselEmptyState } from './CarouselEmptyState';
-import './CarouselDefault.scss';
+import { ensureStylesheet } from '../../runtime/ensureStylesheet';
+import stylesheetUrl from './CarouselDefault.scss?url';
+
+ensureStylesheet(stylesheetUrl);
 
 export type CarouselDefaultItem = {
   title?: string;

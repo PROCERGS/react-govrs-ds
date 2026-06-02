@@ -1,7 +1,10 @@
 import { useEffect, useId, useState } from 'react'
 import type { HTMLAttributes, ReactNode } from 'react'
 
-import './Loader.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Loader.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type LoaderVariant = 'default' | 'percentage'
 type LoaderLabelPosition = 'top' | 'bottom' | 'left' | 'right'

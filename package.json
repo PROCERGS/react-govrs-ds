@@ -4,8 +4,8 @@
   "private": false,
   "type": "module",
   "sideEffects": [
-    "*.css",
-    "*.scss"
+    "**/*.css",
+    "**/*.scss"
   ],
   "main": "./dist/react-govrs-ds.cjs",
   "module": "./dist/react-govrs-ds.es.js",
@@ -16,9 +16,12 @@
       "import": "./dist/react-govrs-ds.es.js",
       "require": "./dist/react-govrs-ds.cjs"
     },
-    "./style.css": "./dist/style.css"
+    "./foundation": {
+      "types": "./dist/types/foundation.d.ts",
+      "import": "./dist/foundation.js",
+      "require": "./dist/foundation.cjs"
+    }
   },
-  "style": "./dist/style.css",
   "files": [
     "dist"
   ],

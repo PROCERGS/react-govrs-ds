@@ -7,7 +7,10 @@ import {
   type ReactNode,
 } from 'react'
 
-import './Table.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Table.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 const DEFAULT_PAGE_SIZES = [20, 50, 100] as const
 

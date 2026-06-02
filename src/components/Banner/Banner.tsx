@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
 
-import './Banner.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Banner.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type BannerType = 'quadrado' | 'variant4'
 

@@ -6,7 +6,10 @@ import {
   faSitemap,
   faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
-import './BarraAcessibilidade.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './BarraAcessibilidade.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 import useHighContrast from '../../hooks/useHighContrast'
 
 type BarraAcessibilidadeProps = {

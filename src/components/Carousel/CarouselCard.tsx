@@ -5,7 +5,10 @@ import { Card } from '../Card/Card';
 import { Stack, Text } from '../../primitives';
 import { breakpoints } from '../../tokens';
 import { CarouselEmptyState } from './CarouselEmptyState';
-import './CarouselCard.scss';
+import { ensureStylesheet } from '../../runtime/ensureStylesheet';
+import stylesheetUrl from './CarouselCard.scss?url';
+
+ensureStylesheet(stylesheetUrl);
 
 export type CarouselCardItem = Card.Props & {
   heading?: string;

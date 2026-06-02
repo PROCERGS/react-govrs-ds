@@ -8,7 +8,10 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
-import './MenuHamburger.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './MenuHamburger.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type MenuHamburgerItem = {
   id?: string | number

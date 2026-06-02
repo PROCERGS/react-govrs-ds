@@ -1,6 +1,9 @@
 import type { CSSProperties, ElementType, HTMLAttributes, ReactNode } from 'react'
 
-import './Stack.scss'
+import { ensureStylesheet } from '../runtime/ensureStylesheet'
+import stylesheetUrl from './Stack.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type StackProps = HTMLAttributes<HTMLElement> & {
   as?: ElementType

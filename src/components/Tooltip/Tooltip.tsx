@@ -7,7 +7,10 @@ import {
   type ReactNode,
 } from 'react'
 
-import './Tooltip.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Tooltip.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type TooltipPosition = 'top' | 'right' | 'bottom' | 'left'
 type TooltipState = 'success' | 'warning' | 'error' | 'info'

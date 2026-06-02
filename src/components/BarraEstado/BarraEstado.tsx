@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
-import './BarraEstado.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './BarraEstado.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type BarraEstadoProps = {}
 

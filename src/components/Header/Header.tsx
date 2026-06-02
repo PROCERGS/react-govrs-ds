@@ -5,7 +5,10 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 import { MenuHamburger } from '../MenuHamburger/MenuHamburger'
 import { Search } from '../Search/Search'
-import './Header.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Header.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 const defaultLogoSrc = new URL('./govrs-symbol.svg', import.meta.url).href
 

@@ -2,7 +2,10 @@ import { useState, type MouseEvent, type ReactNode } from 'react';
 
 import { Stack, Text } from '../../primitives';
 
-import './Card.scss';
+import { ensureStylesheet } from '../../runtime/ensureStylesheet';
+import stylesheetUrl from './Card.scss?url';
+
+ensureStylesheet(stylesheetUrl);
 
 type CardVariant = 'post' | 'list' | 'news' | 'icon';
 type CardSize = 'small' | 'large';

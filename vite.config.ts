@@ -2,18 +2,25 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 
-// Library build configuration
+const externalDependencies = [
+  'react',
+  'react-dom',
+  'react/jsx-runtime',
+  '@fortawesome/fontawesome-svg-core',
+  '@fortawesome/free-solid-svg-icons',
+  '@fortawesome/react-fontawesome',
+  '@react-google-maps/api',
+]
+
 export default defineConfig({
+  base: './',
   plugins: [react()],
   build: {
+    cssCodeSplit: true,
     lib: {
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
-        components: resolve(__dirname, 'src/components/index.ts'),
-        tokens: resolve(__dirname, 'src/tokens/index.ts'),
-        foundations: resolve(__dirname, 'src/foundations/index.ts'),
-        primitives: resolve(__dirname, 'src/primitives/index.ts'),
-        patterns: resolve(__dirname, 'src/patterns/index.ts'),
+        foundation: resolve(__dirname, 'src/foundation.ts'),
       },
       name: 'ReactGovrsDS',
       formats: ['es', 'cjs'],
@@ -22,12 +29,18 @@ export default defineConfig({
           return format === 'es' ? 'react-govrs-ds.es.js' : 'react-govrs-ds.cjs'
         }
 
+        if (entryName === 'foundation') {
+          return format === 'es' ? 'foundation.js' : 'foundation.cjs'
+        }
+
         return `${entryName}.${format === 'es' ? 'js' : 'cjs'}`
       },
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: externalDependencies,
       output: {
+        preserveModules: true,
+        preserveModulesRoot: 'src',
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',

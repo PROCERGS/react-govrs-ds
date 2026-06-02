@@ -1,6 +1,9 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
-import './Button.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Button.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
 type ButtonSize = 'small' | 'medium' | 'large'

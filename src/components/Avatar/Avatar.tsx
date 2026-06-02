@@ -5,7 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { colors } from '../../tokens/colors'
 
-import './Avatar.scss'
+import { ensureStylesheet } from '../../runtime/ensureStylesheet'
+import stylesheetUrl from './Avatar.scss?url'
+
+ensureStylesheet(stylesheetUrl)
 
 type AvatarSize = 'small' | 'medium' | 'large'
 

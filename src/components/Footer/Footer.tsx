@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './Footer.scss';
+import { useEffect, useState } from 'react';
+import { ensureStylesheet } from '../../runtime/ensureStylesheet';
+import stylesheetUrl from './Footer.scss?url';
+
+ensureStylesheet(stylesheetUrl);
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
