@@ -2,10 +2,8 @@ import { useState, type MouseEvent, type ReactNode } from 'react'
 
 import { Stack, Text } from '../../primitives'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Alerts.scss?url'
+import './Alerts.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type AlertVariant = 'success' | 'warning' | 'error' | 'info'
 

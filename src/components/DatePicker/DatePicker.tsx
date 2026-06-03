@@ -9,10 +9,8 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './DatePicker.scss?url'
+import './DatePicker.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type DatePickerVariant = 'date' | 'time' | 'datetime'
 type DatePickerValue = string | null

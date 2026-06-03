@@ -2,10 +2,8 @@ import { useMemo, useState, type CSSProperties, type Key, type ReactNode } from 
 
 import { Card } from '../Card/Card'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './List.scss?url'
+import './List.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type ListVariant = 'default' | 'check' | 'link' | 'card'
 type ListMediaPreset = 'mixed' | 'images' | 'icons' | 'none'

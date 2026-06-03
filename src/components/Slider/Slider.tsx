@@ -9,10 +9,8 @@ import {
   type ReactNode,
 } from 'react'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Slider.scss?url'
+import './Slider.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type SliderBaseProps = {
   label?: ReactNode

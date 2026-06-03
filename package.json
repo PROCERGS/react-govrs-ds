@@ -1,25 +1,30 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "private": false,
   "type": "module",
   "sideEffects": [
     "**/*.css",
     "**/*.scss"
   ],
-  "main": "./dist/react-govrs-ds.cjs",
+  "main": "./dist/react-govrs-ds.es.js",
   "module": "./dist/react-govrs-ds.es.js",
+  "browser": "./dist/react-govrs-ds.es.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
+      "browser": "./dist/react-govrs-ds.es.js",
       "import": "./dist/react-govrs-ds.es.js",
-      "require": "./dist/react-govrs-ds.cjs"
+      "require": "./dist/react-govrs-ds.cjs",
+      "default": "./dist/react-govrs-ds.es.js"
     },
     "./foundation": {
       "types": "./dist/types/foundation.d.ts",
+      "browser": "./dist/foundation.js",
       "import": "./dist/foundation.js",
-      "require": "./dist/foundation.cjs"
+      "require": "./dist/foundation.cjs",
+      "default": "./dist/foundation.js"
     }
   },
   "files": [
@@ -34,8 +39,8 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -64,7 +69,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.1"
-    ,"@react-google-maps/api": "^2.16.1"
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@react-google-maps/api": "^2.16.1"
   }
 }

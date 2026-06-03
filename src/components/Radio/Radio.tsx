@@ -1,9 +1,7 @@
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Radio.scss?url'
+import './Radio.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type RadioVariant = 'default' | 'danger' | 'success'
 

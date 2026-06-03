@@ -10,10 +10,8 @@ import type {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Search.scss?url'
+import './Search.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type SearchSubmitEvent =
   | FormEvent<HTMLFormElement>

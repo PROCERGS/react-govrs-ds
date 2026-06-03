@@ -7,6 +7,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Apresentação',
+          'Consumo',
           'Ações',
           ['Button'],
           'Formulários',

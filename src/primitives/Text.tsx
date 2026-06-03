@@ -1,9 +1,7 @@
 import type { ElementType, HTMLAttributes, ReactNode } from 'react'
 
-import { ensureStylesheet } from '../runtime/ensureStylesheet'
-import stylesheetUrl from './Text.scss?url'
+import './Text.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type TextTone = 'default' | 'muted' | 'inverse'
 type TextSize = 'sm' | 'md' | 'lg'

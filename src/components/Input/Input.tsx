@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Input.scss?url'
+import './Input.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type InputState = 'danger' | 'success' | 'warning' | 'info'
 

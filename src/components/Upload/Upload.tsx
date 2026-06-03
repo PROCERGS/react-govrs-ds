@@ -2,10 +2,8 @@ import { useId, useRef, useState, type InputHTMLAttributes, type ReactNode } fro
 
 import { Badges } from '../Badges/Badges'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Upload.scss?url'
+import './Upload.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type UploadChangeHandler = (files: File[]) => void
 type UploadHandler = (files: File[]) => void | Promise<void>

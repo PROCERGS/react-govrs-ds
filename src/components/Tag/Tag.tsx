@@ -11,10 +11,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Tag.scss?url'
+import './Tag.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type TagVariant = 'default' | 'persistent' | 'persistentGroup' | 'status' | 'count'
 type TagStatus = 'online' | 'offline' | 'away'

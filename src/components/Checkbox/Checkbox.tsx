@@ -1,9 +1,7 @@
 import { useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode } from 'react'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Checkbox.scss?url'
+import './Checkbox.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type CheckboxVariant = 'default' | 'danger' | 'success'
 

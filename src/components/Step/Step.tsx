@@ -13,10 +13,8 @@ import {
 
 import { Tooltip } from '../Tooltip/Tooltip'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Step.scss?url'
+import './Step.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type StepOrientation = 'horizontal' | 'vertical'
 type StepVariant = 'default' | 'dotted' | 'plain'

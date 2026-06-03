@@ -18,10 +18,8 @@ import {
 import { Button } from '../Button/Button'
 import { Input } from '../Input/Input'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Modal.scss?url'
+import './Modal.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type ModalAction = {
   label: string

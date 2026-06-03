@@ -16,10 +16,8 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { ensureStylesheet } from '../../runtime/ensureStylesheet'
-import stylesheetUrl from './Accordion.scss?url'
+import './Accordion.scss'
 
-ensureStylesheet(stylesheetUrl)
 
 type AccordionTheme = 'default' | 'dark'
 type AccordionTitleSize = 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
