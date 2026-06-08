@@ -441,6 +441,29 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     return targetElement
   }
 
+  function ensureAutoMountPoint(currentScript) {
+    if (typeof document === 'undefined') return null
+
+    var mountHost = currentScript && currentScript.parentElement
+    var referenceNode = currentScript
+
+    if (!mountHost || mountHost.tagName === 'HEAD') {
+      mountHost = document.body || document.documentElement
+      referenceNode = null
+    }
+
+    if (!mountHost) return null
+
+    var mountPoint = document.createElement('div')
+    if (referenceNode && referenceNode.parentNode === mountHost) {
+      mountHost.insertBefore(mountPoint, referenceNode)
+    } else {
+      mountHost.appendChild(mountPoint)
+    }
+
+    return mountPoint
+  }
+
   function bootstrapFromCurrentScript() {
     if (typeof document === 'undefined') return null
 
@@ -448,10 +471,31 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     if (!currentScript) return null
 
     var targetSelector = currentScript.getAttribute('data-target')
-    if (!targetSelector) return null
 
     ensureWindowOrigin()
     ensureStyles()
+
+    if (!targetSelector) {
+      var autoMountPoint = ensureAutoMountPoint(currentScript)
+      if (autoMountPoint) {
+        return mountBarraEstado(autoMountPoint)
+      }
+
+      if (document.readyState === 'loading') {
+        var onReady = function () {
+          document.removeEventListener('DOMContentLoaded', onReady)
+
+          var createdAutoMountPoint = ensureAutoMountPoint(currentScript)
+          if (createdAutoMountPoint) {
+            mountBarraEstado(createdAutoMountPoint)
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', onReady)
+      }
+
+      return null
+    }
 
     var mounted = mountBarraEstado(targetSelector)
     if (mounted) return mounted
