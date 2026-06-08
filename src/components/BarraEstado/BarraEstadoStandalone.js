@@ -1,11 +1,18 @@
-(function (root) {
+(() => {
   'use strict'
 
   var STYLE_ID = 'barra-estado-standalone-style'
   var MOUNT_ATTR = 'data-barra-estado-mounted'
-  var mountSequence = 0
+  var SCRIPT_ATTR = 'data-barra-estado-script-processed'
+  var SCRIPT_NAME_HINT = /(?:^|\/)BarraEstadoStandalone(?:\.min)?\.js(?:[?#].*)?$/i
+  var toggleSequence = 0
 
   var STYLE_TEXT = `
+:host {
+  display: block;
+  width: 100%;
+}
+
 #rs-gov {
   color: var(--green-matriz-link, #1a7235);
   vertical-align: initial;
@@ -19,81 +26,6 @@ input.barra-estado__checkbox,
 .barra-estado__menu > li {
   float: left;
   list-style: none;
-}
-
-@media only screen and (max-width: 991px) {
-  .barra-estado__menu {
-    position: absolute;
-    z-index: 999;
-    top: 32px;
-    right: 0;
-    display: none;
-    width: 280px;
-    opacity: 0;
-  }
-
-  .barra-estado__menu > li {
-    display: block;
-    width: 100%;
-    margin: 0;
-  }
-
-  .barra-estado__menu > li > a {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    text-decoration: none;
-  }
-
-  .barra-estado__toggle {
-    position: relative;
-    display: block;
-    margin-bottom: 5px;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  input.barra-estado__checkbox:checked ~ .barra-estado__menu {
-    display: block;
-    opacity: 1;
-  }
-}
-
-.barra-estado {
-  height: 32px;
-  background-color: #f8f8f8;
-  padding: 5px 12px;
-}
-
-.barra-estado__container {
-  position: relative;
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  padding: 0 var(--padding-default, 0px);
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.barra-estado__container a {
-  text-decoration: none;
-}
-
-.barra-estado__logo {
-  position: absolute;
-  width: 77px;
-  height: 16px;
-  margin-top: 6px;
-}
-
-.barra-estado__menu {
-  padding: 14px 0 20px;
-  border-top: 1px solid #fff;
-  margin-top: 0;
-  background: #f8f8f8;
-  font-family: Roboto, Arial, sans-serif;
 }
 
 .barra-estado__nav {
@@ -160,6 +92,11 @@ input.barra-estado__checkbox,
   color: #fff;
 }
 
+.barra-estado__toggle:focus-visible {
+  outline: 2px solid var(--govrs-color-focus, #ffcd07);
+  outline-offset: 2px;
+}
+
 input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
   content: attr(data-close);
 }
@@ -200,26 +137,26 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
   white-space: nowrap !important;
 }
 
-.high-contrast .barra-estado {
+:host-context(.high-contrast) .barra-estado {
   border-bottom: 1px solid var(--govrs-color-contrast-foreground, #ffffff) !important;
   background-color: var(--govrs-color-contrast-background, #000000) !important;
 }
 
-.high-contrast .barra-estado__menu > li > a > #GurIA path {
+:host-context(.high-contrast) .barra-estado__menu > li > a > #GurIA path {
   fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 
-.high-contrast .barra-estado__menu > li > a:focus {
+:host-context(.high-contrast) .barra-estado__menu > li > a:focus {
   box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
   color: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 
-.high-contrast .barra-estado__menu > li > a:hover {
+:host-context(.high-contrast) .barra-estado__menu > li > a:hover {
   box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
   color: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 
-.high-contrast #rs-gov > path {
+:host-context(.high-contrast) #rs-gov > path {
   fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 `
@@ -354,27 +291,30 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     }
   }
 
-  function ensureStyles() {
-    if (typeof document === 'undefined') return null
+  function ensureStyles(styleHost) {
+    if (typeof document === 'undefined' || !styleHost) return null
 
-    var existingStyle = document.getElementById(STYLE_ID)
-    if (existingStyle) return existingStyle
+    if (typeof styleHost.querySelector === 'function') {
+      var existingStyle = styleHost.querySelector('#' + STYLE_ID)
+      if (existingStyle) return existingStyle
+    }
 
     var styleElement = document.createElement('style')
     styleElement.id = STYLE_ID
     styleElement.type = 'text/css'
     styleElement.textContent = STYLE_TEXT
 
-    var styleHost = document.head || document.documentElement
-    styleHost.appendChild(styleElement)
+    if (typeof styleHost.appendChild === 'function') {
+      styleHost.appendChild(styleElement)
+      return styleElement
+    }
 
-    return styleElement
+    return null
   }
 
   function createToggleId() {
-    mountSequence += 1
-
-    return 'barra-estado__toggle-' + mountSequence
+    toggleSequence += 1
+    return 'barra-estado__toggle-' + toggleSequence
   }
 
   function renderMenuItem(item) {
@@ -399,8 +339,8 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
       '<div class="barra-estado__nav">',
       '<div class="barra-estado__nav__form">',
       '<input type="checkbox" id="' + toggleId + '" class="barra-estado__checkbox" />',
-      '<label for="' + toggleId + '" class="barra-estado__toggle" data-open="•••" data-close="•••"></label>',
-      '<ul class="barra-estado__menu">',
+      '<label for="' + toggleId + '" id="' + toggleId + '-toggle" class="barra-estado__toggle" data-open="•••" data-close="•••" tabindex="0" role="button" aria-expanded="false" aria-controls="' + toggleId + '-menu" aria-label="Abrir ou fechar o menu da barra do estado"></label>',
+      '<ul class="barra-estado__menu" id="' + toggleId + '-menu" aria-label="Links institucionais">',
       renderMenuItems(),
       '</ul>',
       '</div>',
@@ -411,118 +351,172 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     ].join('')
   }
 
-  function resolveTarget(targetOrSelector) {
-    if (typeof document === 'undefined') return null
+  function createRenderRoot(hostElement) {
+    if (!hostElement) return null
 
-    if (!targetOrSelector) return null
+    if (hostElement.shadowRoot) return hostElement.shadowRoot
 
-    if (typeof targetOrSelector === 'string') {
-      return document.querySelector(targetOrSelector)
+    if (typeof hostElement.attachShadow !== 'function') {
+      console.error('BarraEstadoStandalone: Shadow DOM não é suportado neste ambiente.')
+      return null
     }
 
-    if (targetOrSelector.nodeType === 1) {
-      return targetOrSelector
+    try {
+      return hostElement.attachShadow({ mode: 'open' })
+    } catch (error) {
+      console.error('BarraEstadoStandalone: falha ao criar Shadow DOM.', error)
+      return null
     }
-
-    return null
   }
 
-  function mountBarraEstado(targetOrSelector) {
-    ensureWindowOrigin()
-    ensureStyles()
+  function clearRenderRoot(renderRoot) {
+    if (!renderRoot) return
 
-    var targetElement = resolveTarget(targetOrSelector)
-    if (!targetElement) return null
+    while (renderRoot.firstChild) {
+      renderRoot.removeChild(renderRoot.firstChild)
+    }
+  }
+
+  function bindToggleBehavior(renderRoot, toggleId) {
+    if (!renderRoot || typeof renderRoot.querySelector !== 'function') return
+
+    var checkbox = renderRoot.querySelector('#' + toggleId)
+    var toggle = renderRoot.querySelector('#' + toggleId + '-toggle')
+
+    if (!checkbox || !toggle) return
+
+    var syncAriaState = function () {
+      var isOpen = Boolean(checkbox.checked)
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+    }
+
+    toggle.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        checkbox.click()
+      }
+
+      if (event.key === 'Escape' && checkbox.checked) {
+        event.preventDefault()
+        checkbox.checked = false
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+    })
+
+    checkbox.addEventListener('change', syncAriaState)
+    syncAriaState()
+  }
+
+  function mountBarraEstado(hostElement) {
+    if (typeof document === 'undefined' || !hostElement) return null
+
+    ensureWindowOrigin()
+
+    var renderRoot = createRenderRoot(hostElement)
+    if (!renderRoot) return null
 
     var toggleId = createToggleId()
-    targetElement.innerHTML = renderMarkup(toggleId)
-    targetElement.setAttribute(MOUNT_ATTR, 'true')
 
-    return targetElement
+    clearRenderRoot(renderRoot)
+    ensureStyles(renderRoot)
+
+    var fragmentHost = document.createElement('div')
+    fragmentHost.innerHTML = renderMarkup(toggleId)
+
+    while (fragmentHost.firstChild) {
+      renderRoot.appendChild(fragmentHost.firstChild)
+    }
+
+    bindToggleBehavior(renderRoot, toggleId)
+    hostElement.setAttribute(MOUNT_ATTR, 'true')
+
+    return hostElement
   }
 
-  function ensureAutoMountPoint(currentScript) {
+  function createMountContainer() {
     if (typeof document === 'undefined') return null
 
-    var mountHost = currentScript && currentScript.parentElement
-    var referenceNode = currentScript
+    var container = document.createElement('div')
+    container.setAttribute(MOUNT_ATTR, 'false')
+    return container
+  }
 
-    if (!mountHost || mountHost.tagName === 'HEAD') {
-      mountHost = document.body || document.documentElement
-      referenceNode = null
+  function removeNode(node) {
+    if (!node || !node.parentNode) return
+    node.parentNode.removeChild(node)
+  }
+
+  function getFallbackCurrentScript() {
+    if (typeof document === 'undefined') return null
+
+    var scripts = document.getElementsByTagName('script')
+    var hintedCandidate = null
+    var fallbackCandidate = null
+
+    for (var index = scripts.length - 1; index >= 0; index -= 1) {
+      var script = scripts[index]
+      if (!script || script.getAttribute(SCRIPT_ATTR) === 'true') continue
+
+      if (script.readyState === 'interactive') {
+        return script
+      }
+
+      if (!hintedCandidate && SCRIPT_NAME_HINT.test(script.getAttribute('src') || script.src || '')) {
+        hintedCandidate = script
+      }
+
+      if (!fallbackCandidate) {
+        fallbackCandidate = script
+      }
     }
 
-    if (!mountHost) return null
+    return hintedCandidate || fallbackCandidate
+  }
 
-    var mountPoint = document.createElement('div')
-    if (referenceNode && referenceNode.parentNode === mountHost) {
-      mountHost.insertBefore(mountPoint, referenceNode)
-    } else {
-      mountHost.appendChild(mountPoint)
+  function resolveCurrentScript() {
+    if (typeof document === 'undefined') return null
+
+    if (document.currentScript) {
+      return document.currentScript
     }
 
-    return mountPoint
+    return getFallbackCurrentScript()
   }
 
   function bootstrapFromCurrentScript() {
     if (typeof document === 'undefined') return null
 
-    var currentScript = document.currentScript
-    if (!currentScript) return null
+    var currentScript = resolveCurrentScript()
 
-    var targetSelector = currentScript.getAttribute('data-target')
-
-    ensureWindowOrigin()
-    ensureStyles()
-
-    if (!targetSelector) {
-      var autoMountPoint = ensureAutoMountPoint(currentScript)
-      if (autoMountPoint) {
-        return mountBarraEstado(autoMountPoint)
-      }
-
-      if (document.readyState === 'loading') {
-        var onReady = function () {
-          document.removeEventListener('DOMContentLoaded', onReady)
-
-          var createdAutoMountPoint = ensureAutoMountPoint(currentScript)
-          if (createdAutoMountPoint) {
-            mountBarraEstado(createdAutoMountPoint)
-          }
-        }
-
-        document.addEventListener('DOMContentLoaded', onReady)
-      }
-
+    if (!currentScript || !currentScript.parentNode) {
+      console.error('BarraEstadoStandalone: não foi possível localizar a tag <script> atual.')
       return null
     }
 
-    var mounted = mountBarraEstado(targetSelector)
-    if (mounted) return mounted
+    currentScript.setAttribute(SCRIPT_ATTR, 'true')
 
-    if (document.readyState === 'loading') {
-      var onReady = function () {
-        document.removeEventListener('DOMContentLoaded', onReady)
-        mountBarraEstado(targetSelector)
-      }
-
-      document.addEventListener('DOMContentLoaded', onReady)
+    var container = createMountContainer()
+    if (!container) {
+      currentScript.removeAttribute(SCRIPT_ATTR)
+      console.error('BarraEstadoStandalone: falha ao criar o container de montagem.')
+      return null
     }
 
-    return null
+    currentScript.parentNode.insertBefore(container, currentScript)
+
+    try {
+      mountBarraEstado(container)
+    } catch (error) {
+      currentScript.removeAttribute(SCRIPT_ATTR)
+      removeNode(container)
+      console.error('BarraEstadoStandalone: falha ao montar a barra.', error)
+      return null
+    }
+
+    removeNode(currentScript)
+
+    return container
   }
-
-  function BarraEstado(targetOrSelector) {
-    return mountBarraEstado(targetOrSelector)
-  }
-
-  BarraEstado.mount = mountBarraEstado
-  BarraEstado.bootstrap = bootstrapFromCurrentScript
-  BarraEstado.ensureStyles = ensureStyles
-  BarraEstado.resolveTarget = resolveTarget
-  BarraEstado.renderMarkup = renderMarkup
-
-  root.BarraEstado = BarraEstado
 
   bootstrapFromCurrentScript()
-})(typeof window !== 'undefined' ? window : globalThis)
+})()
