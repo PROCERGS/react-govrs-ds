@@ -10,6 +10,20 @@
 :host {
   display: block;
   width: 100%;
+
+  --barra-estado-background: transparent;
+  --barra-estado-menu-background: #f8f8f8;
+  --barra-estado-hover-color: #000000;
+  --barra-estado-active-color: #e4e4e4;
+  --barra-estado-font-size: 12px;
+  --barra-estado-font-size-desktop: var(--barra-estado-font-size, 12px);
+  --barra-estado-height: 32px;
+  --barra-estado-link-padding: 13px 40px;
+  --barra-estado-link-padding-desktop: 9px 13px;
+  --barra-estado-guria-link-padding: 7px 13px;
+  --barra-estado-highlight-color: var(--green-matriz-link-activated, #135428);
+  --barra-estado-toggle-color: #bcbcbb;
+  --barra-estado-toggle-hover-color: #fff;
 }
 
 #rs-gov {
@@ -20,6 +34,19 @@
 input.barra-estado__checkbox,
 .barra-estado__toggle {
   display: none;
+}
+
+.barra-estado {
+  background: var(--barra-estado-background);
+  min-height: var(--barra-estado-height);
+}
+
+.barra-estado__container {
+  min-height: var(--barra-estado-height);
+}
+
+.barra-estado__menu {
+  background: var(--barra-estado-menu-background);
 }
 
 .barra-estado__menu > li {
@@ -43,32 +70,33 @@ input.barra-estado__checkbox,
   display: inline-block;
   padding: 0;
   margin: 0;
+  min-height: var(--barra-estado-height);
 }
 
 .barra-estado__menu > li > a {
   display: block;
   box-sizing: border-box;
-  padding: 13px 40px;
+  padding: var(--barra-estado-link-padding);
   color: var(--green-matriz-link, #1a7235);
-  font-size: 12px;
+  font-size: var(--barra-estado-font-size);
   font-weight: 700;
   line-height: 1;
-  transition: box-shadow 0.25s linear;
+  transition: box-shadow 0.25s linear, color 0.25s linear;
 }
 
 .barra-estado__menu > li > a:hover > svg > path,
 .barra-estado__menu > li > a:focus > svg > path {
-  fill: #000000;
+  fill: var(--barra-estado-hover-color);
 }
 
 .barra-estado__menu > li > a:focus,
 .barra-estado__menu > li > a:hover {
-  box-shadow: inset 5px 0 var(--green-matriz-link-activated, #135428);
-  color: #000000;
+  box-shadow: inset 5px 0 var(--barra-estado-highlight-color);
+  color: var(--barra-estado-hover-color);
 }
 
 .barra-estado__menu > li > a:active {
-  color: #e4e4e4 !important;
+  color: var(--barra-estado-active-color) !important;
 }
 
 .barra-estado__menu,
@@ -82,13 +110,13 @@ input.barra-estado__checkbox,
 }
 
 .barra-estado__toggle:after {
-  color: #bcbcbb;
+  color: var(--barra-estado-toggle-color);
   content: attr(data-open);
   transition: all 0.5s linear;
 }
 
 .barra-estado__toggle:hover:after {
-  color: #fff;
+  color: var(--barra-estado-toggle-hover-color);
 }
 
 .barra-estado__toggle:focus-visible {
@@ -105,23 +133,23 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     padding: 0;
     border-top: none;
     margin-top: 0;
-    background: #f8f8f8;
+    background: var(--barra-estado-menu-background);
   }
 
   .barra-estado__menu > li > a {
-    padding: 9px 13px;
-    font-size: 12px;
+    padding: var(--barra-estado-link-padding-desktop);
+    font-size: var(--barra-estado-font-size-desktop);
   }
 
   .barra-estado__menu > li > a:focus,
   .barra-estado__menu > li > a:hover {
-    box-shadow: inset 0 2px var(--green-matriz-link-activated, #135428);
-    color: #000000;
+    box-shadow: inset 0 2px var(--barra-estado-highlight-color);
+    color: var(--barra-estado-hover-color);
   }
 }
 
 .barra-estado__menu > li > a.barra-estado__guria-link {
-  padding: 7px 13px;
+  padding: var(--barra-estado-guria-link-padding);
 }
 
 .visually-hidden {
@@ -138,6 +166,10 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
 
 :host-context(.high-contrast) .barra-estado {
   border-bottom: 1px solid var(--govrs-color-contrast-foreground, #ffffff) !important;
+  background-color: var(--govrs-color-contrast-background, #000000) !important;
+}
+
+:host-context(.high-contrast) .barra-estado__menu {
   background-color: var(--govrs-color-contrast-background, #000000) !important;
 }
 
