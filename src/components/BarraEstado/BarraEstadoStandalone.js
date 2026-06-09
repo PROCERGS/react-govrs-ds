@@ -1,4 +1,4 @@
-(() => {
+(function () {
   'use strict'
 
   var STYLE_ID = 'barra-estado-standalone-style'
@@ -241,6 +241,13 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
 </svg>
 `
 
+  function renderMenuItem(item) {
+    var className = item.className ? ' class="' + item.className + '"' : ''
+    var content = item.html || '<span class="visually-hidden">Estado </span>' + item.label
+
+    return '<li><a target="_blank" rel="noreferrer noopener" href="' + item.href + '"' + className + '>' + content + '</a></li>'
+  }
+
   var MENU_ITEMS = [
     { href: 'https://estado.rs.gov.br/agencia-de-noticias', label: 'Notícias' },
     { href: 'https://www.rs.gov.br/', label: 'Serviços' },
@@ -254,6 +261,8 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
       html: '<span class="visually-hidden">Estado </span>' + GURIA_SVG,
     },
   ]
+
+  var MENU_ITEMS_HTML = MENU_ITEMS.map(renderMenuItem).join('')
 
   function ensureWindowOrigin() {
     if (typeof window === 'undefined') return
@@ -293,17 +302,6 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
     return 'barra-estado__toggle-' + toggleSequence
   }
 
-  function renderMenuItem(item) {
-    var className = item.className ? ' class="' + item.className + '"' : ''
-    var content = item.html || '<span class="visually-hidden">Estado </span>' + item.label
-
-    return '<li><a target="_blank" rel="noreferrer noopener" href="' + item.href + '"' + className + '>' + content + '</a></li>'
-  }
-
-  function renderMenuItems() {
-    return MENU_ITEMS.map(renderMenuItem).join('')
-  }
-
   function renderMarkup(toggleId) {
     return [
       '<div class="container-menu">',
@@ -317,7 +315,7 @@ input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
       '<input type="checkbox" id="' + toggleId + '" class="barra-estado__checkbox" />',
       '<label for="' + toggleId + '" id="' + toggleId + '-toggle" class="barra-estado__toggle" data-open="•••" data-close="•••" tabindex="0" role="button" aria-expanded="false" aria-controls="' + toggleId + '-menu" aria-label="Abrir ou fechar o menu da barra do estado"></label>',
       '<ul class="barra-estado__menu" id="' + toggleId + '-menu" aria-label="Links institucionais">',
-      renderMenuItems(),
+      MENU_ITEMS_HTML,
       '</ul>',
       '</div>',
       '</div>',
