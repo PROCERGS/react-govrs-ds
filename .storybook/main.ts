@@ -14,6 +14,16 @@ const config: StorybookConfig = {
   docs: {
     autodocs: false,
   },
+  async viteFinal(viteConfig) {
+    viteConfig.base = process.env.STORYBOOK_BASE || '/'
+
+    if (viteConfig.build?.lib) {
+      const { lib, rollupOptions, ...build } = viteConfig.build
+      viteConfig.build = build
+    }
+
+    return viteConfig
+  },
 }
 
-export default config;
+export default config
