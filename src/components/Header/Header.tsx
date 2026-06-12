@@ -7,8 +7,8 @@ import { MenuHamburger } from '../MenuHamburger/MenuHamburger'
 import { Search } from '../Search/Search'
 import './Header.scss'
 
-
-const defaultLogoSrc = new URL('./govrs-symbol.svg', import.meta.url).href
+const assetUrl = (relativePath: string) => new URL(relativePath, import.meta.url).href
+const defaultLogoSrc = assetUrl('./govrs-symbol.svg')
 
 type HeaderProps = {
   siteTitle: ReactNode

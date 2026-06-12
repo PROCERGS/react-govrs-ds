@@ -5,6 +5,7 @@ import './Footer.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
+
 export namespace Footer {
   export type Item = {
     title?: string;
@@ -67,12 +68,13 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
   const toggle = (index: number) => {
     setOpenMap((s) => ({ ...s, [index]: !s[index] }));
   };
-  
-  const brasao = new URL('./assets/brasao-RS.svg', import.meta.url).href;
-  const facebookIcon = new URL('./assets/facebook.svg', import.meta.url).href;
-  const instaIcon = new URL('./assets/insta.svg', import.meta.url).href;
-  const ytIcon = new URL('./assets/yt.svg', import.meta.url).href;
-  const xIcon = new URL('./assets/x.svg', import.meta.url).href;
+
+  const assetUrl = (relativePath: string) => new URL(relativePath, import.meta.url).href;
+  const brasao = assetUrl('./assets/brasao-RS.svg');
+  const facebookIcon = assetUrl('./assets/facebook.svg');
+  const instaIcon = assetUrl('./assets/insta.svg');
+  const ytIcon = assetUrl('./assets/yt.svg');
+  const xIcon = assetUrl('./assets/x.svg');
 
   const hasSocial = !!(socialLinks && (socialLinks.facebook || socialLinks.instagram || socialLinks.youtube || socialLinks.x));
 

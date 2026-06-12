@@ -1,6 +1,28 @@
+import { cpSync, mkdirSync, readdirSync, statSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { posix, resolve } from 'node:path'
+import { dirname, extname, join, posix, relative, resolve } from 'node:path'
+
+const COMPONENT_ASSET_EXTENSIONS = new Set(['.svg', '.png', '.jpg', '.jpeg', '.webp', '.gif'])
+
+function collectComponentAssetFiles(componentsDir: string, currentDir = componentsDir): string[] {
+  const assetFiles: string[] = []
+
+  for (const entry of readdirSync(currentDir)) {
+    const entryPath = join(currentDir, entry)
+
+    if (statSync(entryPath).isDirectory()) {
+      assetFiles.push(...collectComponentAssetFiles(componentsDir, entryPath))
+      continue
+    }
+
+    if (COMPONENT_ASSET_EXTENSIONS.has(extname(entry).toLowerCase())) {
+      assetFiles.push(entryPath)
+    }
+  }
+
+  return assetFiles
+}
 
 function injectLibraryCssImports() {
   return {
@@ -38,6 +60,24 @@ function injectLibraryCssImports() {
   }
 }
 
+function copyComponentAssets() {
+  return {
+    name: 'copy-component-assets',
+    apply: 'build' as const,
+    closeBundle() {
+      const srcRoot = resolve(__dirname, 'src')
+      const componentsDir = resolve(srcRoot, 'components')
+      const distRoot = resolve(__dirname, 'dist')
+
+      for (const assetPath of collectComponentAssetFiles(componentsDir)) {
+        const distPath = resolve(distRoot, relative(srcRoot, assetPath))
+        mkdirSync(dirname(distPath), { recursive: true })
+        cpSync(assetPath, distPath)
+      }
+    },
+  }
+}
+
 const isStorybookBuild = process.env.npm_lifecycle_event?.includes('storybook') === true
 
 const externalDependencies = [
@@ -52,7 +92,10 @@ const externalDependencies = [
 
 export default defineConfig({
   base: './',
-  plugins: [react(), ...(isStorybookBuild ? [] : [injectLibraryCssImports()])],
+  plugins: [
+    react(),
+    ...(isStorybookBuild ? [] : [injectLibraryCssImports(), copyComponentAssets()]),
+  ],
   build: {
     cssCodeSplit: true,
     lib: {
