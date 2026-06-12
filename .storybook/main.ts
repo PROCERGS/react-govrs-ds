@@ -22,6 +22,14 @@ const config: StorybookConfig = {
       viteConfig.build = build
     }
 
+    viteConfig.plugins = (viteConfig.plugins ?? []).filter(
+      (plugin) =>
+        plugin &&
+        typeof plugin === 'object' &&
+        'name' in plugin &&
+        plugin.name !== 'inject-library-css-imports',
+    )
+
     return viteConfig
   },
 }
