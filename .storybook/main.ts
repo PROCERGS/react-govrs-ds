@@ -17,10 +17,8 @@ const config: StorybookConfig = {
   async viteFinal(viteConfig) {
     viteConfig.base = process.env.STORYBOOK_BASE || '/'
 
-    if (viteConfig.build?.lib) {
-      const { lib, rollupOptions, ...build } = viteConfig.build
-      viteConfig.build = build
-    }
+    const { lib: _lib, rollupOptions: _rollupOptions, ...build } = viteConfig.build ?? {}
+    viteConfig.build = build
 
     viteConfig.plugins = (viteConfig.plugins ?? []).filter(
       (plugin) =>

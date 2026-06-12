@@ -38,6 +38,8 @@ function injectLibraryCssImports() {
   }
 }
 
+const isStorybookBuild = process.env.npm_lifecycle_event?.includes('storybook') === true
+
 const externalDependencies = [
   'react',
   'react-dom',
@@ -50,7 +52,7 @@ const externalDependencies = [
 
 export default defineConfig({
   base: './',
-  plugins: [react(), injectLibraryCssImports()],
+  plugins: [react(), ...(isStorybookBuild ? [] : [injectLibraryCssImports()])],
   build: {
     cssCodeSplit: true,
     lib: {

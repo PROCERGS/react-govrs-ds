@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 
 export const storyDocsStyles = {
