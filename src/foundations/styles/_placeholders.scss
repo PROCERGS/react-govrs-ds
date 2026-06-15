@@ -1,6 +1,6 @@
 .input-placeholder {
   &::placeholder {
-    color: var(--govrs-color-text-primary, #000000);
+    color: var(--govrs-color-text-placeholder);
     font-family: var(--govrs-font-family-base);
     font-size: var(--govrs-font-size-16, 1rem);
     font-weight: var(--govrs-font-weight-regular, 400);

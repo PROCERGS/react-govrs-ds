@@ -1,6 +1,6 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.1.4",
+  "version": "0.1.8",
   "private": false,
   "type": "module",
   "sideEffects": [
@@ -25,7 +25,8 @@
       "import": "./dist/foundation.js",
       "require": "./dist/foundation.cjs",
       "default": "./dist/foundation.js"
-    }
+    },
+    "./components/*": "./dist/components/*"
   },
   "files": [
     "dist"

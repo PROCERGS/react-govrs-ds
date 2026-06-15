@@ -46,7 +46,7 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-color-brand-primary-alpha-20: rgba(26, 114, 53, 0.2);
   --govrs-color-brand-primary-alpha-40: rgba(26, 114, 53, 0.4);
 
-  --govrs-color-interactive-link: #1351b4;
+  --govrs-color-interactive-link: #1351b4; /* GovBR; ponto de extensão para futura troca para verde de marca */
   --govrs-color-interactive-link-subtle: #c5d4eb;
   --govrs-color-focus: #ffcd07;
   --govrs-color-warning-tint: #fff5c2;
@@ -60,11 +60,11 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-color-info: #2b86d8;
   --govrs-color-info-surface: #e9f5ff;
 
-  --govrs-color-text-primary: #000000;
-  --govrs-color-text-secondary: #333333;
-  --govrs-color-text-muted: #555555;
-  --govrs-color-text-subtle: #666666;
-  --govrs-color-text-placeholder: #999999;
+  --govrs-color-text-primary: var(--govrs-color-brand-primary-strong);
+  --govrs-color-text-secondary: var(--govrs-color-brand-primary-hover);
+  --govrs-color-text-muted: #2f5c40;
+  --govrs-color-text-subtle: #4a7560;
+  --govrs-color-text-placeholder: #6b8f7a;
   --govrs-color-text-inverse: #ffffff;
 
   --govrs-color-surface-base: #ffffff;
@@ -99,10 +99,8 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-color-avatar-tone-13: #e76f51;
   --govrs-color-avatar-tone-14: #2a9d8f;
 
-  --govrs-color-contrast-background: #000000;
-  /* High contrast palette adjusted: use dark green for foreground and beige for dark surfaces */
-  --govrs-color-contrast-background: #f5efe6; /* light beige background */
-  --govrs-color-contrast-foreground: var(--govrs-color-brand-primary-strong, #04290f); /* dark green */
+  --govrs-color-contrast-background: #f5efe6;
+  --govrs-color-contrast-foreground: var(--govrs-color-brand-primary-strong);
   --govrs-color-contrast-muted: #cfc2ab; /* muted beige */
   --govrs-color-contrast-accent: #fecd3a; /* keep accent */
   --govrs-color-contrast-surface: #f7f2ea; /* surface beige */
@@ -305,9 +303,9 @@ $govrs-breakpoint-tv-min: 100rem;
   --interactive-dark: var(--govrs-color-interactive-link-subtle);
   --interactive-dark-rgb: 197, 212, 235;
   --color: var(--govrs-color-text-muted);
-  --color-rgb: 85, 85, 85;
+  --color-rgb: 47, 92, 64;
   --color-dark: var(--govrs-color-text-primary);
-  --color-dark-rgb: 0, 0, 0;
+  --color-dark-rgb: 4, 41, 15;
   --color-light: var(--govrs-color-text-inverse);
   --color-light-rgb: 255, 255, 255;
   --text-color: var(--govrs-color-text-muted);

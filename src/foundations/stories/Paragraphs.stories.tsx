@@ -27,7 +27,7 @@ function Measurement({
   weight: string;
 }) {
   return (
-    <p style={{ ...storyDocsStyles.statText, fontSize: 13 }}>
+    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: 'var(--govrs-color-text-muted)' }}>
       {size} / {lineHeight} / {weight}
     </p>
   );
@@ -100,7 +100,7 @@ export const Documentacao: Story = {
       <DocsHero
         eyebrow="Escalas de parágrafo"
         title={<h3 style={storyDocsStyles.heroTitle}>Paragraphs</h3>}
-        description="A fundação de paragraphs define classes nomeadas por grade e variante para padronizar texto corrido no design system sem exigir combinações ad hoc de tamanho e line-height."
+        description="A fundação de paragraphs define classes nomeadas por grade e variante para padronizar texto corrido no design system sem exigir combinações ad hoc de tamanho e line-height. A cor do texto vem de <code>--govrs-color-text-primary</code> (verde escuro RS)."
       />
 
       <SectionCard
@@ -116,6 +116,7 @@ ${paragraphs4Code}`}
           notes={[
             'A variação longa em 12 col compartilha a mesma escala do parágrafo curto, mas permanece nomeada separadamente por clareza de uso.',
             'No sistema 4 col, a variação curta cobre o caso que historicamente se aproximava do parágrafo pequeno.',
+            'Cor do texto: --govrs-color-text-primary (verde institucional RS).',
           ]}
         >
           <ParagraphsScalePreview />

@@ -17,7 +17,7 @@ const listCode = `<ul class="listas-base">
 
 function Measurement({ size, lineHeight, weight }: { size: string; lineHeight: string; weight: string }) {
   return (
-    <p style={{ ...storyDocsStyles.statText, fontSize: 13 }}>
+    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: 'var(--govrs-color-text-muted)' }}>
       {size} / {lineHeight} / {weight}
     </p>
   );

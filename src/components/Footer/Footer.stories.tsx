@@ -12,7 +12,7 @@ import { Footer } from './Footer'
 import './Footer.scss'
 import '../../foundations/styles/index.scss'
 
-const assetUrl = (relativePath: string) => new URL(relativePath, import.meta.url).href
+import brasaoAsset from './assets/brasao-RS.svg?url'
 
 const sampleItems = [
   {
@@ -52,7 +52,7 @@ const meta = {
   component: Footer,
   args: {
     items: sampleItems,
-    images: [assetUrl('./assets/brasao-RS.svg')],
+    images: [brasaoAsset],
     children: `<div>
   <h4>Informações</h4>
   <p>Horário de atendimento: 9h–17h</p>
@@ -125,7 +125,7 @@ export const FooterDocumentacao: Story = {
           <div style={{ width: '100%' }}>
             <Footer
               items={sampleItems}
-              images={[assetUrl('./assets/brasao-RS.svg')]}
+              images={[brasaoAsset]}
               className="custom-footer"
               navigationLabel="Rodapé principal"
               asidePosition="before"

@@ -8,6 +8,7 @@ const preview: Preview = {
         order: [
           'Apresentação',
           'Consumo',
+          'Customização',
           'Ações',
           ['Button'],
           'Formulários',

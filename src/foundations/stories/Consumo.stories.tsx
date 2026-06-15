@@ -70,7 +70,7 @@ EOF`}
       </SectionCard>
       <SectionCard
         title="Importação do Foundation"
-        description="O Foundation é o bloco responsável por fornecer os estilos base globais do design system, como reset de CSS, tipografia, cores e variáveis globais. Ele deve ser importado no projeto consumidor para garantir a consistência visual e o funcionamento correto dos componentes públicos."
+        description="O Foundation é o bloco responsável por fornecer os estilos base globais do design system, como reset de CSS, tipografia, cores e variáveis globais. Ele deve ser importado no projeto consumidor para garantir a consistência visual e o funcionamento correto dos componentes públicos. Para consultar cores base e como sobrescrever tokens no CSS do tema, veja a página Customização."
       >
         <div>Para importar o Foundation, basta adicionar a seguinte linha no arquivo de entrada do projeto consumidor (ex: <code>index.tsx</code> ou <code>App.tsx</code>):</div>
         <div style={storyDocsStyles.codeBlock}>

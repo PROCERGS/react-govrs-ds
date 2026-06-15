@@ -167,6 +167,7 @@ export const Page: Story = {
       >
         <ul style={storyDocsStyles.list}>
           <li>Use esta página como porta de entrada para entender o desenho geral do catálogo.</li>
+          <li>Consulte Consumo para instalação, import do foundation e uso dos componentes; consulte Customização para cores base e sobrescrita de tokens no CSS do tema.</li>
           <li>Navegue pelo menu lateral a partir da intenção de uso: ações, formulários, busca, feedback, conteúdo, sobreposições e tipografia.</li>
           <li>Abra primeiro a story de documentação para entender o contrato público antes de testar controls ou composições.</li>
           <li>Use stories interativas para validar estados e variações sem depender de aplicações consumidoras, ajustando props pelo painel de Controls.</li>

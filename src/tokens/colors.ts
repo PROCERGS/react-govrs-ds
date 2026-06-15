@@ -10,6 +10,15 @@ export const colors = {
     primaryAlpha20: 'rgba(26, 114, 53, 0.20)',
     primaryAlpha40: 'rgba(26, 114, 53, 0.40)',
   },
+  // Sync with foundations/styles/_variables.scss (--govrs-color-text-*)
+  text: {
+    primary: '#04290F',
+    secondary: '#135428',
+    muted: '#2F5C40',
+    subtle: '#4A7560',
+    placeholder: '#6B8F7A',
+    inverse: '#FFFFFF',
+  },
   interactive: {
     link: '#1351B4',
     linkSubtle: '#C5D4EB',
@@ -70,12 +79,12 @@ export const colors = {
     surfaceStrong: 'rgba(255, 255, 255, 0.90)',
   },
   contrast: {
-    background: '#000000',
-    foreground: '#FFFFFF',
-    muted: '#BABABA',
+    background: '#F5EFE6',
+    foreground: '#04290F',
+    muted: '#CFC2AB',
     accent: '#FECD3A',
-    surface: '#1A1A1A',
-    surfaceAlt: '#2D2D2D',
-    border: '#333333',
+    surface: '#F7F2EA',
+    surfaceAlt: '#EFE6D5',
+    border: '#E6DCC9',
   },
 } as const

@@ -1,90 +1,90 @@
 .high-contrast {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast body {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 //barra estado
 .high-contrast .barra-estado {
-  border-bottom: 1px solid var(--govrs-color-contrast-foreground, #ffffff) !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-bottom: 1px solid var(--govrs-color-contrast-foreground, #04290f) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .barra-estado__menu > li > a > #GurIA path {
-  fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .barra-estado__menu > li > a:focus {
-  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #04290f) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .barra-estado__menu > li > a:hover {
-  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #04290f) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast #rs-gov > path {
-  fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //a
 .high-contrast a {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast a:hover {
-  color: var(--govrs-color-contrast-muted, #bababa) !important;
+  color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
 }
 
 //svg
 .high-contrast .acess-ul > li > a > svg {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .acess-ul > * :hover {
-  fill: var(--govrs-color-contrast-muted, #bababa) !important;
+  fill: var(--govrs-color-contrast-muted, #cfc2ab) !important;
 }
 
 .high-contrast #btn-contraste {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //p
 .high-contrast p {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //h1
 .high-contrast h1 {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //h2
 .high-contrast h2 {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //h3
 .high-contrast h3 {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //span
 .high-contrast span {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //button
 .high-contrast button {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //search
 .high-contrast .s-wrapper {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
   box-shadow: unset;
 }
 
@@ -93,158 +93,158 @@
 }
 
 .high-contrast #buscageralTextBox {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //navigation
 .high-contrast .btn-scroll {
-  border: 3px solid var(--govrs-color-contrast-background, #000000) !important;
-  background-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  border: 3px solid var(--govrs-color-contrast-background, #f5efe6) !important;
+  background-color: var(--govrs-color-contrast-foreground, #04290f) !important;
   box-shadow: unset;
-  color: var(--govrs-color-contrast-background, #000000) !important;
+  color: var(--govrs-color-contrast-background, #f5efe6) !important;
   &:hover {
-    border-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
-    background-color: var(--govrs-color-contrast-background, #000000) !important;
-    color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+    border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
+    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+    color: var(--govrs-color-contrast-foreground, #04290f) !important;
   }
 }
 
 .high-contrast .item.active::before {
-  border-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .breadcrumbs {
   a {
-    color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+    color: var(--govrs-color-contrast-foreground, #04290f) !important;
   }
   a:hover {
-    color: var(--govrs-color-contrast-muted, #bababa) !important;
+    color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
   }
-  border-top: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  border-bottom: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  border-bottom: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .section {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .section.active {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .home > svg {
-  fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .divider::before {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //servicos grid item
 .high-contrast .servicos-grid-item {
-  border: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .servicos-grid-image {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .servicos-image {
-  border-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 //prog grid item
 .high-contrast .prog-grid-item {
-  border: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 .high-contrast .prog-grid-image {
-  border: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 //footer
 .high-contrast #footer {
-  border-top: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .footer-logo {
-  border-top: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 //sitemap
 .high-contrast #page-sitemap {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast #page-sitemap a {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast #page-sitemap a:hover {
-  color: var(--govrs-color-contrast-muted, #bababa) !important;
+  color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
 }
 
 //submenu
 .high-contrast .submenu {
-  border-top: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  border-bottom: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  border-bottom: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .subitem-wrapper {
-  border-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 //card container
 .high-contrast .card-container {
-  border: 2px var(--govrs-color-contrast-foreground, #ffffff) solid !important;
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 //ui
 .high-contrast .ui.label {
-  background-color: var(--govrs-color-contrast-foreground, #ffffff) !important;
-  color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-foreground, #04290f) !important;
+  color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .ui.segment {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
   label {
-    color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+    color: var(--govrs-color-contrast-foreground, #04290f) !important;
   }
   input {
-    background-color: var(--govrs-color-contrast-background, #000000) !important;
-    color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+    color: var(--govrs-color-contrast-foreground, #04290f) !important;
   }
   textarea {
-    background-color: var(--govrs-color-contrast-background, #000000) !important;
-    color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+    color: var(--govrs-color-contrast-foreground, #04290f) !important;
   }
 }
 
 //menu hamburguer
 .high-contrast .menu-hamburger-content {
   border-bottom: 2px solid var(--govrs-color-contrast-accent, #fecd3a);
-  background: var(--govrs-color-contrast-background, #000000) !important;
+  background: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .high-contrast .menu-hamburger-list {
-  border-right: 1px solid var(--govrs-color-contrast-border, #333333) !important;
-  background: var(--govrs-color-contrast-surface, #1a1a1a) !important;
+  border-right: 1px solid var(--govrs-color-contrast-border, #e6dcc9) !important;
+  background: var(--govrs-color-contrast-surface, #f7f2ea) !important;
 }
 
 .high-contrast .menu-hamburger-item a {
-  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #04290f) !important;
 }
 
 .high-contrast .menu-hamburger-item:hover {
-  background-color: var(--govrs-color-contrast-border, #333333) !important;
+  background-color: var(--govrs-color-contrast-border, #e6dcc9) !important;
 }
 
 .menu-hamburger-expand-button {
@@ -252,11 +252,11 @@
 }
 
 .menu-hamburger-item-content.level-odd {
-  background-color: var(--govrs-color-contrast-background, #000000) !important;
+  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
 }
 
 .menu-hamburger-item-content.level-even {
-  background-color: var(--govrs-color-contrast-surface, #1a1a1a) !important;
+  background-color: var(--govrs-color-contrast-surface, #f7f2ea) !important;
 }
 
 .high-contrast img,

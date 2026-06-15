@@ -32,7 +32,7 @@ function Measurement({
   weight: string;
 }) {
   return (
-    <p style={{ ...storyDocsStyles.statText, fontSize: 13 }}>
+    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: 'var(--govrs-color-text-muted)' }}>
       {size} / {lineHeight} / {weight}
     </p>
   );
@@ -137,7 +137,7 @@ export const Documentacao: Story = {
       <DocsHero
         eyebrow="Escalas de títulos"
         title={<h3 style={storyDocsStyles.heroTitle}>Headers</h3>}
-        description="A fundação de headers define o comportamento visual dos títulos de h1 a h4 em duas grades base. O objetivo é manter consistência tipográfica sem acoplar a escala a componentes específicos."
+        description="A fundação de headers define o comportamento visual dos títulos de h1 a h4 em duas grades base. O objetivo é manter consistência tipográfica sem acoplar a escala a componentes específicos. A cor vem de <code>--govrs-color-text-primary</code> (verde escuro RS)."
       />
 
       <SectionCard
@@ -152,6 +152,7 @@ export const Documentacao: Story = {
           notes={[
             'A semântica continua sendo definida pelas tags h1 a h4.',
             'A classe controla apenas a escala visual associada ao contexto.',
+            'Cor do texto: --govrs-color-text-primary (verde institucional RS).',
           ]}
         >
           <HeadersScalePreview />

@@ -60,6 +60,90 @@ function injectLibraryCssImports() {
   }
 }
 
+function readDefaultExportUrl(moduleCode: string): string | null {
+  const valueStart = moduleCode.indexOf('"') + 1
+  const valueEnd = moduleCode.lastIndexOf('";')
+
+  if (valueStart <= 0 || valueEnd <= valueStart) {
+    return null
+  }
+
+  return moduleCode.slice(valueStart, valueEnd)
+}
+
+function inlineLibraryAssetImports() {
+  return {
+    name: 'inline-library-asset-imports',
+    apply: 'build' as const,
+    enforce: 'post' as const,
+    generateBundle(
+      _: unknown,
+      bundle: Record<string, { type: string; fileName: string; code?: string }>,
+    ) {
+      const chunkByFileName = new Map<string, { type: string; fileName: string; code?: string }>()
+      const assetUrlModulePattern = /\.(?:svg|png|jpe?g|webp|gif)\.(?:js|cjs)$/
+      const inlinedAssetModules = new Set<string>()
+      const esmImportPattern = /import ([\w$]+) from (["'])(\.[^"']+\.(?:svg|png|jpe?g|webp|gif)\.js)\2;/g
+      const cjsImportPattern = /([\w$]+)=require\((["'])(\.[^"']+\.(?:svg|png|jpe?g|webp|gif)\.cjs)\2\)/g
+
+      for (const output of Object.values(bundle)) {
+        chunkByFileName.set(output.fileName.replace(/\\/g, '/'), output)
+      }
+
+      for (const output of Object.values(bundle)) {
+        if (output.type !== 'chunk' || typeof output.code !== 'string' || assetUrlModulePattern.test(output.fileName)) {
+          continue
+        }
+
+        let nextCode = output.code
+        const importerDir = posix.dirname(output.fileName.replace(/\\/g, '/'))
+
+        for (const match of output.code.matchAll(esmImportPattern)) {
+          const [importStatement, binding, , importPath] = match
+          const resolvedImportPath = posix.normalize(posix.join(importerDir, importPath))
+          const assetModule = chunkByFileName.get(resolvedImportPath)
+
+          if (!assetModule || typeof assetModule.code !== 'string') {
+            continue
+          }
+
+          const assetUrl = readDefaultExportUrl(assetModule.code)
+          if (!assetUrl) {
+            continue
+          }
+
+          nextCode = nextCode.replace(importStatement, `const ${binding} = ${JSON.stringify(assetUrl)};`)
+          inlinedAssetModules.add(resolvedImportPath)
+        }
+
+        for (const match of output.code.matchAll(cjsImportPattern)) {
+          const [importStatement, binding, , importPath] = match
+          const resolvedImportPath = posix.normalize(posix.join(importerDir, importPath))
+          const assetModule = chunkByFileName.get(resolvedImportPath)
+
+          if (!assetModule || typeof assetModule.code !== 'string') {
+            continue
+          }
+
+          const assetUrl = readDefaultExportUrl(assetModule.code)
+          if (!assetUrl) {
+            continue
+          }
+
+          nextCode = nextCode.replace(importStatement, `${binding}=${JSON.stringify(assetUrl)}`)
+          inlinedAssetModules.add(resolvedImportPath)
+        }
+
+        output.code = nextCode
+      }
+
+      for (const fileName of inlinedAssetModules) {
+        delete bundle[fileName]
+      }
+    },
+  }
+}
+
 function copyComponentAssets() {
   return {
     name: 'copy-component-assets',
@@ -94,7 +178,7 @@ export default defineConfig({
   base: './',
   plugins: [
     react(),
-    ...(isStorybookBuild ? [] : [injectLibraryCssImports(), copyComponentAssets()]),
+    ...(isStorybookBuild ? [] : [injectLibraryCssImports(), inlineLibraryAssetImports(), copyComponentAssets()]),
   ],
   build: {
     cssCodeSplit: true,

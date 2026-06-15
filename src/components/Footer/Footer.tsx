@@ -5,6 +5,11 @@ import './Footer.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
+import brasao from './assets/brasao-RS.svg?url';
+import facebookIcon from './assets/facebook.svg?url';
+import instaIcon from './assets/insta.svg?url';
+import ytIcon from './assets/yt.svg?url';
+import xIcon from './assets/x.svg?url';
 
 export namespace Footer {
   export type Item = {
@@ -68,13 +73,6 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
   const toggle = (index: number) => {
     setOpenMap((s) => ({ ...s, [index]: !s[index] }));
   };
-
-  const assetUrl = (relativePath: string) => new URL(relativePath, import.meta.url).href;
-  const brasao = assetUrl('./assets/brasao-RS.svg');
-  const facebookIcon = assetUrl('./assets/facebook.svg');
-  const instaIcon = assetUrl('./assets/insta.svg');
-  const ytIcon = assetUrl('./assets/yt.svg');
-  const xIcon = assetUrl('./assets/x.svg');
 
   const hasSocial = !!(socialLinks && (socialLinks.facebook || socialLinks.instagram || socialLinks.youtube || socialLinks.x));
 
