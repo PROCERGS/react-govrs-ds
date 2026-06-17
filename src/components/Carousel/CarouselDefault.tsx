@@ -13,6 +13,9 @@ export type CarouselDefaultItem = {
   image?: string;
   imageAlt?: string;
   videoUrl?: string;
+  href?: string;
+  url?: string;
+  linkTarget?: '_blank' | '_self';
 };
 
 export type CarouselDefaultProps = {
@@ -204,151 +207,178 @@ export function CarouselDefault({
               slideClass = `carousel-slide previous slide-out-${slideOutDirection}`;
             }
 
+            const itemHref = item.href || item.url;
+            const canLinkPanel = Boolean(itemHref && !item.videoUrl);
+
+            const slideMedia = item.videoUrl ? (
+              (() => {
+                const youtubeId = getYouTubeId(item.videoUrl);
+                const vimeoId = getVimeoId(item.videoUrl);
+
+                if (youtubeId) {
+                  return loadedVideos[index] ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+                      title={item.title || `YouTube video ${index + 1}`}
+                      className="carousel-video carousel-iframe"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div
+                      className="carousel-video-thumbnail"
+                      onClick={() =>
+                        setLoadedVideos((prev) => ({
+                          ...prev,
+                          [index]: true,
+                        }))
+                      }
+                      role="button"
+                      tabIndex={0}
+                      aria-label={item.title ? `Reproduzir vídeo ${item.title}` : 'Reproduzir vídeo'}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setLoadedVideos((prev) => ({
+                            ...prev,
+                            [index]: true,
+                          }));
+                        }
+                      }}
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                        alt={item.title || `Video thumbnail ${index + 1}`}
+                        className="carousel-thumbnail-image"
+                      />
+                      <span className="carousel-play-overlay" aria-hidden>
+                        <span className="play-icon"></span>
+                      </span>
+                    </div>
+                  );
+                }
+
+                if (vimeoId) {
+                  return loadedVideos[index] ? (
+                    <iframe
+                      src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1`}
+                      title={item.title || `Vimeo video ${index + 1}`}
+                      className="carousel-video carousel-iframe"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div
+                      className="carousel-video-thumbnail"
+                      onClick={() =>
+                        setLoadedVideos((prev) => ({
+                          ...prev,
+                          [index]: true,
+                        }))
+                      }
+                      role="button"
+                      tabIndex={0}
+                      aria-label={item.title ? `Reproduzir vídeo ${item.title}` : 'Reproduzir vídeo'}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setLoadedVideos((prev) => ({
+                            ...prev,
+                            [index]: true,
+                          }));
+                        }
+                      }}
+                    >
+                      <div className="carousel-thumbnail-placeholder">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="80"
+                          height="80"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        <span>Vimeo Video</span>
+                      </div>
+                      <span className="carousel-play-overlay" aria-hidden>
+                        <span className="play-icon"></span>
+                      </span>
+                    </div>
+                  );
+                }
+
+                return (
+                  <video
+                    src={item.videoUrl}
+                    controls
+                    className="carousel-video"
+                    aria-label={item.title || `Video ${index + 1}`}
+                  >
+                    <track kind="captions" />
+                    Your browser does not support the video tag.
+                  </video>
+                );
+              })()
+            ) : item.image ? (
+              <img
+                src={item.image}
+                alt={item.imageAlt || item.title || `Slide ${index + 1}`}
+                className="carousel-image"
+              />
+            ) : (
+              <div className="carousel-image-placeholder">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100"
+                  height="100"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Sem imagem ou vídeo</span>
+              </div>
+            );
+
+            const slideBody = (
+              <>
+                {slideMedia}
+                {(item.title || item.description) && (
+                  <Stack className="carousel-text" gap={1}>
+                    {item.title ? <h3 className="carousel-title">{item.title}</h3> : null}
+                    {item.description ? (
+                      <Text className="carousel-description">{item.description}</Text>
+                    ) : null}
+                  </Stack>
+                )}
+              </>
+            );
+
             return (
               <div
                 key={index}
                 className={slideClass}
                 aria-hidden={!shouldShow}
               >
-                {item.videoUrl ? (
-                  (() => {
-                    const youtubeId = getYouTubeId(item.videoUrl);
-                    const vimeoId = getVimeoId(item.videoUrl);
-
-                    if (youtubeId) {
-                      return loadedVideos[index] ? (
-                        <iframe
-                          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
-                          title={item.title || `YouTube video ${index + 1}`}
-                          className="carousel-video carousel-iframe"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <div
-                          className="carousel-video-thumbnail"
-                          onClick={() =>
-                            setLoadedVideos((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }))
-                          }
-                          role="button"
-                          tabIndex={0}
-                          aria-label={item.title ? `Reproduzir vídeo ${item.title}` : 'Reproduzir vídeo'}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              setLoadedVideos((prev) => ({
-                                ...prev,
-                                [index]: true,
-                              }));
-                            }
-                          }}
-                        >
-                          <img
-                            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                            alt={item.title || `Video thumbnail ${index + 1}`}
-                            className="carousel-thumbnail-image"
-                          />
-                          <span className="carousel-play-overlay" aria-hidden>
-                            <span className="play-icon"></span>
-                          </span>
-                        </div>
-                      );
-                    } else if (vimeoId) {
-                      return loadedVideos[index] ? (
-                        <iframe
-                          src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1`}
-                          title={item.title || `Vimeo video ${index + 1}`}
-                          className="carousel-video carousel-iframe"
-                          allow="autoplay; fullscreen; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <div
-                          className="carousel-video-thumbnail"
-                          onClick={() =>
-                            setLoadedVideos((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }))
-                          }
-                          role="button"
-                          tabIndex={0}
-                          aria-label={item.title ? `Reproduzir vídeo ${item.title}` : 'Reproduzir vídeo'}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              setLoadedVideos((prev) => ({
-                                ...prev,
-                                [index]: true,
-                              }));
-                            }
-                          }}
-                        >
-                          <div className="carousel-thumbnail-placeholder">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="80"
-                              height="80"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                            >
-                              <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                            <span>Vimeo Video</span>
-                          </div>
-                          <span className="carousel-play-overlay" aria-hidden>
-                            <span className="play-icon"></span>
-                          </span>
-                        </div>
-                      );
-                    }
-
-                    return (
-                      <video
-                        src={item.videoUrl}
-                        controls
-                        className="carousel-video"
-                        aria-label={item.title || `Video ${index + 1}`}
-                      >
-                        <track kind="captions" />
-                        Your browser does not support the video tag.
-                      </video>
-                    );
-                  })()
-                ) : item.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt || item.title || `Slide ${index + 1}`}
-                    className="carousel-image"
-                  />
+                {canLinkPanel ? (
+                  <a
+                    href={itemHref}
+                    className="carousel-slide-panel-link"
+                    target={item.linkTarget}
+                    rel={item.linkTarget === '_blank' ? 'noopener noreferrer' : undefined}
+                    aria-label={item.title || `Ir para slide ${index + 1}`}
+                  >
+                    {slideBody}
+                  </a>
                 ) : (
-                  <div className="carousel-image-placeholder">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                    <span>Sem imagem ou vídeo</span>
-                  </div>
-                )}
-                {(item.title || item.description) && (
-                  <Stack className="carousel-text" gap={1}>
-                    {item.title ? <h3 className="carousel-title">{item.title}</h3> : null}
-                    {item.description ? <Text className="carousel-description">{item.description}</Text> : null}
-                  </Stack>
+                  slideBody
                 )}
               </div>
             );

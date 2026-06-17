@@ -12,6 +12,7 @@ export type CarouselCardItem = Card.Props & {
   heading?: string;
   text?: string;
   url?: string;
+  linkTarget?: '_blank' | '_self';
 };
 
 export type CarouselCardProps = {
@@ -237,6 +238,7 @@ export function CarouselCard({
                         image={item?.image}
                         imageAlt={item?.imageAlt}
                         href={item?.href || item?.url}
+                        linkTarget={item?.linkTarget}
                         variant={variant}
                         size={item?.size}
                         disabled={item?.disabled}

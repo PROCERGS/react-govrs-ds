@@ -22,6 +22,7 @@ type CardProps = {
   size?: CardSize;
   disabled?: boolean;
   href?: string;
+  linkTarget?: '_blank' | '_self';
   children?: ReactNode;
   acao?: CardAction;
   onLike?: () => void;
@@ -89,12 +90,6 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
 const PLACEHOLDER_IMAGE =
   "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23E8F5E9'/%3E%3Cpath d='M100 60C88.95 60 80 68.95 80 80C80 91.05 88.95 100 100 100C111.05 100 120 91.05 120 80C120 68.95 111.05 60 100 60ZM140 120H60L75 95L90 115L110 85L140 120Z' fill='%231A7235' opacity='0.3'/%3E%3C/svg%3E";
 
-function getCardClassName(size?: CardSize, disabled?: boolean, extraClassName?: string) {
-  return ['govrs-card', extraClassName, size, disabled ? 'govrs-card-disabled' : undefined]
-    .filter(Boolean)
-    .join(' ');
-}
-
 function handleDisabledAnchorClick(disabled?: boolean) {
   return (event: MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
@@ -103,15 +98,58 @@ function handleDisabledAnchorClick(disabled?: boolean) {
   };
 }
 
+function getCardClassName(
+  size?: CardSize,
+  disabled?: boolean,
+  extraClassName?: string,
+  isLinked?: boolean,
+) {
+  return [
+    'govrs-card',
+    extraClassName,
+    size,
+    isLinked ? 'govrs-card--linked' : undefined,
+    disabled ? 'govrs-card-disabled' : undefined,
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
+function CardStretchedLink({
+  href,
+  title,
+  linkTarget,
+}: {
+  href: string;
+  title: string;
+  linkTarget?: '_blank' | '_self';
+}) {
+  return (
+    <a
+      className="govrs-card-stretched-link"
+      href={href}
+      aria-label={title}
+      target={linkTarget}
+      rel={linkTarget === '_blank' ? 'noopener noreferrer' : undefined}
+    />
+  );
+}
+
 function CardTitleLink({
   title,
   href,
   disabled,
+  useStretchedLink,
 }: {
   title: string;
   href?: string;
   disabled?: boolean;
+  useStretchedLink?: boolean;
 }) {
+  if (useStretchedLink || !href) {
+    return <h3>{title}</h3>;
+  }
+
   return (
     <a
       className={`govrs-card-title-link ${disabled ? 'govrs-card-title-link-disabled' : ''}`}
@@ -130,15 +168,22 @@ function CardHeaderText({
   description,
   href,
   disabled,
+  useStretchedLink,
 }: {
   title: string;
   description?: string;
   href?: string;
   disabled?: boolean;
+  useStretchedLink?: boolean;
 }) {
   return (
     <Stack className="govrs-card-header-text" gap={1}>
-      <CardTitleLink title={title} href={href} disabled={disabled} />
+      <CardTitleLink
+        title={title}
+        href={href}
+        disabled={disabled}
+        useStretchedLink={useStretchedLink}
+      />
       {description ? (
         <Text className="govrs-card-copy" size="sm" tone="muted">
           {description}
@@ -171,6 +216,7 @@ function PostList({
   size,
   disabled,
   href,
+  linkTarget,
   children,
   acao,
   onLike,
@@ -182,9 +228,20 @@ function PostList({
   const [isOpen, setIsOpen] = useState(false);
 
   const hasListItems = itens && itens.length > 0;
+  const hasStretchedLink = Boolean(href && !disabled);
 
   return (
-    <div className={getCardClassName(size, disabled, hasListItems ? 'govrs-card-list' : undefined)}>
+    <div
+      className={getCardClassName(
+        size,
+        disabled,
+        hasListItems ? 'govrs-card-list' : undefined,
+        hasStretchedLink,
+      )}
+    >
+      {hasStretchedLink && href ? (
+        <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
+      ) : null}
       <div className="govrs-card-header">
         {image && (
           <img
@@ -192,10 +249,16 @@ function PostList({
             alt={imageAlt || `Imagem de ${title || 'card'}`}
           />
         )}
-        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
+        <CardHeaderText
+          title={title}
+          description={description}
+          href={hasStretchedLink ? undefined : href}
+          disabled={disabled}
+          useStretchedLink={hasStretchedLink}
+        />
         <button
           type="button"
-          className="govrs-card-header-menu"
+          className="govrs-card-header-menu govrs-card-interactive"
           aria-label="Opcoes do card"
           disabled={disabled}
         >
@@ -214,7 +277,7 @@ function PostList({
         <>
           <button
             type="button"
-            className="govrs-card-list-toggle"
+            className="govrs-card-list-toggle govrs-card-interactive"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Fechar lista' : 'Abrir lista'}
             disabled={disabled}
@@ -235,10 +298,12 @@ function PostList({
           )}
         </>
       ) : (
-        <div className="govrs-card-footer">
+        <div className="govrs-card-footer govrs-card-interactive">
           {acao && (
             <div className="govrs-card-footer-action">
-              <a href={acao.url}>{acao.label}</a>
+              <a href={acao.url} className="govrs-card-interactive">
+                {acao.label}
+              </a>
             </div>
           )}
           <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
@@ -266,10 +331,16 @@ function News({
   size,
   disabled,
   href,
+  linkTarget,
   children,
 }: CardProps) {
+  const hasStretchedLink = Boolean(href && !disabled);
+
   return (
-    <div className={getCardClassName(size, disabled, 'govrs-card-news')}>
+    <div className={getCardClassName(size, disabled, 'govrs-card-news', hasStretchedLink)}>
+      {hasStretchedLink && href ? (
+        <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
+      ) : null}
       {!children && (
         <img
           src={image || PLACEHOLDER_IMAGE}
@@ -278,11 +349,17 @@ function News({
         />
       )}
       <div className="govrs-card-header">
-        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
+        <CardHeaderText
+          title={title}
+          description={description}
+          href={hasStretchedLink ? undefined : href}
+          disabled={disabled}
+          useStretchedLink={hasStretchedLink}
+        />
         {children && (
           <button
             type="button"
-            className="govrs-card-header-menu"
+            className="govrs-card-header-menu govrs-card-interactive"
             aria-label="Opcoes do card"
             disabled={disabled}
           >
@@ -305,16 +382,35 @@ function News({
 // ******************************************************************************************************************
 // ICON
 // ******************************************************************************************************************
-function Icon({ title, description, image, disabled, href, size }: CardProps) {
+function Icon({
+  title,
+  description,
+  image,
+  disabled,
+  href,
+  linkTarget,
+  size,
+}: CardProps) {
+  const hasStretchedLink = Boolean(href && !disabled);
+
   return (
-    <div className={getCardClassName(size, disabled, 'govrs-card-icon')}>
+    <div className={getCardClassName(size, disabled, 'govrs-card-icon', hasStretchedLink)}>
+      {hasStretchedLink && href ? (
+        <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
+      ) : null}
       <img
         src={image || PLACEHOLDER_IMAGE}
         alt=""
         className="govrs-card-icon-img"
       />
       <div className="govrs-card-header">
-        <CardHeaderText title={title} description={description} href={href} disabled={disabled} />
+        <CardHeaderText
+          title={title}
+          description={description}
+          href={hasStretchedLink ? undefined : href}
+          disabled={disabled}
+          useStretchedLink={hasStretchedLink}
+        />
       </div>
     </div>
   );
@@ -332,6 +428,7 @@ export function Card({
   size,
   disabled,
   href,
+  linkTarget,
   children,
   acao,
   onLike,
@@ -351,6 +448,7 @@ export function Card({
         size={size}
         disabled={disabled}
         href={href}
+        linkTarget={linkTarget}
         children={children}
       />
     );
@@ -366,6 +464,7 @@ export function Card({
         size={size}
         disabled={disabled}
         href={href}
+        linkTarget={linkTarget}
       />
     );
   }
@@ -381,6 +480,7 @@ export function Card({
       size={size}
       disabled={disabled}
       href={href}
+      linkTarget={linkTarget}
       children={children}
       acao={acao}
       onLike={onLike}

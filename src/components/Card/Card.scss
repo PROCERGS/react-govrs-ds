@@ -1,4 +1,5 @@
 .govrs-card {
+  position: relative;
   display: flex;
   overflow: hidden;
   min-width: var(--govrs-size-card-min-width, 15.625rem);
@@ -22,6 +23,20 @@
     box-shadow: var(--govrs-shadow-card-hover, 0 4px 16px rgba(0, 0, 0, 0.15));
     transform: translateY(var(--govrs-motion-offset-lift, -2px));
   }
+}
+
+.govrs-card-stretched-link {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.govrs-card-interactive {
+  position: relative;
+  z-index: 1;
 }
 
 .govrs-card-disabled {

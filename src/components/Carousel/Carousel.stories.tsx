@@ -35,11 +35,13 @@ const defaultItems: CarouselDefaultItem[] = [
     title: 'Banner 1',
     description: 'Descrição curta do primeiro banner.',
     image: 'https://picsum.photos/1200/500?random=1',
+    href: 'https://www.rs.gov.br',
   },
   {
     title: 'Banner 2',
     description: 'Outro destaque com texto resumido.',
     image: 'https://picsum.photos/1200/500?random=2',
+    href: 'https://www.rs.gov.br',
   },
   {
     title: 'Banner 3',
@@ -344,7 +346,8 @@ const defaultDataCode = `data={[
   {
     title: 'Banner',
     description: 'Texto opcional',
-    image: 'https://...'
+    image: 'https://...',
+    href: '/pagina-destino'
   },
   {
     title: 'Video',
@@ -537,6 +540,8 @@ export const DefaultDocs: Story = {
             <li><code>width</code> alterna entre conteúdo com largura padrão e a leitura full do slide.</li>
             <li><code>indicators</code> aceita <code>default</code>, <code>inside</code> e <code>numbers</code>.</li>
             <li><code>enableSwipe</code> e <code>noArrowsMobile</code> ajustam a experiência em telas menores; no mobile retrato, o comportamento recomendado é swipe com setas ocultas.</li>
+            <li><code>href</code> ou <code>url</code> em cada item tornam o painel inteiro clicável; slides com <code>videoUrl</code> mantêm o clique para reprodução do vídeo.</li>
+            <li><code>linkTarget</code> aceita <code>_self</code> ou <code>_blank</code> para abrir em nova aba.</li>
           </ul>
         </SectionCard>
 
@@ -705,6 +710,7 @@ export const CardDocs: Story = {
         >
           <ul style={storyDocsStyles.list}>
             <li><code>items</code> recebe objetos compatíveis com <code>Card</code>, incluindo <code>variant</code>, <code>image</code>, <code>href</code>, <code>itens</code> e ações.</li>
+            <li>Com <code>href</code> ou <code>url</code>, o card inteiro fica clicável; botões internos (curtir, compartilhar, ação) continuam interativos.</li>
             <li>Quando <code>cardVariant</code> está presente, ele sobrescreve o <code>variant</code> individual de cada item.</li>
             <li>O dataset pode variar entre <code>post</code>, <code>list</code>, <code>news</code> e <code>icon</code> sem mudar o wrapper <code>Carousel</code>.</li>
           </ul>
