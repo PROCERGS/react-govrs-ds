@@ -1,7 +1,11 @@
 export const zIndex = {
   base: 0,
   raised: 1,
-  overlay: 5,
-  navigation: 10,
-  modal: 20,
+  sticky: 5,
+  header: 10,
+  navigation: 50,
+  dropdown: 60,
+  overlay: 100,
+  modal: 110,
+  toast: 120,
 } as const

@@ -73,7 +73,18 @@ export function Header({
   const [isMobile, setIsMobile] = useState(false)
   const mobileSearchActive = isSearchActiveControlled ? searchActive : internalSearchActive
   const isSearchActive = isMobile ? mobileSearchActive : true
+  const isMenuOpenControlled = menuOpen !== undefined
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false)
+  const isMenuOpen = isMenuOpenControlled ? menuOpen : internalMenuOpen
   const hasMenu = menuItems.length > 0
+
+  function handleMenuOpenChange(nextOpen: boolean) {
+    if (!isMenuOpenControlled) {
+      setInternalMenuOpen(nextOpen)
+    }
+
+    onMenuOpenChange?.(nextOpen)
+  }
 
   function setSearchActiveState(nextActive: boolean) {
     if (!isSearchActiveControlled) {
@@ -126,7 +137,10 @@ export function Header({
   }, [])
 
   return (
-    <header className={getClassName('govrs-header-wrapper', className)}>
+    <header
+      className={getClassName('govrs-header-wrapper', className)}
+      data-menu-open={isMenuOpen && hasMenu ? 'true' : undefined}
+    >
       <div className="govrs-header">
         <div className="govrs-header__logo-nav-wrapper">
           <div
@@ -140,7 +154,7 @@ export function Header({
                 id={`govrs-header-menu-${generatedId}`}
                 items={menuItems}
                 open={menuOpen}
-                onOpenChange={onMenuOpenChange}
+                onOpenChange={handleMenuOpenChange}
               />
             ) : null}
 

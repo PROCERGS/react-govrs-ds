@@ -266,9 +266,13 @@ $govrs-breakpoint-tv-min: 100rem;
   /* Z-index tokens */
   --govrs-z-index-base: 0;
   --govrs-z-index-raised: 1;
-  --govrs-z-index-overlay: 5;
-  --govrs-z-index-navigation: 10;
-  --govrs-z-index-modal: 20;
+  --govrs-z-index-sticky: 5;
+  --govrs-z-index-header: 10;
+  --govrs-z-index-navigation: 50;
+  --govrs-z-index-dropdown: 60;
+  --govrs-z-index-overlay: 100;
+  --govrs-z-index-modal: 110;
+  --govrs-z-index-toast: 120;
 
   /* Legacy aliases kept for compatibility */
   --blue-warm-vivid-70: var(--govrs-color-interactive-link);
@@ -375,12 +379,12 @@ $govrs-breakpoint-tv-min: 100rem;
   --shadow-md: var(--govrs-shadow-card);
   --shadow-lg: var(--govrs-shadow-carousel-card);
   --shadow-xl: var(--govrs-shadow-overlay);
-  --z-index-layer-1: 10;
-  --z-index-layer-2: 20;
-  --z-index-layer-3: 30;
-  --z-index-layer-4: 40;
-  --z-index-layer-5: 50;
-  --z-index-overlay: 1000;
-  --z-index-modal: 2000;
-  --z-index-toast: 3000;
+  --z-index-layer-1: var(--govrs-z-index-header);
+  --z-index-layer-2: var(--govrs-z-index-navigation);
+  --z-index-layer-3: var(--govrs-z-index-dropdown);
+  --z-index-layer-4: var(--govrs-z-index-overlay);
+  --z-index-layer-5: var(--govrs-z-index-modal);
+  --z-index-overlay: var(--govrs-z-index-overlay);
+  --z-index-modal: var(--govrs-z-index-modal);
+  --z-index-toast: var(--govrs-z-index-toast);
 }

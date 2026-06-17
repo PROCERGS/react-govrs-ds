@@ -81,7 +81,7 @@
 
 .govrs-tooltip__box {
   position: absolute;
-  z-index: var(--govrs-z-index-overlay, 5);
+  z-index: var(--govrs-z-index-dropdown);
   display: grid;
   min-width: 10rem;
   max-width: 20rem;

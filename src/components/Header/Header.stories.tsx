@@ -483,6 +483,46 @@ export const HeaderDocumentacao: Story = {
       </SectionCard>
 
       <SectionCard
+        title="Camadas de z-index"
+        description="Header e Menu Hamburger usam tokens CSS para ficar acima do conteúdo da página e de controles de edição com z-index baixo (~10), sem bloquear overlays globais configuráveis."
+      >
+        <div style={storyDocsStyles.codeBlock}>
+          <pre>
+            <code>{`conteúdo da página < controles de edição (~10)
+< header (10) < navegação aberta (50) < dropdown (60)
+< overlay/fade (100+, configurável) < modal (110) < toast (120)`}</code>
+          </pre>
+        </div>
+
+        <ul style={storyDocsStyles.list}>
+          <li><code>--govrs-z-index-header</code> (10): barra do header em scroll normal.</li>
+          <li><code>--govrs-z-index-navigation</code> (50): painel do menu aberto; o wrapper recebe <code>data-menu-open=&quot;true&quot;</code> e sobe para esta camada.</li>
+          <li><code>--govrs-z-index-dropdown</code> (60): popovers e dropdowns do header (ex.: Select, Tooltip).</li>
+          <li><code>--govrs-z-index-overlay</code> (100): fade/backdrop de tela inteira — sobrescrevível no consumidor.</li>
+          <li><code>--govrs-z-index-modal</code> (110) e <code>--govrs-z-index-toast</code> (120): modais e notificações acima do overlay.</li>
+        </ul>
+
+        <div style={storyDocsStyles.codeBlock}>
+          <pre>
+            <code>{`:root {
+  --govrs-z-index-overlay: 1000;
+  --govrs-z-index-modal: 1010;
+  --govrs-z-index-toast: 1020;
+}
+
+.govrs-overlay-backdrop {
+  /* classe utilitária do foundation */
+}`}</code>
+          </pre>
+        </div>
+
+        <ul style={storyDocsStyles.list}>
+          <li>Integração com editores de blocos: com o menu aberto, links do painel ficam acima de handles de arrastar que usam z-index ~10.</li>
+          <li>O botão de voltar ao topo usa <code>--govrs-z-index-toast</code> para permanecer acessível em páginas longas.</li>
+        </ul>
+      </SectionCard>
+
+      <SectionCard
         title="Limites do contrato"
         description="O Header resolve a composição visual do topo, mas ainda depende de quem o consome para decidir links, logo customizado e a integração final com o layout da página."
       >

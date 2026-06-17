@@ -109,7 +109,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 
 .govrs-select__list {
   position: absolute;
-  z-index: var(--govrs-z-index-navigation, 10);
+  z-index: var(--govrs-z-index-dropdown);
   top: calc(100% + var(--govrs-space-2, 0.5rem));
   left: 0;
   overflow: auto;

@@ -1,12 +1,17 @@
 @use '../../foundations/styles/variables' as vars;
 
 .govrs-menu-hamburger {
-  position: static;
+  position: relative;
   font-family: var(--govrs-font-family-base, sans-serif);
 }
 
+.govrs-menu-hamburger[data-open='true'] {
+  z-index: var(--govrs-z-index-navigation);
+}
+
 .govrs-menu-hamburger__toggle {
-  z-index: 101;
+  position: relative;
+  z-index: calc(var(--govrs-z-index-navigation) + 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +37,7 @@
 
 .govrs-menu-hamburger__content {
   position: absolute;
-  z-index: 99;
+  z-index: var(--govrs-z-index-navigation);
   top: 100%;
   right: 0;
   left: 0;

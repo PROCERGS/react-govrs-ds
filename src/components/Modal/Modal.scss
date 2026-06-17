@@ -3,7 +3,7 @@
 .govrs-modal {
   position: fixed;
   inset: 0;
-  z-index: var(--govrs-z-index-modal, 20);
+  z-index: var(--govrs-z-index-modal);
   display: grid;
   place-items: center;
   padding: var(--govrs-space-4, 1rem);

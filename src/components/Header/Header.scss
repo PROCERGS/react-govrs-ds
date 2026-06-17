@@ -2,12 +2,16 @@
 
 .govrs-header-wrapper {
   position: relative;
-  z-index: 10;
+  z-index: var(--govrs-z-index-header);
   width: 100%;
   background: var(--govrs-color-surface-base, #ffffff);
   font-family: var(--govrs-font-family-base, sans-serif);
   display: flex;
   flex-direction: column;
+}
+
+.govrs-header-wrapper[data-menu-open='true'] {
+  z-index: var(--govrs-z-index-navigation);
 }
 
 .govrs-header {
@@ -112,7 +116,7 @@
 
 .govrs-header__scroll-top {
   position: fixed;
-  z-index: var(--govrs-z-index-tooltip, 9999);
+  z-index: var(--govrs-z-index-toast);
   right: 10%;
   bottom: 2.8125rem;
   display: inline-flex;

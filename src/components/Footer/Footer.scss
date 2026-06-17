@@ -1,4 +1,6 @@
 .govrs-footer {
+  position: relative;
+  z-index: var(--govrs-z-index-header);
   padding: 24px;
   background: var(--govrs-color-brand-primary, #1a7235);
   color: var(--govrs-color-text-inverse, #ffffff);
