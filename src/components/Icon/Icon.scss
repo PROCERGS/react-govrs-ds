@@ -1,0 +1,68 @@
+.govrs-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: inherit;
+  color: inherit;
+  font-size: 1rem; /* 16px default */
+  text-decoration: none;
+  transition: 
+    color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
+    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--govrs-color-brand-primary, #1a7235);
+    outline-offset: 2px;
+    border-radius: var(--govrs-radius-md, 4px);
+  }
+}
+
+.govrs-icon--xs {
+  font-size: 0.5rem; /* 8px */
+}
+
+.govrs-icon--sm {
+  font-size: 0.75rem; /* 12px */
+}
+
+.govrs-icon--lg {
+  font-size: 1.3125rem; /* 21px */
+}
+
+.govrs-icon--2x {
+  font-size: 2rem; /* 32px */
+}
+
+.govrs-icon--3x {
+  font-size: 3.0625rem; /* 49px */
+}
+
+.govrs-icon--4x {
+  font-size: 4.0625rem; /* 65px */
+}
+
+.govrs-icon--5x {
+  font-size: 6.25rem; /* 100px */
+}
+
+/* When icon is a link */
+a.govrs-icon {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
