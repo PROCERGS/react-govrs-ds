@@ -265,7 +265,8 @@ export const MenuHamburgerDocumentacao: Story = {
         description="O painel aberto usa --govrs-z-index-navigation (50). Quando integrado ao Header, o wrapper pai também recebe data-menu-open para escapar de stacking contexts baixos."
       >
         <ul style={storyDocsStyles.list}>
-          <li><code>.govrs-menu-hamburger[data-open='true']</code> eleva o componente para a camada de navegação.</li>
+          <li><code>.govrs-header-wrapper[data-menu-open='true']</code> eleva o header inteiro para a camada de navegação.</li>
+          <li>O root do menu usa <code>position: static</code> para o painel absoluto ancorar no header (largura total), não só no botão toggle.</li>
           <li><code>.govrs-menu-hamburger__content</code> usa o mesmo token; o toggle fica em <code>calc(var(--govrs-z-index-navigation) + 1)</code>.</li>
           <li>Em editores drag-and-drop, prefira estes tokens em vez de valores mágicos (ex.: 99, 101) para permitir override no tema consumidor.</li>
           <li>Backdrops globais devem usar <code>--govrs-z-index-overlay</code> (ou a classe <code>.govrs-overlay-backdrop</code>) acima da navegação.</li>
