@@ -511,7 +511,6 @@ export const HeaderDocumentacao: Story = {
 }
 
 .govrs-overlay-backdrop {
-  /* classe utilitária do foundation */
 }`}</code>
           </pre>
         </div>
