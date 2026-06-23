@@ -592,7 +592,7 @@
       return true;
     }
 
-    if (dominioAtual.endsWith('.pro.intra.rs.gov.br')) {
+    if (dominioAtual.endsWith('.intra.rs.gov.br')) {
       return true;
     }
 
