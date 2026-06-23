@@ -570,10 +570,10 @@
 (function () {
   'use strict';
 
-  var STYLE_ID = 'barra-estado-standalone-style';
-  var HOST_ATTR = 'data-barra-estado-host';
-  var MOUNT_ATTR = 'data-barra-estado-mounted';
-  var toggleSequence = 0;
+  const STYLE_ID = 'barra-estado-standalone-style';
+  const HOST_ATTR = 'data-barra-estado-host';
+  const MOUNT_ATTR = 'data-barra-estado-mounted';
+  let toggleSequence = 0;
 
   /* =========================
    * Controle de domínio
@@ -581,14 +581,14 @@
   function ignorarDominio() {
     if (typeof window === 'undefined' || !window.location) return false;
 
-    var dominioAtual = window.location.hostname.toLowerCase();
+    const dominioAtual = window.location.hostname.toLowerCase();
 
-    var dominiosIgnorados = [
+    const dominiosIgnorados = [
       'exemplo.rs.gov.br'
       // adicionar outros domínios específicos aqui
     ];
 
-    if (dominiosIgnorados.indexOf(dominioAtual) !== -1) {
+    if (dominiosIgnorados.includes(dominioAtual)) {
       return true;
     }
 
@@ -620,7 +620,9 @@
   /* =========================
    * CSS baseado no código de produção
    * ========================= */
-  var STYLE_TEXT = `
+  const STYLE_TEXT = `
+@import url(//fonts.googleapis.com/css?family=Roboto);
+
 :host {
   display: block;
   width: 100%;
@@ -632,8 +634,6 @@
 :host *::after {
   box-sizing: border-box;
 }
-
-@import url(//fonts.googleapis.com/css?family=Roboto);
 
 .barra-estado {
   height: 32px;
@@ -915,12 +915,7 @@
 }
 `;
 
-  /* =========================
-   * SVGs inline
-   * Use aqui os SVGs completos já existentes
-   * ========================= */
-
-  var RS_GOV_SVG = `
+  const RS_GOV_SVG = `
 <svg
   version="1.1"
   id="rs-gov-br"
@@ -947,7 +942,7 @@
 </svg>
 `;
 
-  var GURIA_SVG = `
+  const GURIA_SVG = `
 <svg
   id="GurIA"
   xmlns="http://www.w3.org/2000/svg"
@@ -973,7 +968,7 @@
   /* =========================
    * Itens do menu
    * ========================= */
-  var MENU_ITEMS = [
+  const MENU_ITEMS = [
     {
       href: 'https://estado.rs.gov.br/agencia-de-noticias',
       label: 'Notícias'
@@ -1015,22 +1010,10 @@
   }
 
   function renderMenuItem(item) {
-    var className = item.className ? ' class="' + item.className + '"' : '';
-    var content =
-      item.html ||
-      '<span class="sr-only">Estado </span>' + escapeHtml(item.label);
+    const className = item.className ? ` class="${item.className}"` : '';
+    const content = item.html || `<span class="sr-only">Estado </span>${escapeHtml(item.label)}`;
 
-    return (
-      '<li>' +
-        '<a target="_self" rel="noreferrer noopener" href="' +
-          escapeHtml(item.href) +
-          '"' +
-          className +
-        '>' +
-          content +
-        '</a>' +
-      '</li>'
-    );
+    return `<li><a target="_self" rel="noreferrer noopener" href="${escapeHtml(item.href)}"${className}>${content}</a></li>`;
   }
 
   function createToggleId() {
@@ -1039,46 +1022,38 @@
   }
 
   function renderMarkup(toggleId) {
-    var menuItemsHtml = MENU_ITEMS.map(renderMenuItem).join('');
+    const menuItemsHtml = MENU_ITEMS.map(renderMenuItem).join('');
 
-    return [
-      '<div class="container-menu">',
-        '<div class="barra-estado">',
-          '<div class="barra-estado__container">',
-
-            '<a class="barra-estado__logo" title="rs.gov" target="_self" rel="noreferrer noopener" href="https://www.rs.gov.br/">',
-              RS_GOV_SVG,
-            '</a>',
-
-            '<div class="barra-estado__nav">',
-              '<div class="barra-estado__nav__form">',
-
-                '<input type="checkbox" id="' + toggleId + '" class="barra-estado__checkbox" />',
-
-                '<label',
-                  ' for="' + toggleId + '"',
-                  ' id="' + toggleId + '-toggle"',
-                  ' class="barra-estado__toggle"',
-                  ' data-open="•••"',
-                  ' data-close="•••"',
-                  ' tabindex="0"',
-                  ' role="button"',
-                  ' aria-expanded="false"',
-                  ' aria-controls="' + toggleId + '-menu"',
-                  ' aria-label="Abrir ou fechar o menu da barra do estado"',
-                '></label>',
-
-                '<ul class="barra-estado__menu" id="' + toggleId + '-menu" aria-label="Links institucionais">',
-                  menuItemsHtml,
-                '</ul>',
-
-              '</div>',
-            '</div>',
-
-          '</div>',
-        '</div>',
-      '</div>'
-    ].join('');
+    return `
+      <div class="container-menu">
+        <div class="barra-estado">
+          <div class="barra-estado__container">
+            <a class="barra-estado__logo" title="rs.gov" target="_self" rel="noreferrer noopener" href="https://www.rs.gov.br/">
+              ${RS_GOV_SVG}
+            </a>
+            <div class="barra-estado__nav">
+              <div class="barra-estado__nav__form">
+                <input type="checkbox" id="${toggleId}" class="barra-estado__checkbox" />
+                <label
+                  for="${toggleId}"
+                  id="${toggleId}-toggle"
+                  class="barra-estado__toggle"
+                  data-open="•••"
+                  data-close="•••"
+                  tabindex="0"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="${toggleId}-menu"
+                  aria-label="Abrir ou fechar o menu da barra do estado"
+                ></label>
+                <ul class="barra-estado__menu" id="${toggleId}-menu" aria-label="Links institucionais">
+                  ${menuItemsHtml}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
   }
 
   /* =========================
@@ -1115,13 +1090,13 @@
   function ensureStyles(renderRoot) {
     if (!renderRoot || typeof document === 'undefined') return null;
 
-    var existingStyle = renderRoot.querySelector('#' + STYLE_ID);
+    const existingStyle = renderRoot.querySelector(`#${STYLE_ID}`);
 
     if (existingStyle) {
       return existingStyle;
     }
 
-    var styleElement = document.createElement('style');
+    const styleElement = document.createElement('style');
     styleElement.id = STYLE_ID;
     styleElement.type = 'text/css';
     styleElement.textContent = STYLE_TEXT;
@@ -1134,18 +1109,18 @@
   function bindToggleBehavior(renderRoot, toggleId) {
     if (!renderRoot || typeof renderRoot.querySelector !== 'function') return;
 
-    var checkbox = renderRoot.querySelector('#' + toggleId);
-    var toggle = renderRoot.querySelector('#' + toggleId + '-toggle');
+    const checkbox = renderRoot.querySelector(`#${toggleId}`);
+    const toggle = renderRoot.querySelector(`#${toggleId}-toggle`);
 
     if (!checkbox || !toggle) return;
 
     function syncAriaState() {
-      var isOpen = Boolean(checkbox.checked);
+      const isOpen = Boolean(checkbox.checked);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     }
 
     toggle.addEventListener('keydown', function (event) {
-      var key = event.key || event.code;
+      const key = event.key || event.code;
 
       if (key === 'Enter' || key === ' ') {
         event.preventDefault();
@@ -1181,27 +1156,25 @@
      * No jQuery antigo era removido apenas .barra-estado.
      * Aqui removemos também wrappers comuns para evitar sobras.
      */
-    var oldBars = document.querySelectorAll(
-      '.barra-estado, .container-menu:not([' + HOST_ATTR + '])'
+    const oldBars = document.querySelectorAll(
+      `.barra-estado, .container-menu:not([${HOST_ATTR}])`
     );
 
-    Array.prototype.forEach.call(oldBars, function (element) {
-      if (element && element.parentNode) {
-        element.parentNode.removeChild(element);
-      }
+    Array.from(oldBars).forEach((element) => {
+      element?.parentNode?.removeChild(element);
     });
   }
 
   function createMountHost() {
     if (typeof document === 'undefined' || !document.body) return null;
 
-    var existingHost = getExistingHost();
+    const existingHost = getExistingHost();
 
     if (existingHost) {
       return existingHost;
     }
 
-    var host = document.createElement('div');
+    const host = document.createElement('div');
 
     host.setAttribute(HOST_ATTR, 'true');
     host.setAttribute(MOUNT_ATTR, 'false');
@@ -1220,16 +1193,16 @@
 
     ensureWindowOrigin();
 
-    var renderRoot = createRenderRoot(hostElement);
+    const renderRoot = createRenderRoot(hostElement);
 
     if (!renderRoot) return null;
 
-    var toggleId = createToggleId();
+    const toggleId = createToggleId();
 
     clearRenderRoot(renderRoot);
     ensureStyles(renderRoot);
 
-    var fragmentHost = document.createElement('div');
+    const fragmentHost = document.createElement('div');
     fragmentHost.innerHTML = renderMarkup(toggleId);
 
     while (fragmentHost.firstChild) {
@@ -1246,10 +1219,10 @@
   function bootstrapIntoBody() {
     if (typeof document === 'undefined') return null;
 
-    var run = function () {
+    const run = () => {
       removeLegacyBarraEstado();
 
-      var host = createMountHost();
+      const host = createMountHost();
 
       if (!host) {
         console.error('BarraEstado: não foi possível criar o host no <body>.');
