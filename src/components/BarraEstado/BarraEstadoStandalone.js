@@ -6,289 +6,58 @@
   var HOST_ATTR = 'data-barra-estado-host'
   var toggleSequence = 0
 
-//   var STYLE_TEXT = `
-// :host {
-//   display: block;
-//   width: 100%;
+  var STYLE_TEXT = `
+:host {
+  display: block;
+  width: 100%;
 
-//   --barra-estado-background: transparent;
-//   --barra-estado-menu-background: #f8f8f8;
-//   --barra-estado-hover-color: #000000;
-//   --barra-estado-active-color: #e4e4e4;
-//   --barra-estado-font-size: 12px;
-//   --barra-estado-font-size-desktop: var(--barra-estado-font-size, 12px);
-//   --barra-estado-height: 32px;
-//   --barra-estado-link-padding: 13px 40px;
-//   --barra-estado-link-padding-desktop: 9px 13px;
-//   --barra-estado-guria-link-padding: 7px 13px;
-//   --barra-estado-highlight-color: var(--green-matriz-link-activated, #135428);
-//   --barra-estado-toggle-color: #bcbcbb;
-//   --barra-estado-toggle-hover-color: #fff;
-// }
-
-// #rs-gov {
-//   color: var(--green-matriz-link, #1a7235);
-//   vertical-align: initial;
-// }
-
-// input.barra-estado__checkbox,
-// .barra-estado__toggle {
-//   display: none;
-// }
-
-// .barra-estado {
-//   background: var(--barra-estado-background);
-//   min-height: var(--barra-estado-height);
-// }
-
-// .barra-estado__container {
-//   min-height: var(--barra-estado-height);
-// }
-
-// .barra-estado__menu {
-//   background: var(--barra-estado-menu-background);
-// }
-
-// .barra-estado__menu > li {
-//   float: left;
-//   list-style: none;
-// }
-
-// .barra-estado__nav {
-//   display: block;
-//   float: right;
-// }
-
-// .barra-estado__menu,
-// .barra-estado__menu > li,
-// .barra-estado__menu > li > a,
-// .barra-estado__nav {
-//   height: 100%;
-// }
-
-// .barra-estado__nav__form {
-//   display: inline-block;
-//   padding: 0;
-//   margin: 0;
-//   min-height: var(--barra-estado-height);
-// }
-
-// .barra-estado__menu > li > a {
-//   display: block;
-//   box-sizing: border-box;
-//   padding: var(--barra-estado-link-padding);
-//   color: var(--green-matriz-link, #1a7235);
-//   font-size: var(--barra-estado-font-size);
-//   font-weight: 700;
-//   line-height: 1;
-//   transition: box-shadow 0.25s linear, color 0.25s linear;
-// }
-
-// .barra-estado__menu > li > a:hover > svg > path,
-// .barra-estado__menu > li > a:focus > svg > path {
-//   fill: var(--barra-estado-hover-color);
-// }
-
-// .barra-estado__menu > li > a:focus,
-// .barra-estado__menu > li > a:hover {
-//   box-shadow: inset 5px 0 var(--barra-estado-highlight-color);
-//   color: var(--barra-estado-hover-color);
-// }
-
-// .barra-estado__menu > li > a:active {
-//   color: var(--barra-estado-active-color) !important;
-// }
-
-// .barra-estado__menu,
-// .barra-estado__menu > li,
-// .barra-estado__menu > li > a {
-//   height: auto;
-// }
-
-// .barra-estado__toggle {
-//   z-index: 2;
-// }
-
-// .barra-estado__toggle:after {
-//   color: var(--barra-estado-toggle-color);
-//   content: attr(data-open);
-//   transition: all 0.5s linear;
-// }
-
-// .barra-estado__toggle:hover:after {
-//   color: var(--barra-estado-toggle-hover-color);
-// }
-
-// .barra-estado__toggle:focus-visible {
-//   outline: 2px solid var(--govrs-color-focus, #ffcd07);
-//   outline-offset: 2px;
-// }
-
-// input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
-//   content: attr(data-close);
-// }
-
-// @media only screen and (min-width: 992px) {
-//   .barra-estado__menu {
-//     padding: 0;
-//     border-top: none;
-//     margin-top: 0;
-//     background: var(--barra-estado-menu-background);
-//   }
-
-//   .barra-estado__menu > li > a {
-//     padding: var(--barra-estado-link-padding-desktop);
-//     font-size: var(--barra-estado-font-size-desktop);
-//   }
-
-//   .barra-estado__menu > li > a:focus,
-//   .barra-estado__menu > li > a:hover {
-//     box-shadow: inset 0 2px var(--barra-estado-highlight-color);
-//     color: var(--barra-estado-hover-color);
-//   }
-// }
-
-// .barra-estado__menu > li > a.barra-estado__guria-link {
-//   padding: var(--barra-estado-guria-link-padding);
-// }
-
-// .visually-hidden {
-//   position: absolute !important;
-//   overflow: hidden !important;
-//   width: 1px !important;
-//   height: 1px !important;
-//   padding: 0 !important;
-//   border: 0 !important;
-//   margin: -1px !important;
-//   clip: rect(0, 0, 0, 0) !important;
-//   white-space: nowrap !important;
-// }
-
-// :host-context(.high-contrast) .barra-estado {
-//   border-bottom: 1px solid var(--govrs-color-contrast-foreground, #ffffff) !important;
-//   background-color: var(--govrs-color-contrast-background, #000000) !important;
-// }
-
-// :host-context(.high-contrast) .barra-estado__menu {
-//   background-color: var(--govrs-color-contrast-background, #000000) !important;
-// }
-
-// :host-context(.high-contrast) .barra-estado__menu > li > a > #GurIA path {
-//   fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
-// }
-
-// :host-context(.high-contrast) .barra-estado__menu > li > a:focus {
-//   box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
-//   color: var(--govrs-color-contrast-foreground, #ffffff) !important;
-// }
-
-// :host-context(.high-contrast) .barra-estado__menu > li > a:hover {
-//   box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
-//   color: var(--govrs-color-contrast-foreground, #ffffff) !important;
-// }
-
-// :host-context(.high-contrast) #rs-gov > path {
-//   fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
-// }
-// `
-var STYLE_TEXT = `
-@import url(//fonts.googleapis  width: 100%;@import url(//fonts.googleapis.com/css?family=Roboto);
-  font-family: Roboto, Arial, sans-serif;
-  -webkit-animation: bugfix infinite 1s;
+  --barra-estado-background: transparent;
+  --barra-estado-background: #4f4f4f;
+  --barra-estado-menu-background: #f8f8f8;
+  --barra-estado-hover-color: #000000;
+  --barra-estado-active-color: #e4e4e4;
+  --barra-estado-font-size: 12px;
+  --barra-estado-font-size-desktop: var(--barra-estado-font-size, 12px);
+  --barra-estado-height: 32px;
+  --barra-estado-link-padding: 13px 40px;
+  --barra-estado-link-padding-desktop: 9px 13px;
+  --barra-estado-guria-link-padding: 7px 13px;
+  --barra-estado-highlight-color: var(--green-matriz-link-activated, #135428);
+  --barra-estado-toggle-color: #bcbcbb;
+  --barra-estado-toggle-hover-color: #fff;
 }
 
-@-webkit-keyframes bugfix {
-  from,
-  to {
-    padding: 0;
-  }
+#rs-gov {
+  color: var(--green-matriz-link, #1a7235);
+  vertical-align: initial;
 }
 
-:host *,
-:host *::before,
-:host *::after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.barra-estado__checkbox,
+input.barra-estado__checkbox,
 .barra-estado__toggle {
   display: none;
 }
 
 .barra-estado {
-  height: 32px;
-  background-color: #4f4f4f;
+  background: var(--barra-estado-background);
+  min-height: var(--barra-estado-height);
 }
 
 .barra-estado__container {
-  position: relative;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  height: 100%;
+  min-height: var(--barra-estado-height);
 }
 
-.barra-estado__container a {
-  text-decoration: none;
+.barra-estado__menu {
+  background: var(--barra-estado-menu-background);
 }
 
-@media (min-width: 768px) {
-  .barra-estado__container {
-    width: 750px;
-  }
-}
-
-@media (min-width: 992px) {
-  .barra-estado__container {
-    width: 970px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .barra-estado__container {
-    width: 1170px;
-  }
-}
-
-.barra-estado__logo {
-  position: absolute;
-  width: 77px;
-  height: 16px;
-  margin-top: 6px;
-  left: 15px;
-}
-
-.barra-estado__logo svg {
-  display: block;
-}
-
-.barra-estado__logo svg path {
-  fill: #f4f4f1;
+.barra-estado__menu > li {
+  float: left;
+  list-style: none;
 }
 
 .barra-estado__nav {
   display: block;
   float: right;
-  height: 100%;
-}
-
-.barra-estado__nav__form {
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-}
-
-.barra-estado__menu {
-  font-family: Roboto, Arial, sans-serif;
-  text-transform: uppercase;
-  background: #737474;
-  border-top: 1px solid #fff;
-  margin-top: 0;
-  padding: 14px 0 20px;
-  list-style: none;
 }
 
 .barra-estado__menu,
@@ -298,42 +67,37 @@ var STYLE_TEXT = `
   height: 100%;
 }
 
-.barra-estado__menu > li {
-  list-style: none;
-  float: left;
+.barra-estado__nav__form {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-height: var(--barra-estado-height);
 }
 
 .barra-estado__menu > li > a {
   display: block;
-  font-weight: 400;
-  padding: 13px 40px;
-  font-size: 14px;
+  box-sizing: border-box;
+  padding: var(--barra-estado-link-padding);
+  color: var(--green-matriz-link, #1a7235);
+  font-size: var(--barra-estado-font-size);
+  font-weight: 700;
   line-height: 1;
-  color: #e4e4e4;
-  text-decoration: none;
-  -webkit-transition: box-shadow 0.25s linear;
-  -moz-transition: box-shadow 0.25s linear;
-  -o-transition: box-shadow 0.25s linear;
-  transition: box-shadow 0.25s linear;
+  transition: box-shadow 0.25s linear, color 0.25s linear;
 }
 
-.barra-estado__menu > li > a:visited {
-  color: #e4e4e4 !important;
+.barra-estado__menu > li > a:hover > svg > path,
+.barra-estado__menu > li > a:focus > svg > path {
+  fill: var(--barra-estado-hover-color);
 }
 
 .barra-estado__menu > li > a:focus,
 .barra-estado__menu > li > a:hover {
-  box-shadow: inset 5px 0 #fff;
-  color: #fff;
-}
-
-.barra-estado__menu > li > a:focus svg path,
-.barra-estado__menu > li > a:hover svg path {
-  fill: #fff;
+  box-shadow: inset 5px 0 var(--barra-estado-highlight-color);
+  color: var(--barra-estado-hover-color);
 }
 
 .barra-estado__menu > li > a:active {
-  color: #e4e4e4 !important;
+  color: var(--barra-estado-active-color) !important;
 }
 
 .barra-estado__menu,
@@ -342,168 +106,92 @@ var STYLE_TEXT = `
   height: auto;
 }
 
-.barra-estado__guria-link svg {
-  display: block;
-}
-
-.barra-estado__guria-link svg path {
-  fill: #fff;
-}
-
 .barra-estado__toggle {
   z-index: 2;
 }
 
 .barra-estado__toggle:after {
+  color: var(--barra-estado-toggle-color);
   content: attr(data-open);
-  display: block;
-  position: absolute;
-  right: 0;
-  width: 45px;
-  height: 32px;
-  text-align: right;
-  font-size: 18px;
-  line-height: 13px;
-  color: #bcbcbb;
-  -webkit-transition: all 0.5s linear;
-  -moz-transition: all 0.5s linear;
-  -o-transition: all 0.5s linear;
   transition: all 0.5s linear;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .barra-estado__toggle:hover:after {
-  color: #fff;
+  color: var(--barra-estado-toggle-hover-color);
 }
 
 .barra-estado__toggle:focus-visible {
-  outline: 2px solid #ffcd07;
+  outline: 2px solid var(--govrs-color-focus, #ffcd07);
   outline-offset: 2px;
 }
 
-.barra-estado__checkbox:checked + .barra-estado__toggle:after {
+input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
   content: attr(data-close);
 }
 
-.sr-only,
-.visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  border: 0 !important;
-  white-space: nowrap !important;
-}
-
-/* =========================
- * Mobile - equivalente ao Código B
- * ========================= */
-@media only screen and (max-width: 991px) {
-  .barra-estado__menu {
-    display: none;
-    opacity: 0;
-    width: 280px;
-    position: absolute;
-    right: 0;
-    top: 32px;
-    z-index: 999;
-  }
-
-  .barra-estado__menu > li {
-    display: block;
-    width: 100%;
-    margin: 0;
-    float: none;
-  }
-
-  .barra-estado__menu > li > a {
-    display: block;
-    width: 100%;
-    text-decoration: none;
-    padding: 13px 40px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-
-  .barra-estado__toggle {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    width: 45px;
-    height: 32px;
-  }
-
-  .barra-estado__checkbox:checked ~ .barra-estado__menu {
-    display: block;
-    opacity: 1;
-  }
-}
-
-/* =========================
- * Desktop - equivalente ao Código B
- * ========================= */
 @media only screen and (min-width: 992px) {
   .barra-estado__menu {
-    background: transparent;
-    border-top: none;
     padding: 0;
+    border-top: none;
     margin-top: 0;
+    background: var(--barra-estado-menu-background);
   }
 
   .barra-estado__menu > li > a {
-    padding: 9px 13px;
-    font-size: 11px;
-  }
-
-  .barra-estado__menu > li:last-child > a,
-  .barra-estado__menu > li > a.barra-estado__guria-link {
-    padding: 7px 13px;
+    padding: var(--barra-estado-link-padding-desktop);
+    font-size: var(--barra-estado-font-size-desktop);
   }
 
   .barra-estado__menu > li > a:focus,
   .barra-estado__menu > li > a:hover {
-    box-shadow: inset 0 2px #fff;
-    color: #fff;
+    box-shadow: inset 0 2px var(--barra-estado-highlight-color);
+    color: var(--barra-estado-hover-color);
   }
 }
 
-/* =========================
- * Alto contraste mantido do Código A
- * Não existe no Código B, mas não interfere na funcionalidade.
- * ========================= */
+.barra-estado__menu > li > a.barra-estado__guria-link {
+  padding: var(--barra-estado-guria-link-padding);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: -1px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+}
+
 :host-context(.high-contrast) .barra-estado {
-  border-bottom: 1px solid #ffffff !important;
-  background-color: #000000 !important;
+  border-bottom: 1px solid var(--govrs-color-contrast-foreground, #ffffff) !important;
+  background-color: var(--govrs-color-contrast-background, #000000) !important;
 }
 
 :host-context(.high-contrast) .barra-estado__menu {
-  background-color: #000000 !important;
+  background-color: var(--govrs-color-contrast-background, #000000) !important;
 }
 
-:host-context(.high-contrast) .barra-estado__menu > li > a {
-  color: #ffffff !important;
+:host-context(.high-contrast) .barra-estado__menu > li > a > #GurIA path {
+  fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 
-:host-context(.high-contrast) .barra-estado__menu > li > a:focus,
+:host-context(.high-contrast) .barra-estado__menu > li > a:focus {
+  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
+}
+
 :host-context(.high-contrast) .barra-estado__menu > li > a:hover {
-  box-shadow: inset 0 5px #ffffff !important;
-  color: #ffffff !important;
+  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #ffffff) !important;
+  color: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 
-:host-context(.high-contrast) svg path {
-  fill: #ffffff !important;
+:host-context(.high-contrast) #rs-gov > path {
+  fill: var(--govrs-color-contrast-foreground, #ffffff) !important;
 }
 `
-
 
   var RS_GOV_SVG = `
 <svg
@@ -547,7 +235,7 @@ var STYLE_TEXT = `
   <desc>A tua nova assistente digital</desc>
   <path d="M38.35,5.71c.18,0,.35-.02.53-.02.04-.07.1-.14.16-.2.07.1.13.2.2.31.06-.11.11-.25.15-.37.03-.1.06-.22.12-.31.04.07.07.16.1.23.04.12.08.24.12.37.02.07.03.13.06.2.03-.09.05-.19.08-.28l.13-.43c.04-.14.08-.29.15-.43.06.13.09.28.12.43.04.16.08.32.11.48.02-.05.03-.11.05-.17.03-.1.06-.2.09-.31.04-.15.21-.93.3-1h.01s.06.1.08.14c.04.1.07.21.09.32.05.19.09.38.12.57.02.11.03.23.06.34.04-.24.21-1.12.34-1.28.13.17.3,1.22.33,1.46.05-.39.11-.78.18-1.18.05-.32.1-.63.16-.95.04-.26.09-.53.16-.79.02-.08.04-.17.08-.25.02-.04.04-.07.08-.09.01,0,.03,0,.04.01.07.04.1.2.13.27.03.1.04.2.07.29.06.29.12.58.16.87.03.2.07.4.1.61.04.25.08.5.12.75.03.14.04.29.08.43.01-.12.03-.25.04-.37.04-.35.09-.71.2-1.05.01-.05.03-.12.07-.16h.01s.04.05.04.07c.08.16.13.33.18.5.09.32.16.64.24.97.02-.07.03-.15.05-.22l.07-.32c.04-.16.07-.32.13-.47.03.07.04.14.07.2l.09.32c.07.22.15.44.21.66.08-.31.16-.61.25-.92.04.08.06.16.09.25.09.23.17.46.27.68.03-.07.06-.15.08-.22.05-.14.1-.29.16-.43.08.19.17.37.26.55.06-.1.13-.2.2-.31.05.07.1.14.15.21.15,0,.29.01.43.02L43.94.22h-3.08l-2.58,5.5h.07,0Z" fill="#1A7235" />
   <path d="M46.55,5.77c-.22,0-.44.01-.66.01-.04.1-.11.19-.16.28-.04-.07-.08-.14-.12-.21-.04-.07-.08-.13-.11-.2-.04.08-.25.64-.29.67-.05-.02-.25-.5-.3-.58-.06.11-.28.77-.35.8h-.03s-.04-.04-.05-.06c-.04-.08-.08-.17-.11-.26-.05-.14-.09-.28-.16-.42-.06.11-.17.44-.27.5h-.03c-.08-.05-.25-.44-.28-.54-.03-.07-.04-.14-.07-.22-.04.14-.06.29-.09.43-.03.12-.15.64-.25.7h-.02c-.07-.04-.28-.62-.32-.72,0,.14-.03.29-.04.43-.03.34-.07.68-.11,1.02-.04.26-.08.52-.12.77-.03.14-.04.28-.07.41,0,.04-.02.1-.05.13h-.03s-.03-.04-.03-.06c-.03-.11-.04-.22-.06-.33-.03-.16-.05-.32-.08-.49-.08-.5-.13-1-.18-1.5-.01-.13-.02-.26-.04-.4-.08.17-.13.37-.22.53-.01.02-.03.06-.06.07-.01,0-.02,0-.03,0-.11-.07-.23-.66-.27-.8-.06.37-.1.74-.2,1.1-.03.09-.04.19-.09.28-.01.03-.04.08-.07.09h-.03c-.1-.07-.28-1.09-.3-1.24-.03-.14-.04-.28-.07-.42-.06.14-.11.29-.17.44-.03.07-.06.15-.1.22-.02.04-.04.08-.08.1h-.02c-.11-.04-.2-.37-.26-.47-.05.09-.32.63-.35.65h0c-.06-.07-.08-.16-.1-.24l-.12-.34c-.03-.07-.05-.15-.09-.22-.1.11-.14.26-.23.38-.04-.04-.17-.27-.2-.28-.01,0-.03.02-.04.02h-.49c-.08-.01-.16-.01-.25-.01l-3.39,7.22h3.19l1.19-2.74h6.25l1.19,2.74h3.27l-3.4-7.22v-.02Z" fill="#1A7235" />
-  <path d="M31.41.22h3.11v12.77h-3.11V.22Z" fill="#1A7235" />
+  <path d="M31.41.22h3.11v12.77h-3.11V.22Z" />
   <path d="M30.93,3.03v2.63c-.25-.02-.44-.04-.67-.04-1.65,0-2.75.86-2.75,2.74v4.63h-3V3.18h2.87v1.3c.73-.95,1.96-1.44,3.56-1.44h0Z" fill="#1A7235" />
   <path d="M23.88,3.18v9.81h-2.85v-1.16c-.79.86-1.94,1.31-3.21,1.31-2.59,0-4.42-1.39-4.42-4.41V3.18h3v5.13c0,1.64.77,2.37,2.09,2.37s2.39-.84,2.39-2.65V3.18h3Z" fill="#1A7235" />
   <path d="M9.94,6.41h2.85v5.18c-1.48,1.06-3.52,1.62-5.44,1.62C3.11,13.21,0,10.45,0,6.6S3.11,0,7.4,0c2.37,0,4.33.77,5.63,2.21l-2,1.75c-.98-.98-2.11-1.44-3.48-1.44-2.61,0-4.4,1.66-4.4,4.09s1.79,4.09,4.37,4.09c.85,0,1.63-.14,2.42-.55v-3.74h0Z" fill="#1A7235" />
