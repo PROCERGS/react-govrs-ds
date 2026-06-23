@@ -477,7 +477,7 @@
       return true;
     }
 
-    if (dominioAtual.endsWith(".pro.intra.rs.gov.br")) {
+    if (dominioAtual.endsWith(".intra.rs.gov.br")) {
       return true;
     }
 
@@ -487,14 +487,12 @@
   if (ignorarDominio()) return;
 
 
-  /* =========================
-   ⚙ CONFIG
-  ========================== */
+  /* ========================= CONFIG ========================== */
   var STYLE_ID = "barra-estado-style";
   var toggleId = "barra-toggle-" + Date.now();
 
 
-  /* ========================= CSS (mantido do código 2) ========================== */
+  /* ========================= CSS ========================== */
   var STYLE = `
     :host { display:block;width:100%; }
     .barra-estado { min-height:32px; background:#fff; }
