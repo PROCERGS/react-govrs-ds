@@ -37,7 +37,7 @@
   function ensureWindowOrigin() {
     if (typeof window === 'undefined') return;
 
-    if (!window.location.origin) {
+    if (!('origin' in window.location)) {
       try {
         window.location.origin =
           window.location.protocol + '//' + window.location.host;
@@ -379,7 +379,6 @@
   height="13.21px"
   viewBox="0 0 49.94 13.21"
   enable-background="new 0 0 49.94 13.21"
-  xml:space="preserve"
 >
   <title>GurIA</title>
   <desc>A tua nova assistente digital</desc>
@@ -411,7 +410,8 @@
     },
     {
       href: 'https://estado.rs.gov.br/institucional',
-      label: 'Secretarias e Órgãos'
+      label: 'Secretarias e Órgãos',
+      className: 'barra-letters'
     },
     {
       href: 'https://www.diariooficial.rs.gov.br/',
@@ -420,7 +420,7 @@
     {
       href: 'https://www.rs.gov.br/guria',
       className: 'barra-estado__guria-link',
-      html: '<span class="sr-only">Estado </span>' + GURIA_SVG
+      html: '<span class="visually-hidden">Estado </span>' + GURIA_SVG
     }
   ];
 
@@ -435,7 +435,7 @@
 
   function renderMenuItem(item) {
     const className = item.className ? ` class="${item.className}"` : '';
-    const content = item.html || `<span class="sr-only">Estado </span>${escapeHtml(item.label)}`;
+    const content = item.html || `<span class="visually-hidden">Estado </span>${escapeHtml(item.label)}`;
 
     return `<li><a target="_self" rel="noreferrer noopener" href="${escapeHtml(item.href)}"${className}>${content}</a></li>`;
   }
@@ -488,14 +488,14 @@
     }
 
     if (typeof hostElement.attachShadow !== 'function') {
-      console.error('BarraEstado: Shadow DOM não é suportado neste ambiente.');
+      console.error('BarraEstadoStandalone: Shadow DOM não é suportado neste ambiente.');
       return null;
     }
 
     try {
       return hostElement.attachShadow({ mode: 'open' });
     } catch (error) {
-      console.error('BarraEstado: falha ao criar Shadow DOM.', error);
+      console.error('BarraEstadoStandalone: falha ao criar Shadow DOM.', error);
       return null;
     }
   }
@@ -638,7 +638,7 @@
       const host = createMountHost();
 
       if (!host) {
-        console.error('BarraEstado: não foi possível criar o host no <body>.');
+        console.error('BarraEstadoStandalone: não foi possível criar o host no <body>.');
         return null;
       }
 
