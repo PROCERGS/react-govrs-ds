@@ -1,8 +1,5 @@
 // barra-estado.js
-// Web Component da barra de estado do Governo do RS
-// Uso:
-//   import './barra-estado.js';
-//   <barra-estado></barra-estado>
+// Web Component da>// Web Component da barra de estado do Governo do RS
 //
 // Também pode ser servido por CDN (ex.: jsDelivr) a partir de GitHub ou npm.
 
@@ -15,10 +12,78 @@ const DEFAULT_LINKS = [
   { href: 'http://www.transparencia.rs.gov.br/', label: 'Transparência', srPrefix: 'Estado ' },
   { href: 'https://estado.rs.gov.br/institucional', label: 'Secretarias e Órgãos', srPrefix: 'Estado ' },
   { href: 'https://www.diariooficial.rs.gov.br/', label: 'Diário Oficial', srPrefix: 'Estado ' },
-  { href: 'https://sosenchentes.rs.gov.br', label: '&gt;&gt; SOS RS &lt;&lt;', srPrefix: 'Estado ' },
+  { href: 'https://sosenchentes.rs.gov.br', label: '>> SOS RS <<', srPrefix: 'Estado ' },
 ];
 
-const LOGO_SVG = `
+/**
+ * Decodifica entidades HTML comuns e também casos duplamente escapados,
+ * por exemplo:
+ *   &lt;div&gt;       -> <div>
+ *   &amp;gt;         -> >
+ *   &amp;amp;lt;     -> <
+ *
+ * Essa função protege o conteúdo de templates, CSS inline e SVG inline,
+ * caso algum processo de publicação/editor tenha escapado o HTML.
+ */
+function normalizeEscapedHtml(input = '') {
+  if (typeof input !== 'string') return input;
+
+  const entityMap = {
+    '&lt;': '<',
+    '&gt;': '>',
+    '&amp;': '&',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&apos;': "'",
+    '&#x2F;': '/',
+    '&#47;': '/',
+    '&nbsp;': ' ',
+  };
+
+  const entityRegex = /&(lt|gt|amp|quot|#39|apos|#x2F|#47|nbsp);/g;
+
+  let output = input;
+  let previous;
+
+  // Reaplica até estabilizar, para corrigir casos duplamente escapados.
+  do {
+    previous = output;
+    output = output.replace(entityRegex, (match) => entityMap[match] ?? match);
+  } while (output !== previous && entityRegex.test(output));
+
+  return output;
+}
+
+/**
+ * Escapa texto para inserção segura em HTML.
+ * Usado para labels/textos vindos de atributos/propriedades.
+ */
+function escapeHtml(value = '') {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+/**
+ * Sanitiza URL minimamente para uso em href.
+ * Aceita apenas protocolos seguros comuns.
+ */
+function sanitizeUrl(url = '') {
+  const value = normalizeEscapedHtml(String(url).trim());
+
+  try {
+    const parsed = new URL(value, window.location.href);
+    const allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
+    return allowedProtocols.includes(parsed.protocol) ? parsed.href : '#';
+  } catch {
+    return '#';
+  }
+}
+
+const LOGO_SVG = normalizeEscapedHtml(`
 <svg version="1.1" id="rs-gov-br" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="77px" height="16px"
      viewBox="0 0 77 16" enable-background="new 0 0 77 16" xml:space="preserve" aria-hidden="true" focusable="false">
   <title>RS.GOV.BR</title>
@@ -32,9 +97,10 @@ const LOGO_SVG = `
   <path d="M53.52,13.09v-2.87h2.91v2.87h-2.91Z" fill="#fff"/>
   <path d="M64.39,13.28c-1.45,0-2.35-.67-3-1.43v1.25h-2.73V0h2.73V4.86c.67-.9,1.57-1.56,3-1.56,2.24,0,4.38,1.76,4.38,4.97v.04c0,3.22-2.11,4.98-4.38,4.98h0Zm1.65-5.02c0-1.59-1.08-2.66-2.35-2.66s-2.33,1.06-2.33,2.66v.04c0,1.59,1.06,2.66,2.33,2.66s2.35-1.04,2.35-2.66v-.04Z" fill="#fff"/>
   <path d="M76.34,6.15c-1.8,0-2.92,1.09-2.92,3.4v3.55h-2.73V3.48h2.73v1.94c.56-1.32,1.45-2.19,3.07-2.12v2.85h-.15Z" fill="#fff"/>
-</svg>`;
+</svg>
+`);
 
-const CSS_TEXT = `
+const CSS_TEXT = normalizeEscapedHtml(`
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
 :host {
@@ -281,26 +347,38 @@ const CSS_TEXT = `
     max-inline-size: var(--barra-estado-container-max-1200);
   }
 }
-`;
+`);
 
 function createMenuHtml(links) {
   const items = links.map((item) => {
-    const target = item.target || '_self';
+    const target = item.target === '_blank' ? '_blank' : '_self';
     const rel = target === '_blank' ? ' rel="noopener noreferrer"' : '';
+
+    const href = sanitizeUrl(item.href);
+    const label = escapeHtml(normalizeEscapedHtml(item.label || ''));
+    const srPrefix = escapeHtml(normalizeEscapedHtml(item.srPrefix || ''));
+
     return `
       <li>
-        <a target="${target}" href="${item.href}"${rel}>
-          <span class="sr-only">${item.srPrefix || ''}</span>${item.label}
+        <a target="${target}" href="${href}"${rel}>
+          <span class="sr-only">${srPrefix}</span>${label}
         </a>
       </li>`;
   }).join('');
 
-  return `
+  return normalizeEscapedHtml(`
     <div class="barra-estado" part="root">
       <div class="barra-estado__container" part="container">
-        <a class="barra-estado__logo" part="logo" title="rs.gov" href="https://www.rs.gov.br/" aria-label="RS.GOV.BR - Governo do Estado do Rio Grande do Sul">
+        <a
+          class="barra-estado__logo"
+          part="logo"
+          title="rs.gov"
+          href="https://www.rs.gov.br/"
+          aria-label="RS.GOV.BR - Governo do Estado do Rio Grande do Sul"
+        >
           ${LOGO_SVG}
         </a>
+
         <div class="barra-estado__nav" part="nav">
           <div class="barra-estado__nav__form">
             <input type="checkbox" id="barra-estado__toggle" aria-hidden="true">
@@ -312,16 +390,18 @@ function createMenuHtml(links) {
               aria-label="Abrir ou fechar menu"
               tabindex="0"
             ></label>
+
             <ul class="barra-estado__menu" part="menu">
               ${items}
             </ul>
           </div>
         </div>
       </div>
-    </div>`;
+    </div>
+  `);
 }
 
-export class RsBarraEstado extends HTMLElement {
+export class BarraEstado extends HTMLElement {
   static get observedAttributes() {
     return ['links'];
   }
@@ -330,7 +410,8 @@ export class RsBarraEstado extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this._links = null;
-    this._rendered = false;
+    this._onToggleChange = null;
+    this._onToggleKeydown = null;
   }
 
   get links() {
@@ -362,16 +443,24 @@ export class RsBarraEstado extends HTMLElement {
     this.render();
   }
 
+  disconnectedCallback() {
+    this.removeA11yListeners();
+  }
+
   render() {
     if (!this.shadowRoot) return;
 
+    this.removeA11yListeners();
+
+    const safeCss = normalizeEscapedHtml(CSS_TEXT);
+    const safeHtml = createMenuHtml(this.links);
+
     this.shadowRoot.innerHTML = `
-      <style>${CSS_TEXT}</style>
-      ${createMenuHtml(this.links)}
+      <style>${safeCss}</style>
+      ${safeHtml}
     `;
 
     this.setupA11y();
-    this._rendered = true;
   }
 
   setupA11y() {
@@ -380,31 +469,50 @@ export class RsBarraEstado extends HTMLElement {
 
     if (!toggleInput || !toggleLabel) return;
 
-    const syncAria = () => {
+    this._onToggleChange = () => {
       toggleLabel.setAttribute('aria-expanded', String(toggleInput.checked));
     };
 
-    syncAria();
-    toggleInput.addEventListener('change', syncAria, { passive: true });
-
-    toggleLabel.addEventListener('keydown', (event) => {
+    this._onToggleKeydown = (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         toggleInput.checked = !toggleInput.checked;
         toggleInput.dispatchEvent(new Event('change', { bubbles: true }));
       }
-    });
+    };
+
+    this._onToggleChange();
+    toggleInput.addEventListener('change', this._onToggleChange, { passive: true });
+    toggleLabel.addEventListener('keydown', this._onToggleKeydown);
+  }
+
+  removeA11yListeners() {
+    const toggleInput = this.shadowRoot?.querySelector('#barra-estado__toggle');
+    const toggleLabel = this.shadowRoot?.querySelector('.barra-estado__toggle');
+
+    if (toggleInput && this._onToggleChange) {
+      toggleInput.removeEventListener('change', this._onToggleChange);
+    }
+
+    if (toggleLabel && this._onToggleKeydown) {
+      toggleLabel.removeEventListener('keydown', this._onToggleKeydown);
+    }
+
+    this._onToggleChange = null;
+    this._onToggleKeydown = null;
   }
 }
 
-export function defineRsBarraEstado(tagName = COMPONENT_TAG) {
+export function defineBarraEstado(tagName = COMPONENT_TAG) {
   if (typeof window === 'undefined' || !('customElements' in window)) return;
   if (!window.customElements.get(tagName)) {
-    window.customElements.define(tagName, RsBarraEstado);
+    window.customElements.define(tagName, BarraEstado);
   }
 }
 
 // Auto-registro em ambiente de navegador.
-defineRsBarraEstado();
+defineBarraEstado();
 
-export default RsBarraEstado;
+export default BarraEstado;
+// Uso:
+//   import './barra-estado.js';
