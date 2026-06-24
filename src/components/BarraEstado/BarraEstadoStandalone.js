@@ -11,7 +11,7 @@
   display: block;
   width: 100%;
 
-  // --barra-estado-background: transparent;
+  // --barra-estado-background: transparent; 
   --barra-estado-background: #4f4f4f;
   --barra-estado-menu-background: #f8f8f8;
   --barra-estado-hover-color: #000000;
