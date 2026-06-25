@@ -23,7 +23,23 @@ const COMPONENT_TAG = 'barra-estado';
  *   </script>
  *   <script src="...BarraEstadoStandalone.js"></script>
  */
-const DEFAULT_BLOCKED_HOSTS = ['https://pcm.des.intra.rs.gov.br/inicial','https://pcm.pro.intra.rs.gov.br/inicial'];
+const DEFAULT_BLOCKED_HOSTS = [ "sitedpers.des.intra.rs.gov.br",
+            "sitedpers.hml.rs.gov.br",
+            "www.defensoria.rs.def.br",
+            "www.defensoria.rs.gov.br",
+            "www.dpe.rs.gov.br",
+            "matriz2-hotsite.des.procergs.localhost",
+            "servicos.detran.rs.gov.br",
+            "siteexp.des.procergs.localhost",
+            "siteexp.des.intra.rs.gov.br",
+            "siteexp.hml.rs.gov.br",
+            "expointer.rs.gov.br",
+            "www.expointer.rs.gov.br",
+            "sitedigx.des.intra.rs.gov.br",
+            "sitedigx01.hml.rs.gov.br",
+            "sitedigx03.rs.gov.br",
+            "conversasdigitais.rs.gov.br",
+            "www.conversasdigitais.rs.gov.br"];
 
 /**
  * Decodifica entidades HTML comuns e também casos duplamente escapados,
