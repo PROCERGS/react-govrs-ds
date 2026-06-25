@@ -513,11 +513,6 @@ function defineBarraEstado(tagName = COMPONENT_TAG) {
 
 /**
  * Auto-injeta a barra no início do <body>, removendo qualquer instância
- * anterior (.barra-estado legada via jQuery, <barra-estado> ou .container-menu).
- *
- * Reproduz o comportamento do script jQuery legado, no qual a barra
- * aparece automaticamente em qualquer página que carregue este JS,
- * sem precisar adicionar a tag no HTML.
  */
 function autoMountBarraEstado() {
   if (typeof document === 'undefined') return;
@@ -557,6 +552,3 @@ if (typeof window !== 'undefined') {
 defineBarraEstado();
 autoMountBarraEstado();
 
-// Uso:
-//   <script src="barra-estado.js"></script>
-//   (a barra é injetada automaticamente no topo do <body>)
