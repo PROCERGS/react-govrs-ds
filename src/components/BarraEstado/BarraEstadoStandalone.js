@@ -1,7 +1,8 @@
 // barra-estado.js
-// Web Component da>// Web Component da barra de estado do Governo do RS
+// Web Component da barra de estado do Governo do RS
 //
 // Também pode ser servido por CDN (ex.: jsDelivr) a partir de GitHub ou npm.
+// Compatível tanto com <script src="..."> clássico quanto com <script type="module">.
 
 const COMPONENT_TAG = 'barra-estado';
 
@@ -401,7 +402,7 @@ function createMenuHtml(links) {
   `);
 }
 
-export class BarraEstado extends HTMLElement {
+class BarraEstado extends HTMLElement {
   static get observedAttributes() {
     return ['links'];
   }
@@ -503,16 +504,22 @@ export class BarraEstado extends HTMLElement {
   }
 }
 
-export function defineBarraEstado(tagName = COMPONENT_TAG) {
+function defineBarraEstado(tagName = COMPONENT_TAG) {
   if (typeof window === 'undefined' || !('customElements' in window)) return;
   if (!window.customElements.get(tagName)) {
     window.customElements.define(tagName, BarraEstado);
   }
 }
 
+// Expõe globalmente para uso em <script> clássico (sem type="module").
+if (typeof window !== 'undefined') {
+  window.BarraEstado = BarraEstado;
+  window.defineBarraEstado = defineBarraEstado;
+}
+
 // Auto-registro em ambiente de navegador.
 defineBarraEstado();
 
-export default BarraEstado;
 // Uso:
-//   import './barra-estado.js';
+//   <script src="barra-estado.js"></script>
+//   <barra-estado></barra-estado>
