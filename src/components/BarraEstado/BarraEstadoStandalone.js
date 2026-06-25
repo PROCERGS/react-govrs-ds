@@ -511,15 +511,52 @@ function defineBarraEstado(tagName = COMPONENT_TAG) {
   }
 }
 
+/**
+ * Auto-injeta a barra no início do <body>, removendo qualquer instância
+ * anterior (.barra-estado legada via jQuery, <barra-estado> ou .container-menu).
+ *
+ * Reproduz o comportamento do script jQuery legado, no qual a barra
+ * aparece automaticamente em qualquer página que carregue este JS,
+ * sem precisar adicionar a tag no HTML.
+ */
+function autoMountBarraEstado() {
+  if (typeof document === 'undefined') return;
+
+  const mount = () => {
+    // Remove instâncias anteriores (versão jQuery e versões já montadas deste script).
+    document.querySelectorAll(
+      '.barra-estado, .container-menu, ' + COMPONENT_TAG
+    ).forEach((node) => node.remove());
+
+    if (!document.body) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'container-menu';
+
+    const barra = document.createElement(COMPONENT_TAG);
+    wrapper.appendChild(barra);
+
+    document.body.prepend(wrapper);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount, { once: true });
+  } else {
+    mount();
+  }
+}
+
 // Expõe globalmente para uso em <script> clássico (sem type="module").
 if (typeof window !== 'undefined') {
   window.BarraEstado = BarraEstado;
   window.defineBarraEstado = defineBarraEstado;
+  window.mountBarraEstado = autoMountBarraEstado;
 }
 
-// Auto-registro em ambiente de navegador.
+// Auto-registro do custom element + auto-mount no <body>.
 defineBarraEstado();
+autoMountBarraEstado();
 
 // Uso:
 //   <script src="barra-estado.js"></script>
-//   <barra-estado></barra-estado>
+//   (a barra é injetada automaticamente no topo do <body>)
