@@ -512,6 +512,31 @@ function defineBarraEstado(tagName = COMPONENT_TAG) {
 }
 
 /**
+ * Injeta no <head> uma regra global que zera padding/margin superior do
+ * <html> e <body>, equivalente ao "hack" do script jQuery legado:
+ *
+ *   body { -webkit-animation: bugfix infinite 1s }
+ *   @-webkit-keyframes bugfix { from, to { padding: 0 } }
+ *
+ * Sem isso, temas que aplicam padding-top ao <body> deixam um espaço
+ * em branco acima da barra.
+ */
+function injectBodyReset() {
+  if (typeof document === 'undefined' || !document.head) return;
+  if (document.getElementById('barra-estado-body-reset')) return;
+
+  const style = document.createElement('style');
+  style.id = 'barra-estado-body-reset';
+  style.textContent =
+    'html.barra-estado-mounted,' +
+    'body.barra-estado-mounted{' +
+      'margin-top:0 !important;' +
+      'padding-top:0 !important;' +
+    '}';
+  document.head.appendChild(style);
+}
+
+/**
  * Auto-injeta a barra no início do <body>, removendo qualquer instância
  */
 function autoMountBarraEstado() {
@@ -520,15 +545,26 @@ function autoMountBarraEstado() {
   const mount = () => {
     // Remove instâncias anteriores (versão jQuery e versões já montadas deste script).
     document.querySelectorAll(
-      '.barra-estado, .container-menu, ' + COMPONENT_TAG
+      '.barra-estado, .container-menu, .barra-estado-host, ' + COMPONENT_TAG
     ).forEach((node) => node.remove());
 
     if (!document.body) return;
 
+    // Reset de padding/margin no html e body para evitar gap acima da barra.
+    injectBodyReset();
+    document.documentElement.classList.add('barra-estado-mounted');
+    document.body.classList.add('barra-estado-mounted');
+
     const wrapper = document.createElement('div');
-    wrapper.className = 'container-menu';
+    // Classe específica para evitar colisão com CSS legado do tema (.container-menu).
+    // Mantemos .container-menu por compatibilidade de seletores externos.
+    wrapper.className = 'barra-estado-host container-menu';
+    // Reset inline para neutralizar qualquer margin/padding herdado do tema.
+    wrapper.style.cssText =
+      'margin:0;padding:0;display:block;width:100%;line-height:0;';
 
     const barra = document.createElement(COMPONENT_TAG);
+    barra.style.cssText = 'display:block;margin:0;padding:0;line-height:normal;';
     wrapper.appendChild(barra);
 
     document.body.prepend(wrapper);
