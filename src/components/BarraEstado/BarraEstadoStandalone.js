@@ -23,7 +23,7 @@ const COMPONENT_TAG = 'barra-estado';
  *   </script>
  *   <script src="...BarraEstadoStandalone.js"></script>
  */
-const DEFAULT_BLOCKED_HOSTS = ['.intra.rs.gov.br'];
+const DEFAULT_BLOCKED_HOSTS = ['https://pcm.des.intra.rs.gov.br/inicial','https://pcm.pro.intra.rs.gov.br/inicial'];
 
 /**
  * Decodifica entidades HTML comuns e também casos duplamente escapados,
@@ -588,16 +588,6 @@ function isHostBlocked() {
   });
 }
 
-/**
- * Injeta no <head> uma regra global que zera padding/margin superior do
- * <html> e <body>, equivalente ao "hack" do script jQuery legado:
- *
- *   body { -webkit-animation: bugfix infinite 1s }
- *   @-webkit-keyframes bugfix { from, to { padding: 0 } }
- *
- * Sem isso, temas que aplicam padding-top ao <body> deixam um espaço
- * em branco acima da barra.
- */
 function injectBodyReset() {
   if (typeof document === 'undefined' || !document.head) return;
   if (document.getElementById('barra-estado-body-reset')) return;
