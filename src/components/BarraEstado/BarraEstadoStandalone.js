@@ -1,28 +1,8 @@
 // barra-estado.js
 // Web Component da barra de estado do Governo do RS
-//
-// Também pode ser servido por CDN (ex.: jsDelivr) a partir de GitHub ou npm.
-// Compatível tanto com <script src="..."> clássico quanto com <script type="module">.
 
 const COMPONENT_TAG = 'barra-estado';
 
-/**
- * Hosts em que a barra NÃO deve ser renderizada.
- * - Strings iniciadas com "." são tratadas como sufixo (ex.: ".intra.rs.gov.br"
- *   bloqueia "foo.intra.rs.gov.br" e "intra.rs.gov.br").
- * - Strings sem ponto inicial são comparadas por igualdade exata.
- * - Também aceita RegExp.
- *
- * Para acrescentar hosts adicionais no consumidor, defina ANTES de carregar
- * este script:
- *
- *   <script>
- *     window.barraEstadoConfig = {
- *       blockedHosts: ['exemplo.rs.gov.br', '.dev.rs.gov.br', /\.local$/]
- *     };
- *   </script>
- *   <script src="...BarraEstadoStandalone.js"></script>
- */
 const DEFAULT_BLOCKED_HOSTS = [ "sitedpers.des.intra.rs.gov.br",
             "sitedpers.hml.rs.gov.br",
             "www.defensoria.rs.def.br",
@@ -41,16 +21,6 @@ const DEFAULT_BLOCKED_HOSTS = [ "sitedpers.des.intra.rs.gov.br",
             "conversasdigitais.rs.gov.br",
             "www.conversasdigitais.rs.gov.br"];
 
-/**
- * Decodifica entidades HTML comuns e também casos duplamente escapados,
- * por exemplo:
- *   &lt;div&gt;       -> <div>
- *   &amp;gt;         -> >
- *   &amp;amp;lt;     -> <
- *
- * Essa função protege o conteúdo de templates, CSS inline e SVG inline,
- * caso algum processo de publicação/editor tenha escapado o HTML.
- */
 function normalizeEscapedHtml(input = '') {
   if (typeof input !== 'string') return input;
 
@@ -80,10 +50,6 @@ function normalizeEscapedHtml(input = '') {
   return output;
 }
 
-/**
- * Escapa texto para inserção segura em HTML.
- * Usado para labels/textos vindos de atributos/propriedades.
- */
 function escapeHtml(value = '') {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -93,10 +59,6 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#39;');
 }
 
-/**
- * Sanitiza URL minimamente para uso em href.
- * Aceita apenas protocolos seguros comuns.
- */
 function sanitizeUrl(url = '') {
   const value = normalizeEscapedHtml(String(url).trim());
 
@@ -648,6 +610,7 @@ function autoMountBarraEstado() {
       'margin:0;padding:0;display:block;width:100%;line-height:0;';
 
     const barra = document.createElement(COMPONENT_TAG);
+    barra.className = 'barra-estado'; //TESTE PARA CSS LEGADO
     barra.style.cssText = 'display:block;margin:0;padding:0;line-height:normal;';
     wrapper.appendChild(barra);
 
@@ -661,7 +624,6 @@ function autoMountBarraEstado() {
   }
 }
 
-// Expõe globalmente para uso em <script> clássico (sem type="module").
 if (typeof window !== 'undefined') {
   window.BarraEstado = BarraEstado;
   window.defineBarraEstado = defineBarraEstado;
@@ -670,7 +632,6 @@ if (typeof window !== 'undefined') {
   window.BARRA_ESTADO_DEFAULT_BLOCKED_HOSTS = DEFAULT_BLOCKED_HOSTS.slice();
 }
 
-// Auto-registro do custom element + auto-mount no <body>.
 defineBarraEstado();
 autoMountBarraEstado();
 
