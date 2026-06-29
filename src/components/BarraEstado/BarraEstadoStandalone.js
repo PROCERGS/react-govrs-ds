@@ -438,7 +438,7 @@ class BarraEstado extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'close' });
+    this.attachShadow({ mode: 'closed' });
     this._links = null;
     this._onToggleChange = null;
     this._onToggleKeydown = null;
