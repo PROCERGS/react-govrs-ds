@@ -377,8 +377,7 @@ function createMenuHtml(links) {
     const label = escapeHtml(normalizeEscapedHtml(item.label || ''));
     const srPrefix = escapeHtml(normalizeEscapedHtml(item.srPrefix || ''));
 
-    // Se o item fornecer svgHtml, o SVG substitui o texto visível.
-    // O label vai inteiro no <span class="sr-only"> para leitores de tela.
+    
     if (typeof item.svgHtml === 'string' && item.svgHtml.trim()) {
       const svg = normalizeEscapedHtml(item.svgHtml);
       return `
@@ -439,12 +438,12 @@ class BarraEstado extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'close' });
     this._links = null;
     this._onToggleChange = null;
     this._onToggleKeydown = null;
   }
-
+ 
   get links() {
     return this._links ?? DEFAULT_LINKS;
   }
@@ -558,7 +557,7 @@ function isHostBlocked() {
     if (typeof pattern !== 'string' || pattern === '') return false;
 
     const p = pattern.toLowerCase();
-    // Sufixo: ".intra.rs.gov.br" casa "foo.intra.rs.gov.br" e "intra.rs.gov.br".
+    
     if (p.startsWith('.')) {
       return host === p.slice(1) || host.endsWith(p);
     }
@@ -602,15 +601,12 @@ function autoMountBarraEstado() {
     document.body.classList.add('barra-estado-mounted');
 
     const wrapper = document.createElement('div');
-    // Classe específica para evitar colisão com CSS legado do tema (.container-menu).
-    // Mantemos .container-menu por compatibilidade de seletores externos.
     wrapper.className = 'barra-estado-host container-menu';
-    // Reset inline para neutralizar qualquer margin/padding herdado do tema.
     wrapper.style.cssText =
       'margin:0;padding:0;display:block;width:100%;line-height:0;';
 
     const barra = document.createElement(COMPONENT_TAG);
-    barra.className = 'barra-estado'; //TESTE PARA CSS LEGADO
+    barra.className = 'barra-estado';
     barra.style.cssText = 'display:block;margin:0;padding:0;line-height:normal;';
     wrapper.appendChild(barra);
 
