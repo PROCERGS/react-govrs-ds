@@ -436,13 +436,23 @@ class BarraEstado extends HTMLElement {
     return ['links'];
   }
 
+  // constructor() {
+  //   super();
+  //   this.attachShadow({ mode: 'closed' });
+  //   this._links = null;
+  //   this._onToggleChange = null;
+  //   this._onToggleKeydown = null;
+  // }
   constructor() {
-    super();
-    this.attachShadow({ mode: 'closed' });
-    this._links = null;
-    this._onToggleChange = null;
-    this._onToggleKeydown = null;
-  }
+  super();
+
+  this._shadow = this.attachShadow({ mode: 'closed' });
+
+  this._links = null;
+  this._onToggleChange = null;
+  this._onToggleKeydown = null;
+}
+
  
   get links() {
     return this._links ?? DEFAULT_LINKS;
@@ -477,21 +487,37 @@ class BarraEstado extends HTMLElement {
     this.removeA11yListeners();
   }
 
+  // render() {
+  //   if (!this.shadowRoot) return;
+
+  //   this.removeA11yListeners();
+
+  //   const safeCss = normalizeEscapedHtml(CSS_TEXT);
+  //   const safeHtml = createMenuHtml(this.links);
+
+  //   this.shadowRoot.innerHTML = `
+  //     <style>${safeCss}</style>
+  //     ${safeHtml}
+  //   `;
+
+  //   this.setupA11y();
+  // }
   render() {
-    if (!this.shadowRoot) return;
+  if (!this._shadow) return;
 
-    this.removeA11yListeners();
+  this.removeA11yListeners();
 
-    const safeCss = normalizeEscapedHtml(CSS_TEXT);
-    const safeHtml = createMenuHtml(this.links);
+  const safeCss = normalizeEscapedHtml(CSS_TEXT);
+  const safeHtml = createMenuHtml(this.links);
 
-    this.shadowRoot.innerHTML = `
-      <style>${safeCss}</style>
-      ${safeHtml}
-    `;
+  this._shadow.innerHTML = `
+    <style>${safeCss}</style>
+    ${safeHtml}
+  `;
 
-    this.setupA11y();
-  }
+  this.setupA11y();
+}
+
 
   setupA11y() {
     const toggleInput = this.shadowRoot?.querySelector('#barra-estado__toggle');
