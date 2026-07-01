@@ -127,7 +127,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   --barra-estado-container-max-992: 970px;
   --barra-estado-container-max-1200: 1170px;
   display: block;
-  contain: content;
+  // contain: content;
   font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 
