@@ -223,7 +223,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   background: var(--barra-estado-menu-bg);
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
-  font-family: inherit;
+  font-family: Roboto, Arial, sans-serif;
   list-style: none;
 }
 
