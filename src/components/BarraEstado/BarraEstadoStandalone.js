@@ -247,6 +247,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   line-height: 1;
   transition: box-shadow .25s linear, color .25s linear;
   text-decoration: none;
+  font-family: Roboto, Arial, sans-serif;
 }
 
 .barra-estado__menu > li > a:visited,
