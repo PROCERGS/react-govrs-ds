@@ -237,16 +237,21 @@ const CSS_TEXT = normalizeEscapedHtml(`
   float: left;
 }
 
+// .barra-estado__menu > li > a {
+//   display: block;
+//   padding: 13px 40px;
+//   color: var(--barra-estado-text);
+//   font-size: 14px;
+//   font-weight: 400;
+//   line-height: 1;
+//   transition: box-shadow .25s linear, color .25s linear;
+//   text-decoration: none;
+//   font-family: Roboto, Arial, sans-serif;
+// }
 .barra-estado__menu > li > a {
-  display: block;
-  padding: 13px 40px;
-  color: var(--barra-estado-text);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1;
-  transition: box-shadow .25s linear, color .25s linear;
-  text-decoration: none;
-  font-family: Roboto, Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .barra-estado__menu > li > a:visited,
@@ -261,13 +266,15 @@ const CSS_TEXT = normalizeEscapedHtml(`
   outline: none;
 }
 
+// .barra-estado__menu > li > a svg {
+//   display: inline-block;
+//   vertical-align: middle;
+//   block-size: auto;
+//   max-block-size: 14px;
+// }
 .barra-estado__menu > li > a svg {
-  display: inline-block;
-  vertical-align: middle;
-  block-size: auto;
-  max-block-size: 14px;
+  display: block;
 }
-
 .barra-estado__toggle {
   z-index: 2;
 }
