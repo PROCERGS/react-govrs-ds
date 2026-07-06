@@ -172,6 +172,15 @@ const CSS_TEXT = normalizeEscapedHtml(`
   text-decoration: none;
 }
 
+// .barra-estado__logo {
+//   position: absolute;
+//   inset-inline-start: 15px;
+//   inset-block-start: 6px;
+//   inline-size: 77px;
+//   block-size: 16px;
+//   display: inline-flex;
+//   align-items: center;
+// }
 .barra-estado__logo {
   position: absolute;
   inset-inline-start: 15px;
@@ -180,6 +189,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   block-size: 16px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .barra-estado__logo svg {
@@ -235,6 +245,8 @@ const CSS_TEXT = normalizeEscapedHtml(`
 .barra-estado__menu > li {
   list-style: none;
   float: left;
+  display: flex;
+  align-items: center;
 }
 
 // .barra-estado__menu > li > a {
@@ -252,6 +264,15 @@ const CSS_TEXT = normalizeEscapedHtml(`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 13px 40px;
+  color: var(--barra-estado-text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  transition: box-shadow .25s linear, color .25s linear;
+  text-decoration: none;
+  font-family: Roboto, Arial, sans-serif;
 }
 
 .barra-estado__menu > li > a:visited,
@@ -274,6 +295,8 @@ const CSS_TEXT = normalizeEscapedHtml(`
 // }
 .barra-estado__menu > li > a svg {
   display: block;
+  block-size: auto;
+  max-block-size: 14px;
 }
 .barra-estado__toggle {
   z-index: 2;
