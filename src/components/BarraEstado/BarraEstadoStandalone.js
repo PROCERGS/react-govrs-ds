@@ -113,7 +113,7 @@ const DEFAULT_LINKS = [
 ];
 
 const CSS_TEXT = normalizeEscapedHtml(`
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 :host {
   --barra-estado-height: 32px;
@@ -172,15 +172,6 @@ const CSS_TEXT = normalizeEscapedHtml(`
   text-decoration: none;
 }
 
-// .barra-estado__logo {
-//   position: absolute;
-//   inset-inline-start: 15px;
-//   inset-block-start: 6px;
-//   inline-size: 77px;
-//   block-size: 16px;
-//   display: inline-flex;
-//   align-items: center;
-// }
 .barra-estado__logo {
   position: absolute;
   inset-inline-start: 15px;
@@ -189,8 +180,8 @@ const CSS_TEXT = normalizeEscapedHtml(`
   block-size: 16px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
+
 
 .barra-estado__logo svg {
   display: block;
@@ -211,7 +202,9 @@ const CSS_TEXT = normalizeEscapedHtml(`
 .barra-estado__nav__form {
   margin: 0;
   padding: 0;
-  display: inline-block;
+  display: inline-flex;
+  align-items: stretch;
+  block-size: 100%;
 }
 
 #barra-estado__toggle,
@@ -219,61 +212,41 @@ const CSS_TEXT = normalizeEscapedHtml(`
   display: none;
 }
 
-.barra-estado__menu,
-.barra-estado__menu > li,
-.barra-estado__menu > li > a,
-.barra-estado__nav {
-  block-size: 100%;
-}
-
 .barra-estado__menu {
   margin: 0;
-  padding: 14px 0 20px;
+  padding: 0;
+  block-size: 100%;
+  display: flex;
+  align-items: stretch;
   background: var(--barra-estado-menu-bg);
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   list-style: none;
 }
 
-.barra-estado__menu,
-.barra-estado__menu > li,
-.barra-estado__menu > li > a {
-  block-size: auto;
-}
+
 
 .barra-estado__menu > li {
   list-style: none;
-  float: left;
   display: flex;
-  align-items: center;
+  align-items: stretch;
 }
 
-// .barra-estado__menu > li > a {
-//   display: block;
-//   padding: 13px 40px;
-//   color: var(--barra-estado-text);
-//   font-size: 14px;
-//   font-weight: 400;
-//   line-height: 1;
-//   transition: box-shadow .25s linear, color .25s linear;
-//   text-decoration: none;
-//   font-family: Roboto, Arial, sans-serif;
-// }
 .barra-estado__menu > li > a {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  padding: 13px 40px;
+  padding: 0 13px;
   color: var(--barra-estado-text);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
   transition: box-shadow .25s linear, color .25s linear;
   text-decoration: none;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
 }
+
 
 .barra-estado__menu > li > a:visited,
 .barra-estado__menu > li > a:active {
@@ -287,17 +260,13 @@ const CSS_TEXT = normalizeEscapedHtml(`
   outline: none;
 }
 
-// .barra-estado__menu > li > a svg {
-//   display: inline-block;
-//   vertical-align: middle;
-//   block-size: auto;
-//   max-block-size: 14px;
-// }
 .barra-estado__menu > li > a svg {
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   block-size: auto;
   max-block-size: 14px;
 }
+
 .barra-estado__toggle {
   z-index: 2;
 }
@@ -380,8 +349,9 @@ const CSS_TEXT = normalizeEscapedHtml(`
   }
 
   .barra-estado__menu > li > a {
-    padding: 9px 13px;
+    padding: 0 13px;
     font-size: 11px;
+    font-family: 'Roboto', Arial, sans-serif;
   }
 
   .barra-estado__menu > li > a:hover,
@@ -596,10 +566,6 @@ function defineBarraEstado(tagName = COMPONENT_TAG) {
   }
 }
 
-/**
- * Retorna true se o host atual estiver na lista de bloqueio.
- * Combina DEFAULT_BLOCKED_HOSTS com window.barraEstadoConfig.blockedHosts.
- */
 function isHostBlocked() {
   if (typeof window === 'undefined' || !window.location) return false;
 
@@ -644,14 +610,14 @@ function autoMountBarraEstado() {
   if (isHostBlocked()) return;
 
   const mount = () => {
-    // Remove instâncias anteriores (versão jQuery e versões já montadas deste script).
+    
     document.querySelectorAll(
       '.barra-estado, .container-menu, .barra-estado-host, ' + COMPONENT_TAG
     ).forEach((node) => node.remove());
 
     if (!document.body) return;
 
-    // Reset de padding/margin no html e body para evitar gap acima da barra.
+  
     injectBodyReset();
     document.documentElement.classList.add('barra-estado-mounted');
     document.body.classList.add('barra-estado-mounted');
