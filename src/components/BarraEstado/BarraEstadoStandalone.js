@@ -175,7 +175,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
 .barra-estado__logo {
   position: absolute;
   inset-inline-start: 15px;
-  inset-block-start: 6px;
+  inset-block-start: 8px;
   inline-size: 77px;
   block-size: 16px;
   display: inline-flex;
@@ -265,6 +265,10 @@ const CSS_TEXT = normalizeEscapedHtml(`
   vertical-align: middle;
   block-size: auto;
   max-block-size: 14px;
+}
+
+.barra-estado__menu > li > a svg#GurIA {
+  transform: translateY(-2px);
 }
 
 .barra-estado__toggle {
