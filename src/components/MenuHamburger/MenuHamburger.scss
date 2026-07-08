@@ -1,12 +1,8 @@
 @use '../../foundations/styles/variables' as vars;
 
 .govrs-menu-hamburger {
-  position: relative;
+  position: static;
   font-family: var(--govrs-font-family-base, sans-serif);
-}
-
-.govrs-menu-hamburger[data-open='true'] {
-  z-index: var(--govrs-z-index-navigation);
 }
 
 .govrs-menu-hamburger__toggle {

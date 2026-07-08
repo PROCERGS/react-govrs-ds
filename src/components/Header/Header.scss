@@ -14,9 +14,15 @@
   z-index: var(--govrs-z-index-navigation);
 }
 
+.govrs-header-wrapper .govrs-menu-hamburger__content {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
 .govrs-header {
   width: 100%;
-  padding: 0 var(--padding-default, 0);
+  padding-inline: var(--govrs-header-padding-inline, var(--govrs-space-2-5, 0.625rem));
   margin: 0;
   box-sizing: border-box;
 }
@@ -156,10 +162,6 @@ body.has-sidebar .govrs-header__scroll-top {
 }
 
 @media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
-  .govrs-header {
-    padding-inline: var(--govrs-space-4, 1rem);
-  }
-
   .govrs-header__logo-nav-wrapper {
     gap: var(--govrs-space-3, 0.75rem);
   }

@@ -5,6 +5,7 @@ export { Banner } from './Banner/Banner';
 export { Badges } from './Badges/Badges';
 export { Button } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
+export { Icon } from './Icon/Icon';
 export { Card } from './Card/Card';
 export { Carousel } from './Carousel/Carousel';
 export { DatePicker } from './DatePicker/DatePicker';

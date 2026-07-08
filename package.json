@@ -1,6 +1,6 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.1.9",
+  "version": "0.2.2",
   "private": false,
   "type": "module",
   "sideEffects": [
@@ -37,6 +37,7 @@
     "build-storybook": "storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
     "build": "vite build && npm run build:types",
+    "prepack": "npm run build",
     "lint": "eslint ."
   },
   "peerDependencies": {
@@ -69,6 +70,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
     "@react-google-maps/api": "^2.16.1"
