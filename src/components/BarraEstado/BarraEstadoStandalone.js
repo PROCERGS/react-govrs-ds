@@ -3,7 +3,8 @@
 
 const COMPONENT_TAG = 'barra-estado';
 
-const DEFAULT_BLOCKED_HOSTS = [ "sitedpers.des.intra.rs.gov.br",
+const DEFAULT_BLOCKED_HOSTS = [
+            "sitedpers.des.intra.rs.gov.br",
             "sitedpers.hml.rs.gov.br",
             "www.defensoria.rs.def.br",
             "www.defensoria.rs.gov.br",
@@ -128,6 +129,8 @@ const CSS_TEXT = normalizeEscapedHtml(`
   --barra-estado-container-max-1200: 1170px;
   display: block;
   font-family: Roboto, Arial, sans-serif;
+  -webkit-animation: bugfix infinite 1s;
+  animation: bugfix infinite 1s;
 }
 
 *, *::before, *::after {
@@ -136,11 +139,6 @@ const CSS_TEXT = normalizeEscapedHtml(`
 
 @keyframes bugfix {
   from, to { padding: 0; }
-}
-
-:host {
-  -webkit-animation: bugfix infinite 1s;
-  animation: bugfix infinite 1s;
 }
 
 .sr-only {
@@ -221,14 +219,10 @@ const CSS_TEXT = normalizeEscapedHtml(`
   background: var(--barra-estado-menu-bg);
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
-  font-family: 'Roboto', Arial, sans-serif;
   list-style: none;
 }
 
-
-
 .barra-estado__menu > li {
-  list-style: none;
   display: flex;
   align-items: stretch;
 }
@@ -243,8 +237,6 @@ const CSS_TEXT = normalizeEscapedHtml(`
   line-height: 1;
   white-space: nowrap;
   transition: box-shadow .25s linear, color .25s linear;
-  text-decoration: none;
-  font-family: 'Roboto', Arial, sans-serif;
 }
 
 
@@ -327,19 +319,9 @@ const CSS_TEXT = normalizeEscapedHtml(`
   }
 
   .barra-estado__menu > li > a {
-    display: flex;
-    align-items: center;
     inline-size: 100%;
     block-size: auto;
     padding: 14px 20px;
-    font-size: 12px;
-  }
-
-  .barra-estado__menu > li > a:hover,
-  .barra-estado__menu > li > a:focus-visible {
-    box-shadow: inset 5px 0 #fff;
-    color: var(--barra-estado-text-hover);
-    outline: none;
   }
 
   .barra-estado__toggle {
@@ -370,16 +352,12 @@ const CSS_TEXT = normalizeEscapedHtml(`
   }
 
   .barra-estado__menu {
-    margin-top: 0;
-    padding: 0;
     background: transparent;
     border-block-start: none;
   }
 
   .barra-estado__menu > li > a {
-    padding: 0 13px;
     font-size: 11px;
-    font-family: 'Roboto', Arial, sans-serif;
   }
 
   .barra-estado__menu > li > a:hover,
@@ -464,13 +442,6 @@ class BarraEstado extends HTMLElement {
     return ['links'];
   }
 
-  // constructor() {
-  //   super();
-  //   this.attachShadow({ mode: 'closed' });
-  //   this._links = null;
-  //   this._onToggleChange = null;
-  //   this._onToggleKeydown = null;
-  // }
   constructor() {
   super();
 
@@ -502,7 +473,7 @@ class BarraEstado extends HTMLElement {
           this.render();
         }
       } catch {
-        // Ignora JSON inválido e mantém os links padrão.
+        
       }
     }
   }
@@ -515,21 +486,6 @@ class BarraEstado extends HTMLElement {
     this.removeA11yListeners();
   }
 
-  // render() {
-  //   if (!this.shadowRoot) return;
-
-  //   this.removeA11yListeners();
-
-  //   const safeCss = normalizeEscapedHtml(CSS_TEXT);
-  //   const safeHtml = createMenuHtml(this.links);
-
-  //   this.shadowRoot.innerHTML = `
-  //     <style>${safeCss}</style>
-  //     ${safeHtml}
-  //   `;
-
-  //   this.setupA11y();
-  // }
   render() {
   if (!this._shadow) return;
 
@@ -630,9 +586,6 @@ function injectBodyReset() {
   document.head.appendChild(style);
 }
 
-/**
- * Auto-injeta a barra no início do <body>, removendo qualquer instância
- */
 function autoMountBarraEstado() {
   if (typeof document === 'undefined') return;
   if (isHostBlocked()) return;
