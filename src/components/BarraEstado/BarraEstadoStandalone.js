@@ -279,13 +279,16 @@ const CSS_TEXT = normalizeEscapedHtml(`
   content: attr(data-open);
   position: absolute;
   inset-inline-end: 0;
-  display: block;
+  inset-block-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   inline-size: 45px;
   block-size: 32px;
+  padding-inline-end: 4px;
   color: var(--barra-estado-alt-text);
   font-size: 18px;
-  line-height: 13px;
-  text-align: right;
+  line-height: 1;
   transition: color .5s linear;
 }
 
@@ -298,38 +301,59 @@ const CSS_TEXT = normalizeEscapedHtml(`
   content: attr(data-close);
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 991.98px) {
   .barra-estado__menu {
     position: absolute;
     inset-inline-end: 0;
     inset-block-start: 32px;
     z-index: 999;
     display: none;
+    flex-direction: column;
+    align-items: stretch;
     inline-size: 280px;
+    block-size: auto;
+    padding-block: 4px;
     opacity: 0;
+    background: var(--barra-estado-menu-bg);
+    border-block-start: 1px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   .barra-estado__menu > li {
     display: block;
     inline-size: 100%;
+    block-size: auto;
     margin: 0;
   }
 
   .barra-estado__menu > li > a {
-    display: block;
+    display: flex;
+    align-items: center;
     inline-size: 100%;
+    block-size: auto;
+    padding: 14px 20px;
+    font-size: 12px;
+  }
+
+  .barra-estado__menu > li > a:hover,
+  .barra-estado__menu > li > a:focus-visible {
+    box-shadow: inset 5px 0 #fff;
+    color: var(--barra-estado-text-hover);
+    outline: none;
   }
 
   .barra-estado__toggle {
     position: relative;
     display: block;
+    inline-size: 45px;
+    block-size: 32px;
     cursor: pointer;
     user-select: none;
     -webkit-touch-callout: none;
   }
 
   #barra-estado__toggle:checked ~ .barra-estado__menu {
-    display: block;
+    display: flex;
     opacity: 1;
   }
 }
