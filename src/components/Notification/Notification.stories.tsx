@@ -378,7 +378,7 @@ const dataPresets: Record<string, Notification.Tab[]> = {
 }
 
 const meta = {
-  title: 'Feedback/Notificações',
+  title: 'Feedback/Notifications',
   component: Notification,
   parameters: {
     layout: 'padded',
