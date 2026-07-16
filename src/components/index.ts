@@ -18,6 +18,7 @@ export { Loader } from './Loader/Loader';
 export { List } from './List/List';
 export { MenuHamburger } from './MenuHamburger/MenuHamburger';
 export { Modal } from './Modal/Modal';
+export { Notification } from './Notification/Notification';
 export { Radio } from './Radio/Radio';
 export { Search } from './Search/Search';
 export { Select } from './Select/Select';

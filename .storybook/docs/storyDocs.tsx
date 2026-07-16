@@ -218,6 +218,7 @@ type StorySandboxExampleProps = {
   code: string
   notes?: string[]
   children: ReactNode
+  allowOverflow?: boolean
 }
 
 type StoryPreviewCardProps = {
@@ -312,11 +313,12 @@ export function StorySandboxExample({
   code,
   notes,
   children,
+  allowOverflow = false,
 }: StorySandboxExampleProps) {
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview')
 
   return (
-    <div style={storyDocsStyles.sandbox}>
+    <div style={{ ...storyDocsStyles.sandbox, overflow: allowOverflow ? 'visible' : 'hidden' }}>
       <div style={storyDocsStyles.sandboxHeader}>
         <div style={{ display: 'grid', gap: 6 }}>
           <strong style={{ color: '#0f172a', fontSize: 16 }}>{title}</strong>
