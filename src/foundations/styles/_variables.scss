@@ -33,6 +33,19 @@ $govrs-breakpoint-tablet-landscape-max: 79.9375rem;
 $govrs-breakpoint-desktop-min: 80rem;
 $govrs-breakpoint-desktop-max: 99.9375rem;
 $govrs-breakpoint-tv-min: 100rem;
+$govrs-breakpoint-xs: 25rem;
+$govrs-breakpoint-xs-wide: 26.25rem;
+$govrs-breakpoint-sm: 36rem;
+$govrs-breakpoint-md: 40rem;
+$govrs-breakpoint-lg: 48rem;
+$govrs-breakpoint-xl: 62rem;
+$govrs-breakpoint-xxl: 64rem;
+$govrs-breakpoint-xxxl: 75rem;
+
+$govrs-layout-container-barra-max-lg: 46.875rem;
+$govrs-layout-container-barra-max-xl: 60.625rem;
+$govrs-layout-container-barra-max-xxxl: 73.125rem;
+$govrs-layout-container-header-max-width: 100rem;
 
 :root {
   /* Color tokens */
@@ -116,6 +129,21 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-breakpoint-desktop-min: #{$govrs-breakpoint-desktop-min};
   --govrs-breakpoint-desktop-max: #{$govrs-breakpoint-desktop-max};
   --govrs-breakpoint-tv-min: #{$govrs-breakpoint-tv-min};
+  --govrs-breakpoint-xs: #{$govrs-breakpoint-xs};
+  --govrs-breakpoint-xs-wide: #{$govrs-breakpoint-xs-wide};
+  --govrs-breakpoint-sm: #{$govrs-breakpoint-sm};
+  --govrs-breakpoint-md: #{$govrs-breakpoint-md};
+  --govrs-breakpoint-lg: #{$govrs-breakpoint-lg};
+  --govrs-breakpoint-xl: #{$govrs-breakpoint-xl};
+  --govrs-breakpoint-xxl: #{$govrs-breakpoint-xxl};
+  --govrs-breakpoint-xxxl: #{$govrs-breakpoint-xxxl};
+
+  --govrs-layout-container-barra-max-lg: #{$govrs-layout-container-barra-max-lg};
+  --govrs-layout-container-barra-max-xl: #{$govrs-layout-container-barra-max-xl};
+  --govrs-layout-container-barra-max-xxxl: #{$govrs-layout-container-barra-max-xxxl};
+  --govrs-layout-container-header-max-width: #{$govrs-layout-container-header-max-width};
+  --govrs-layout-container-max-width: var(--govrs-layout-container-header-max-width);
+  --layout-container-width: var(--govrs-layout-container-header-max-width);
 
   /* Spacing tokens */
   --govrs-space-0: 0rem;

@@ -1,0 +1,45 @@
+@use 'variables' as vars;
+
+@mixin govrs-layout-container-barra {
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+
+  @media (min-width: #{vars.$govrs-breakpoint-lg}) {
+    max-width: var(
+      --govrs-layout-container-barra-max-lg,
+      #{vars.$govrs-layout-container-barra-max-lg}
+    );
+  }
+
+  @media (min-width: #{vars.$govrs-breakpoint-xl}) {
+    max-width: var(
+      --govrs-layout-container-barra-max-xl,
+      #{vars.$govrs-layout-container-barra-max-xl}
+    );
+  }
+
+  @media (min-width: #{vars.$govrs-breakpoint-xxxl}) {
+    max-width: var(
+      --govrs-layout-container-barra-max-xxxl,
+      #{vars.$govrs-layout-container-barra-max-xxxl}
+    );
+  }
+}
+
+@mixin govrs-layout-container-header {
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+
+  @media (min-width: #{vars.$govrs-breakpoint-tv-min}) {
+    max-width: var(
+      --govrs-layout-container-header-max-width,
+      #{vars.$govrs-layout-container-header-max-width}
+    );
+  }
+}
+
+@mixin govrs-layout-container {
+  @include govrs-layout-container-header;
+}

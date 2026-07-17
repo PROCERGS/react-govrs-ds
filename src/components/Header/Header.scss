@@ -1,4 +1,5 @@
 @use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/layout-container' as layout;
 
 .govrs-header-wrapper {
   position: relative;
@@ -21,9 +22,9 @@
 }
 
 .govrs-header {
-  width: 100%;
+  @include layout.govrs-layout-container-header;
   padding-inline: var(--govrs-header-padding-inline, var(--govrs-space-2-5, 0.625rem));
-  margin: 0;
+  margin-block: 0;
   box-sizing: border-box;
 }
 
