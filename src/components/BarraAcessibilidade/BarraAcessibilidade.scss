@@ -8,7 +8,7 @@
 }
 
 .acess-wrapper {
-  @include layout.govrs-layout-container-barra;
+  @include layout.govrs-layout-container-header;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
