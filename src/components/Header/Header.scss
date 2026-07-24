@@ -15,14 +15,6 @@
   z-index: var(--govrs-z-index-navigation);
 }
 
-.govrs-header-wrapper .govrs-menu-hamburger__content {
-  left: 50%;
-  right: auto;
-  width: 100vw;
-  max-width: 100vw;
-  transform: translateX(-50%);
-}
-
 .govrs-header {
   @include layout.govrs-layout-container-header;
   padding-inline: var(--govrs-header-padding-inline, var(--govrs-space-2-5, 0.625rem));

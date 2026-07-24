@@ -73,58 +73,60 @@ export function BarraAcessibilidade({
   }, [shortcutItems])
 
   return (
-    <div className="acess-wrapper">
-      <div className="acess-right">
-        <ul className="acess-ul">
-          {shortcutItems.map((item, idx) => (
-            <li key={idx}>
-              <a title={`Ir para ${item.title.toLowerCase()}`} href={item.href}>
-                {item.title} [{idx + 1}]
-              </a>{' '}
-            </li>
-          ))}
+    <div className="acess-bar">
+      <div className="acess-wrapper">
+        <div className="acess-right">
+          <ul className="acess-ul">
+            {shortcutItems.map((item, idx) => (
+              <li key={idx}>
+                <a title={`Ir para ${item.title.toLowerCase()}`} href={item.href}>
+                  {item.title} [{idx + 1}]
+                </a>{' '}
+              </li>
+            ))}
 
-          {hrefAccessibility ? (
+            {hrefAccessibility ? (
+              <li>
+                <a href={hrefAccessibility}>
+                  <FontAwesomeIcon icon={faUniversalAccess} height={'12px'} width={'12px'} /> Acessibilidade
+                </a>
+              </li>
+            ) : null}
+          </ul>
+        </div>
+
+        <div className="acess-left">
+          <ul className="acess-ul">
             <li>
-              <a href={hrefAccessibility}>
-                <FontAwesomeIcon icon={faUniversalAccess} height={'12px'} width={'12px'} /> Acessibilidade
-              </a>
+              <button
+                id="btn-contraste"
+                type="button"
+                aria-pressed={isHighContrast}
+                aria-label={isHighContrast ? 'Desativar alto contraste' : 'Ativar alto contraste'}
+                onClick={toggleContrast}
+                className="acess-contrast-btn"
+              >
+                <FontAwesomeIcon icon={faCircleHalfStroke} height={'16px'} width={'16px'} />
+              </button>
             </li>
-          ) : null}
-        </ul>
-      </div>
 
-      <div className="acess-left">
-        <ul className="acess-ul">
-          <li>
-            <button
-              id="btn-contraste"
-              type="button"
-              aria-pressed={isHighContrast}
-              aria-label={isHighContrast ? 'Desativar alto contraste' : 'Ativar alto contraste'}
-              onClick={toggleContrast}
-              className="acess-contrast-btn"
-            >
-              <FontAwesomeIcon icon={faCircleHalfStroke} height={'16px'} width={'16px'} />
-            </button>
-          </li>
+            {hrefContact ? (
+              <li>
+                <a href={hrefContact} aria-label="Contato">
+                  <FontAwesomeIcon icon={faEnvelope} height={'16px'} width={'16px'} />
+                </a>
+              </li>
+            ) : null}
 
-          {hrefContact ? (
-            <li>
-              <a href={hrefContact} aria-label="Contato">
-                <FontAwesomeIcon icon={faEnvelope} height={'16px'} width={'16px'} />
-              </a>
-            </li>
-          ) : null}
-
-          {hrefSitemap ? (
-            <li>
-              <a href={hrefSitemap} aria-label="Mapa do site">
-                <FontAwesomeIcon icon={faSitemap} height={'16px'} width={'16px'} />
-              </a>
-            </li>
-          ) : null}
-        </ul>
+            {hrefSitemap ? (
+              <li>
+                <a href={hrefSitemap} aria-label="Mapa do site">
+                  <FontAwesomeIcon icon={faSitemap} height={'16px'} width={'16px'} />
+                </a>
+              </li>
+            ) : null}
+          </ul>
+        </div>
       </div>
     </div>
   )
