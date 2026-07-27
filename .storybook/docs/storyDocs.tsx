@@ -143,12 +143,13 @@ export const storyDocsStyles = {
     flexShrink: 0,
   },
   previewStage: {
-    display: 'grid',
+    display: 'flex',
+    flexDirection: 'column',
     gap: 16,
     padding: 18,
     borderRadius: 20,
-    background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
-    border: '1px solid #e2e8f0',
+    background: 'var(--govrs-color-surface-base, #ffffff)',
+    border: '1px solid var(--govrs-color-border-default, #e2e8f0)',
   },
   codeBlock: {
     margin: 0,

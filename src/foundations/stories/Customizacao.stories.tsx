@@ -44,6 +44,44 @@ const baseColorsCode = `/* Cores base — valores padrão do foundation (:root) 
 --govrs-color-interactive-link: ${colors.interactive.link.toLowerCase()};
 --govrs-color-focus: ${colors.interactive.focus.toLowerCase()};`;
 
+const highContrastTokensCode = `/* Tokens usados pelo modo de alto contraste */
+[data-govrs-contrast='high'] {
+  --govrs-color-contrast-background: #000000;
+  --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-icon: #ffffff;
+  --govrs-color-contrast-border: #ffffff;
+  --govrs-color-contrast-mark: #ffffff;
+
+  /* Controles no fundo escuro */
+  --govrs-color-contrast-control-background: #000000;
+  --govrs-color-contrast-control-foreground: #ffffff;
+  --govrs-color-contrast-control-border: #ffffff;
+
+  /* Campos e superfícies invertidas */
+  --govrs-color-contrast-field-background: #ffffff;
+  --govrs-color-contrast-field-foreground: #000000;
+  --govrs-color-contrast-field-border: #000000;
+  --govrs-color-contrast-popover-background: #ffffff;
+  --govrs-color-contrast-popover-foreground: #000000;
+  --govrs-color-contrast-popover-border: #000000;
+
+  /* Busca mantém aliases próprios por compatibilidade */
+  --govrs-color-contrast-search-background: var(--govrs-color-contrast-field-background);
+  --govrs-color-contrast-search-foreground: var(--govrs-color-contrast-field-foreground);
+}
+
+/* Personalização no projeto consumidor:
+   mantenha texto, ícones e bordas com contraste acessível */
+[data-govrs-contrast='high'] {
+  --govrs-color-contrast-background: #111111;
+  --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-icon: #ffffff;
+  --govrs-color-contrast-border: #ffffff;
+  --govrs-color-contrast-control-background: #111111;
+  --govrs-color-contrast-control-foreground: #ffffff;
+  --govrs-color-contrast-control-border: #ffffff;
+}`;
+
 const globalOverrideCode = `/* tema-global.css — importar DEPOIS do foundation no projeto consumidor */
 @import '@procergs/react-govrs-ds/foundation';
 
@@ -193,6 +231,24 @@ export const Page: Story = {
         description="Valores padrão injetados pelo foundation em :root. Use como referência ao montar overrides no CSS do tema."
       >
         <CodeBlock code={baseColorsCode} />
+      </SectionCard>
+
+      <SectionCard
+        title="Tokens do modo de alto contraste"
+        description="Quando o modo de alto contraste está ativo, os componentes usam tokens semânticos para superfícies, texto, ícones, marcas, campos, popovers e bordas. Busca, seletores, tooltips, modais e painéis de data usam as superfícies invertidas com fundo branco e conteúdo preto."
+      >
+        <CodeBlock code={highContrastTokensCode} />
+        <ul style={storyDocsStyles.list}>
+          <li>
+            Sobrescreva os tokens dentro de <code>[data-govrs-contrast='high']</code> no projeto consumidor para alterar a superfície de contraste sem editar o pacote.
+          </li>
+          <li>
+            Preserve os pares de foreground e border para cada superfície; a alteração de uma cor deve manter contraste suficiente com seu background correspondente.
+          </li>
+          <li>
+            Imagens, vídeos, mapas e demais mídias não são recoloridos; ícones funcionais e clicáveis seguem o token de ícone, com a exceção do ícone preto do campo de busca.
+          </li>
+        </ul>
       </SectionCard>
 
       <SectionCard

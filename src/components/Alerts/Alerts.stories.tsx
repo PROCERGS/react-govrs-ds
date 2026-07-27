@@ -281,6 +281,11 @@ export const AlertsDocumentacao: Story = {
 export const AlertsInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['success', 'warning', 'error', 'info'],

@@ -584,6 +584,11 @@ export const SliderDocumentacao: Story = {
 export const SliderInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     label: {
       control: 'text',
       description: 'Rótulo exibido acima do controle.',

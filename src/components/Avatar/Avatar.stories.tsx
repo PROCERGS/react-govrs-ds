@@ -392,6 +392,11 @@ export const AvatarDocumentacao: Story = {
 export const AvatarInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     name: {
       control: 'text',
       description: 'Nome usado para inicial, cor e saudação do dropdown.',

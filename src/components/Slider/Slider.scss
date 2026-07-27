@@ -5,6 +5,14 @@
     var(--govrs-slider-horizontal-rail-top) + (var(--govrs-slider-rail-size) / 2)
   );
   --govrs-slider-vertical-rail-left: 0.625rem;
+  --govrs-slider-label-color: var(--govrs-color-text-secondary, #333333);
+  --govrs-slider-input-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-slider-input-foreground: var(--govrs-color-text-secondary, #333333);
+  --govrs-slider-input-border: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-slider-rail-color: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-slider-range-background: color-mix(in srgb, var(--govrs-color-brand-primary, #1a7235) 50%, transparent);
+  --govrs-slider-thumb-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-slider-thumb-border: transparent;
   --govrs-slider-vertical-center: calc(
     var(--govrs-slider-vertical-rail-left) + (var(--govrs-slider-rail-size) / 2)
   );
@@ -20,7 +28,7 @@
 .govrs-slider__label {
   display: block;
   width: 100%;
-  color: var(--govrs-color-text-secondary, #333333);
+  color: var(--govrs-slider-label-color);
   font-size: var(--govrs-font-size-body-md, 1rem);
   line-height: var(--govrs-line-height-body-sm, 1.5rem);
 }
@@ -71,10 +79,10 @@
 .govrs-slider__input {
   width: 3.75rem;
   padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-1-5, 0.375rem);
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-emphasis, #cccccc);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-slider-input-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
-  background-color: var(--govrs-color-surface-base, #ffffff);
-  color: var(--govrs-color-text-secondary, #333333);
+  background-color: var(--govrs-slider-input-background);
+  color: var(--govrs-slider-input-foreground);
   font-family: inherit;
   font-size: var(--govrs-font-size-body-md, 1rem);
   line-height: var(--govrs-line-height-body-sm, 1.5rem);
@@ -111,13 +119,13 @@
 }
 
 .govrs-slider__rail {
-  background-color: var(--govrs-color-border-emphasis, #cccccc);
+  background-color: var(--govrs-slider-rail-color);
 }
 
 .govrs-slider__range-bar {
   left: var(--govrs-slider-start);
   width: calc(var(--govrs-slider-end) - var(--govrs-slider-start));
-  background-color: color-mix(in srgb, var(--govrs-color-brand-primary, #1a7235) 50%, transparent);
+  background-color: var(--govrs-slider-range-background);
 }
 
 .govrs-slider--vertical .govrs-slider__rail,
@@ -149,8 +157,8 @@
   height: 1.25rem;
   transform: translate(-50%, -50%);
   border-radius: var(--govrs-radius-circle, 50%);
-  border: none;
-  background-color: var(--govrs-color-brand-primary, #1a7235);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-slider-thumb-border);
+  background-color: var(--govrs-slider-thumb-background);
   box-shadow: none;
   opacity: 1;
   pointer-events: auto;
@@ -158,13 +166,13 @@
 }
 
 .govrs-slider__thumb:hover {
-  background-color: var(--govrs-color-brand-primary-hover, #135428);
+  background-color: var(--govrs-slider-thumb-background);
 }
 
 .govrs-slider__thumb:active,
 .govrs-slider__thumb[data-active='true'] {
   cursor: grabbing;
-  background-color: var(--govrs-color-brand-primary-soft, #ddf9e3);
+  background-color: var(--govrs-slider-thumb-background);
 }
 
 .govrs-slider__thumb:focus {

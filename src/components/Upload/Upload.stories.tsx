@@ -161,7 +161,7 @@ function UploadInteractivePreview(args: Upload.Props) {
         }}
       />
 
-      <p style={storyDocsStyles.statText}>
+      <p style={{ ...storyDocsStyles.statText, color: 'inherit' }}>
         <strong>Selecionado:</strong> {files.length > 0 ? files.map((file) => file.name).join(', ') : '—'}
       </p>
     </div>
@@ -304,6 +304,11 @@ export const UploadDocumentacao: Story = {
 export const UploadInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     maxFiles: {
       control: 'number',
       description: 'Quantidade máxima de arquivos permitidos.',

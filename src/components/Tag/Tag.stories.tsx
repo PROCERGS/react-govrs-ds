@@ -563,6 +563,11 @@ export const TagDocumentacao: Story = {
 export const TagInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['default', 'persistent', 'persistentGroup', 'status', 'count'],

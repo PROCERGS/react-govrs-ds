@@ -844,6 +844,11 @@ export const TableDocumentacaoIrregular: Story = {
 export const TableInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: 'radio',
       options: ['default', 'irregular'],

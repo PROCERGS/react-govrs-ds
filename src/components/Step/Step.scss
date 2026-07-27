@@ -1,4 +1,6 @@
 .govrs-step-horizontal {
+  --govrs-step-active-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-step-active-foreground: var(--govrs-color-text-inverse, #ffffff);
   --govrs-step-horizontal-size: 40px;
   --govrs-step-horizontal-label-slot: 24px;
   display: flex;
@@ -80,8 +82,8 @@
 
 .govrs-step-horizontal__circle.is-active,
 .govrs-step-vertical__circle.is-active {
-  background-color: var(--govrs-color-brand-primary, #1a7235);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  background-color: var(--govrs-step-active-background);
+  color: var(--govrs-step-active-foreground);
 }
 
 .govrs-step-horizontal__circle.is-clickable,
@@ -354,6 +356,8 @@
 }
 
 .govrs-step-vertical {
+  --govrs-step-active-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-step-active-foreground: var(--govrs-color-text-inverse, #ffffff);
   --govrs-step-vertical-size: 40px;
   --govrs-step-vertical-label-slot: 120px;
   --govrs-step-vertical-connector-gap: 6px;

@@ -1,6 +1,9 @@
 .govrs-button {
   --govrs-button-height: var(--govrs-size-control-lg, 2.5rem);
   --govrs-button-padding-inline: var(--govrs-space-6, 1.5rem);
+  --govrs-button-background: transparent;
+  --govrs-button-foreground: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-border: transparent;
   position: relative;
   display: inline-flex;
   min-width: 0;
@@ -8,10 +11,10 @@
   align-items: center;
   justify-content: center;
   padding: 0 var(--govrs-button-padding-inline);
-  border: var(--govrs-border-width-sm, 1px) solid transparent;
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-button-border);
   border-radius: var(--govrs-radius-pill, 999px);
-  background-color: transparent;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  background-color: var(--govrs-button-background);
+  color: var(--govrs-button-foreground);
   cursor: pointer;
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-body-md, 1rem);
@@ -86,9 +89,9 @@
 }
 
 .govrs-button--primary {
-  background-color: var(--govrs-color-brand-primary, #1a7235);
-  border-color: var(--govrs-color-brand-primary, #1a7235);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-button-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-border: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 
 .govrs-button--primary:not(:disabled):hover {
@@ -103,9 +106,9 @@
 }
 
 .govrs-button--secondary {
-  background-color: var(--govrs-color-surface-base, #ffffff);
-  border-color: var(--govrs-color-brand-primary, #1a7235);
-  color: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-button-border: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-foreground: var(--govrs-color-brand-primary, #1a7235);
 }
 
 .govrs-button--secondary:not(:disabled):hover {
@@ -118,8 +121,8 @@
 }
 
 .govrs-button--tertiary {
-  background-color: transparent;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-button-background: transparent;
+  --govrs-button-foreground: var(--govrs-color-brand-primary, #1a7235);
 }
 
 .govrs-button--tertiary:not(:disabled):hover {
@@ -132,13 +135,13 @@
 }
 
 .govrs-button--dark {
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-button-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 
 .govrs-button--dark.govrs-button--primary {
-  background-color: var(--govrs-color-surface-base, #ffffff);
-  border-color: var(--govrs-color-surface-base, #ffffff);
-  color: var(--govrs-color-brand-primary-strong, #04290f);
+  --govrs-button-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-button-border: var(--govrs-color-surface-base, #ffffff);
+  --govrs-button-foreground: var(--govrs-color-brand-primary-strong, #04290f);
 }
 
 .govrs-button--dark.govrs-button--primary:not(:disabled):hover {
@@ -153,9 +156,9 @@
 }
 
 .govrs-button--dark.govrs-button--secondary {
-  background-color: transparent;
-  border-color: var(--govrs-color-surface-base, #ffffff);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-button-background: transparent;
+  --govrs-button-border: var(--govrs-color-surface-base, #ffffff);
+  --govrs-button-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 
 .govrs-button--dark.govrs-button--secondary:not(:disabled):hover,
@@ -171,11 +174,11 @@
 }
 
 .govrs-button--dark.govrs-button--tertiary {
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-button-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 
 .govrs-button--loading {
-  color: transparent !important;
+  color: transparent;
   pointer-events: none;
 }
 

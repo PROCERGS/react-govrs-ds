@@ -312,6 +312,11 @@ export const AccordionDocumentacao: Story = {
 export const AccordionInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     items: {
       control: false,
       description: 'A story usa um conjunto fixo de itens para manter a comparação entre estados.',

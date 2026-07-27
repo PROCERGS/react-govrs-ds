@@ -380,6 +380,11 @@ export const CardDocumentacao: Story = {
 export const CardInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['post', 'list', 'news', 'icon'],

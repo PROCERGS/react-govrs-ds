@@ -30,16 +30,23 @@ $svg-unchecked: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' 
 }
 
 input[type='checkbox'][role='switch'].govrs-switch {
+  --govrs-switch-track-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-switch-track-border: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-switch-thumb-background: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-switch-thumb-border: transparent;
+  --govrs-switch-checked-track-border: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-switch-checked-thumb-background: var(--govrs-color-brand-primary, #1a7235);
+
   position: relative;
   display: inline-block;
   width: 3.25rem;
   height: 1.875rem;
   flex: 0 0 3.25rem;
   padding: 0;
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-emphasis, #cccccc);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-switch-track-border);
   border-radius: var(--govrs-radius-pill, 999px);
   appearance: none;
-  background-color: var(--govrs-color-surface-base, #ffffff);
+  background-color: var(--govrs-switch-track-background);
   cursor: pointer;
   outline: none;
   transition:
@@ -57,7 +64,8 @@ input[type='checkbox'][role='switch'].govrs-switch::after {
   width: 1.375rem;
   height: 1.375rem;
   border-radius: var(--govrs-radius-circle, 50%);
-  background-color: var(--govrs-color-border-emphasis, #cccccc);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-switch-thumb-border);
+  background-color: var(--govrs-switch-thumb-background);
   background-image: url('data:image/svg+xml;utf8,#{$svg-unchecked}');
   background-position: center;
   background-repeat: no-repeat;
@@ -74,11 +82,11 @@ input[type='checkbox'][role='switch'].govrs-switch:hover:not(:disabled) {
 }
 
 input[type='checkbox'][role='switch'].govrs-switch:checked {
-  border-color: var(--govrs-color-brand-primary, #1a7235);
+  border-color: var(--govrs-switch-checked-track-border);
 }
 
 input[type='checkbox'][role='switch'].govrs-switch:checked::after {
-  background-color: var(--govrs-color-brand-primary, #1a7235);
+  background-color: var(--govrs-switch-checked-thumb-background);
   background-image: url('data:image/svg+xml;utf8,#{$svg-checked}');
   transform: translateX(1.125rem);
 }

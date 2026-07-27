@@ -88,7 +88,7 @@ function RadioInteractivePreview(args: Radio.Props) {
   }, [args.checked])
 
   return (
-    <div style={{ ...storyDocsStyles.previewStage, padding: 16 }}>
+    <>
       <Radio
         {...args}
         checked={checked}
@@ -98,10 +98,10 @@ function RadioInteractivePreview(args: Radio.Props) {
         }}
       />
 
-      <p style={storyDocsStyles.statText}>
+      <p style={{ ...storyDocsStyles.statText, color: 'inherit' }}>
         <strong>Selecionado:</strong> {checked ? 'Sim' : 'Nao'}
       </p>
-    </div>
+    </>
   )
 }
 
@@ -348,6 +348,11 @@ export const RadioDocumentacao: Story = {
 export const RadioInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     name: {
       control: 'text',
       description: 'Opcional. Quando informado, agrupa radios com o mesmo nome; vazio ou ausente mantém a radio isolada.',
@@ -404,6 +409,13 @@ export const RadioInterativo: Story = {
 
 export const RadioGrupo: Story = {
   name: 'Grupo Interativo',
+  argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
+  },
   parameters: {
     controls: { disable: true },
   },

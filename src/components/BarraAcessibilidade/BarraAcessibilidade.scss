@@ -2,12 +2,21 @@
 @use '../../foundations/styles/layout-container' as layout;
 
 @media (max-width: calc(#{vars.$govrs-breakpoint-lg} - 0.0625rem)) {
-  .acess-wrapper {
+  .acess-bar {
     display: none !important;
   }
 }
 
+.acess-bar {
+  --govrs-acess-bar-foreground: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-acess-bar-hover-foreground: var(--govrs-color-brand-primary-hover, #135428);
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .acess-wrapper {
+  @include layout.govrs-layout-container-header;
   @include layout.govrs-layout-container-barra;
   display: flex;
   flex-direction: row;
@@ -28,7 +37,7 @@
 
 .acess-ul > li > a,
 .acess-ul > li > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-foreground);
   font-size: 12px;
   display: inline-flex;
   align-items: center;
@@ -37,7 +46,7 @@
 
 .acess-ul > li:hover > a,
 .acess-ul > li:hover > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-hover-foreground);
   cursor: pointer;
 }
 

@@ -372,6 +372,11 @@ export const SearchDocumentacao: Story = {
 export const SearchInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     placeholder: {
       control: 'text',
       description: 'Texto exibido quando o campo está vazio.',

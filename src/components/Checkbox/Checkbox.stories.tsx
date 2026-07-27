@@ -118,7 +118,11 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-function CheckboxInteractivePreview(args: Checkbox.Props) {
+type CheckboxInteractiveArgs = Checkbox.Props & {
+  modoContraste?: boolean
+}
+
+function CheckboxInteractivePreview({ modoContraste = false, ...args }: CheckboxInteractiveArgs) {
   const [checked, setChecked] = useState(Boolean(args.checked))
 
   useEffect(() => {
@@ -126,7 +130,13 @@ function CheckboxInteractivePreview(args: Checkbox.Props) {
   }, [args.checked])
 
   return (
-    <div style={{ padding: 12 }}>
+    <div
+      style={{
+        padding: 12,
+        backgroundColor: modoContraste ? 'var(--govrs-color-contrast-background)' : undefined,
+        color: modoContraste ? 'var(--govrs-color-contrast-foreground)' : undefined,
+      }}
+    >
       <Checkbox
         {...args}
         checked={checked}
@@ -536,6 +546,11 @@ export const CheckboxDocumentacao: Story = {
 export const CheckboxInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     label: {
       control: 'text',
       description: 'Texto principal associado ao checkbox e usado como nome acessível quando visível.',
@@ -587,11 +602,18 @@ export const CheckboxInterativo: Story = {
     indeterminate: false,
     group: false,
   },
-  render: (args) => <CheckboxInteractivePreview {...args} />,
+  render: (args) => <CheckboxInteractivePreview {...(args as CheckboxInteractiveArgs)} />,
 }
 
 export const CheckboxGrupo: Story = {
   name: 'Grupo Interativo',
+  argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
+  },
   parameters: {
     controls: { disable: true },
   },
