@@ -5,7 +5,9 @@
   "type": "module",
   "sideEffects": [
     "**/*.css",
-    "**/*.scss"
+    "**/*.scss",
+    "./dist/foundation.js",
+    "./dist/foundation.cjs"
   ],
   "main": "./dist/react-govrs-ds.es.js",
   "module": "./dist/react-govrs-ds.es.js",
