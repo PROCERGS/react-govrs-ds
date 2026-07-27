@@ -553,6 +553,11 @@ export const DatePickerDocumentacao: Story = {
 export const DatePickerInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['date', 'time', 'datetime'],

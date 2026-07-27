@@ -233,6 +233,12 @@
 }
 
 .govrs-list-link {
+  --govrs-list-link-border: var(--govrs-color-border-default, #cccccc);
+  --govrs-list-link-number: var(--govrs-color-text-subtle, #6b7280);
+  --govrs-list-link-icon: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-list-link-meta: var(--govrs-color-text-primary, #000000);
+  --govrs-list-link-anchor: var(--govrs-color-brand-primary, #1a7235);
+
   width: 100%;
 }
 
@@ -253,7 +259,7 @@
 }
 
 .govrs-list-link__item:not(:first-child) {
-  border-top: 1px solid var(--govrs-color-border-default, #cccccc);
+  border-top: 1px solid var(--govrs-list-link-border);
 }
 
 .govrs-list-link__left {
@@ -264,7 +270,7 @@
 }
 
 .govrs-list-link__number {
-  color: var(--govrs-color-text-subtle, #6b7280);
+  color: var(--govrs-list-link-number);
   font-size: var(--govrs-font-size-24, 1.5rem);
   font-weight: var(--govrs-font-weight-medium, 500);
   line-height: 1;
@@ -273,6 +279,7 @@
 .govrs-list-link__icon {
   width: 2rem;
   height: 2rem;
+  color: var(--govrs-list-link-icon);
 }
 
 .govrs-list-link__icon svg {
@@ -289,13 +296,13 @@
 
 .govrs-list-link__meta {
   margin: 0 0 var(--govrs-space-1, 0.25rem);
-  color: var(--govrs-color-text-primary, #000000);
+  color: var(--govrs-list-link-meta);
   font-size: var(--govrs-font-size-16, 1rem);
   line-height: 1.5;
 }
 
 .govrs-list-link__anchor {
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: var(--govrs-list-link-anchor);
   font-size: var(--govrs-font-size-20, 1.25rem);
   font-weight: var(--govrs-font-weight-medium, 500);
   line-height: 1.4;
@@ -304,7 +311,7 @@
 
 .govrs-list-link__anchor:hover,
 .govrs-list-link__anchor:focus-visible {
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: var(--govrs-list-link-anchor);
   text-decoration: underline;
 }
 

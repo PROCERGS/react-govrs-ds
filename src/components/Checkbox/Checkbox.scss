@@ -1,6 +1,6 @@
-$svg-checked: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='14' viewBox='0 0 18 14' fill='none'%3E%3Cpath d='M6.40625 12.75L1.21875 7.5625C0.90625 7.25 0.90625 6.71875 1.21875 6.40625L2.34375 5.28125C2.65625 4.96875 3.15625 4.96875 3.46875 5.28125L7 8.78125L14.5 1.28125C14.8125 0.96875 15.3125 0.96875 15.625 1.28125L16.75 2.40625C17.0625 2.71875 17.0625 3.25 16.75 3.5625L7.5625 12.75C7.25 13.0625 6.71875 13.0625 6.40625 12.75Z' fill='%23279B4A'/%3E%3C/svg%3E";
+$svg-checked-mask: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='14' viewBox='0 0 18 14'%3E%3Cpath fill='black' d='M6.40625 12.75L1.21875 7.5625C0.90625 7.25 0.90625 6.71875 1.21875 6.40625L2.34375 5.28125C2.65625 4.96875 3.15625 4.96875 3.46875 5.28125L7 8.78125L14.5 1.28125C14.8125 0.96875 15.3125 0.96875 15.625 1.28125L16.75 2.40625C17.0625 2.71875 17.0625 3.25 16.75 3.5625L7.5625 12.75C7.25 13.0625 6.71875 13.0625 6.40625 12.75Z'/%3E%3C/svg%3E";
 
-$svg-group: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='4' viewBox='0 0 14 4' fill='none'%3E%3Cpath d='M13 0.5C13.5312 0.5 14 0.96875 14 1.5V2.5C14 3.0625 13.5312 3.5 13 3.5H1C0.4375 3.5 0 3.0625 0 2.5V1.5C0 0.96875 0.4375 0.5 1 0.5H13Z' fill='%23FFFFFF'/%3E%3C/svg%3E";
+$svg-group-mask: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='4' viewBox='0 0 14 4'%3E%3Cpath fill='black' d='M13 0.5C13.5312 0.5 14 0.96875 14 1.5V2.5C14 3.0625 13.5312 3.5 13 3.5H1C0.4375 3.5 0 3.0625 0 2.5V1.5C0 0.96875 0.4375 0.5 1 0.5H13Z'/%3E%3C/svg%3E";
 
 .govrs-checkbox-field {
   display: inline-flex;
@@ -31,16 +31,23 @@ $svg-group: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='4' vie
 }
 
 input[type='checkbox'].govrs-checkbox {
+  --govrs-checkbox-mark: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-checkbox-mark-mask: none;
+  --govrs-checkbox-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-checkbox-border: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-checkbox-active-border: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-checkbox-indeterminate-background: var(--govrs-color-success, #168821);
+
   position: relative;
   display: inline-block;
   width: var(--govrs-space-6, 1.5rem);
   height: var(--govrs-space-6, 1.5rem);
   flex: 0 0 var(--govrs-space-6, 1.5rem);
   padding: 0;
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-emphasis, #cccccc);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-checkbox-border);
   border-radius: var(--govrs-radius-xs, 0.25rem);
   appearance: none;
-  background-color: var(--govrs-color-surface-base, #ffffff);
+  background-color: var(--govrs-checkbox-background);
   cursor: pointer;
   transition:
     background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
@@ -56,8 +63,13 @@ input[type='checkbox'].govrs-checkbox::after {
   display: block;
   width: 18px;
   height: 14px;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--govrs-checkbox-mark);
+  mask-image: var(--govrs-checkbox-mark-mask);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--govrs-checkbox-mark-mask);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
   content: '';
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -67,7 +79,7 @@ input[type='checkbox'].govrs-checkbox::after {
 }
 
 input[type='checkbox'].govrs-checkbox:checked::after {
-  background-image: url("data:image/svg+xml;utf8,#{$svg-checked}");
+  --govrs-checkbox-mark-mask: url("data:image/svg+xml;utf8,#{$svg-checked-mask}");
   opacity: 1;
 }
 
@@ -78,25 +90,24 @@ input[type='checkbox'].govrs-checkbox.govrs-checkbox--group::after {
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--group:checked {
-  border-color: var(--govrs-color-brand-primary, #1a7235);
-  background-color: var(--govrs-color-surface-base, #ffffff);
+  border-color: var(--govrs-checkbox-active-border);
+  background-color: var(--govrs-checkbox-background);
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--group:checked::after {
   width: 18px;
   height: 14px;
-  background-image: url("data:image/svg+xml;utf8,#{$svg-checked}");
   background-size: contain;
   opacity: 1;
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--group:indeterminate {
-  border-color: var(--govrs-color-brand-primary, #1a7235);
-  background-color: var(--govrs-color-success, #168821);
+  border-color: var(--govrs-checkbox-active-border);
+  background-color: var(--govrs-checkbox-indeterminate-background);
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--group:indeterminate::after {
-  background-image: url("data:image/svg+xml;utf8,#{$svg-group}");
+  --govrs-checkbox-mark-mask: url("data:image/svg+xml;utf8,#{$svg-group-mask}");
   opacity: 1;
 }
 

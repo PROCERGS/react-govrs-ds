@@ -1,10 +1,16 @@
 .govrs-badge {
+  --govrs-badge-background: transparent;
+  --govrs-badge-foreground: inherit;
+  --govrs-badge-border: transparent;
+
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-2, 0.5rem);
-  border: var(--govrs-border-width-sm, 1px) solid transparent;
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-badge-border);
   border-radius: var(--govrs-radius-pill, 999px);
+  background-color: var(--govrs-badge-background);
+  color: var(--govrs-badge-foreground);
   font-family: var(--govrs-font-family-base);
   font-weight: var(--govrs-font-weight-regular, 400);
   gap: var(--govrs-space-1, 0.25rem);
@@ -27,20 +33,20 @@
 }
 
 .govrs-badge--success {
-  background-color: var(--govrs-color-success, #168821);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-badge-background: var(--govrs-color-success, #168821);
+  --govrs-badge-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 .govrs-badge--error {
-  background-color: var(--govrs-color-error, #e52207);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-badge-background: var(--govrs-color-error, #e52207);
+  --govrs-badge-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 .govrs-badge--warning {
-  background-color: var(--govrs-color-warning, #ffcd07);
-  color: var(--govrs-color-text-secondary, #333333);
+  --govrs-badge-background: var(--govrs-color-warning, #ffcd07);
+  --govrs-badge-foreground: var(--govrs-color-text-secondary, #333333);
 }
 .govrs-badge--info {
-  background-color: var(--govrs-color-info, #2b86d8);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-badge-background: var(--govrs-color-info, #2b86d8);
+  --govrs-badge-foreground: var(--govrs-color-text-inverse, #ffffff);
 }
 
 .govrs-badge--warning .govrs-badge__icon svg {
@@ -48,22 +54,22 @@
 }
 
 .govrs-badge--outline {
-  background-color: transparent;
-  border-color: currentColor;
+  --govrs-badge-background: transparent;
+  --govrs-badge-border: currentColor;
 }
 
 .govrs-badge--outline.govrs-badge--success {
-  color: var(--govrs-color-success, #168821);
+  --govrs-badge-foreground: var(--govrs-color-success, #168821);
 }
 
 .govrs-badge--outline.govrs-badge--error {
-  color: var(--govrs-color-error, #e52207);
+  --govrs-badge-foreground: var(--govrs-color-error, #e52207);
 }
 
 .govrs-badge--outline.govrs-badge--warning {
-  color: var(--govrs-color-text-secondary, #333333);
+  --govrs-badge-foreground: var(--govrs-color-text-secondary, #333333);
 }
 
 .govrs-badge--outline.govrs-badge--info {
-  color: var(--govrs-color-info, #2b86d8);
+  --govrs-badge-foreground: var(--govrs-color-info, #2b86d8);
 }

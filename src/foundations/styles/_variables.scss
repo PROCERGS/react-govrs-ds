@@ -112,13 +112,36 @@ $govrs-layout-container-header-max-width: 100rem;
   --govrs-color-avatar-tone-13: #e76f51;
   --govrs-color-avatar-tone-14: #2a9d8f;
 
-  --govrs-color-contrast-background: #f5efe6;
-  --govrs-color-contrast-foreground: var(--govrs-color-brand-primary-strong);
-  --govrs-color-contrast-muted: #cfc2ab; /* muted beige */
-  --govrs-color-contrast-accent: #fecd3a; /* keep accent */
-  --govrs-color-contrast-surface: #f7f2ea; /* surface beige */
-  --govrs-color-contrast-surface-alt: #efe6d5; /* alt surface beige */
-  --govrs-color-contrast-border: #e6dcc9; /* border beige */
+  /* High-contrast semantic tokens. */
+  --govrs-color-contrast-background: #000000;
+  --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-muted: #ffffff;
+  --govrs-color-contrast-accent: var(--govrs-color-focus);
+  --govrs-color-contrast-surface: #000000;
+  --govrs-color-contrast-surface-alt: #000000;
+  --govrs-color-contrast-border: #ffffff;
+  --govrs-color-contrast-icon: #ffffff;
+  --govrs-color-contrast-mark: #ffffff;
+  --govrs-color-contrast-control-background: #000000;
+  --govrs-color-contrast-control-foreground: #ffffff;
+  --govrs-color-contrast-control-border: #ffffff;
+  --govrs-color-contrast-field-background: #ffffff;
+  --govrs-color-contrast-field-foreground: #000000;
+  --govrs-color-contrast-field-border: #000000;
+  --govrs-color-contrast-popover-background: #ffffff;
+  --govrs-color-contrast-popover-foreground: #000000;
+  --govrs-color-contrast-popover-border: #000000;
+  --govrs-color-contrast-search-background: var(--govrs-color-contrast-field-background);
+  --govrs-color-contrast-search-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-color-contrast-status-online: #168821;
+  --govrs-color-contrast-status-offline: #e52207;
+  --govrs-color-contrast-status-away: #ffcd07;
+
+  /* Media chrome stays independent from the high-contrast palette. */
+  --govrs-color-media-backdrop: #000000;
+  --govrs-color-media-surface: #1a1a1a;
+  --govrs-color-media-surface-alt: #2d2d2d;
+  --govrs-color-overlay-backdrop: rgba(0, 0, 0, 0.48);
 
   /* Breakpoint tokens */
   --govrs-breakpoint-smartphone-portrait-max: #{$govrs-breakpoint-smartphone-portrait-max};

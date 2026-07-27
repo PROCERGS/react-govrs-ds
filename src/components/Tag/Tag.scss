@@ -1,14 +1,21 @@
 .govrs-tag {
+  --govrs-tag-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-tag-foreground: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-tag-border: transparent;
+  --govrs-tag-selected-background: var(--govrs-color-success, #168821);
+  --govrs-tag-selected-foreground: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-tag-selected-border: var(--govrs-color-success, #168821);
+
   display: inline-flex;
   min-width: 0;
   min-height: var(--govrs-size-control-sm, 2rem);
   align-items: center;
   justify-content: center;
   padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-3, 0.75rem);
-  border: var(--govrs-border-width-sm, 1px) solid transparent;
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-tag-border);
   border-radius: var(--govrs-radius-pill, 999px);
-  background-color: var(--govrs-color-brand-primary, #1a7235);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  background-color: var(--govrs-tag-background);
+  color: var(--govrs-tag-foreground);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-body-sm, 0.875rem);
   font-weight: var(--govrs-font-weight-medium, 500);
@@ -51,7 +58,7 @@
 }
 
 .govrs-tag--default:not(.govrs-tag--disabled):hover {
-  background-color: var(--govrs-color-brand-primary-hover, #135428);
+  background-color: var(--govrs-tag-background);
 }
 
 .govrs-tag--persistent {
@@ -64,7 +71,7 @@
 }
 
 .govrs-tag--persistent:not(:disabled):hover {
-  background-color: var(--govrs-color-brand-primary-hover, #135428);
+  background-color: var(--govrs-tag-background);
   transform: translateY(-1px);
 }
 
@@ -75,8 +82,9 @@
 .govrs-tag--checked,
 .govrs-tag--persistent:not(:disabled).govrs-tag--checked,
 .govrs-tag--persistent:not(:disabled):active.govrs-tag--checked {
-  background-color: var(--govrs-color-success, #168821);
-  border-color: var(--govrs-color-success, #168821);
+  background-color: var(--govrs-tag-selected-background);
+  border-color: var(--govrs-tag-selected-border);
+  color: var(--govrs-tag-selected-foreground);
 }
 
 .govrs-tag--disabled,

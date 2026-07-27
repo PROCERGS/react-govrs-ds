@@ -97,10 +97,10 @@ const menuStageStyle: CSSProperties = {
   display: 'grid',
   alignContent: 'start',
   minHeight: 360,
-  border: '1px solid #dbe5f0',
+  border: '1px solid var(--govrs-color-border-default, #dbe5f0)',
   borderRadius: 12,
   overflow: 'hidden',
-  background: '#f8fafc',
+  background: 'var(--govrs-color-surface-muted, #f8fafc)',
 }
 
 const menuBarStyle: CSSProperties = {
@@ -110,13 +110,13 @@ const menuBarStyle: CSSProperties = {
   alignItems: 'center',
   gap: 12,
   padding: '0 18px',
-  borderBottom: '1px solid #dbe5f0',
-  background: '#ffffff',
+  borderBottom: '1px solid var(--govrs-color-border-default, #dbe5f0)',
+  background: 'var(--govrs-color-surface-base, #ffffff)',
 }
 
 const menuBarLabelStyle: CSSProperties = {
   margin: 0,
-  color: '#475569',
+  color: 'var(--govrs-color-text-muted, #475569)',
   fontSize: 14,
 }
 
@@ -304,6 +304,11 @@ export const MenuHamburgerDocumentacao: Story = {
 export const MenuHamburgerInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     items: {
       control: 'object',
       description: 'Árvore de itens exibida no menu.',

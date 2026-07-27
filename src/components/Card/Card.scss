@@ -1,4 +1,6 @@
 .govrs-card {
+  --govrs-card-border: transparent;
+
   position: relative;
   display: flex;
   overflow: hidden;
@@ -8,6 +10,7 @@
   flex: 1;
   flex-direction: column;
   padding: var(--govrs-space-4, 1rem);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-card-border);
   border-radius: var(--govrs-radius-md, 0.5rem);
   background-color: var(--govrs-color-surface-base, #ffffff);
   box-shadow: var(--govrs-shadow-card, 0 2px 8px rgba(0, 0, 0, 0.1));

@@ -390,6 +390,11 @@ export const ButtonDocumentacao: Story = {
 export const ButtonInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'tertiary'],

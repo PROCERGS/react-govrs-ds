@@ -258,6 +258,11 @@ export const LoaderInterativo: Story = {
     color: '#1A7235',
   },
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['default', 'percentage'],

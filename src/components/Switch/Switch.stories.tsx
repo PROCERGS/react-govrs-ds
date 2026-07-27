@@ -89,7 +89,7 @@ function SwitchInteractivePreview(args: Switch.Props) {
   }, [args.checked])
 
   return (
-    <div style={{ ...storyDocsStyles.previewStage, padding: 16 }}>
+    <>
       <Switch
         {...args}
         checked={checked}
@@ -99,10 +99,10 @@ function SwitchInteractivePreview(args: Switch.Props) {
         }}
       />
 
-      <p style={storyDocsStyles.statText}>
+      <p style={{ ...storyDocsStyles.statText, color: 'inherit' }}>
         <strong>Estado atual:</strong> {checked ? 'Ativado' : 'Desativado'}
       </p>
-    </div>
+    </>
   )
 }
 
@@ -313,6 +313,11 @@ export const SwitchDocumentacao: Story = {
 export const SwitchInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     label: {
       control: 'text',
       description: 'Texto principal associado ao controle.',

@@ -8,6 +8,9 @@
 }
 
 .acess-bar {
+  --govrs-acess-bar-foreground: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-acess-bar-hover-foreground: var(--govrs-color-brand-primary-hover, #135428);
+
   width: 100%;
   box-sizing: border-box;
 }
@@ -34,7 +37,7 @@
 
 .acess-ul > li > a,
 .acess-ul > li > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-foreground);
   font-size: 12px;
   display: inline-flex;
   align-items: center;
@@ -43,7 +46,7 @@
 
 .acess-ul > li:hover > a,
 .acess-ul > li:hover > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-hover-foreground);
   cursor: pointer;
 }
 

@@ -183,6 +183,11 @@ export const FooterDocumentacao: Story = {
 export const FooterInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     items: { control: 'object', table: { category: 'Conteúdo' } },
     images: { control: 'object', table: { category: 'Conteúdo' } },
     navigationLabel: { control: 'text', table: { category: 'Acessibilidade' } },

@@ -1,13 +1,20 @@
 @use '../../foundations/styles/variables' as vars;
 
 .govrs-modal {
+  --govrs-modal-dialog-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-modal-dialog-foreground: var(--govrs-color-text-primary, #000000);
+  --govrs-modal-dialog-border: var(--govrs-color-border-subtle, #e6e6e6);
+  --govrs-modal-action-background: transparent;
+  --govrs-modal-action-foreground: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-modal-action-border: transparent;
+
   position: fixed;
   inset: 0;
   z-index: var(--govrs-z-index-modal);
   display: grid;
   place-items: center;
   padding: var(--govrs-space-4, 1rem);
-  background: color-mix(in srgb, var(--govrs-color-contrast-background, #000000) 48%, transparent);
+  background: var(--govrs-color-overlay-backdrop, rgba(0, 0, 0, 0.48));
 }
 
 .govrs-modal__dialog {
@@ -16,9 +23,10 @@
   max-height: calc(100vh - (var(--govrs-space-4, 1rem) * 2));
   min-width: 0;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-subtle, #e6e6e6);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
   border-radius: var(--govrs-radius-xl, 1rem);
-  background: var(--govrs-color-surface-base, #ffffff);
+  background: var(--govrs-modal-dialog-background);
+  color: var(--govrs-modal-dialog-foreground);
   box-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
   outline: none;
   overflow: hidden;
@@ -34,7 +42,7 @@
 
 .govrs-modal__title {
   margin: 0;
-  color: var(--govrs-color-text-primary, #000000);
+  color: var(--govrs-modal-dialog-foreground);
   font-family: var(--govrs-font-family-display, sans-serif);
   font-size: var(--govrs-font-size-heading-lg, 1.5rem);
   font-weight: var(--govrs-font-weight-semibold, 600);
@@ -52,10 +60,10 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-action-border);
   border-radius: var(--govrs-radius-pill, 999px);
-  background: transparent;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  background: var(--govrs-modal-action-background);
+  color: var(--govrs-modal-action-foreground);
   cursor: pointer;
 }
 
@@ -92,7 +100,7 @@
 .govrs-modal__lead {
   display: grid;
   gap: var(--govrs-space-3, 0.75rem);
-  color: var(--govrs-color-text-secondary, #333333);
+  color: var(--govrs-modal-dialog-foreground);
   font-family: var(--govrs-font-family-base, sans-serif);
   font-size: var(--govrs-font-size-body-md, 1rem);
   line-height: var(--govrs-line-height-body-md, 1.5rem);
@@ -111,7 +119,7 @@
   display: grid;
   gap: var(--govrs-space-3, 0.75rem);
   padding-block: var(--govrs-space-3, 0.75rem);
-  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-subtle, #e6e6e6);
+  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
 }
 
 .govrs-modal__item:first-child {
@@ -129,7 +137,7 @@
   border: none;
   border-radius: var(--govrs-radius-md, 0.5rem);
   background: transparent;
-  color: var(--govrs-color-text-primary, #000000);
+  color: var(--govrs-modal-dialog-foreground);
   cursor: pointer;
   text-align: left;
 }
@@ -167,7 +175,7 @@
 
 .govrs-modal__item-label {
   min-width: 0;
-  color: var(--govrs-color-text-primary, #000000);
+  color: var(--govrs-modal-dialog-foreground);
   font-family: var(--govrs-font-family-base, sans-serif);
   font-size: var(--govrs-font-size-body-md, 1rem);
   font-weight: var(--govrs-font-weight-medium, 500);
@@ -176,12 +184,12 @@
 
 .govrs-modal__item-icon {
   flex: 0 0 auto;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: var(--govrs-modal-dialog-foreground);
 }
 
 .govrs-modal__item-content {
   padding-left: calc(3rem + var(--govrs-space-3, 0.75rem) + var(--govrs-space-2, 0.5rem));
-  color: var(--govrs-color-text-secondary, #333333);
+  color: var(--govrs-modal-dialog-foreground);
 }
 
 .govrs-modal__form-fields {
@@ -194,7 +202,7 @@
   gap: var(--govrs-space-3, 0.75rem);
   flex-wrap: wrap;
   padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-5, 1.25rem) var(--govrs-space-5, 1.25rem);
-  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-subtle, #e6e6e6);
+  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
 }
 
 @media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {

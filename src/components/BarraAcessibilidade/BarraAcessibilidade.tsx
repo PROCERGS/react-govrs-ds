@@ -8,10 +8,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import './BarraAcessibilidade.scss'
 
-import useHighContrast from '../../hooks/useHighContrast'
+import { useHighContrast } from '../../hooks/useHighContrast'
 
 type BarraAcessibilidadeProps = {
   defaultHighContrast?: boolean
+  disableHighContrastToggle?: boolean
   hrefAccessibility?: string
   hrefContact?: string
   hrefSitemap?: string
@@ -20,12 +21,17 @@ type BarraAcessibilidadeProps = {
 
 export function BarraAcessibilidade({
   defaultHighContrast,
+  disableHighContrastToggle = false,
   hrefAccessibility,
   hrefContact,
   hrefSitemap,
   shortcuts,
 }: BarraAcessibilidadeProps) {
-  const { enabled: isHighContrast, toggle: toggleContrast } = useHighContrast(Boolean(defaultHighContrast))
+  const { enabled: isHighContrast, toggle: toggleContrast } = useHighContrast(
+    Boolean(defaultHighContrast),
+    undefined,
+    { sync: !disableHighContrastToggle },
+  )
 
   const shortcutItems = useMemo(() => {
     if (Array.isArray(shortcuts) && shortcuts.length > 0) return shortcuts
@@ -103,7 +109,8 @@ export function BarraAcessibilidade({
                 type="button"
                 aria-pressed={isHighContrast}
                 aria-label={isHighContrast ? 'Desativar alto contraste' : 'Ativar alto contraste'}
-                onClick={toggleContrast}
+                disabled={disableHighContrastToggle}
+                onClick={disableHighContrastToggle ? undefined : toggleContrast}
                 className="acess-contrast-btn"
               >
                 <FontAwesomeIcon icon={faCircleHalfStroke} height={'16px'} width={'16px'} />
