@@ -1,3 +1,4 @@
+import '../src/foundations/styles/runtime-tokens.scss'
 import '../src/foundations/styles/index.scss'
 import { createElement } from 'react'
 import type { Decorator, Preview } from '@storybook/react'

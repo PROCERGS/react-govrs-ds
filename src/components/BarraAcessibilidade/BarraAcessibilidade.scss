@@ -1,4 +1,4 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
 @use '../../foundations/styles/layout-container' as layout;
 
 @media (max-width: calc(#{vars.$govrs-breakpoint-lg} - 0.0625rem)) {

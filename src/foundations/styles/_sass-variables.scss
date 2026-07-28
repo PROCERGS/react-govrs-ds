@@ -1,0 +1,46 @@
+$font-family-base:
+  'Noto Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  'Noto Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+
+$color-black: #000000;
+
+$font-family-display:
+  'Saira Semi Condensed',
+  'Noto Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
+
+$govrs-breakpoint-smartphone-portrait-max: 35.9375rem;
+$govrs-breakpoint-smartphone-landscape-tablet-portrait-min: 36rem;
+$govrs-breakpoint-smartphone-landscape-tablet-portrait-max: 61.9375rem;
+$govrs-breakpoint-tablet-landscape-min: 62rem;
+$govrs-breakpoint-tablet-landscape-max: 79.9375rem;
+$govrs-breakpoint-desktop-min: 80rem;
+$govrs-breakpoint-desktop-max: 99.9375rem;
+$govrs-breakpoint-tv-min: 100rem;
+$govrs-breakpoint-xs: 25rem;
+$govrs-breakpoint-xs-wide: 26.25rem;
+$govrs-breakpoint-sm: 36rem;
+$govrs-breakpoint-md: 40rem;
+$govrs-breakpoint-lg: 48rem;
+$govrs-breakpoint-xl: 62rem;
+$govrs-breakpoint-xxl: 64rem;
+$govrs-breakpoint-xxxl: 75rem;
+
+$govrs-layout-container-barra-max-lg: 46.875rem;
+$govrs-layout-container-barra-max-xl: 60.625rem;
+$govrs-layout-container-barra-max-xxxl: 73.125rem;
+$govrs-layout-container-header-max-width: 100rem;

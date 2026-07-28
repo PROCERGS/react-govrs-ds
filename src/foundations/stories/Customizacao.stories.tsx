@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import {
@@ -6,7 +7,9 @@ import {
   SectionCard,
   storyDocsStyles,
 } from '../../../.storybook/docs/storyDocs';
+import { Button } from '../../components/Button/Button';
 import { colors } from '../../tokens/colors';
+import '../styles/runtime-tokens.scss';
 import '../styles/index.scss';
 
 function CodeBlock({ code }: { code: string }) {
@@ -19,7 +22,7 @@ function CodeBlock({ code }: { code: string }) {
   );
 }
 
-const baseColorsCode = `/* Cores base — valores padrão do foundation (:root) */
+const baseColorsCode = `/* Cores base — valores padrão dos tokens CSS (:root) */
 
 /* Brand */
 --govrs-color-brand-primary: ${colors.brand.primary.toLowerCase()};
@@ -44,52 +47,47 @@ const baseColorsCode = `/* Cores base — valores padrão do foundation (:root) 
 --govrs-color-interactive-link: ${colors.interactive.link.toLowerCase()};
 --govrs-color-focus: ${colors.interactive.focus.toLowerCase()};`;
 
-const highContrastTokensCode = `/* Tokens usados pelo modo de alto contraste */
-[data-govrs-contrast='high'] {
-  --govrs-color-contrast-background: #000000;
+const highContrastTokensCode = `/* O componente já carrega os tokens e o mapa de contraste.
+   Este é um override opcional do tema consumidor. */
+:root:is(.high-contrast, [data-govrs-contrast='high']) {
+  /* Superfície principal, texto, ícones e bordas */
+  --govrs-color-contrast-background: #101010;
   --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-muted: #ffffff;
   --govrs-color-contrast-icon: #ffffff;
   --govrs-color-contrast-border: #ffffff;
-  --govrs-color-contrast-mark: #ffffff;
 
-  /* Controles no fundo escuro */
-  --govrs-color-contrast-control-background: #000000;
+  /* Botões e controles no fundo escuro */
+  --govrs-color-contrast-control-background: #101010;
   --govrs-color-contrast-control-foreground: #ffffff;
   --govrs-color-contrast-control-border: #ffffff;
 
-  /* Campos e superfícies invertidas */
+  /* Campos e popovers invertidos */
   --govrs-color-contrast-field-background: #ffffff;
   --govrs-color-contrast-field-foreground: #000000;
   --govrs-color-contrast-field-border: #000000;
   --govrs-color-contrast-popover-background: #ffffff;
   --govrs-color-contrast-popover-foreground: #000000;
   --govrs-color-contrast-popover-border: #000000;
-
-  /* Busca mantém aliases próprios por compatibilidade */
-  --govrs-color-contrast-search-background: var(--govrs-color-contrast-field-background);
-  --govrs-color-contrast-search-foreground: var(--govrs-color-contrast-field-foreground);
-}
-
-/* Personalização no projeto consumidor:
-   mantenha texto, ícones e bordas com contraste acessível */
-[data-govrs-contrast='high'] {
-  --govrs-color-contrast-background: #111111;
-  --govrs-color-contrast-foreground: #ffffff;
-  --govrs-color-contrast-icon: #ffffff;
-  --govrs-color-contrast-border: #ffffff;
-  --govrs-color-contrast-control-background: #111111;
-  --govrs-color-contrast-control-foreground: #ffffff;
-  --govrs-color-contrast-control-border: #ffffff;
 }`;
 
-const globalOverrideCode = `/* tema-global.css — importar DEPOIS do foundation no projeto consumidor */
-@import '@procergs/react-govrs-ds/foundation';
+const contrastActivationCode = `/* A BarraAcessibilidade faz isso automaticamente.
+   Para uma ativação controlada em React, use o hook do DS. */
+import { useHighContrast } from '@procergs/react-govrs-ds';
+
+function Exemplo() {
+  const { setEnabled } = useHighContrast();
+
+  return <button onClick={() => setEnabled(true)}>Ativar contraste</button>;
+}`;
+
+const globalOverrideCode = `/* tema-global.css — carregue este CSS depois do bundle do DS */
 
 :root {
   /* Cores: afeta body, headers-*, paragraph-*, componentes */
-  --govrs-color-text-primary: #04290f;
-  --govrs-color-text-muted: #2f5c40;
-  --govrs-color-brand-primary: #1a7235;
+  --govrs-color-text-primary: #2a123d;
+  --govrs-color-text-muted: #5b3c70;
+  --govrs-color-brand-primary: #6d28d9;
 
   /* Espaçamento: afeta margin/padding/gap que usam --govrs-space-* */
   --govrs-space-3: 0.75rem;
@@ -104,6 +102,30 @@ const globalOverrideCode = `/* tema-global.css — importar DEPOIS do foundation
   --govrs-radius-sm: 0.5rem;
   --govrs-border-width-sm: 1px;
 }`;
+
+const componentOverrideCode = `/* tema-editorial.css — customização limitada a este bloco */
+.exemplo-botao-editorial {
+  --govrs-color-brand-primary: #6d28d9;
+  --govrs-color-brand-primary-hover: #5b21b6;
+  --govrs-color-text-inverse: #ffffff;
+  --govrs-radius-sm: 999px;
+}
+
+/* O Button dentro do bloco usa os tokens acima.
+   Outros componentes e o restante do site não são alterados. */`;
+
+const componentPreviewStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1.5rem',
+  border: '1px solid var(--govrs-color-border-default)',
+  borderRadius: 'var(--govrs-radius-md)',
+  background: 'var(--govrs-color-surface-muted)',
+  '--govrs-color-brand-primary': '#6d28d9',
+  '--govrs-color-brand-primary-hover': '#5b21b6',
+  '--govrs-color-text-inverse': '#ffffff',
+  '--govrs-radius-sm': '999px',
+} as CSSProperties;
 
 const classScopeCode = `/* tema-portal.css — override por classe, sem alterar o pacote */
 
@@ -223,39 +245,52 @@ export const Page: Story = {
       <DocsHero
         eyebrow="Tokens e tema"
         title={<h3 style={storyDocsStyles.heroTitle}>Customização</h3>}
-        description="Referência das cores base do design system e exemplos de como sobrescrever variáveis CSS no projeto consumidor — globalmente ou por classe — sem editar o pacote. Fundações (headers, paragraphs, lists) e componentes já consomem os tokens; redefina as variáveis e o visual acompanha."
+        description="Referência dos tokens CSS do design system e exemplos de como sobrescrevê-los no projeto consumidor — globalmente ou por classe — sem editar o pacote. Componentes carregam automaticamente os tokens necessários; Foundation é opcional e acrescenta estilos globais."
       />
 
       <SectionCard
         title="Cores base do projeto"
-        description="Valores padrão injetados pelo foundation em :root. Use como referência ao montar overrides no CSS do tema."
+        description="Valores padrão disponibilizados pelos componentes e pela entrada tokens em :root. Use como referência ao montar overrides no CSS do tema."
       >
         <CodeBlock code={baseColorsCode} />
       </SectionCard>
 
       <SectionCard
         title="Tokens do modo de alto contraste"
-        description="Quando o modo de alto contraste está ativo, os componentes usam tokens semânticos para superfícies, texto, ícones, marcas, campos, popovers e bordas. Busca, seletores, tooltips, modais e painéis de data usam as superfícies invertidas com fundo branco e conteúdo preto."
+        description="Quando a Barra de Acessibilidade ativa o contraste, ela marca o html e os componentes passam automaticamente a consumir os tokens de contraste. Personalize os tokens fonte --govrs-color-contrast-*; o DS remapeia os tokens semânticos e locais dos componentes."
       >
         <CodeBlock code={highContrastTokensCode} />
+        <p style={storyDocsStyles.statText}>Ativação programática, quando necessária:</p>
+        <CodeBlock code={contrastActivationCode} />
         <ul style={storyDocsStyles.list}>
           <li>
-            Sobrescreva os tokens dentro de <code>[data-govrs-contrast='high']</code> no projeto consumidor para alterar a superfície de contraste sem editar o pacote.
+            Use <code>:root:is(.high-contrast, [data-govrs-contrast='high'])</code> no override. Ele tem a mesma prioridade do mapa interno do DS e mantém a customização estável mesmo quando componentes carregam depois.
           </li>
           <li>
-            Preserve os pares de foreground e border para cada superfície; a alteração de uma cor deve manter contraste suficiente com seu background correspondente.
+            Preserve os pares de background, foreground e border para cada superfície. O DS não calcula essas combinações automaticamente; a responsabilidade de manter contraste suficiente é do tema consumidor.
           </li>
           <li>
-            Imagens, vídeos, mapas e demais mídias não são recoloridos; ícones funcionais e clicáveis seguem o token de ícone, com a exceção do ícone preto do campo de busca.
+            Imagens, vídeos, mapas e demais mídias não são recoloridos. Ícones funcionais seguem o token de ícone, exceto o ícone preto em campos de busca com superfície branca.
           </li>
         </ul>
       </SectionCard>
 
       <SectionCard
         title="Override no projeto inteiro"
-        description="Redefina variáveis em :root após importar o foundation. Afeta todas as páginas e componentes que dependem dos tokens."
+        description="Redefina variáveis em :root no CSS do tema. Isso afeta componentes e Foundations que dependem desses tokens; carregue o CSS do tema depois do bundle do DS."
       >
         <CodeBlock code={globalOverrideCode} />
+      </SectionCard>
+
+      <SectionCard
+        title="Customização pontual de componente"
+        description="Aplique tokens em um wrapper para alterar somente os componentes dentro dele. A demonstração abaixo personaliza apenas este Button, sem afetar os demais Buttons ou o tema global."
+      >
+        <CodeBlock code={componentOverrideCode} />
+        <p style={storyDocsStyles.statText}>Resultado:</p>
+        <div className="exemplo-botao-editorial" style={componentPreviewStyle}>
+          <Button>Publicar conteúdo</Button>
+        </div>
       </SectionCard>
 
       <SectionCard
@@ -287,7 +322,7 @@ export const Page: Story = {
 
       <SectionCard
         title="Famílias de variáveis disponíveis"
-        description="Qualquer token --govrs-* definido em _variables.scss pode ser sobrescrito da mesma forma."
+        description="Qualquer token --govrs-* exposto pelo runtime tokens pode ser sobrescrito da mesma forma."
       >
         <CodeBlock code={tokenReferenceCode} />
         <ul style={storyDocsStyles.list}>
@@ -300,7 +335,7 @@ export const Page: Story = {
             apontam para os tokens text; redefinir o token fonte costuma ser suficiente.
           </li>
           <li>
-            Para instalação e import do foundation, consulte a página Consumo.
+            Consulte a página Consumo para decidir entre componentes, tokens e foundation.
           </li>
         </ul>
       </SectionCard>

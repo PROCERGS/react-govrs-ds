@@ -30,6 +30,13 @@ function injectLibraryCssImports() {
     apply: 'build' as const,
     enforce: 'post' as const,
     generateBundle(_: unknown, bundle: Record<string, { type: string; fileName: string; code?: string; viteMetadata?: { importedCss?: Set<string> } }>) {
+      const runtimeTokensEntry = Object.values(bundle).find(
+        (output) => output.type === 'chunk' && output.fileName === 'tokens.js',
+      )
+      const runtimeTokensCss = runtimeTokensEntry?.viteMetadata?.importedCss
+        ? Array.from(runtimeTokensEntry.viteMetadata.importedCss)
+        : []
+
       for (const output of Object.values(bundle)) {
         if (output.type !== 'chunk' || typeof output.code !== 'string') {
           continue
@@ -40,12 +47,18 @@ function injectLibraryCssImports() {
         }
 
         const importedCss = output.viteMetadata?.importedCss ? Array.from(output.viteMetadata.importedCss) : []
+        const needsRuntimeTokens = output.fileName.startsWith('components/')
+          || output.fileName.startsWith('primitives/')
+        const cssImports = [
+          ...(needsRuntimeTokens ? runtimeTokensCss : []),
+          ...importedCss,
+        ]
 
-        if (importedCss.length === 0) {
+        if (cssImports.length === 0) {
           continue
         }
 
-        const cssPrelude = importedCss
+        const cssPrelude = [...new Set(cssImports)]
           .map((cssFile) => {
             const relativePath = posix.relative(posix.dirname(output.fileName), cssFile)
             const importPath = relativePath.startsWith('.') ? relativePath : `./${relativePath}`
@@ -186,6 +199,7 @@ export default defineConfig({
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
         foundation: resolve(__dirname, 'src/foundation.ts'),
+        tokens: resolve(__dirname, 'src/runtime-tokens.ts'),
       },
       name: 'ReactGovrsDS',
       formats: ['es', 'cjs'],
@@ -196,6 +210,10 @@ export default defineConfig({
 
         if (entryName === 'foundation') {
           return format === 'es' ? 'foundation.js' : 'foundation.cjs'
+        }
+
+        if (entryName === 'tokens') {
+          return format === 'es' ? 'tokens.js' : 'tokens.cjs'
         }
 
         return `${entryName}.${format === 'es' ? 'js' : 'cjs'}`
