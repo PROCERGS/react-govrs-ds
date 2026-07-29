@@ -94,7 +94,7 @@ const barraAcessibilidadeDocsHeroStats = [
   },
   {
     title: 'Comportamento',
-    text: 'Os atalhos numerados começam em 1, respondem a Alt+1...Alt+9 e o contraste persiste em localStorage quando o usuário alterna o botão.',
+    text: 'Os três primeiros atalhos respondem a Alt+1, Alt+2 e Alt+3. Cada item pode declarar uma ação própria ou manter a navegação por href.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -128,9 +128,9 @@ const barraEstadoExampleCode = `<BarraEstado />`
 
 const barraAcessibilidadeExampleCode = `<BarraAcessibilidade
   shortcuts={[
-    { title: 'Conteúdo', href: '#conteudo' },
-    { title: 'Menu', href: '#menu' },
-    { title: 'Busca', href: '#buscar' },
+    { title: 'Conteúdo', href: '#conteudo', onActivate: focarConteudo },
+    { title: 'Menu', href: '#menu', onActivate: abrirMenu },
+    { title: 'Busca', href: '#buscar', onActivate: focarBusca },
   ]}
   hrefAccessibility="/acessibilidade"
   hrefContact="/contato"
@@ -626,8 +626,9 @@ export const BarraAcessibilidadeDoc: Story = {
             </p>
 
             <ul style={storyDocsStyles.list}>
-              <li><code>shortcuts</code> recebe um array de objetos <code>{'{ title: string; href: string }'}</code>.</li>
-              <li>Links com hash rolam para um elemento da página; outras URLs navegam normalmente.</li>
+              <li><code>shortcuts</code> recebe objetos <code>{'{ title: string; href: string; onActivate?: () => void }'}</code>.</li>
+              <li>Alt+1, Alt+2 e Alt+3 acionam respectivamente os três primeiros itens declarados.</li>
+              <li><code>onActivate</code> substitui o href ao clicar ou usar a tecla de aderência; sem a ação, hashes rolam para um elemento e outras URLs navegam normalmente.</li>
             </ul>
           </PropsCard>
 
@@ -661,7 +662,8 @@ export const BarraAcessibilidadeDoc: Story = {
           description="Exemplo recomendado quando a página precisa expor atalhos numerados, contraste e todas as rotas auxiliares da barra."
           code={barraAcessibilidadeExampleCode}
           notes={[
-            'Se o terceiro atalho usar hash, o comportamento preservado tenta focar o elemento antes de rolar até ele.',
+            'Use onActivate quando o atalho precisa abrir, focar ou selecionar elementos controlados pela aplicação.',
+            'Alt+4 até Alt+9 não recebem comportamento pela Barra de Acessibilidade.',
             'Na aplicação consumidora, o botão de contraste mantém a preferência do usuário em localStorage para reutilização entre visitas.',
             'Nesta documentação, o botão permanece isolado; use modoContraste na story Interativo para visualizar o tema.',
           ]}

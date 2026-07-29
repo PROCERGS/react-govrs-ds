@@ -10,13 +10,19 @@ import './BarraAcessibilidade.scss'
 
 import { useHighContrast } from '../../hooks/useHighContrast'
 
+type AccessibilityShortcut = {
+  title: string
+  href: string
+  onActivate?: () => void
+}
+
 type BarraAcessibilidadeProps = {
   defaultHighContrast?: boolean
   disableHighContrastToggle?: boolean
   hrefAccessibility?: string
   hrefContact?: string
   hrefSitemap?: string
-  shortcuts?: Array<{ title: string; href: string }>
+  shortcuts?: AccessibilityShortcut[]
 }
 
 export function BarraAcessibilidade({
@@ -51,24 +57,23 @@ export function BarraAcessibilidade({
 
       if (!event.altKey) return
       const key = event.key
-      if (!/^[1-9]$/.test(key)) return
+      if (!/^[1-3]$/.test(key)) return
       const index = parseInt(key, 10) - 1
       const item = shortcutItems[index]
-      if (!item || !item.href) return
+      if (!item) return
+
+      event.preventDefault()
+
+      if (item.onActivate) {
+        item.onActivate()
+        return
+      }
 
       const href = item.href
       if (href.startsWith('#')) {
         const id = href.slice(1)
-        if (index === 2) {
-          setTimeout(() => {
-            const el = document.getElementById(id) as HTMLElement | null
-            el?.focus()
-            el?.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
-        } else {
-          const el = document.getElementById(id)
-          el?.scrollIntoView({ behavior: 'smooth' })
-        }
+        const el = document.getElementById(id)
+        el?.scrollIntoView({ behavior: 'smooth' })
       } else if (typeof window !== 'undefined') {
         window.location.href = href
       }
@@ -85,7 +90,15 @@ export function BarraAcessibilidade({
           <ul className="acess-ul">
             {shortcutItems.map((item, idx) => (
               <li key={idx}>
-                <a title={`Ir para ${item.title.toLowerCase()}`} href={item.href}>
+                <a
+                  title={`Ir para ${item.title.toLowerCase()}`}
+                  href={item.href}
+                  onClick={(event) => {
+                    if (!item.onActivate) return
+                    event.preventDefault()
+                    item.onActivate()
+                  }}
+                >
                   {item.title} [{idx + 1}]
                 </a>{' '}
               </li>
