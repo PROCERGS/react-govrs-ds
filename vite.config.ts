@@ -4,6 +4,11 @@ import react from '@vitejs/plugin-react'
 import { dirname, extname, join, posix, relative, resolve } from 'node:path'
 
 const COMPONENT_ASSET_EXTENSIONS = new Set(['.svg', '.png', '.jpg', '.jpeg', '.webp', '.gif'])
+const ASSET_URL_MODULE_PATTERN = /\.(?:svg|png|jpe?g|webp|gif)\.(?:js|cjs)$/
+
+function isAssetUrlModule(fileName: string): boolean {
+  return ASSET_URL_MODULE_PATTERN.test(fileName.replace(/\\/g, '/'))
+}
 
 function collectComponentAssetFiles(componentsDir: string, currentDir = componentsDir): string[] {
   const assetFiles: string[] = []
@@ -42,7 +47,7 @@ function injectLibraryCssImports() {
           continue
         }
 
-        if (!output.fileName.endsWith('.js')) {
+        if (!output.fileName.endsWith('.js') || isAssetUrlModule(output.fileName)) {
           continue
         }
 
@@ -74,14 +79,28 @@ function injectLibraryCssImports() {
 }
 
 function readDefaultExportUrl(moduleCode: string): string | null {
-  const valueStart = moduleCode.indexOf('"') + 1
-  const valueEnd = moduleCode.lastIndexOf('";')
+  const directDefaultExport = moduleCode.match(
+    /(?:^|\n)\s*(?:export default|module\.exports\s*=)\s*("(?:[^"\\]|\\.)*")\s*;?/,
+  )
+  const namedDefaultExport = moduleCode.match(
+    /const\s+([\w$]+)\s*=\s*("(?:[^"\\]|\\.)*")\s*;?\s*export\s*\{\s*\1\s+as\s+default\s*\}\s*;?/,
+  )
+  const namedCommonJsExport = moduleCode.match(
+    /const\s+([\w$]+)\s*=\s*("(?:[^"\\]|\\.)*")\s*;?\s*module\.exports\s*=\s*\1\s*;?/,
+  )
+  const serializedValue =
+    directDefaultExport?.[1] ?? namedDefaultExport?.[2] ?? namedCommonJsExport?.[2]
 
-  if (valueStart <= 0 || valueEnd <= valueStart) {
+  if (!serializedValue) {
     return null
   }
 
-  return moduleCode.slice(valueStart, valueEnd)
+  try {
+    const value = JSON.parse(serializedValue)
+    return typeof value === 'string' ? value : null
+  } catch {
+    return null
+  }
 }
 
 function inlineLibraryAssetImports() {
@@ -94,7 +113,6 @@ function inlineLibraryAssetImports() {
       bundle: Record<string, { type: string; fileName: string; code?: string }>,
     ) {
       const chunkByFileName = new Map<string, { type: string; fileName: string; code?: string }>()
-      const assetUrlModulePattern = /\.(?:svg|png|jpe?g|webp|gif)\.(?:js|cjs)$/
       const inlinedAssetModules = new Set<string>()
       const esmImportPattern = /import ([\w$]+) from (["'])(\.[^"']+\.(?:svg|png|jpe?g|webp|gif)\.js)\2;/g
       const cjsImportPattern = /([\w$]+)=require\((["'])(\.[^"']+\.(?:svg|png|jpe?g|webp|gif)\.cjs)\2\)/g
@@ -104,7 +122,7 @@ function inlineLibraryAssetImports() {
       }
 
       for (const output of Object.values(bundle)) {
-        if (output.type !== 'chunk' || typeof output.code !== 'string' || assetUrlModulePattern.test(output.fileName)) {
+        if (output.type !== 'chunk' || typeof output.code !== 'string' || isAssetUrlModule(output.fileName)) {
           continue
         }
 

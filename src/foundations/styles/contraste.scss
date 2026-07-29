@@ -5,7 +5,8 @@
  * Consumer projects may override any --govrs-color-contrast-* token inside
  * [data-govrs-contrast='high'] without replacing component styles.
  */
-:root:is(.high-contrast, [data-govrs-contrast='high']) {
+:root:is(.high-contrast, [data-govrs-contrast='high']),
+:is(.high-contrast, [data-govrs-contrast='high']) {
   --govrs-color-brand-primary: var(--govrs-color-contrast-control-background);
   --govrs-color-brand-primary-strong: var(--govrs-color-contrast-control-foreground);
   --govrs-color-brand-primary-hover: var(--govrs-color-contrast-control-background);
