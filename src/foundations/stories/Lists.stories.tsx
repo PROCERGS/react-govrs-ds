@@ -61,7 +61,7 @@ export const Documentacao: Story = {
       <DocsHero
         eyebrow="Listas tipográficas"
         title={<h3 style={storyDocsStyles.heroTitle}>Lists</h3>}
-        description="A fundação Lists centraliza a apresentação tipográfica de listas simples e ajuda a evitar repetição de regras de texto em componentes e páginas consumidoras."
+        description="A fundação Lists centraliza a apresentação tipográfica de listas simples e ajuda a evitar repetição de regras de texto em componentes e páginas consumidoras. A lista como bloco termina com 1,25rem de margem antes do próximo elemento de conteúdo."
       />
 
       <SectionCard
@@ -74,6 +74,7 @@ export const Documentacao: Story = {
           code={listCode}
           notes={[
             'Essa fundação cobre listas textuais simples; listas com comportamento adicional devem subir para um componente ou pattern.',
+            'Ritmo vertical: a lista usa margin-bottom de 1,25rem (--govrs-space-5); o espaçamento entre itens permanece próprio da lista.',
           ]}
         >
           <ListsPreview />

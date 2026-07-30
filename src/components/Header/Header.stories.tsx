@@ -58,7 +58,7 @@ const docsHeroStats = [
   },
   {
     title: 'Comportamento',
-    text: 'Em telas amplas, a busca permanece visível. Em telas compactas, ela abre pelo botão e oculta temporariamente a identidade para ganhar espaço.',
+    text: 'Em telas amplas, a busca permanece visível. Em telas compactas, ela abre pelo botão, oculta temporariamente a identidade e expande a partir do alinhamento direito original.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -420,13 +420,14 @@ export const HeaderDocumentacao: Story = {
 
       <SectionCard
         title="Menu e busca"
-        description="Menu e busca são as partes mais sensíveis do contrato porque combinam props visuais com pares controlado/não controlado. Em desktop a busca permanece aberta; abaixo do breakpoint responsivo ela passa a ser recolhível para preservar espaço horizontal."
+        description="Menu e busca são as partes mais sensíveis do contrato porque combinam props visuais com pares controlado/não controlado. Em desktop a busca permanece aberta; abaixo do breakpoint responsivo ela passa a ser recolhível para preservar espaço horizontal e, ao abrir, mantém sua borda direita alinhada ao ícone fechado."
       >
         <ul style={storyDocsStyles.list}>
               <li><code>menuOpen</code> com <code>onMenuOpenChange</code> coloca o menu em modo controlado.</li>
           <li><code>searchValue</code> com <code>onSearchValueChange</code> controla o conteúdo digitado; <code>defaultSearchValue</code> apenas define o valor inicial.</li>
           <li><code>searchActive</code> com <code>onSearchActiveChange</code> controla a abertura da busca móvel; em desktop essa prop não fecha a busca, porque o Header a mantém visível.</li>
           <li>O mesmo token CSS é usado pelo Search e pelo MenuHamburger para manter a troca de layout coerente.</li>
+          <li>Em mobile, a busca aberta cresce para a esquerda a partir da posição original do ícone e usa no máximo 24,0625rem.</li>
         </ul>
 
         <div style={{ ...storyDocsStyles.cardGrid, display: 'flex', flexDirection: 'column' }}>

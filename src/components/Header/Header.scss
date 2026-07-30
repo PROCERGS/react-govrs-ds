@@ -173,9 +173,10 @@ body.has-sidebar .govrs-header__scroll-top {
     display: none;
   }
 
-  .govrs-header__search-wrapper--active {
-    flex: 1 1 auto;
-    width: 100%;
+  .govrs-header__search-wrapper.govrs-header__search-wrapper--active {
+    width: min(24.0625rem, 100%);
+    flex: 0 1 min(24.0625rem, 100%);
+    margin-left: auto;
   }
 
   .govrs-header__scroll-top {

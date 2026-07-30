@@ -220,6 +220,7 @@ const tokenReferenceCode = `/* Referência rápida de famílias customizáveis *
 /* Raio       */ --govrs-radius-*
 /* Borda      */ --govrs-border-width-*, --govrs-color-border-*
 /* Sombra     */ --govrs-shadow-*
+/* Layout     */ --govrs-layout-container-header-max-width (Header e Footer)
 /* Camadas    */ --govrs-z-index-*   (header, navigation, overlay, modal, toast)
 /* Motion     */ --govrs-duration-*, --govrs-easing-*`;
 

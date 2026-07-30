@@ -137,7 +137,7 @@ export const Documentacao: Story = {
       <DocsHero
         eyebrow="Escalas de títulos"
         title={<h3 style={storyDocsStyles.heroTitle}>Headers</h3>}
-        description="A fundação de headers define o comportamento visual dos títulos de h1 a h4 em duas grades base. O objetivo é manter consistência tipográfica sem acoplar a escala a componentes específicos. A cor vem de <code>--govrs-color-text-primary</code> (verde escuro RS)."
+        description="A fundação de headers define o comportamento visual dos títulos de h1 a h4 em duas grades base. O objetivo é manter consistência tipográfica sem acoplar a escala a componentes específicos. A cor vem de <code>--govrs-color-text-primary</code> (verde escuro RS) e cada título termina com 1,25rem de margem para separar o próximo bloco de conteúdo."
       />
 
       <SectionCard
@@ -153,6 +153,7 @@ export const Documentacao: Story = {
             'A semântica continua sendo definida pelas tags h1 a h4.',
             'A classe controla apenas a escala visual associada ao contexto.',
             'Cor do texto: --govrs-color-text-primary (verde institucional RS).',
+            'Ritmo vertical: todos os títulos usam margin-bottom de 1,25rem (--govrs-space-5).',
           ]}
         >
           <HeadersScalePreview />

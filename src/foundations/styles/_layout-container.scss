@@ -32,7 +32,7 @@
   margin-inline: auto;
   box-sizing: border-box;
 
-  @media (min-width: #{vars.$govrs-breakpoint-tv-min}) {
+  @media (min-width: #{vars.$govrs-layout-container-header-max-width}) {
     max-width: var(
       --govrs-layout-container-header-max-width,
       #{vars.$govrs-layout-container-header-max-width}

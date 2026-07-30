@@ -81,7 +81,7 @@ input.barra-estado__checkbox,
   border-top: 1px solid #fff;
   margin-top: 0;
   background: #f8f8f8;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: var(--govrs-font-family-base, 'Noto Sans', sans-serif);
 }
 .barra-estado__nav {
   display: block;
