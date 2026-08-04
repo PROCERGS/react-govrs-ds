@@ -622,6 +622,11 @@ export const BannerDocumentacao: Story = {
 export const BannerInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     bannerType: {
       control: { type: 'select' },
       options: ['default', 'quadrado', 'variant4'],

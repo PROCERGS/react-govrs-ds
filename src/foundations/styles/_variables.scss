@@ -1,38 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+@use './sass-variables' as *;
 
-$font-family-base:
-  'Noto Sans',
-  system-ui,
-  -apple-system,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  'Noto Color Emoji',
-  'Segoe UI Emoji',
-  'Segoe UI Symbol';
-
-$color-black: #000000;
-
-$font-family-display:
-  'Saira Semi Condensed',
-  'Noto Sans',
-  system-ui,
-  -apple-system,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
-
-$govrs-breakpoint-smartphone-portrait-max: 35.9375rem;
-$govrs-breakpoint-smartphone-landscape-tablet-portrait-min: 36rem;
-$govrs-breakpoint-smartphone-landscape-tablet-portrait-max: 61.9375rem;
-$govrs-breakpoint-tablet-landscape-min: 62rem;
-$govrs-breakpoint-tablet-landscape-max: 79.9375rem;
-$govrs-breakpoint-desktop-min: 80rem;
-$govrs-breakpoint-desktop-max: 99.9375rem;
-$govrs-breakpoint-tv-min: 100rem;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   /* Color tokens */
@@ -99,13 +67,36 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-color-avatar-tone-13: #e76f51;
   --govrs-color-avatar-tone-14: #2a9d8f;
 
-  --govrs-color-contrast-background: #f5efe6;
-  --govrs-color-contrast-foreground: var(--govrs-color-brand-primary-strong);
-  --govrs-color-contrast-muted: #cfc2ab; /* muted beige */
-  --govrs-color-contrast-accent: #fecd3a; /* keep accent */
-  --govrs-color-contrast-surface: #f7f2ea; /* surface beige */
-  --govrs-color-contrast-surface-alt: #efe6d5; /* alt surface beige */
-  --govrs-color-contrast-border: #e6dcc9; /* border beige */
+  /* High-contrast semantic tokens. */
+  --govrs-color-contrast-background: #000000;
+  --govrs-color-contrast-foreground: #ffffff;
+  --govrs-color-contrast-muted: #ffffff;
+  --govrs-color-contrast-accent: var(--govrs-color-focus);
+  --govrs-color-contrast-surface: #000000;
+  --govrs-color-contrast-surface-alt: #000000;
+  --govrs-color-contrast-border: #ffffff;
+  --govrs-color-contrast-icon: #ffffff;
+  --govrs-color-contrast-mark: #ffffff;
+  --govrs-color-contrast-control-background: #000000;
+  --govrs-color-contrast-control-foreground: #ffffff;
+  --govrs-color-contrast-control-border: #ffffff;
+  --govrs-color-contrast-field-background: #ffffff;
+  --govrs-color-contrast-field-foreground: #000000;
+  --govrs-color-contrast-field-border: #000000;
+  --govrs-color-contrast-popover-background: #ffffff;
+  --govrs-color-contrast-popover-foreground: #000000;
+  --govrs-color-contrast-popover-border: #000000;
+  --govrs-color-contrast-search-background: var(--govrs-color-contrast-field-background);
+  --govrs-color-contrast-search-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-color-contrast-status-online: #168821;
+  --govrs-color-contrast-status-offline: #e52207;
+  --govrs-color-contrast-status-away: #ffcd07;
+
+  /* Media chrome stays independent from the high-contrast palette. */
+  --govrs-color-media-backdrop: #000000;
+  --govrs-color-media-surface: #1a1a1a;
+  --govrs-color-media-surface-alt: #2d2d2d;
+  --govrs-color-overlay-backdrop: rgba(0, 0, 0, 0.48);
 
   /* Breakpoint tokens */
   --govrs-breakpoint-smartphone-portrait-max: #{$govrs-breakpoint-smartphone-portrait-max};
@@ -116,6 +107,21 @@ $govrs-breakpoint-tv-min: 100rem;
   --govrs-breakpoint-desktop-min: #{$govrs-breakpoint-desktop-min};
   --govrs-breakpoint-desktop-max: #{$govrs-breakpoint-desktop-max};
   --govrs-breakpoint-tv-min: #{$govrs-breakpoint-tv-min};
+  --govrs-breakpoint-xs: #{$govrs-breakpoint-xs};
+  --govrs-breakpoint-xs-wide: #{$govrs-breakpoint-xs-wide};
+  --govrs-breakpoint-sm: #{$govrs-breakpoint-sm};
+  --govrs-breakpoint-md: #{$govrs-breakpoint-md};
+  --govrs-breakpoint-lg: #{$govrs-breakpoint-lg};
+  --govrs-breakpoint-xl: #{$govrs-breakpoint-xl};
+  --govrs-breakpoint-xxl: #{$govrs-breakpoint-xxl};
+  --govrs-breakpoint-xxxl: #{$govrs-breakpoint-xxxl};
+
+  --govrs-layout-container-barra-max-lg: #{$govrs-layout-container-barra-max-lg};
+  --govrs-layout-container-barra-max-xl: #{$govrs-layout-container-barra-max-xl};
+  --govrs-layout-container-barra-max-xxxl: #{$govrs-layout-container-barra-max-xxxl};
+  --govrs-layout-container-header-max-width: #{$govrs-layout-container-header-max-width};
+  --govrs-layout-container-max-width: var(--govrs-layout-container-header-max-width);
+  --layout-container-width: var(--govrs-layout-container-header-max-width);
 
   /* Spacing tokens */
   --govrs-space-0: 0rem;

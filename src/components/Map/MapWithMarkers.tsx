@@ -38,7 +38,7 @@ const buildSvgPin = (n: number) => {
   <g filter="url(#shadow)">
     <path d="M20 1C10.059 1 2 9.059 2 19c0 11.5 13.341 28.503 17.24 33.218a1 1 0 0 0 1.52 0C24.659 47.503 38 30.5 38 19 38 9.059 29.941 1 20 1Z" fill="#1c7ed6" stroke="#0f4b7a" stroke-width="2"/>
   </g>
-  <text x="20" y="24" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="700">${label}</text>
+  <text x="20" y="24" text-anchor="middle" fill="#ffffff" font-family="Noto Sans, sans-serif" font-size="18" font-weight="700">${label}</text>
 </svg>`
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }

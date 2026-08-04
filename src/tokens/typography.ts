@@ -1,8 +1,6 @@
-export const fontFamilyBase =
-  "'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+export const fontFamilyBase = "'Noto Sans', sans-serif"
 
-export const fontFamilyDisplay =
-  "'Saira Semi Condensed', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+export const fontFamilyDisplay = fontFamilyBase
 
 export const typography = {
   fontFamily: {

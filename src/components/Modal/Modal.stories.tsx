@@ -536,6 +536,11 @@ export const ModalDocumentacao: Story = {
 export const ModalInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     title: {
       control: 'text',
       description: 'Título principal do diálogo.',

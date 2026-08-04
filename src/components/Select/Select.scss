@@ -1,6 +1,20 @@
-$svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4.5 8.5L7 11L11.5 5.5' stroke='%231A7235' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
+$svg-check-mask: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.5L7 11L11.5 5.5' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
 
 .govrs-select {
+  --govrs-select-label: var(--govrs-color-text-primary, #000000);
+  --govrs-select-control-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-select-control-foreground: var(--govrs-color-text-secondary, #333333);
+  --govrs-select-control-border: var(--govrs-color-text-placeholder, #999999);
+  --govrs-select-list-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-select-list-foreground: var(--govrs-color-text-secondary, #333333);
+  --govrs-select-list-border: var(--govrs-color-border-subtle, #e6e6e6);
+  --govrs-select-icon: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-select-placeholder: var(--govrs-color-text-placeholder, #999999);
+  --govrs-select-selected-background: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-select-selected-foreground: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-select-marker-background: var(--govrs-color-surface-base, #ffffff);
+  --govrs-select-marker-border: var(--govrs-color-border-muted, #dcdcdc);
+
   display: grid;
   width: 100%;
   max-width: 22.5rem;
@@ -9,7 +23,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 }
 
 .govrs-select__label {
-  color: var(--govrs-color-text-primary, #000000);
+  color: var(--govrs-select-label);
   font-size: var(--govrs-font-size-body-md, 1rem);
   font-weight: var(--govrs-font-weight-regular, 400);
 }
@@ -24,10 +38,10 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
   min-height: 3rem;
   align-items: center;
   padding: 0 var(--govrs-space-3, 0.75rem);
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-text-placeholder, #999999);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-select-control-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
-  background-color: var(--govrs-color-surface-base, #ffffff);
-  color: var(--govrs-color-text-secondary, #333333);
+  background-color: var(--govrs-select-control-background);
+  color: var(--govrs-select-control-foreground);
   cursor: pointer;
   gap: var(--govrs-space-2, 0.5rem);
   text-align: left;
@@ -38,7 +52,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 }
 
 .govrs-select__control:hover:not(:disabled) {
-  background-color: var(--govrs-color-surface-alt, #f3f3f3);
+  background-color: var(--govrs-select-control-background);
 }
 
 .govrs-select__control:focus {
@@ -82,12 +96,12 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--govrs-color-text-placeholder, #999999);
+  color: var(--govrs-select-placeholder);
 }
 
 .govrs-select__indicator {
   margin-left: auto;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: var(--govrs-select-icon);
   transition: transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
 }
 
@@ -104,7 +118,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 }
 
 .govrs-select__value--placeholder {
-  color: var(--govrs-color-text-placeholder, #999999);
+  color: var(--govrs-select-placeholder);
 }
 
 .govrs-select__list {
@@ -115,9 +129,9 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
   overflow: auto;
   width: 100%;
   max-height: 13.75rem;
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-subtle, #e6e6e6);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-select-list-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
-  background: var(--govrs-color-surface-base, #ffffff);
+  background: var(--govrs-select-list-background);
   box-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
 }
 
@@ -126,7 +140,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
   align-items: center;
   justify-content: flex-start;
   padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-4, 1rem);
-  color: var(--govrs-color-text-secondary, #333333);
+  color: var(--govrs-select-list-foreground);
   cursor: pointer;
   font-size: var(--govrs-font-size-body-md, 1rem);
   gap: var(--govrs-space-3, 0.75rem);
@@ -134,7 +148,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 
 .govrs-select__item--header {
   background-color: transparent;
-  color: var(--govrs-color-text-placeholder, #999999);
+  color: var(--govrs-select-placeholder);
   cursor: default;
 }
 
@@ -161,8 +175,8 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 }
 
 .govrs-select--multiple .govrs-select__item--selected {
-  background-color: var(--govrs-color-brand-primary, #1a7235);
-  color: var(--govrs-color-text-inverse, #ffffff);
+  background-color: var(--govrs-select-selected-background);
+  color: var(--govrs-select-selected-foreground);
 }
 
 .govrs-select__item-marker {
@@ -170,9 +184,9 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
   width: 1.25rem;
   height: 1.25rem;
   flex: 0 0 1.25rem;
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-muted, #dcdcdc);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-select-marker-border);
   border-radius: var(--govrs-radius-xs, 0.25rem);
-  background-color: var(--govrs-color-surface-base, #ffffff);
+  background-color: var(--govrs-select-marker-background);
 }
 
 .govrs-select--multiple .govrs-select__item--selected .govrs-select__item-marker {
@@ -182,9 +196,13 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 .govrs-select--multiple .govrs-select__item--selected .govrs-select__item-marker::after {
   position: absolute;
   inset: 0;
-  background-image: url('data:image/svg+xml;utf8,#{$svg-check}');
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--govrs-select-selected-foreground);
+  mask-image: url('data:image/svg+xml;utf8,#{$svg-check-mask}');
+  mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url('data:image/svg+xml;utf8,#{$svg-check-mask}');
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
   content: '';
 }
 
@@ -194,7 +212,7 @@ $svg-check: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill=
 }
 
 .govrs-select--multiple .govrs-select__item--selected .govrs-select__item-label {
-  color: var(--govrs-color-text-inverse, #ffffff);
+  color: var(--govrs-select-selected-foreground);
 }
 
 .govrs-select__feedback {

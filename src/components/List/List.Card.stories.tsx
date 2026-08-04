@@ -267,6 +267,11 @@ export const Documentacao: Story = {
 export const Interativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     perRow: {
       control: { type: 'number', min: 1, max: 6, step: 1 },
       description: 'Quantidade de colunas exibidas por linha.',

@@ -10,6 +10,7 @@ import facebookIcon from './assets/facebook.svg?url';
 import instaIcon from './assets/insta.svg?url';
 import ytIcon from './assets/yt.svg?url';
 import xIcon from './assets/x.svg?url';
+import procergsLogo from './assets/procergs.svg?url';
 
 export namespace Footer {
   export type Item = {
@@ -78,10 +79,11 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
 
   return (
     <footer className={`govrs-footer ${className}`} data-mobile={isMobile}>
-      <figure className="govrs-footer__brasao" aria-hidden="true">
-        <img src={brasao} alt="Brasão do RS" />
-      </figure>
-      <div className="govrs-footer__content">
+      <div className="govrs-footer__container">
+        <figure className="govrs-footer__brasao" aria-hidden="true">
+          <img src={brasao} alt="Brasão do RS" />
+        </figure>
+        <div className="govrs-footer__content">
         {asidePosition === 'before' && children ? (
           <aside className={`govrs-footer__aside govrs-footer__aside--before`} aria-label="footer-aside">
             {children}
@@ -169,9 +171,9 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
             {children}
           </aside>
         ) : null}
-      </div>
+        </div>
 
-      <div className="govrs-footer__images">
+        <div className="govrs-footer__images">
         {hasSocial ? (
           <div className="govrs-footer__socialBlock">
             <div className="govrs-footer__social-title">Redes Sociais</div>
@@ -205,20 +207,26 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
             <img key={i} src={src} alt="rodape-logo" />
           ))}
         </div>
-      </div>
-      <div className="govrs-footer__bottom">
-        <div className="govrs-footer__separator" />
-        <p className="govrs-footer__license">
-          Texto destinado a exibição das informações relacionadas à{' '}
-          {license ? (
-            <a href={license} className="govrs-footer__license-link" target="_blank" rel="noopener noreferrer">
-              <strong>licença de uso</strong>
-            </a>
-          ) : (
-            <strong>licença de uso</strong>
-          )}
-          .
-        </p>
+        </div>
+        <div className="govrs-footer__bottom">
+          <div className="govrs-footer__separator" />
+          <div className="govrs-footer__license-row">
+            <p className="govrs-footer__license">
+              Texto destinado a exibição das informações relacionadas à{' '}
+              {license ? (
+                <a href={license} className="govrs-footer__license-link" target="_blank" rel="noopener noreferrer">
+                  <strong>licença de uso</strong>
+                </a>
+              ) : (
+                <strong>licença de uso</strong>
+              )}
+              .
+            </p>
+            <div className="govrs-footer__brand" aria-hidden="true">
+              <img className="govrs-footer__brand-logo" src={procergsLogo} alt="" />
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );

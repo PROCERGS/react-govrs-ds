@@ -1,4 +1,4 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
 
 .carousel-container {
   position: relative;
@@ -14,7 +14,7 @@
   overflow: hidden;
   width: 100%;
   height: var(--govrs-size-media-carousel, 31.25rem);
-  background: var(--govrs-color-contrast-background, #000000);
+  background: var(--govrs-color-media-backdrop, #000000);
   cursor: pointer;
 }
 
@@ -34,8 +34,8 @@
   justify-content: center;
   background: linear-gradient(
     135deg,
-    var(--govrs-color-contrast-surface, #1a1a1a) 0%,
-    var(--govrs-color-contrast-surface-alt, #2d2d2d) 100%
+    var(--govrs-color-media-surface, #1a1a1a) 0%,
+    var(--govrs-color-media-surface-alt, #2d2d2d) 100%
   );
   color: var(--govrs-color-text-muted, #999999);
   gap: var(--govrs-space-4, 1rem);
@@ -181,7 +181,7 @@
 }
 
 .carousel-video {
-  background-color: var(--govrs-color-contrast-background, #000000);
+  background-color: var(--govrs-color-media-backdrop, #000000);
 }
 
 .carousel-image-placeholder {

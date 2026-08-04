@@ -171,6 +171,7 @@ export const Page: Story = {
           <li>Navegue pelo menu lateral a partir da intenção de uso: ações, formulários, busca, feedback, conteúdo, sobreposições e tipografia.</li>
           <li>Abra primeiro a story de documentação para entender o contrato público antes de testar controls ou composições.</li>
           <li>Use stories interativas para validar estados e variações sem depender de aplicações consumidoras, ajustando props pelo painel de Controls.</li>
+          <li>Para verificar o alto contraste, abra uma story Interativo, ative o switch <strong>modoContraste</strong> no painel de Controls e confira fundos pretos, bordas brancas, textos e ícones funcionais brancos; imagens, vídeos e mapas devem permanecer preservados.</li>
           <li>Considere o Storybook como referência oficial de demonstração do design system durante evolução, review e validação manual.</li>
         </ul>
       </SectionCard>

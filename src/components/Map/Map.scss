@@ -18,7 +18,7 @@
 .govrs-map__marker-list select {
   width: 100%;
   display: block;
-  font-family: var(--govrs-font-family-base, Arial, sans-serif);
+  font-family: var(--govrs-font-family-base, 'Noto Sans', sans-serif);
   font-size: var(--govrs-font-size-16, 1rem);
   color: var(--govrs-color-text-secondary, #333333);
   background-color: var(--govrs-color-surface-base, #ffffff);

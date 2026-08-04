@@ -1,11 +1,15 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.2.2",
+  "version": "0.3.3",
   "private": false,
   "type": "module",
   "sideEffects": [
     "**/*.css",
-    "**/*.scss"
+    "**/*.scss",
+    "./dist/foundation.js",
+    "./dist/foundation.cjs",
+    "./dist/tokens.js",
+    "./dist/tokens.cjs"
   ],
   "main": "./dist/react-govrs-ds.es.js",
   "module": "./dist/react-govrs-ds.es.js",
@@ -25,6 +29,13 @@
       "import": "./dist/foundation.js",
       "require": "./dist/foundation.cjs",
       "default": "./dist/foundation.js"
+    },
+    "./tokens": {
+      "types": "./dist/types/runtime-tokens.d.ts",
+      "browser": "./dist/tokens.js",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs",
+      "default": "./dist/tokens.js"
     },
     "./components/*": "./dist/components/*"
   },
