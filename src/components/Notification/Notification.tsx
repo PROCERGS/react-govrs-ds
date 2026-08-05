@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faXmark } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { Button } from '../Button/Button'
-import { Tab } from '../Tab/Tab'
+import { Tab, type TabIconPosition } from '../Tab/Tab'
 import './Notification.scss'
 
 export type NotificationItem = {
@@ -29,6 +29,7 @@ export type NotificationProps = {
   buttonVariant?: 'primary' | 'secondary' | 'tertiary'
   buttonSize?: 'small' | 'medium' | 'large'
   tabs: NotificationTab[]
+  iconPosition?: TabIconPosition
   showUserArea?: boolean
   user?: {
     name?: ReactNode
@@ -46,6 +47,7 @@ export function Notification({
   buttonVariant = 'secondary',
   buttonSize = 'medium',
   tabs,
+  iconPosition,
   showUserArea = true,
   user,
   onClose,
@@ -200,6 +202,7 @@ export function Notification({
               <Tab
                 ariaLabel="Categorias de notificações"
                 hideTabList={!hasVisualTabs}
+                iconPosition={iconPosition}
                 className={[
                   'govrs-notification__tabs',
                   hasVisualTabs && showCloseButton && !hasUserArea

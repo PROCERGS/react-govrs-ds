@@ -59,6 +59,17 @@
   font-weight: var(--govrs-font-weight-medium);
 }
 
+.govrs-tab__trigger--icon-top,
+.govrs-tab__trigger--icon-bottom {
+  flex-direction: column;
+  gap: var(--govrs-space-1);
+}
+
+.govrs-tab__trigger--icon-left,
+.govrs-tab__trigger--icon-right {
+  flex-direction: row;
+}
+
 .govrs-tab__icon {
   flex: 0 0 auto;
 }

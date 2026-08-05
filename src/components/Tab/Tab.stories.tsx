@@ -5,6 +5,7 @@ import {
   faFolder,
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 import {
   DocsHero,
@@ -13,39 +14,75 @@ import {
   SectionCard,
   storyDocsStyles,
 } from '../../../.storybook/docs/storyDocs'
-import { Tab, type TabId } from './Tab'
+import { Tab, type TabIconPosition, type TabId } from './Tab'
 import './Tab.scss'
 import '../../foundations/styles/index.scss'
 
-type InteractiveTabItem = {
-  id: string
-  label: string
-}
+type TabMode = 'text' | 'iconAndText' | 'iconOnly'
 
 type InteractiveArgs = {
-  tabs: InteractiveTabItem[]
+  tabMode: TabMode
+  iconPosition: TabIconPosition
   modoContraste?: boolean
 }
 
-function InteractivePreview({ tabs }: InteractiveArgs) {
-  const resolvedTabs =
-    tabs.length > 0
-      ? tabs
-      : [{ id: 'overview', label: 'Visão geral' }]
-  const [selectedId, setSelectedId] = useState<TabId>(resolvedTabs[0].id)
-  const activeId = resolvedTabs.some((tab) => tab.id === selectedId)
+const interactiveTabs: Array<{
+  id: string
+  label: string
+  icon: IconDefinition
+}> = [
+  { id: 'notifications', label: 'Notificações', icon: faBell },
+  { id: 'favorites', label: 'Favoritos', icon: faStar },
+  { id: 'files', label: 'Arquivos', icon: faFolder },
+]
+
+function InteractivePreview({ tabMode, iconPosition }: InteractiveArgs) {
+  const [selectedId, setSelectedId] = useState<TabId>(interactiveTabs[0].id)
+  const activeId = interactiveTabs.some((tab) => tab.id === selectedId)
     ? selectedId
-    : resolvedTabs[0].id
+    : interactiveTabs[0].id
 
   return (
-    <Tab activeId={activeId} onActiveChange={setSelectedId} ariaLabel="Demonstração de abas">
-      {resolvedTabs.map((tab) => (
-        <Tab.Item key={tab.id} id={tab.id} label={tab.label}>
+    <Tab
+      activeId={activeId}
+      onActiveChange={setSelectedId}
+      ariaLabel="Demonstração de abas"
+      iconPosition={tabMode === 'iconAndText' ? iconPosition : undefined}
+    >
+      {interactiveTabs.map((tab) => {
+        const content = (
           <TabContent title={tab.label}>
             <p>Conteúdo da aba &quot;{tab.label}&quot;.</p>
           </TabContent>
-        </Tab.Item>
-      ))}
+        )
+
+        if (tabMode === 'iconOnly') {
+          return (
+            <Tab.Item key={tab.id} id={tab.id} icon={tab.icon} ariaLabel={tab.label}>
+              {content}
+            </Tab.Item>
+          )
+        }
+
+        if (tabMode === 'iconAndText') {
+          return (
+            <Tab.Item
+              key={tab.id}
+              id={tab.id}
+              label={tab.label}
+              icon={tab.icon}
+            >
+              {content}
+            </Tab.Item>
+          )
+        }
+
+        return (
+          <Tab.Item key={tab.id} id={tab.id} label={tab.label}>
+            {content}
+          </Tab.Item>
+        )
+      })}
     </Tab>
   )
 }
@@ -131,7 +168,7 @@ const textTabsExampleCode = `<Tab defaultActiveId="overview" ariaLabel="Seções
 
 function IconTextTabsPreview() {
   return (
-    <Tab defaultActiveId="notifications" ariaLabel="Categorias de mensagens">
+    <Tab defaultActiveId="notifications" ariaLabel="Categorias de mensagens" iconPosition="top">
       <Tab.Item id="notifications" label="Notificações" icon={faBell}>
         <TabContent title="Notificações">
           <p>Você tem três notificações pendentes.</p>
@@ -153,7 +190,7 @@ function IconTextTabsPreview() {
 
 const iconTextTabsExampleCode = `import { faBell, faStar, faFolder } from '@fortawesome/free-solid-svg-icons'
 
-<Tab defaultActiveId="notifications" ariaLabel="Categorias de mensagens">
+<Tab defaultActiveId="notifications" ariaLabel="Categorias de mensagens" iconPosition="top">
   <Tab.Item id="notifications" label="Notificações" icon={faBell}>
     <section>
       <h4>Notificações</h4>
@@ -252,11 +289,11 @@ export const Documentation: Story = {
 
       <SectionCard
         title="Texto e ícone"
-        description="Passe label e icon para exibir os dois elementos no trigger."
+        description="Passe label e icon em cada Tab.Item. Defina iconPosition no Tab para padronizar a posição do ícone em todas as abas (left, right, top ou bottom)."
       >
         <SandboxExample
           title="Categorias de mensagens"
-          description="O ícone complementa a label visível do trigger."
+          description="iconPosition=&quot;top&quot; no Tab aplica o ícone acima do texto em todos os itens."
           code={iconTextTabsExampleCode}
         >
           <IconTextTabsPreview />
@@ -283,11 +320,8 @@ export const Interactive: StoryObj<InteractiveArgs> = {
   name: 'Interativo',
   render: (args) => <InteractivePreview {...args} />,
   args: {
-    tabs: [
-      { id: 'overview', label: 'Visão geral' },
-      { id: 'favorites', label: 'Favoritos' },
-      { id: 'notifications', label: 'Notificações' },
-    ],
+    tabMode: 'text',
+    iconPosition: 'left',
     modoContraste: false,
   },
   parameters: {
@@ -300,7 +334,6 @@ export const Interactive: StoryObj<InteractiveArgs> = {
         'ariaLabel',
         'hideTabList',
         'className',
-        'preset',
       ],
     },
   },
@@ -310,12 +343,23 @@ export const Interactive: StoryObj<InteractiveArgs> = {
       description: 'Visualiza o componente no modo de alto contraste.',
       table: { category: 'Acessibilidade' },
     },
-    tabs: {
-      control: 'object',
-      description: 'Lista de abas no formato [{ id, label }]. Altere os nomes ou a quantidade de itens.',
+    tabMode: {
+      control: 'select',
+      options: ['text', 'iconAndText', 'iconOnly'],
+      description: 'Tipo de aba: somente texto, ícone e texto, ou somente ícone.',
       table: {
-        category: 'Conteúdo',
-        type: { summary: 'Array<{ id: string; label: string }>' },
+        category: 'Aparência',
+        type: { summary: "'text' | 'iconAndText' | 'iconOnly'" },
+      },
+    },
+    iconPosition: {
+      control: 'select',
+      options: ['left', 'right', 'top', 'bottom'],
+      description: 'Posição do ícone no Tab. Só tem efeito quando as abas têm label e icon.',
+      if: { arg: 'tabMode', eq: 'iconAndText' },
+      table: {
+        category: 'Aparência',
+        type: { summary: "'left' | 'right' | 'top' | 'bottom'" },
       },
     },
   },

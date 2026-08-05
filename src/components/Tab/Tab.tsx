@@ -15,6 +15,7 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import './Tab.scss'
 
 export type TabId = string | number
+export type TabIconPosition = 'left' | 'right' | 'top' | 'bottom'
 type TabLabel = ReactNode
 
 type TabItemBaseProps = {
@@ -45,6 +46,7 @@ export type TabProps = {
   onActiveChange?: (activeId: TabId) => void
   ariaLabel?: string
   hideTabList?: boolean
+  iconPosition?: TabIconPosition
   className?: string
 }
 
@@ -93,6 +95,7 @@ function TabRoot({
   onActiveChange,
   ariaLabel = 'Abas',
   hideTabList = false,
+  iconPosition = 'left',
   className,
 }: TabProps) {
   const generatedId = useId().replace(/:/g, '')
@@ -187,8 +190,24 @@ function TabRoot({
           {items.map((item) => {
             const { id, triggerId, panelId, element } = item
             const isActive = id === resolvedActiveId
-            const { ariaLabel: itemAriaLabel, disabled, icon, label } = element.props
-            const isIconOnly = icon && !label
+            const {
+              ariaLabel: itemAriaLabel,
+              disabled,
+              icon,
+              label,
+            } = element.props
+            const hasIconAndLabel = Boolean(icon && label)
+            const isIconOnly = Boolean(icon && !label)
+            const resolvedIconPosition = hasIconAndLabel ? iconPosition : undefined
+            const iconAfterLabel =
+              resolvedIconPosition === 'right' || resolvedIconPosition === 'bottom'
+            const iconNode = icon ? (
+              <FontAwesomeIcon
+                icon={icon}
+                aria-hidden
+                className={label ? 'govrs-tab__icon' : undefined}
+              />
+            ) : null
 
             return (
               <button
@@ -214,18 +233,22 @@ function TabRoot({
                   'govrs-tab__trigger',
                   isActive && 'govrs-tab__trigger--active',
                   isIconOnly && 'govrs-tab__trigger--icon-only',
+                  resolvedIconPosition && `govrs-tab__trigger--icon-${resolvedIconPosition}`,
                 )}
                 onClick={() => activateTab(id)}
                 onKeyDown={(event) => handleTabKeyDown(event, id)}
               >
-                {icon ? (
-                  <FontAwesomeIcon
-                    icon={icon}
-                    aria-hidden
-                    className={label ? 'govrs-tab__icon' : undefined}
-                  />
-                ) : null}
-                {label}
+                {iconAfterLabel ? (
+                  <>
+                    {label}
+                    {iconNode}
+                  </>
+                ) : (
+                  <>
+                    {iconNode}
+                    {label}
+                  </>
+                )}
               </button>
             )
           })}

@@ -94,7 +94,7 @@ const tabs = [
   },
 ]
 
-<Notification tabs={tabs} />`
+<Notification tabs={tabs} iconPosition="top" />`
 
 const tabsIconOnlyCode = `import { faBell, faTriangleExclamation, faRefresh } from '@fortawesome/free-solid-svg-icons'
 
@@ -374,6 +374,7 @@ type Story = StoryObj<typeof meta>
 
 type InteractivePreviewProps = {
   tabMode?: 'text' | 'iconAndText' | 'iconOnly' | 'single'
+  iconPosition?: 'left' | 'right' | 'top' | 'bottom'
   showUserArea?: boolean
   emptyState?: boolean
   dataPreset?: 'default' | 'allNew' | 'withDisabled' | 'allRead' | 'single'
@@ -439,6 +440,7 @@ function TabsIconAndTextPreview() {
         buttonLabel="Notificações"
         useBellIcon
         tabs={tabsWithIconAndText}
+        iconPosition="top"
         showUserArea={false}
       />
     </div>
@@ -619,7 +621,7 @@ type NotificationTab = {
 
         <SandboxExample
           title="Exemplo com abas visuais — ícone e texto"
-          description="Informe icon e label na tab. O ícone aparece à esquerda do texto."
+          description="Informe icon e label na tab. A posição do ícone é definida por iconPosition no Notification (left, right, top ou bottom)."
           code={tabsWithIconAndTextCode}
           allowOverflow
         >
@@ -782,6 +784,7 @@ function InteractivePreview(args: InteractivePreviewProps) {
         buttonVariant="secondary"
         buttonSize="medium"
         tabs={resolvedTabs}
+        iconPosition={args.tabMode === 'iconAndText' ? args.iconPosition : undefined}
         showUserArea={args.showUserArea}
         user={
           args.showUserArea
@@ -803,11 +806,12 @@ function InteractivePreview(args: InteractivePreviewProps) {
   )
 }
 
-export const Interactive: StoryObj<typeof InteractivePreview> = {
+export const Interactive: StoryObj<InteractivePreviewProps> = {
   name: 'Interativo',
   render: (args) => <InteractivePreview {...args} />,
   args: {
     tabMode: 'text',
+    iconPosition: 'left',
     showUserArea: true,
     emptyState: false,
     dataPreset: 'default',
@@ -815,18 +819,13 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
   },
   parameters: {
     controls: {
-      exclude: [
-        'buttonLabel',
-        'useBellIcon',
-        'buttonVariant',
-        'buttonSize',
-        'iconOnly',
-        'tabs',
-        'user',
-        'showCloseButton',
-        'onClose',
-        'onNotificationClick',
-        'className',
+      include: [
+        'tabMode',
+        'iconPosition',
+        'showUserArea',
+        'emptyState',
+        'dataPreset',
+        'modoContraste',
       ],
     },
   },
@@ -841,20 +840,38 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
       options: ['single', 'text', 'iconAndText', 'iconOnly'],
       description:
         'Modo das abas: uma única lista (single), só texto (text), ícone + texto (iconAndText) ou só ícone (iconOnly).',
-      table: { defaultValue: { summary: 'text' } },
+      table: {
+        category: 'Aparência',
+        defaultValue: { summary: 'text' },
+      },
+    },
+    iconPosition: {
+      name: 'iconPosition',
+      control: 'select',
+      options: ['left', 'right', 'top', 'bottom'],
+      description: 'Posição do ícone nas abas. Disponível quando tabMode é iconAndText.',
+      if: { arg: 'tabMode', eq: 'iconAndText' },
+      table: {
+        category: 'Aparência',
+        type: { summary: "'left' | 'right' | 'top' | 'bottom'" },
+        defaultValue: { summary: 'left' },
+      },
     },
     showUserArea: {
       control: 'boolean',
+      table: { category: 'Conteúdo' },
     },
     emptyState: {
       control: 'boolean',
       description: 'Mostra estado vazio de notificações.',
+      table: { category: 'Conteúdo' },
     },
     dataPreset: {
       control: 'select',
       options: ['default', 'allNew', 'withDisabled', 'allRead', 'single'],
       description: 'Conjunto de dados das notificações exibidas na primeira aba.',
       table: {
+        category: 'Conteúdo',
         defaultValue: { summary: 'default' },
         type: {
           summary: 'string',
