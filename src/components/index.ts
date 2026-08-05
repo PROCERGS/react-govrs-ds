@@ -25,6 +25,7 @@ export { Select } from './Select/Select';
 export { Slider } from './Slider/Slider';
 export { Step } from './Step/Step';
 export { Switch } from './Switch/Switch';
+export { Tab } from './Tab/Tab';
 export { Table } from './Table/Table';
 export { Tag } from './Tag/Tag';
 export { Tooltip } from './Tooltip/Tooltip';

@@ -101,7 +101,6 @@ const tabsIconOnlyCode = `import { faBell, faTriangleExclamation, faRefresh } fr
 const tabs = [
   {
     id: 'all',
-    // sem label = somente \u00edcone na aba
     icon: faBell,
     items: [...],
   },
@@ -198,25 +197,6 @@ const triggerStylesExampleCode = `<div style={{ display: 'flex', gap: 12, flexWr
   />
 </div>`
 
-const interactiveSnippetCode = `const tabs = [
-  {
-    id: 'all',
-    label: 'Todas',
-    items: [
-      { id: 'n1', title: 'Seu documento foi aprovado', description: 'Atualização do processo', time: 'Há 00 min', isNew: true },
-    ],
-  },
-]
-
-<Notification
-  buttonLabel="Notificações (3)"
-  buttonVariant="secondary"
-  useBellIcon
-  tabs={tabs}
-  showUserArea
-  user={{ name: 'Nome do Usuário', email: 'nome.sobrenome@dominio.com' }}
-/>`
-
 const tabsSingle: Notification.Tab[] = [
   {
     id: 'all',
@@ -308,7 +288,6 @@ const tabsIconOnly: Notification.Tab[] = [
   { id: 'updates', icon: faRefresh, items: tabsMultiple[1].items },
 ]
 
-// Conjuntos de dados para o Interativo
 const presetDefault: Notification.Tab[] = [
   {
     id: 'all',
@@ -394,15 +373,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 type InteractivePreviewProps = {
-  buttonLabel?: string
-  useBellIcon?: boolean
-  buttonVariant?: 'primary' | 'secondary' | 'tertiary'
-  buttonSize?: 'small' | 'medium' | 'large'
   tabMode?: 'text' | 'iconAndText' | 'iconOnly' | 'single'
   showUserArea?: boolean
-  iconOnly?: boolean
   emptyState?: boolean
   dataPreset?: 'default' | 'allNew' | 'withDisabled' | 'allRead' | 'single'
+  modoContraste?: boolean
 }
 
 function BasicPreview() {
@@ -575,6 +550,7 @@ export const Documentation: Story = {
   },
   parameters: {
     docsOnly: true,
+    controls: { disable: true },
   },
   render: () => (
     <DocsStoryLayout>
@@ -601,7 +577,7 @@ export const Documentation: Story = {
 
 type NotificationTab = {
   id: string | number
-  label?: ReactNode   // op\u00e7\u00f5es: s\u00f3 texto (label), s\u00f3 \u00edcone (icon), \u00edcone + texto (icon + label)
+  label?: ReactNode
   icon?: IconDefinition
   items: NotificationItem[]
 }`}</code>
@@ -773,25 +749,38 @@ type NotificationTab = {
 function InteractivePreview(args: InteractivePreviewProps) {
   const [selectedNotification, setSelectedNotification] = useState<string | number | null>(null)
 
-  const resolvedTabs = args.emptyState
+  const presetItems =
+    (dataPresets[args.dataPreset ?? 'default'] ?? presetDefault)[0]?.items ?? []
+
+  const resolvedTabs: Notification.Tab[] = args.emptyState
     ? [{ id: 'all', label: 'Todas', items: [] }]
     : args.tabMode === 'iconAndText'
-      ? tabsWithIconAndText
+      ? [
+          { id: 'all', label: 'Todas', icon: faBell, items: presetItems },
+          { id: 'important', label: 'Importantes', icon: faStar, items: [] },
+          { id: 'messages', label: 'Mensagens', icon: faEnvelope, items: [] },
+        ]
       : args.tabMode === 'iconOnly'
-        ? tabsIconOnly
+        ? [
+            { id: 'all', icon: faBell, items: presetItems },
+            { id: 'important', icon: faTriangleExclamation, items: [] },
+            { id: 'updates', icon: faRefresh, items: [] },
+          ]
         : args.tabMode === 'text'
-          ? tabsMultiple
-          : dataPresets[args.dataPreset ?? 'default'] ?? presetDefault
-
-  const resolvedButtonLabel = args.iconOnly ? '' : args.buttonLabel
+          ? [
+              { id: 'important', label: 'Importantes', items: presetItems },
+              { id: 'updates', label: 'Atualizações', items: [] },
+              { id: 'messages', label: 'Mensagens', items: [] },
+            ]
+          : [{ id: 'all', label: 'Todas', items: presetItems }]
 
   return (
     <div style={{ display: 'grid', gap: 20 }}>
       <Notification
-        buttonLabel={resolvedButtonLabel}
-        useBellIcon={args.useBellIcon}
-        buttonVariant={args.buttonVariant}
-        buttonSize={args.buttonSize}
+        buttonLabel="Notificações (3)"
+        useBellIcon
+        buttonVariant="secondary"
+        buttonSize="medium"
         tabs={resolvedTabs}
         showUserArea={args.showUserArea}
         user={
@@ -810,15 +799,6 @@ function InteractivePreview(args: InteractivePreviewProps) {
           Última notificação clicada: <strong>{selectedNotification}</strong>
         </p>
       ) : null}
-
-      <div>
-        <p style={{ ...storyDocsStyles.statText, marginBottom: 8 }}>
-          <strong>Código para copiar e colar:</strong>
-        </p>
-        <pre style={storyDocsStyles.codeBlock}>
-          <code>{interactiveSnippetCode}</code>
-        </pre>
-      </div>
     </div>
   )
 }
@@ -827,33 +807,34 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
   name: 'Interativo',
   render: (args) => <InteractivePreview {...args} />,
   args: {
-    buttonLabel: 'Notificações (3)',
-    useBellIcon: true,
-    buttonVariant: 'secondary',
-    buttonSize: 'medium',
     tabMode: 'text',
     showUserArea: true,
-    iconOnly: false,
     emptyState: false,
     dataPreset: 'default',
+    modoContraste: false,
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'buttonLabel',
+        'useBellIcon',
+        'buttonVariant',
+        'buttonSize',
+        'iconOnly',
+        'tabs',
+        'user',
+        'showCloseButton',
+        'onClose',
+        'onNotificationClick',
+        'className',
+      ],
+    },
   },
   argTypes: {
-    buttonLabel: {
-      control: 'text',
-      description: 'Texto do botão disparador.',
-      table: { type: { summary: 'string' } },
-    },
-    useBellIcon: {
+    modoContraste: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'true' } },
-    },
-    buttonVariant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'tertiary'],
-    },
-    buttonSize: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
     },
     tabMode: {
       control: 'select',
@@ -865,10 +846,6 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
     showUserArea: {
       control: 'boolean',
     },
-    iconOnly: {
-      control: 'boolean',
-      description: 'Quando true, ignora buttonLabel e mostra somente o sino.',
-    },
     emptyState: {
       control: 'boolean',
       description: 'Mostra estado vazio de notificações.',
@@ -876,7 +853,7 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
     dataPreset: {
       control: 'select',
       options: ['default', 'allNew', 'withDisabled', 'allRead', 'single'],
-      description: 'Conjunto de dados das notificações. Ativo apenas quando tabMode é "single".',
+      description: 'Conjunto de dados das notificações exibidas na primeira aba.',
       table: {
         defaultValue: { summary: 'default' },
         type: {

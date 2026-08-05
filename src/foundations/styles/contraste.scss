@@ -82,6 +82,42 @@
   --govrs-button-border: var(--govrs-color-contrast-control-border);
 }
 
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tab {
+  --govrs-tab-list-background: var(--govrs-color-contrast-control-background);
+  --govrs-tab-panel-background: var(--govrs-color-contrast-control-background);
+  --govrs-tab-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-border: var(--govrs-color-contrast-control-border);
+  --govrs-tab-active-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-active-border: var(--govrs-color-contrast-control-border);
+  --govrs-tab-hover-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-focus: var(--govrs-color-contrast-accent);
+}
+
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-notification {
+  --govrs-notification-panel-background: var(--govrs-color-contrast-control-background);
+  --govrs-notification-panel-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-panel-muted: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-panel-border: var(--govrs-color-contrast-control-border);
+  --govrs-notification-tabs-background: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-hover: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-active: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-interaction-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-accent: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-accent-hover: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-new-indicator: var(--govrs-color-contrast-accent);
+  --govrs-notification-panel-shadow: none;
+}
+
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-notification .govrs-tab {
+  --govrs-tab-list-background: var(--govrs-notification-tabs-background);
+  --govrs-tab-panel-background: var(--govrs-notification-panel-background);
+  --govrs-tab-foreground: var(--govrs-notification-panel-foreground);
+  --govrs-tab-border: var(--govrs-notification-panel-border);
+  --govrs-tab-active-foreground: var(--govrs-notification-accent);
+  --govrs-tab-active-border: var(--govrs-notification-accent);
+  --govrs-tab-hover-foreground: var(--govrs-notification-accent-hover);
+}
+
 :is(.high-contrast, [data-govrs-contrast='high']) .govrs-select {
   --govrs-select-label: var(--govrs-color-contrast-foreground);
   --govrs-select-control-background: var(--govrs-color-contrast-field-background);

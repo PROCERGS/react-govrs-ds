@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faXmark } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { Button } from '../Button/Button'
+import { Tab } from '../Tab/Tab'
 import './Notification.scss'
 
 export type NotificationItem = {
@@ -16,44 +17,26 @@ export type NotificationItem = {
 
 export type NotificationTab = {
   id: string | number
-  /**
-   * Conteúdo textual/JSX da aba.
-   * Combinações suportadas:
-   * - só texto: label
-   * - só ícone: icon
-   * - ícone e texto: icon + label
-   */
   label?: ReactNode
-  /** Ícone Font Awesome para a aba */
   icon?: IconDefinition
+  ariaLabel?: string
   items: NotificationItem[]
 }
 
 export type NotificationProps = {
-  /** Rótulo do botão que dispara o modal (se vazio, mostra apenas o ícone) */
   buttonLabel?: ReactNode
-  /** Usar ícone de sininho no botão */
   useBellIcon?: boolean
-  /** Variante do botão */
   buttonVariant?: 'primary' | 'secondary' | 'tertiary'
-  /** Tamanho do botão */
   buttonSize?: 'small' | 'medium' | 'large'
-  /** Abas de notificações */
   tabs: NotificationTab[]
-  /** Mostrar seção de usuário */
   showUserArea?: boolean
-  /** Dados do usuário (nome e email) */
   user?: {
     name?: ReactNode
     email?: ReactNode
   }
-  /** Callback quando fechar o modal */
   onClose?: () => void
-  /** Exibir botão de fechar no painel (padrão: true) */
   showCloseButton?: boolean
-  /** Callback quando clicar em uma notificação */
   onNotificationClick?: (notificationId: string | number) => void
-  /** Classe customizada para o container */
   className?: string
 }
 
@@ -72,7 +55,6 @@ export function Notification({
 }: NotificationProps) {
   const validTabs = tabs && tabs.length > 0 ? tabs : []
   const [isOpen, setIsOpen] = useState(false)
-  const [activeTabId, setActiveTabId] = useState(validTabs[0]?.id)
   const [panelAlignment, setPanelAlignment] = useState<'left' | 'right'>('left')
   const containerRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -158,11 +140,8 @@ export function Notification({
   const hasVisualTabs = validTabs.length > 1
   const shouldReserveContentTopSpace = showCloseButton && !hasUserArea && !hasVisualTabs
 
-  const activeTab = validTabs.find((tab) => tab.id === activeTabId)
-
   return (
     <div ref={containerRef} className={`govrs-notification ${className || ''}`}>
-      {/* Botão para abrir modal */}
       <div ref={triggerRef}>
         <Button
           variant={buttonVariant}
@@ -179,8 +158,6 @@ export function Notification({
           {buttonLabel}
         </Button>
       </div>
-
-      {/* Painel de notificações */}
       {isOpen && (
         <div
           id={panelId}
@@ -201,8 +178,6 @@ export function Notification({
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             )}
-
-            {/* Área do usuário */}
             {hasUserArea && (
               <div
                 className={[
@@ -221,101 +196,104 @@ export function Notification({
               </div>
             )}
 
-            {/* Tabs */}
-            {hasVisualTabs && (
-              <div
+            {validTabs.length > 0 ? (
+              <Tab
+                ariaLabel="Categorias de notificações"
+                hideTabList={!hasVisualTabs}
                 className={[
                   'govrs-notification__tabs',
-                  showCloseButton && !hasUserArea ? 'govrs-notification__tabs--with-close' : '',
+                  hasVisualTabs && showCloseButton && !hasUserArea
+                    ? 'govrs-notification__tabs--with-close'
+                    : '',
                 ].filter(Boolean).join(' ')}
               >
-                <div className="govrs-notification__tab-list" role="tablist">
-                  {validTabs.map((tab) => {
-                    const isIconOnly = tab.icon && !tab.label
-                    const ariaLabel = typeof tab.label === 'string'
-                      ? tab.label
-                      : isIconOnly
-                        ? `Aba ${String(tab.id)}`
-                        : undefined
+                {validTabs.map((tab) => {
+                  const contentClassName = [
+                    'govrs-notification__content',
+                    shouldReserveContentTopSpace ? 'govrs-notification__content--with-close' : '',
+                  ].filter(Boolean).join(' ')
 
-                    return (
-                      <button
-                        key={tab.id}
-                        role="tab"
-                        aria-selected={tab.id === activeTabId}
-                        aria-label={ariaLabel}
-                        className={[
-                          'govrs-notification__tab',
-                          tab.id === activeTabId ? 'govrs-notification__tab--active' : '',
-                          isIconOnly ? 'govrs-notification__tab--icon-only' : '',
-                        ].filter(Boolean).join(' ')}
-                        onClick={() => setActiveTabId(tab.id)}
-                      >
-                        {tab.icon && (
-                          <FontAwesomeIcon
-                            icon={tab.icon}
-                            aria-hidden
-                            className={tab.label ? 'govrs-notification__tab-icon' : undefined}
-                          />
-                        )}
-                        {tab.label}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Lista de notificações */}
-            <div
-              className={[
-                'govrs-notification__content',
-                shouldReserveContentTopSpace ? 'govrs-notification__content--with-close' : '',
-              ].filter(Boolean).join(' ')}
-            >
-              {activeTab && activeTab.items.length > 0 ? (
-                <div className="govrs-notification__items">
-                  {activeTab.items.map((item) => (
-                    <div
-                      key={item.id}
-                      className={`govrs-notification__item${item.disabled ? ' govrs-notification__item--disabled' : ''}`}
-                      role="button"
-                      tabIndex={item.disabled ? -1 : 0}
-                      aria-disabled={item.disabled || undefined}
-                      onClick={item.disabled ? undefined : () => handleNotificationClick(item.id)}
-                      onKeyDown={(e) => {
-                        if (item.disabled) return
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault()
-                          handleNotificationClick(item.id)
-                        }
-                      }}
-                    >
-                      <div className="govrs-notification__item-header">
-                        <h3 className="govrs-notification__item-title">
-                          {item.isNew ? (
-                            <span className="govrs-notification__item-new-indicator" aria-hidden />
-                          ) : null}
-                          <span>{item.title}</span>
-                        </h3>
-                        {item.time && (
-                          <span className="govrs-notification__item-time">
-                            {item.time}
-                          </span>
-                        )}
-                      </div>
-                      <p className="govrs-notification__item-description">
-                        {item.description}
-                      </p>
+                  const notificationContent = (
+                    <div className={contentClassName}>
+                      {tab.items.length > 0 ? (
+                        <div className="govrs-notification__items">
+                          {tab.items.map((item) => (
+                            <div
+                              key={item.id}
+                              className={`govrs-notification__item${item.disabled ? ' govrs-notification__item--disabled' : ''}`}
+                              role="button"
+                              tabIndex={item.disabled ? -1 : 0}
+                              aria-disabled={item.disabled || undefined}
+                              onClick={item.disabled ? undefined : () => handleNotificationClick(item.id)}
+                              onKeyDown={(event) => {
+                                if (item.disabled) return
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault()
+                                  handleNotificationClick(item.id)
+                                }
+                              }}
+                            >
+                              <div className="govrs-notification__item-header">
+                                <h3 className="govrs-notification__item-title">
+                                  {item.isNew ? (
+                                    <span className="govrs-notification__item-new-indicator" aria-hidden />
+                                  ) : null}
+                                  <span>{item.title}</span>
+                                </h3>
+                                {item.time ? (
+                                  <span className="govrs-notification__item-time">{item.time}</span>
+                                ) : null}
+                              </div>
+                              <p className="govrs-notification__item-description">{item.description}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="govrs-notification__empty-state">
+                          <p>Nenhuma notificação neste momento</p>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              ) : (
+                  )
+
+                  if (tab.icon && !tab.label) {
+                    return (
+                      <Tab.Item
+                        key={tab.id}
+                        id={tab.id}
+                        icon={tab.icon}
+                        ariaLabel={tab.ariaLabel ?? `Aba ${String(tab.id)}`}
+                      >
+                        {notificationContent}
+                      </Tab.Item>
+                    )
+                  }
+
+                  return (
+                    <Tab.Item
+                      key={tab.id}
+                      id={tab.id}
+                      label={tab.label ?? `Aba ${String(tab.id)}`}
+                      icon={tab.icon}
+                      ariaLabel={tab.ariaLabel}
+                    >
+                      {notificationContent}
+                    </Tab.Item>
+                  )
+                })}
+              </Tab>
+            ) : (
+              <div
+                className={[
+                  'govrs-notification__content',
+                  shouldReserveContentTopSpace ? 'govrs-notification__content--with-close' : '',
+                ].filter(Boolean).join(' ')}
+              >
                 <div className="govrs-notification__empty-state">
                   <p>Nenhuma notificação neste momento</p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}
