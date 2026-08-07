@@ -114,7 +114,7 @@ const DEFAULT_LINKS = [
 ];
 
 const CSS_TEXT = normalizeEscapedHtml(`
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("//fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 :host {
   --barra-estado-height: 32px;
@@ -128,7 +128,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   --barra-estado-container-max-992: 970px;
   --barra-estado-container-max-1200: 1170px;
   display: block;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   -webkit-animation: bugfix infinite 1s;
   animation: bugfix infinite 1s;
 }
@@ -220,6 +220,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
   list-style: none;
+  font-family: "Roboto", Arial, sans-serif;
 }
 
 .barra-estado__menu > li {
@@ -233,16 +234,15 @@ const CSS_TEXT = normalizeEscapedHtml(`
   padding: 0 13px;
   color: var(--barra-estado-text);
   font-size: 12px;
-  font-weight: 700;
   line-height: 1;
   white-space: nowrap;
-  transition: box-shadow .25s linear, color .25s linear;
+  transition: all .25s linear;
 }
 
 
 .barra-estado__menu > li > a:visited,
 .barra-estado__menu > li > a:active {
-  color: var(--barra-estado-text) !important;
+
 }
 
 .barra-estado__menu > li > a:hover,
@@ -445,7 +445,7 @@ class BarraEstado extends HTMLElement {
   constructor() {
   super();
 
-  this._shadow = this.attachShadow({ mode: 'closed' });
+  this._shadow = this.attachShadow({ mode: 'open' });
 
   this._links = null;
   this._onToggleChange = null;
