@@ -113,8 +113,10 @@ const DEFAULT_LINKS = [
   { href: 'https://www.rs.gov.br/guria', label: 'GurIA', srPrefix: 'Estado ', svgHtml: GURIA_SVG },
 ];
 
+const GOOGLE_FONTS_ROBOTO_URL = 'https://fonts.googleapis.com/css2?family=Roboto&display=swap';
+
 const CSS_TEXT = normalizeEscapedHtml(`
-@import url("//fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("${GOOGLE_FONTS_ROBOTO_URL}");
 
 :host {
   --barra-estado-height: 32px;
