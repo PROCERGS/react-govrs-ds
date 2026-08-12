@@ -1,7 +1,7 @@
 import { useEffect, useState, type TouchEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { Stack, Text } from '../../primitives';
+import { Stack } from '../../primitives';
 import { breakpoints } from '../../tokens';
 import { CarouselEmptyState } from './CarouselEmptyState';
 import './CarouselDefault.scss'
@@ -171,20 +171,30 @@ export function CarouselDefault({
   const isPrevDisabled = !circular && currentIndex === 0;
   const isNextDisabled = !circular && currentIndex === items.length - 1;
   const shouldShowArrows = items.length > 1 && !(noArrowsMobile && isSmartphonePortrait);
+  const titleClass = [
+    isSmartphonePortrait ? 'headers-4' : 'headers-12',
+    'carousel-title',
+  ].join(' ');
+  const descriptionClass = [
+    isSmartphonePortrait ? 'paragraph-4-small' : 'paragraph-12-small',
+    'carousel-description',
+  ].join(' ');
 
   return (
     <div className="carousel-container carousel-default" aria-roledescription="carousel" aria-label="Carrossel padrão">
       <div className="carousel-wrapper">
         {shouldShowArrows ? (
-          <button
-            className={`carousel-button carousel-button-prev icon-${width}`}
-            type="button"
-            onClick={goToPrevious}
-            disabled={isPrevDisabled}
-            aria-label="Slide anterior"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
+          <div className="carousel-arrow carousel-arrow-prev">
+            <button
+              className={`carousel-button carousel-button-prev icon-${width}`}
+              type="button"
+              onClick={goToPrevious}
+              disabled={isPrevDisabled}
+              aria-label="Slide anterior"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+          </div>
         ) : null}
 
         <div
@@ -352,9 +362,9 @@ export function CarouselDefault({
                 {slideMedia}
                 {(item.title || item.description) && (
                   <Stack className="carousel-text" gap={1}>
-                    {item.title ? <h3 className="carousel-title">{item.title}</h3> : null}
+                    {item.title ? <h3 className={titleClass}>{item.title}</h3> : null}
                     {item.description ? (
-                      <Text className="carousel-description">{item.description}</Text>
+                      <p className={descriptionClass}>{item.description}</p>
                     ) : null}
                   </Stack>
                 )}
@@ -386,15 +396,17 @@ export function CarouselDefault({
         </div>
 
         {shouldShowArrows ? (
-          <button
-            className={`carousel-button carousel-button-next icon-${width}`}
-            type="button"
-            onClick={goToNext}
-            disabled={isNextDisabled}
-            aria-label="Próximo slide"
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          <div className="carousel-arrow carousel-arrow-next">
+            <button
+              className={`carousel-button carousel-button-next icon-${width}`}
+              type="button"
+              onClick={goToNext}
+              disabled={isNextDisabled}
+              aria-label="Próximo slide"
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
         ) : null}
       </div>
 
