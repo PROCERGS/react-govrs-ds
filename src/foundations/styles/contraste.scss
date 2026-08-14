@@ -271,6 +271,28 @@
   color-scheme: dark;
 }
 
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-pagination {
+  --govrs-pagination-foreground: var(--govrs-color-contrast-foreground);
+  --govrs-pagination-brand: var(--govrs-color-contrast-foreground);
+  --govrs-pagination-control-background: var(--govrs-color-contrast-field-background);
+  --govrs-pagination-control-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-pagination-control-border: var(--govrs-color-contrast-field-border);
+  --govrs-pagination-select-appearance: auto;
+  --govrs-pagination-select-icon: none;
+  --govrs-pagination-page-default-background: var(--govrs-color-contrast-control-background);
+  --govrs-pagination-page-default-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-pagination-page-default-border: var(--govrs-color-contrast-control-border);
+  --govrs-pagination-page-active-background: var(--govrs-color-contrast-popover-background);
+  --govrs-pagination-page-active-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-pagination-page-active-border: var(--govrs-color-contrast-control-border);
+  --govrs-pagination-page-hover-background: var(--govrs-color-contrast-control-background);
+  --govrs-pagination-page-hover-border: var(--govrs-color-contrast-accent);
+  --govrs-pagination-page-pressed-background: var(--govrs-color-contrast-popover-background);
+  --govrs-pagination-page-pressed-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-pagination-page-pressed-border: var(--govrs-color-contrast-control-border);
+  color-scheme: dark;
+}
+
 :is(.high-contrast, [data-govrs-contrast='high']) .govrs-list-link {
   --govrs-list-link-border: var(--govrs-color-contrast-border);
   --govrs-list-link-number: var(--govrs-color-contrast-foreground);
