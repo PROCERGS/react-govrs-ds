@@ -40,7 +40,7 @@ const preview: Preview = {
           'Busca',
           ['Search'],
           'Navegação',
-          ['Header', 'MenuHamburger', 'Step', '*'],
+          ['Header', 'MenuHamburger', 'BreadCrumbs', 'Step', '*'],
           'Feedback',
           ['Alerts', 'Badges', 'Loader', '*'],
           'Conteúdo',
