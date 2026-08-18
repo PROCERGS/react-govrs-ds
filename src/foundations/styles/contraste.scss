@@ -293,6 +293,13 @@
   color-scheme: dark;
 }
 
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-breadcrumbs {
+  --govrs-breadcrumbs-link: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-link-hover: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-current: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-separator: var(--govrs-color-contrast-muted);
+}
+
 :is(.high-contrast, [data-govrs-contrast='high']) .govrs-list-link {
   --govrs-list-link-border: var(--govrs-color-contrast-border);
   --govrs-list-link-number: var(--govrs-color-contrast-foreground);
