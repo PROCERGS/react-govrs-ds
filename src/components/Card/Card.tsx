@@ -1,7 +1,6 @@
 import { useState, type MouseEvent, type ReactNode } from 'react';
 
 import { Stack, Text } from '../../primitives';
-import { Tag } from '../Tag/Tag';
 
 import './Card.scss'
 
@@ -225,17 +224,41 @@ function getVisibleTags(tags?: string[], tagsLimit?: number) {
   return (tags?.filter(Boolean) ?? []).slice(0, resolveTagsLimit(tagsLimit));
 }
 
-function CardTags({ tags }: { tags: string[] }) {
-  if (tags.length === 0) {
+function formatTagsText(tags: string[]) {
+  return tags
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+    .map((tag) => tag.toLocaleUpperCase('pt-BR'))
+    .join(', ');
+}
+
+function CardTagsText({ tags, tagsLimit }: Pick<CardProps, 'tags' | 'tagsLimit'>) {
+  const visibleTags = getVisibleTags(tags, tagsLimit);
+  const tagsText = formatTagsText(visibleTags);
+
+  if (!tagsText) {
     return null;
   }
 
+  return <p className="govrs-card-tags-text">{tagsText}</p>;
+}
+
+function NewsMedia({
+  image,
+  imageAlt,
+  title,
+  tags,
+  tagsLimit,
+}: Pick<CardProps, 'image' | 'imageAlt' | 'title' | 'tags' | 'tagsLimit'>) {
   return (
-    <div className="govrs-card-tags">
-      {tags.map((tag) => (
-        <Tag key={tag} variant="default" label={tag} showClose={false} />
-      ))}
-    </div>
+    <>
+      <img
+        src={image || PLACEHOLDER_IMAGE}
+        alt={imageAlt || `Imagem de ${title || 'card'}`}
+        className="govrs-card-image"
+      />
+      <CardTagsText tags={tags} tagsLimit={tagsLimit} />
+    </>
   );
 }
 
@@ -261,48 +284,32 @@ function CardLikeShare({
 }
 
 function CardFooter({
-  tags,
-  tagsLimit,
   acao,
   disabled,
   onLike,
   onShare,
   showLikeShare = false,
-}: Pick<CardProps, 'tags' | 'tagsLimit' | 'acao' | 'disabled' | 'onLike' | 'onShare'> & {
+}: Pick<CardProps, 'acao' | 'disabled' | 'onLike' | 'onShare'> & {
   showLikeShare?: boolean;
 }) {
-  const visibleTags = getVisibleTags(tags, tagsLimit);
-  const hasTags = visibleTags.length > 0;
-
-  if (!hasTags && !showLikeShare && !acao) {
+  if (!showLikeShare && !acao) {
     return null;
   }
 
   return (
-    <div
-      className={[
-        'govrs-card-footer',
-        'govrs-card-interactive',
-        hasTags && showLikeShare ? 'govrs-card-footer--stacked' : undefined,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-    >
-      <CardTags tags={visibleTags} />
-      {acao || showLikeShare ? (
-        <div className="govrs-card-footer-actions">
-          {acao ? (
-            <div className="govrs-card-footer-action">
-              <a href={acao.url} className="govrs-card-interactive">
-                {acao.label}
-              </a>
-            </div>
-          ) : null}
-          {showLikeShare ? (
-            <CardLikeShare disabled={disabled} onLike={onLike} onShare={onShare} />
-          ) : null}
-        </div>
-      ) : null}
+    <div className="govrs-card-footer govrs-card-interactive">
+      <div className="govrs-card-footer-actions">
+        {acao ? (
+          <div className="govrs-card-footer-action">
+            <a href={acao.url} className="govrs-card-interactive">
+              {acao.label}
+            </a>
+          </div>
+        ) : null}
+        {showLikeShare ? (
+          <CardLikeShare disabled={disabled} onLike={onLike} onShare={onShare} />
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -369,6 +376,7 @@ function PostList({
           <span>⋮</span>
         </button>
       </div>
+      <CardTagsText tags={tags} tagsLimit={tagsLimit} />
       {bodyImg && (
         <img
           src={bodyImg}
@@ -403,8 +411,6 @@ function PostList({
         </>
       ) : (
         <CardFooter
-          tags={tags}
-          tagsLimit={tagsLimit}
           acao={acao}
           disabled={disabled}
           onLike={onLike}
@@ -438,18 +444,22 @@ function News({
   const showLikeShare = Boolean(onLike || onShare);
   const showHeaderMenu = Boolean(children || showLikeShare);
 
+  const media = (
+    <NewsMedia
+      image={image}
+      imageAlt={imageAlt}
+      title={title}
+      tags={tags}
+      tagsLimit={tagsLimit}
+    />
+  );
+
   return (
     <div className={getCardClassName(size, disabled, 'govrs-card-news', hasStretchedLink)}>
       {hasStretchedLink && href ? (
         <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
       ) : null}
-      {!children && (
-        <img
-          src={image || PLACEHOLDER_IMAGE}
-          alt={imageAlt || `Imagem de ${title || 'card'}`}
-          className="govrs-card-image"
-        />
-      )}
+      {!children ? media : null}
       <div className="govrs-card-header">
         <CardHeaderText
           title={title}
@@ -469,17 +479,9 @@ function News({
           </button>
         )}
       </div>
-      {children && (
-        <img
-          src={image || PLACEHOLDER_IMAGE}
-          alt={imageAlt || `Imagem de ${title || 'card'}`}
-          className="govrs-card-image"
-        />
-      )}
+      {children ? media : null}
       <CardBody>{children}</CardBody>
       <CardFooter
-        tags={tags}
-        tagsLimit={tagsLimit}
         disabled={disabled}
         onLike={onLike}
         onShare={onShare}

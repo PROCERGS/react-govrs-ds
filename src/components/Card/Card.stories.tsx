@@ -217,7 +217,7 @@ function CardPropsGuidePreview() {
           <li><code>children</code> compõe o corpo principal do card.</li>
           <li><code>acao</code> adiciona a chamada de rodapé.</li>
           <li><code>onLike</code> e <code>onShare</code> controlam as ações sociais.</li>
-          <li><code>tags</code> é opcional no rodapé; com tags e ícones juntos, as tags ficam acima.</li>
+          <li><code>tags</code> aparece como parágrafo verde abaixo do cabeçalho; sem tags, essa faixa não aparece.</li>
           <li><code>bodyImg</code> e <code>bodyImgAlt</code> adicionam imagem extra no corpo.</li>
         </ul>
       </StoryPreviewCard>
@@ -233,7 +233,7 @@ function CardPropsGuidePreview() {
       <StoryPreviewCard label="News">
         <ul style={storyDocsStyles.list}>
           <li><code>children</code> é opcional e reorganiza a posição da imagem e do cabeçalho.</li>
-          <li><code>tags</code> e <code>tagsLimit</code> controlam as tags do rodapé; sem tags, essa faixa não aparece.</li>
+          <li><code>tags</code> e <code>tagsLimit</code> viram um parágrafo verde abaixo da imagem; sem tags, essa faixa não aparece.</li>
           <li><code>onLike</code> e <code>onShare</code> exibem os ícones sociais e o menu do cabeçalho.</li>
           <li><code>acao</code>, <code>itens</code> e <code>bodyImg</code> não entram na renderização desta variante.</li>
         </ul>
@@ -372,9 +372,9 @@ export const CardDocumentacao: Story = {
           <CardNewsIconPreview />
         </SandboxExample>
         <p style={storyDocsStyles.text}>
-          Em <code>news</code> e <code>post</code>, <code>tags</code> é opcional. Se o
-          rodapé tiver tags e os ícones de curtir/compartilhar ao mesmo tempo, o layout
-          empilha em coluna: as tags ficam acima e os ícones abaixo.
+          Em <code>news</code> e <code>post</code>, <code>tags</code> é opcional e aparece
+          como um parágrafo na cor verde padrão, abaixo da imagem ou do cabeçalho. Sem tags,
+          essa faixa não é renderizada.
         </p>
       </SectionCard>
 
@@ -490,7 +490,7 @@ export const CardInterativo: Story = {
     tags: {
       control: 'object',
       description:
-        'Tags opcionais do rodapé nas variantes news e post. Sem tags, só os ícones (quando existirem) aparecem.',
+        'Tags opcionais nas variantes news e post. Aparecem como um parágrafo verde, não como o componente Tag. Sem tags, só os ícones (quando existirem) aparecem.',
       table: { category: 'Conteúdo' },
     },
     tagsLimit: {
