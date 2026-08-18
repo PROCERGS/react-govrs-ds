@@ -72,6 +72,44 @@ function sanitizeUrl(url = '') {
   }
 }
 
+// Remove tags/atributos perigosos de SVGs vindos de props/atributos externos (proteção contra XSS via `links`).
+function sanitizeSvgMarkup(svgMarkup = '') {
+  if (typeof window === 'undefined' || typeof DOMParser === 'undefined') return '';
+
+  const normalized = normalizeEscapedHtml(String(svgMarkup));
+  let doc;
+  try {
+    doc = new DOMParser().parseFromString(normalized, 'image/svg+xml');
+  } catch {
+    return '';
+  }
+
+  const root = doc.documentElement;
+  if (!root || root.nodeName.toLowerCase() !== 'svg' || doc.querySelector('parsererror')) {
+    return '';
+  }
+
+  const DISALLOWED_TAGS = new Set(['script', 'foreignobject', 'iframe', 'embed', 'object']);
+  const UNSAFE_URL = /^\s*javascript:/i;
+
+  root.querySelectorAll('*').forEach((el) => {
+    if (DISALLOWED_TAGS.has(el.nodeName.toLowerCase())) {
+      el.remove();
+      return;
+    }
+    [...el.attributes].forEach((attr) => {
+      const name = attr.name.toLowerCase();
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      } else if ((name === 'href' || name === 'xlink:href') && UNSAFE_URL.test(attr.value)) {
+        el.removeAttribute(attr.name);
+      }
+    });
+  });
+
+  return root.outerHTML;
+}
+
 const LOGO_SVG = normalizeEscapedHtml(`
 <svg version="1.1" id="rs-gov-br" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="77px" height="16px"
      viewBox="0 0 77 16" enable-background="new 0 0 77 16" xml:space="preserve" aria-hidden="true" focusable="false">
@@ -102,6 +140,49 @@ const GURIA_SVG = normalizeEscapedHtml(`
   <path d="M9.94,6.41h2.85v5.18c-1.48,1.06-3.52,1.62-5.44,1.62C3.11,13.21,0,10.45,0,6.6S3.11,0,7.4,0c2.37,0,4.33.77,5.63,2.21l-2,1.75c-.98-.98-2.11-1.44-3.48-1.44-2.61,0-4.4,1.66-4.4,4.09s1.79,4.09,4.37,4.09c.85,0,1.63-.14,2.42-.55v-3.74h0Z" fill="#fff"/>
 </svg>
 `);
+
+// Fontes usadas pelo @font-face abaixo. Também são carregadas via FontFace API (ver ensureRobotoFontsLoaded)
+// porque alguns navegadores não disparam o download de um @font-face declarado dentro de um Shadow Root
+// quando o texto que o usa também está apenas dentro da shadow tree, deixando o fallback (Arial/serif) ativo.
+const ROBOTO_FONT_FACES = [
+  {
+    url: 'https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmaiArmlw.woff2',
+    unicodeRange: 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF',
+  },
+  {
+    url: 'https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmUiAo.woff2',
+    unicodeRange: 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD',
+  },
+];
+
+let robotoFontsLoadPromise = null;
+
+function ensureRobotoFontsLoaded() {
+  if (typeof document === 'undefined' || typeof FontFace === 'undefined' || !('fonts' in document)) {
+    return Promise.resolve();
+  }
+  if (robotoFontsLoadPromise) return robotoFontsLoadPromise;
+
+  robotoFontsLoadPromise = Promise.all(
+    ROBOTO_FONT_FACES.map(({ url, unicodeRange }) => {
+      const face = new FontFace('Roboto', `url(${url}) format('woff2')`, {
+        style: 'normal',
+        weight: '400',
+        unicodeRange,
+      });
+      return face
+        .load()
+        .then((loaded) => {
+          document.fonts.add(loaded);
+          return loaded;
+        })
+        // falha de rede/CSP não deve quebrar o componente: o CSS @font-face e o fallback (Arial, sans-serif) continuam válidos
+        .catch(() => null);
+    })
+  );
+
+  return robotoFontsLoadPromise;
+}
 
 const DEFAULT_LINKS = [
   { href: 'https://estado.rs.gov.br/agencia-de-noticias', label: 'Notícias', srPrefix: 'Estado ' },
@@ -151,6 +232,12 @@ const CSS_TEXT = normalizeEscapedHtml(`
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+/* Alguns navegadores aplicam uma font-family de UA stylesheet a controles de formulário,
+   ignorando a herança normal do Shadow DOM; força o uso da Roboto nesses elementos. */
+input, button, select, textarea, label {
+  font-family: inherit;
 }
 
 @keyframes bugfix {
@@ -401,7 +488,15 @@ function createMenuHtml(links) {
 
     
     if (typeof item.svgHtml === 'string' && item.svgHtml.trim()) {
-      const svg = normalizeEscapedHtml(item.svgHtml);
+      const svg = sanitizeSvgMarkup(item.svgHtml);
+      if (!svg) {
+        return `
+      <li>
+        <a target="${target}" href="${href}"${rel}>
+          <span class="sr-only">${srPrefix}</span>${label}
+        </a>
+      </li>`;
+      }
       return `
       <li>
         <a target="${target}" href="${href}"${rel}>
@@ -495,6 +590,7 @@ class BarraEstado extends HTMLElement {
   }
 
   connectedCallback() {
+    ensureRobotoFontsLoaded();
     this.render();
   }
 
@@ -507,13 +603,20 @@ class BarraEstado extends HTMLElement {
 
   this.removeA11yListeners();
 
-  const safeCss = normalizeEscapedHtml(CSS_TEXT);
-  const safeHtml = createMenuHtml(this.links);
+  // O <style> (com o @font-face da Roboto) é criado uma única vez para evitar
+  // reparse/refetch da fonte a cada atualização de `links`.
+  if (!this._styleEl) {
+    this._styleEl = document.createElement('style');
+    this._styleEl.textContent = normalizeEscapedHtml(CSS_TEXT);
+    this._shadow.appendChild(this._styleEl);
+  }
 
-  this._shadow.innerHTML = `
-    <style>${safeCss}</style>
-    ${safeHtml}
-  `;
+  if (!this._contentEl) {
+    this._contentEl = document.createElement('div');
+    this._shadow.appendChild(this._contentEl);
+  }
+
+  this._contentEl.innerHTML = createMenuHtml(this.links);
 
   this.setupA11y();
 }
