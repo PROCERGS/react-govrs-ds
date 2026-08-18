@@ -1,6 +1,7 @@
 import { useState, type MouseEvent, type ReactNode } from 'react';
 
 import { Stack, Text } from '../../primitives';
+import { Tag } from '../Tag/Tag';
 
 import './Card.scss'
 
@@ -32,6 +33,8 @@ type CardProps = {
   }>;
   bodyImg?: string;
   bodyImgAlt?: string;
+  tags?: string[];
+  tagsLimit?: number;
 };
 
 // ******************************************************************************************************************
@@ -86,6 +89,19 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
     />
   </svg>
 );
+
+const DEFAULT_TAGS_LIMIT = 3;
+const MAX_TAGS_LIMIT = 3;
+
+function resolveTagsLimit(limit?: number) {
+  const value = Number(limit);
+
+  if (!Number.isFinite(value)) {
+    return DEFAULT_TAGS_LIMIT;
+  }
+
+  return Math.min(MAX_TAGS_LIMIT, Math.max(1, Math.round(value)));
+}
 
 const PLACEHOLDER_IMAGE =
   "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23E8F5E9'/%3E%3Cpath d='M100 60C88.95 60 80 68.95 80 80C80 91.05 88.95 100 100 100C111.05 100 120 91.05 120 80C120 68.95 111.05 60 100 60ZM140 120H60L75 95L90 115L110 85L140 120Z' fill='%231A7235' opacity='0.3'/%3E%3C/svg%3E";
@@ -205,6 +221,92 @@ function CardBody({ children }: { children?: ReactNode }) {
   );
 }
 
+function getVisibleTags(tags?: string[], tagsLimit?: number) {
+  return (tags?.filter(Boolean) ?? []).slice(0, resolveTagsLimit(tagsLimit));
+}
+
+function CardTags({ tags }: { tags: string[] }) {
+  if (tags.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="govrs-card-tags">
+      {tags.map((tag) => (
+        <Tag key={tag} variant="default" label={tag} showClose={false} />
+      ))}
+    </div>
+  );
+}
+
+function CardLikeShare({
+  disabled,
+  onLike,
+  onShare,
+}: {
+  disabled?: boolean;
+  onLike?: () => void;
+  onShare?: () => void;
+}) {
+  return (
+    <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
+      <button type="button" aria-label="Curtir" onClick={onLike} disabled={disabled}>
+        <LikeIcon />
+      </button>
+      <button type="button" aria-label="Compartilhar" onClick={onShare} disabled={disabled}>
+        <ShareIcon />
+      </button>
+    </Stack>
+  );
+}
+
+function CardFooter({
+  tags,
+  tagsLimit,
+  acao,
+  disabled,
+  onLike,
+  onShare,
+  showLikeShare = false,
+}: Pick<CardProps, 'tags' | 'tagsLimit' | 'acao' | 'disabled' | 'onLike' | 'onShare'> & {
+  showLikeShare?: boolean;
+}) {
+  const visibleTags = getVisibleTags(tags, tagsLimit);
+  const hasTags = visibleTags.length > 0;
+
+  if (!hasTags && !showLikeShare && !acao) {
+    return null;
+  }
+
+  return (
+    <div
+      className={[
+        'govrs-card-footer',
+        'govrs-card-interactive',
+        hasTags && showLikeShare ? 'govrs-card-footer--stacked' : undefined,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      <CardTags tags={visibleTags} />
+      {acao || showLikeShare ? (
+        <div className="govrs-card-footer-actions">
+          {acao ? (
+            <div className="govrs-card-footer-action">
+              <a href={acao.url} className="govrs-card-interactive">
+                {acao.label}
+              </a>
+            </div>
+          ) : null}
+          {showLikeShare ? (
+            <CardLikeShare disabled={disabled} onLike={onLike} onShare={onShare} />
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 // ******************************************************************************************************************
 // POST / LIST
 // ******************************************************************************************************************
@@ -224,6 +326,8 @@ function PostList({
   itens,
   bodyImg,
   bodyImgAlt,
+  tags,
+  tagsLimit,
 }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -298,23 +402,15 @@ function PostList({
           )}
         </>
       ) : (
-        <div className="govrs-card-footer govrs-card-interactive">
-          {acao && (
-            <div className="govrs-card-footer-action">
-              <a href={acao.url} className="govrs-card-interactive">
-                {acao.label}
-              </a>
-            </div>
-          )}
-          <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
-            <button type="button" aria-label="Curtir" onClick={onLike} disabled={disabled}>
-              <LikeIcon />
-            </button>
-            <button type="button" aria-label="Compartilhar" onClick={onShare} disabled={disabled}>
-              <ShareIcon />
-            </button>
-          </Stack>
-        </div>
+        <CardFooter
+          tags={tags}
+          tagsLimit={tagsLimit}
+          acao={acao}
+          disabled={disabled}
+          onLike={onLike}
+          onShare={onShare}
+          showLikeShare
+        />
       )}
     </div>
   );
@@ -333,8 +429,14 @@ function News({
   href,
   linkTarget,
   children,
+  tags,
+  tagsLimit,
+  onLike,
+  onShare,
 }: CardProps) {
   const hasStretchedLink = Boolean(href && !disabled);
+  const showLikeShare = Boolean(onLike || onShare);
+  const showHeaderMenu = Boolean(children || showLikeShare);
 
   return (
     <div className={getCardClassName(size, disabled, 'govrs-card-news', hasStretchedLink)}>
@@ -356,7 +458,7 @@ function News({
           disabled={disabled}
           useStretchedLink={hasStretchedLink}
         />
-        {children && (
+        {showHeaderMenu && (
           <button
             type="button"
             className="govrs-card-header-menu govrs-card-interactive"
@@ -375,6 +477,14 @@ function News({
         />
       )}
       <CardBody>{children}</CardBody>
+      <CardFooter
+        tags={tags}
+        tagsLimit={tagsLimit}
+        disabled={disabled}
+        onLike={onLike}
+        onShare={onShare}
+        showLikeShare={showLikeShare}
+      />
     </div>
   );
 }
@@ -436,6 +546,8 @@ export function Card({
   itens,
   bodyImg,
   bodyImgAlt,
+  tags,
+  tagsLimit,
 }: CardProps) {
   if (variant === 'news') {
     return (
@@ -450,6 +562,10 @@ export function Card({
         href={href}
         linkTarget={linkTarget}
         children={children}
+        tags={tags}
+        tagsLimit={tagsLimit}
+        onLike={onLike}
+        onShare={onShare}
       />
     );
   }
@@ -488,6 +604,8 @@ export function Card({
       itens={itens}
       bodyImg={bodyImg}
       bodyImgAlt={bodyImgAlt}
+      tags={tags}
+      tagsLimit={tagsLimit}
     />
   );
 }

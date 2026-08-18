@@ -98,6 +98,10 @@
     text-decoration: none;
   }
 
+  .govrs-card-news & h3 {
+    -webkit-line-clamp: 3;
+  }
+
   & a > h3 {
     text-decoration: none;
     color: var(--govrs-color-brand-primary, #1a7235);
@@ -194,6 +198,14 @@
     }
   }
 
+  & .govrs-card-footer-actions {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--govrs-space-2, 0.5rem);
+  }
+
   & .govrs-card-footer-like-share {
     display: flex;
     align-items: center;
@@ -208,6 +220,16 @@
         height: 38px;
       }
     }
+  }
+}
+
+.govrs-card-footer--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--govrs-space-2, 0.5rem);
+
+  .govrs-card-tags {
+    margin-top: 0;
   }
 }
 
@@ -466,6 +488,14 @@
   border-radius: var(--govrs-radius-sm, 0.375rem);
   margin-top: var(--govrs-space-3, 0.75rem);
   object-fit: cover;
+}
+
+.govrs-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: auto;
+  gap: var(--govrs-space-2, 0.5rem);
 }
 
 .govrs-card-footer-action > a {

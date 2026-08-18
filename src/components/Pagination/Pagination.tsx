@@ -248,7 +248,7 @@ function buildPageItems(
 }
 
 function countPagesElements(node: ReactNode): number {
-  return Children.toArray(node).reduce((count, child) => {
+  return Children.toArray(node).reduce<number>((count, child) => {
     if (!isValidElement(child)) {
       return count
     }
@@ -504,7 +504,7 @@ function PaginationRoot({
   const pagesWarningShownRef = useRef(false)
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production' || pagesWarningShownRef.current) {
+    if (import.meta.env.PROD || pagesWarningShownRef.current) {
       return
     }
 
