@@ -91,6 +91,7 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
 
 const DEFAULT_TAGS_LIMIT = 3;
 const MAX_TAGS_LIMIT = 3;
+const CARD_TEXT_MAX_LENGTH = 140;
 
 function resolveTagsLimit(limit?: number) {
   const value = Number(limit);
@@ -100,6 +101,17 @@ function resolveTagsLimit(limit?: number) {
   }
 
   return Math.min(MAX_TAGS_LIMIT, Math.max(1, Math.round(value)));
+}
+
+function truncateText(value?: string, maxLength = CARD_TEXT_MAX_LENGTH) {
+  const text = value?.trim() ?? '';
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const ellipsis = '...';
+  return `${text.slice(0, Math.max(0, maxLength - ellipsis.length)).trimEnd()}${ellipsis}`;
 }
 
 const PLACEHOLDER_IMAGE =
@@ -152,17 +164,23 @@ function CardStretchedLink({
 
 function CardTitleLink({
   title,
+  fullTitle,
   href,
   disabled,
   useStretchedLink,
 }: {
   title: string;
+  fullTitle: string;
   href?: string;
   disabled?: boolean;
   useStretchedLink?: boolean;
 }) {
+  const heading = (
+    <h3 title={fullTitle !== title ? fullTitle : undefined}>{title}</h3>
+  );
+
   if (useStretchedLink || !href) {
-    return <h3>{title}</h3>;
+    return heading;
   }
 
   return (
@@ -173,7 +191,7 @@ function CardTitleLink({
       aria-disabled={disabled || undefined}
       tabIndex={disabled ? -1 : undefined}
     >
-      <h3>{title}</h3>
+      {heading}
     </a>
   );
 }
@@ -191,17 +209,26 @@ function CardHeaderText({
   disabled?: boolean;
   useStretchedLink?: boolean;
 }) {
+  const displayTitle = truncateText(title);
+  const displayDescription = truncateText(description);
+
   return (
     <Stack className="govrs-card-header-text" gap={1}>
       <CardTitleLink
-        title={title}
+        title={displayTitle}
+        fullTitle={title}
         href={href}
         disabled={disabled}
         useStretchedLink={useStretchedLink}
       />
-      {description ? (
-        <Text className="govrs-card-copy" size="sm" tone="muted">
-          {description}
+      {displayDescription ? (
+        <Text
+          className="govrs-card-copy"
+          size="sm"
+          tone="muted"
+          title={description && description !== displayDescription ? description : undefined}
+        >
+          {displayDescription}
         </Text>
       ) : null}
     </Stack>
@@ -459,7 +486,17 @@ function News({
       {hasStretchedLink && href ? (
         <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
       ) : null}
-      {!children ? media : null}
+      {showHeaderMenu ? (
+        <button
+          type="button"
+          className="govrs-card-header-menu govrs-card-interactive"
+          aria-label="Opcoes do card"
+          disabled={disabled}
+        >
+          <span>⋮</span>
+        </button>
+      ) : null}
+      {media}
       <div className="govrs-card-header">
         <CardHeaderText
           title={title}
@@ -468,18 +505,7 @@ function News({
           disabled={disabled}
           useStretchedLink={hasStretchedLink}
         />
-        {showHeaderMenu && (
-          <button
-            type="button"
-            className="govrs-card-header-menu govrs-card-interactive"
-            aria-label="Opcoes do card"
-            disabled={disabled}
-          >
-            <span>⋮</span>
-          </button>
-        )}
       </div>
-      {children ? media : null}
       <CardBody>{children}</CardBody>
       <CardFooter
         disabled={disabled}

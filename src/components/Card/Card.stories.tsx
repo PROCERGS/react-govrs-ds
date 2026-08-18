@@ -232,7 +232,7 @@ function CardPropsGuidePreview() {
 
       <StoryPreviewCard label="News">
         <ul style={storyDocsStyles.list}>
-          <li><code>children</code> é opcional e reorganiza a posição da imagem e do cabeçalho.</li>
+          <li><code>children</code> é opcional e entra como corpo extra abaixo da descrição, sem alterar a ordem da imagem, das tags e do cabeçalho.</li>
           <li><code>tags</code> e <code>tagsLimit</code> viram um parágrafo verde abaixo da imagem; sem tags, essa faixa não aparece.</li>
           <li><code>onLike</code> e <code>onShare</code> exibem os ícones sociais e o menu do cabeçalho.</li>
           <li><code>acao</code>, <code>itens</code> e <code>bodyImg</code> não entram na renderização desta variante.</li>
