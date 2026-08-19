@@ -17,31 +17,42 @@ const cardItems: List.CardItem[] = [
     id: 'card1',
     title: 'Card 1',
     description: 'Descrição do card 1',
+    variant: 'news',
     image:
       'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Imagem card 1',
+    href: '#',
+    tags: ['noticias', 'Bento', 'comunicacao'],
   },
   {
     id: 'card2',
     title: 'Card 2',
     description: 'Descrição do card 2',
+    variant: 'news',
     image:
       'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Imagem card 2',
+    href: '#',
+    tags: ['enoturismo', 'Serra Gaúcha'],
   },
   {
     id: 'card3',
     title: 'Card 3',
     description: 'Descrição do card 3',
+    variant: 'news',
+    href: '#',
+    tags: ['Matriz3'],
   },
   {
     id: 'card4',
-    title: 'Card 4',
+    title: 'Card 4 com título longo o suficiente para quebrar em mais de uma linha no card de notícia',
     description: 'Descrição do card 4',
     variant: 'news',
     image:
       'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&h=400&fit=crop',
     imageAlt: 'Imagem card 4',
+    href: '#',
+    tags: ['noticias', 'Bento Gonçalves', 'comunicacao', 'extra'],
   },
 ]
 
@@ -148,6 +159,10 @@ const itemShapeCode = `<List
 
 type ListCardInteractiveArgs = {
   perRow: number
+  overflow: List.CardOverflow
+  showInteractive: boolean
+  tagsLimit: number
+  items: List.CardItem[]
 }
 
 const meta = {
@@ -155,6 +170,10 @@ const meta = {
   component: ListCardInteractivePreview,
   args: {
     perRow: 3,
+    overflow: 'wrap',
+    showInteractive: true,
+    tagsLimit: 3,
+    items: cardItems,
   },
   parameters: {
     layout: 'padded',
@@ -170,16 +189,30 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 function getCardInteractivePreviewKey(args: ListCardInteractiveArgs) {
-  return String(args.perRow)
+  return `${args.perRow}-${args.overflow}-${args.showInteractive}-${args.tagsLimit}`
 }
 
 function ListCardInteractivePreview(args: ListCardInteractiveArgs) {
+  const items = args.items.map((item) => ({
+    ...item,
+    tagsLimit: args.tagsLimit,
+    onLike: args.showInteractive ? () => undefined : undefined,
+    onShare: args.showInteractive ? () => undefined : undefined,
+  }))
+
   return (
     <div style={{ ...storyDocsStyles.previewStage, justifyItems: 'stretch' }}>
-      <List variant="card" items={cardItems} perRow={args.perRow} />
+      <List
+        variant="card"
+        items={items}
+        perRow={args.perRow}
+        overflow={args.overflow}
+      />
 
       <p style={storyDocsStyles.statText}>
         <strong>Colunas ativas:</strong> {args.perRow}
+        {' · '}
+        <strong>Overflow:</strong> {args.overflow}
       </p>
     </div>
   )
@@ -277,10 +310,38 @@ export const Interativo: Story = {
       description: 'Quantidade de colunas exibidas por linha.',
       table: { category: 'Layout' },
     },
+    overflow: {
+      control: { type: 'radio' },
+      options: ['wrap', 'scroll'],
+      labels: {
+        wrap: 'Quebrar linha',
+        scroll: 'Rolagem horizontal',
+      },
+      description: 'Define se os cards extras quebram linha ou ficam em uma faixa com scroll.',
+      table: { category: 'Layout' },
+    },
+    showInteractive: {
+      control: 'boolean',
+      description:
+        'Quando ligado, exibe o menu do cabeçalho e os ícones de curtir/compartilhar em cada card.',
+      table: { category: 'Interação' },
+    },
+    tagsLimit: {
+      control: { type: 'select' },
+      options: [1, 2, 3],
+      description: 'Quantidade máxima de tags visíveis em cada card (1 a 3).',
+      table: { category: 'Conteúdo' },
+    },
+    items: {
+      control: 'object',
+      description:
+        'Objetos renderizados em cada card. Edite title, description, image, href, tags e variant neste painel.',
+      table: { category: 'Conteúdo' },
+    },
   },
   parameters: {
     controls: {
-      exclude: ['className', 'items', 'itemKey', 'variant'],
+      exclude: ['className', 'itemKey', 'variant'],
     },
   },
   render: (args) => (

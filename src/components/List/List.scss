@@ -325,7 +325,7 @@
   width: 100%;
   padding: 0;
   margin: 0;
-  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  gap: var(--govrs-space-4, 1rem);
   grid-template-columns: repeat(var(--govrs-list-card-cols, 3), minmax(0, 1fr));
 }
 
@@ -334,7 +334,7 @@
   min-width: 0;
   box-sizing: border-box;
   flex-direction: column;
-  padding: var(--govrs-space-6, 1.5rem) var(--govrs-space-4, 1rem);
+  padding: 0;
 }
 
 .govrs-list-card__item > .govrs-card {
@@ -343,8 +343,24 @@
   height: 100%;
 }
 
+.govrs-list-card--scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  grid-template-columns: none;
+  scroll-behavior: smooth;
+}
+
+.govrs-list-card--scroll .govrs-list-card__item {
+  flex: 0 0
+    calc(
+      (100% - ((var(--govrs-list-card-cols, 3) - 1) * var(--govrs-space-4, 1rem))) /
+        var(--govrs-list-card-cols, 3)
+    );
+}
+
 @media (max-width: 45rem) {
-  .govrs-list-card {
+  .govrs-list-card:not(.govrs-list-card--scroll) {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }

@@ -32,6 +32,8 @@ type CardProps = {
   }>;
   bodyImg?: string;
   bodyImgAlt?: string;
+  tags?: string[];
+  tagsLimit?: number;
 };
 
 // ******************************************************************************************************************
@@ -87,6 +89,31 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
   </svg>
 );
 
+const DEFAULT_TAGS_LIMIT = 3;
+const MAX_TAGS_LIMIT = 3;
+const CARD_TEXT_MAX_LENGTH = 140;
+
+function resolveTagsLimit(limit?: number) {
+  const value = Number(limit);
+
+  if (!Number.isFinite(value)) {
+    return DEFAULT_TAGS_LIMIT;
+  }
+
+  return Math.min(MAX_TAGS_LIMIT, Math.max(1, Math.round(value)));
+}
+
+function truncateText(value?: string, maxLength = CARD_TEXT_MAX_LENGTH) {
+  const text = value?.trim() ?? '';
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const ellipsis = '...';
+  return `${text.slice(0, Math.max(0, maxLength - ellipsis.length)).trimEnd()}${ellipsis}`;
+}
+
 const PLACEHOLDER_IMAGE =
   "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23E8F5E9'/%3E%3Cpath d='M100 60C88.95 60 80 68.95 80 80C80 91.05 88.95 100 100 100C111.05 100 120 91.05 120 80C120 68.95 111.05 60 100 60ZM140 120H60L75 95L90 115L110 85L140 120Z' fill='%231A7235' opacity='0.3'/%3E%3C/svg%3E";
 
@@ -137,17 +164,23 @@ function CardStretchedLink({
 
 function CardTitleLink({
   title,
+  fullTitle,
   href,
   disabled,
   useStretchedLink,
 }: {
   title: string;
+  fullTitle: string;
   href?: string;
   disabled?: boolean;
   useStretchedLink?: boolean;
 }) {
+  const heading = (
+    <h3 title={fullTitle !== title ? fullTitle : undefined}>{title}</h3>
+  );
+
   if (useStretchedLink || !href) {
-    return <h3>{title}</h3>;
+    return heading;
   }
 
   return (
@@ -158,7 +191,7 @@ function CardTitleLink({
       aria-disabled={disabled || undefined}
       tabIndex={disabled ? -1 : undefined}
     >
-      <h3>{title}</h3>
+      {heading}
     </a>
   );
 }
@@ -176,17 +209,26 @@ function CardHeaderText({
   disabled?: boolean;
   useStretchedLink?: boolean;
 }) {
+  const displayTitle = truncateText(title);
+  const displayDescription = truncateText(description);
+
   return (
     <Stack className="govrs-card-header-text" gap={1}>
       <CardTitleLink
-        title={title}
+        title={displayTitle}
+        fullTitle={title}
         href={href}
         disabled={disabled}
         useStretchedLink={useStretchedLink}
       />
-      {description ? (
-        <Text className="govrs-card-copy" size="sm" tone="muted">
-          {description}
+      {displayDescription ? (
+        <Text
+          className="govrs-card-copy"
+          size="sm"
+          tone="muted"
+          title={description && description !== displayDescription ? description : undefined}
+        >
+          {displayDescription}
         </Text>
       ) : null}
     </Stack>
@@ -202,6 +244,100 @@ function CardBody({ children }: { children?: ReactNode }) {
     <Stack className="govrs-card-body" gap={2}>
       <Text>{children}</Text>
     </Stack>
+  );
+}
+
+function getVisibleTags(tags?: string[], tagsLimit?: number) {
+  return (tags?.filter(Boolean) ?? []).slice(0, resolveTagsLimit(tagsLimit));
+}
+
+function formatTagsText(tags: string[]) {
+  return tags
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+    .map((tag) => tag.toLocaleUpperCase('pt-BR'))
+    .join(', ');
+}
+
+function CardTagsText({ tags, tagsLimit }: Pick<CardProps, 'tags' | 'tagsLimit'>) {
+  const visibleTags = getVisibleTags(tags, tagsLimit);
+  const tagsText = formatTagsText(visibleTags);
+
+  if (!tagsText) {
+    return null;
+  }
+
+  return <p className="govrs-card-tags-text">{tagsText}</p>;
+}
+
+function NewsMedia({
+  image,
+  imageAlt,
+  title,
+  tags,
+  tagsLimit,
+}: Pick<CardProps, 'image' | 'imageAlt' | 'title' | 'tags' | 'tagsLimit'>) {
+  return (
+    <>
+      <img
+        src={image || PLACEHOLDER_IMAGE}
+        alt={imageAlt || `Imagem de ${title || 'card'}`}
+        className="govrs-card-image"
+      />
+      <CardTagsText tags={tags} tagsLimit={tagsLimit} />
+    </>
+  );
+}
+
+function CardLikeShare({
+  disabled,
+  onLike,
+  onShare,
+}: {
+  disabled?: boolean;
+  onLike?: () => void;
+  onShare?: () => void;
+}) {
+  return (
+    <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
+      <button type="button" aria-label="Curtir" onClick={onLike} disabled={disabled}>
+        <LikeIcon />
+      </button>
+      <button type="button" aria-label="Compartilhar" onClick={onShare} disabled={disabled}>
+        <ShareIcon />
+      </button>
+    </Stack>
+  );
+}
+
+function CardFooter({
+  acao,
+  disabled,
+  onLike,
+  onShare,
+  showLikeShare = false,
+}: Pick<CardProps, 'acao' | 'disabled' | 'onLike' | 'onShare'> & {
+  showLikeShare?: boolean;
+}) {
+  if (!showLikeShare && !acao) {
+    return null;
+  }
+
+  return (
+    <div className="govrs-card-footer govrs-card-interactive">
+      <div className="govrs-card-footer-actions">
+        {acao ? (
+          <div className="govrs-card-footer-action">
+            <a href={acao.url} className="govrs-card-interactive">
+              {acao.label}
+            </a>
+          </div>
+        ) : null}
+        {showLikeShare ? (
+          <CardLikeShare disabled={disabled} onLike={onLike} onShare={onShare} />
+        ) : null}
+      </div>
+    </div>
   );
 }
 
@@ -224,6 +360,8 @@ function PostList({
   itens,
   bodyImg,
   bodyImgAlt,
+  tags,
+  tagsLimit,
 }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -265,6 +403,7 @@ function PostList({
           <span>⋮</span>
         </button>
       </div>
+      <CardTagsText tags={tags} tagsLimit={tagsLimit} />
       {bodyImg && (
         <img
           src={bodyImg}
@@ -298,23 +437,13 @@ function PostList({
           )}
         </>
       ) : (
-        <div className="govrs-card-footer govrs-card-interactive">
-          {acao && (
-            <div className="govrs-card-footer-action">
-              <a href={acao.url} className="govrs-card-interactive">
-                {acao.label}
-              </a>
-            </div>
-          )}
-          <Stack className="govrs-card-footer-like-share" direction="row" align="center" gap={1}>
-            <button type="button" aria-label="Curtir" onClick={onLike} disabled={disabled}>
-              <LikeIcon />
-            </button>
-            <button type="button" aria-label="Compartilhar" onClick={onShare} disabled={disabled}>
-              <ShareIcon />
-            </button>
-          </Stack>
-        </div>
+        <CardFooter
+          acao={acao}
+          disabled={disabled}
+          onLike={onLike}
+          onShare={onShare}
+          showLikeShare
+        />
       )}
     </div>
   );
@@ -333,21 +462,41 @@ function News({
   href,
   linkTarget,
   children,
+  tags,
+  tagsLimit,
+  onLike,
+  onShare,
 }: CardProps) {
   const hasStretchedLink = Boolean(href && !disabled);
+  const showLikeShare = Boolean(onLike || onShare);
+  const showHeaderMenu = Boolean(children || showLikeShare);
+
+  const media = (
+    <NewsMedia
+      image={image}
+      imageAlt={imageAlt}
+      title={title}
+      tags={tags}
+      tagsLimit={tagsLimit}
+    />
+  );
 
   return (
     <div className={getCardClassName(size, disabled, 'govrs-card-news', hasStretchedLink)}>
       {hasStretchedLink && href ? (
         <CardStretchedLink href={href} title={title} linkTarget={linkTarget} />
       ) : null}
-      {!children && (
-        <img
-          src={image || PLACEHOLDER_IMAGE}
-          alt={imageAlt || `Imagem de ${title || 'card'}`}
-          className="govrs-card-image"
-        />
-      )}
+      {showHeaderMenu ? (
+        <button
+          type="button"
+          className="govrs-card-header-menu govrs-card-interactive"
+          aria-label="Opcoes do card"
+          disabled={disabled}
+        >
+          <span>⋮</span>
+        </button>
+      ) : null}
+      {media}
       <div className="govrs-card-header">
         <CardHeaderText
           title={title}
@@ -356,25 +505,14 @@ function News({
           disabled={disabled}
           useStretchedLink={hasStretchedLink}
         />
-        {children && (
-          <button
-            type="button"
-            className="govrs-card-header-menu govrs-card-interactive"
-            aria-label="Opcoes do card"
-            disabled={disabled}
-          >
-            <span>⋮</span>
-          </button>
-        )}
       </div>
-      {children && (
-        <img
-          src={image || PLACEHOLDER_IMAGE}
-          alt={imageAlt || `Imagem de ${title || 'card'}`}
-          className="govrs-card-image"
-        />
-      )}
       <CardBody>{children}</CardBody>
+      <CardFooter
+        disabled={disabled}
+        onLike={onLike}
+        onShare={onShare}
+        showLikeShare={showLikeShare}
+      />
     </div>
   );
 }
@@ -436,6 +574,8 @@ export function Card({
   itens,
   bodyImg,
   bodyImgAlt,
+  tags,
+  tagsLimit,
 }: CardProps) {
   if (variant === 'news') {
     return (
@@ -450,6 +590,10 @@ export function Card({
         href={href}
         linkTarget={linkTarget}
         children={children}
+        tags={tags}
+        tagsLimit={tagsLimit}
+        onLike={onLike}
+        onShare={onShare}
       />
     );
   }
@@ -488,6 +632,8 @@ export function Card({
       itens={itens}
       bodyImg={bodyImg}
       bodyImgAlt={bodyImgAlt}
+      tags={tags}
+      tagsLimit={tagsLimit}
     />
   );
 }

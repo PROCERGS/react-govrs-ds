@@ -72,9 +72,12 @@ type ListLinkProps = ListBaseProps<ListLinkItem> & {
   invert?: boolean
 }
 
+type ListCardOverflow = 'wrap' | 'scroll'
+
 type ListCardProps = ListBaseProps<ListCardItem> & {
   variant: 'card'
   perRow?: number
+  overflow?: ListCardOverflow
 }
 
 type ListProps = ListDefaultProps | ListCheckProps | ListLinkProps | ListCardProps
@@ -529,13 +532,27 @@ function LinkVariant({
   )
 }
 
-function CardVariant({ items = [], itemKey, className, perRow = 3 }: ListCardProps) {
+function CardVariant({
+  items = [],
+  itemKey,
+  className,
+  perRow = 3,
+  overflow = 'wrap',
+}: ListCardProps) {
   const gridStyle = {
     '--govrs-list-card-cols': perRow,
   } as CSSProperties
 
   return (
-    <div className={joinClassNames('govrs-list-card', className)} role="list" style={gridStyle}>
+    <div
+      className={joinClassNames(
+        'govrs-list-card',
+        overflow === 'scroll' && 'govrs-list-card--scroll',
+        className,
+      )}
+      role="list"
+      style={gridStyle}
+    >
       {items.map((item, index) => {
         const { id: _id, key: _key, ...cardProps } = item
 
@@ -578,4 +595,5 @@ export namespace List {
   export type CheckItem = ListCheckItem
   export type LinkItem = ListLinkItem
   export type CardItem = ListCardItem
+  export type CardOverflow = ListCardOverflow
 }
