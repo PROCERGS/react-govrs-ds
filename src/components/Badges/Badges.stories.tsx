@@ -217,6 +217,11 @@ export const BadgesDocumentacao: Story = {
 export const BadgesInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['success', 'warning', 'error', 'info'],

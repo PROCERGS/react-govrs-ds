@@ -1,4 +1,4 @@
-@use './variables';
+@use './sass-variables' as variables;
 
 .listas {
   &-demo {
@@ -16,8 +16,10 @@
 }
 
 .listas-base ul,
-ul.listas-base {
-  margin: 0 0 var(--govrs-space-4, 1rem) var(--govrs-space-6, 1.5rem);
+.listas-base ol,
+ul.listas-base,
+ol.listas-base {
+  margin: 0 0 var(--govrs-space-5, 1.25rem) var(--govrs-space-6, 1.5rem);
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-20, 1.25rem);

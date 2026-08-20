@@ -163,6 +163,11 @@ export const MapDocumentacao: Story = {
 export const MapInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     editable: {
       control: 'boolean',
       description: 'Permite adicionar e arrastar marcadores',

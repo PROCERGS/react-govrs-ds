@@ -1,19 +1,28 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
+@use '../../foundations/styles/layout-container' as layout;
 
-@media (max-width: 767px) {
-  .acess-wrapper {
+@media (max-width: calc(#{vars.$govrs-breakpoint-lg} - 0.0625rem)) {
+  .acess-bar {
     display: none !important;
   }
 }
 
-.acess-wrapper {
-  display: flex;
+.acess-bar {
+  --govrs-acess-bar-foreground: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-acess-bar-hover-foreground: var(--govrs-color-brand-primary-hover, #135428);
+
   width: 100%;
-  max-width: none;
+  box-sizing: border-box;
+}
+
+.acess-wrapper {
+  @include layout.govrs-layout-container-header;
+  @include layout.govrs-layout-container-barra;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 5px 12px;
-  margin: 0;
+  margin-block: 0;
   box-sizing: border-box;
 }
 
@@ -28,7 +37,7 @@
 
 .acess-ul > li > a,
 .acess-ul > li > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-foreground);
   font-size: 12px;
   display: inline-flex;
   align-items: center;
@@ -37,7 +46,7 @@
 
 .acess-ul > li:hover > a,
 .acess-ul > li:hover > button {
-  color: #1a7235;
+  color: var(--govrs-acess-bar-hover-foreground);
   cursor: pointer;
 }
 

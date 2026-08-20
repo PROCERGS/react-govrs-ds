@@ -170,6 +170,7 @@ function StepPreviewFrame({
       style={{
         width: '100%',
         maxWidth: orientation === 'vertical' ? 360 : 760,
+        height: orientation === 'vertical' ? 360 : undefined,
         minHeight: orientation === 'vertical' ? 360 : undefined,
         display: 'flex',
         alignItems: 'flex-start',
@@ -495,6 +496,11 @@ function StepInteractivePreview(args: StepInteractiveArgs) {
 export const StepInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     preset: {
       control: { type: 'select' },
       options: ['numeric', 'icons', 'states', 'links'],

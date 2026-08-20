@@ -58,7 +58,7 @@ const docsHeroStats = [
   },
   {
     title: 'Comportamento',
-    text: 'Em telas amplas, a busca permanece visível. Em telas compactas, ela abre pelo botão e oculta temporariamente a identidade para ganhar espaço.',
+    text: 'Em telas amplas, a busca permanece visível. Em telas compactas, ela abre pelo botão, oculta temporariamente a identidade e expande a partir do alinhamento direito original.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -94,7 +94,7 @@ const barraAcessibilidadeDocsHeroStats = [
   },
   {
     title: 'Comportamento',
-    text: 'Os atalhos numerados começam em 1, respondem a Alt+1...Alt+9 e o contraste persiste em localStorage quando o usuário alterna o botão.',
+    text: 'Os três primeiros atalhos respondem a Alt+1, Alt+2 e Alt+3. Cada item pode declarar uma ação própria ou manter a navegação por href.',
   },
 ] satisfies Array<{ title: string; text: string }>
 
@@ -128,9 +128,9 @@ const barraEstadoExampleCode = `<BarraEstado />`
 
 const barraAcessibilidadeExampleCode = `<BarraAcessibilidade
   shortcuts={[
-    { title: 'Conteúdo', href: '#conteudo' },
-    { title: 'Menu', href: '#menu' },
-    { title: 'Busca', href: '#buscar' },
+    { title: 'Conteúdo', href: '#conteudo', onActivate: focarConteudo },
+    { title: 'Menu', href: '#menu', onActivate: abrirMenu },
+    { title: 'Busca', href: '#buscar', onActivate: focarBusca },
   ]}
   hrefAccessibility="/acessibilidade"
   hrefContact="/contato"
@@ -151,16 +151,16 @@ const headerFrameStyle: CSSProperties = {
   display: 'grid',
   alignContent: 'start',
   minHeight: 430,
-  border: '1px solid #dbe5f0',
+  border: '1px solid var(--govrs-color-border-default, #dbe5f0)',
   borderRadius: 12,
   overflow: 'hidden',
-  background: '#ffffff',
+  background: 'var(--govrs-color-surface-base, #ffffff)',
 }
 
 const headerContentHintStyle: CSSProperties = {
   margin: 0,
   padding: '28px 24px',
-  color: '#64748b',
+  color: 'var(--govrs-color-text-muted, #64748b)',
   fontSize: 14,
 }
 
@@ -267,7 +267,6 @@ function HeaderMenuOpenPreview() {
 }
 
 type InteractiveArgs = Header.Props & {
-  barraAcessibilidadeDefaultHighContrast?: boolean
   barraAcessibilidadeShortcuts?: Array<{ title: string; href: string }>
   barraAcessibilidadeHrefAccessibility?: string
   barraAcessibilidadeHrefContact?: string
@@ -296,7 +295,7 @@ function HeaderInteractivePreview(args: InteractiveArgs) {
         hrefAccessibility={args.barraAcessibilidadeHrefAccessibility ?? '/acessibilidade'}
         hrefContact={args.barraAcessibilidadeHrefContact ?? '/contato'}
         hrefSitemap={args.barraAcessibilidadeHrefSitemap ?? '/sitemap'}
-        defaultHighContrast={Boolean(args.barraAcessibilidadeDefaultHighContrast)}
+        disableHighContrastToggle
       />
 
       <Header
@@ -421,13 +420,14 @@ export const HeaderDocumentacao: Story = {
 
       <SectionCard
         title="Menu e busca"
-        description="Menu e busca são as partes mais sensíveis do contrato porque combinam props visuais com pares controlado/não controlado. Em desktop a busca permanece aberta; abaixo do breakpoint responsivo ela passa a ser recolhível para preservar espaço horizontal."
+        description="Menu e busca são as partes mais sensíveis do contrato porque combinam props visuais com pares controlado/não controlado. Em desktop a busca permanece aberta; abaixo do breakpoint responsivo ela passa a ser recolhível para preservar espaço horizontal e, ao abrir, mantém sua borda direita alinhada ao ícone fechado."
       >
         <ul style={storyDocsStyles.list}>
               <li><code>menuOpen</code> com <code>onMenuOpenChange</code> coloca o menu em modo controlado.</li>
           <li><code>searchValue</code> com <code>onSearchValueChange</code> controla o conteúdo digitado; <code>defaultSearchValue</code> apenas define o valor inicial.</li>
           <li><code>searchActive</code> com <code>onSearchActiveChange</code> controla a abertura da busca móvel; em desktop essa prop não fecha a busca, porque o Header a mantém visível.</li>
           <li>O mesmo token CSS é usado pelo Search e pelo MenuHamburger para manter a troca de layout coerente.</li>
+          <li>Em mobile, a busca aberta cresce para a esquerda a partir da posição original do ícone e usa no máximo 24,0625rem.</li>
         </ul>
 
         <div style={{ ...storyDocsStyles.cardGrid, display: 'flex', flexDirection: 'column' }}>
@@ -627,8 +627,9 @@ export const BarraAcessibilidadeDoc: Story = {
             </p>
 
             <ul style={storyDocsStyles.list}>
-              <li><code>shortcuts</code> recebe um array de objetos <code>{'{ title: string; href: string }'}</code>.</li>
-              <li>Links com hash rolam para um elemento da página; outras URLs navegam normalmente.</li>
+              <li><code>shortcuts</code> recebe objetos <code>{'{ title: string; href: string; onActivate?: () => void }'}</code>.</li>
+              <li>Alt+1, Alt+2 e Alt+3 acionam respectivamente os três primeiros itens declarados.</li>
+              <li><code>onActivate</code> substitui o href ao clicar ou usar a tecla de aderência; sem a ação, hashes rolam para um elemento e outras URLs navegam normalmente.</li>
             </ul>
           </PropsCard>
 
@@ -644,6 +645,17 @@ export const BarraAcessibilidadeDoc: Story = {
               <li>Se uma dessas props não for informada, o item correspondente não aparece.</li>
             </ul>
           </PropsCard>
+
+          <PropsCard label="Alto contraste">
+            <p style={storyDocsStyles.statText}>
+              Na aplicação consumidora, o botão alterna o estado global e preserva a preferência. No Storybook, o contraste é controlado pela story.
+            </p>
+
+            <ul style={storyDocsStyles.list}>
+              <li><code>defaultHighContrast</code> define o estado inicial quando não há preferência persistida.</li>
+              <li><code>disableHighContrastToggle</code> desabilita o botão e impede leitura, gravação e alteração do estado global.</li>
+            </ul>
+          </PropsCard>
         </div>
 
         <SandboxExample
@@ -651,11 +663,14 @@ export const BarraAcessibilidadeDoc: Story = {
           description="Exemplo recomendado quando a página precisa expor atalhos numerados, contraste e todas as rotas auxiliares da barra."
           code={barraAcessibilidadeExampleCode}
           notes={[
-            'Se o terceiro atalho usar hash, o comportamento preservado tenta focar o elemento antes de rolar até ele.',
-            'O botão de contraste mantém a preferência do usuário em localStorage para reutilização entre visitas.',
+            'Use onActivate quando o atalho precisa abrir, focar ou selecionar elementos controlados pela aplicação.',
+            'Alt+4 até Alt+9 não recebem comportamento pela Barra de Acessibilidade.',
+            'Na aplicação consumidora, o botão de contraste mantém a preferência do usuário em localStorage para reutilização entre visitas.',
+            'Nesta documentação, o botão permanece isolado; use modoContraste na story Interativo para visualizar o tema.',
           ]}
         >
           <BarraAcessibilidade
+            disableHighContrastToggle
             shortcuts={[
               { title: 'Conteúdo', href: '#conteudo' },
               { title: 'Menu', href: '#menu' },
@@ -679,10 +694,12 @@ export const BarraAcessibilidadeDoc: Story = {
           notes={[
             'Sem shortcuts, a barra deixa de renderizar os atalhos numerados.',
             'Sem hrefAccessibility, hrefContact ou hrefSitemap, o item correspondente não aparece.',
-            'A barra resolve a interação de alto contraste internamente; o efeito visual final depende da folha global que estiliza a classe high-contrast.',
+            'Na aplicação consumidora, a barra resolve a interação de alto contraste globalmente; o efeito visual final depende da folha global que estiliza a classe high-contrast.',
+            'Para visualizar o contraste no Storybook, abra uma story Interativo e ative o switch modoContraste no painel de Controls. A prévia fica isolada, sem ler ou persistir a preferência no localStorage.',
           ]}
         >
           <BarraAcessibilidade
+            disableHighContrastToggle
             shortcuts={[
               { title: 'Conteúdo', href: '#conteudo' },
               { title: 'Busca', href: '#buscar' },
@@ -695,7 +712,8 @@ export const BarraAcessibilidadeDoc: Story = {
         <ul style={storyDocsStyles.list}>
           <li>Use hashes em <code>shortcuts</code> quando quiser rolar até partes da mesma página; use URLs absolutas ou relativas quando a navegação precisar sair do contexto atual.</li>
           <li>A barra não recebe props para customizar ícones ou o texto do botão de contraste; esse contrato permanece fixo para manter consistência institucional.</li>
-          <li>Como o contraste é aplicado globalmente via classe em <code>document.documentElement</code>, o restante da aplicação precisa conhecer e estilizar esse estado para o efeito visual acontecer.</li>
+          <li>Na aplicação consumidora, o contraste é aplicado globalmente via classe e atributo em <code>document.documentElement</code>; o restante da aplicação precisa conhecer e estilizar esse estado para o efeito visual acontecer.</li>
+          <li>No Storybook, use o switch <code>modoContraste</code> das stories Interativo para conferir fundos pretos, bordas brancas, textos e ícones funcionais brancos, mantendo imagens, vídeos e mapas sem alterações. Esse control atua somente na prévia; a Barra de Acessibilidade fica em modo passivo, sem alterar documento, evento ou localStorage.</li>
         </ul>
       </SectionCard>
     </DocsStoryLayout>
@@ -709,8 +727,7 @@ export const HeaderInterativo: Story = {
     controls: {
       sort: 'none',
       include: [
-        
-        'barraAcessibilidadeDefaultHighContrast',
+        'modoContraste',
         'barraAcessibilidadeShortcuts',
         'barraAcessibilidadeHrefAccessibility',
         'barraAcessibilidadeHrefContact',
@@ -742,10 +759,14 @@ export const HeaderInterativo: Story = {
     },
   },
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     // BarraEstado props
 
     // BarraAcessibilidade props
-    barraAcessibilidadeDefaultHighContrast: { control: 'boolean', table: { category: 'BarraAcessibilidade' } },
     barraAcessibilidadeShortcuts: { control: 'object', table: { category: 'BarraAcessibilidade' } },
     barraAcessibilidadeHrefAccessibility: { control: 'text', table: { category: 'BarraAcessibilidade' } },
     barraAcessibilidadeHrefContact: { control: 'text', table: { category: 'BarraAcessibilidade' } },

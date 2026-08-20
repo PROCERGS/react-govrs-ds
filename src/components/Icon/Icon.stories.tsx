@@ -530,6 +530,11 @@ export const Interactive: StoryObj<typeof InteractivePreview> = {
     href: '',
   },
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     iconName: {
       control: 'text',
       description: 'Nome do ícone a testar (ex.: faHome, faUser, faSearch, faArrowRight). Digite o nome exato do ícone disponível no Font Awesome.',

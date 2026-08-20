@@ -1,14 +1,11 @@
 //HEADERS E PARÁGRAFOS
-@use './variables';
+@use './sass-variables' as variables;
 @use './headers';
 @use './paragraphs';
 @use './lists';
 @use './placeholders';
 @use './labels';
 @use './layers';
-
-//CONTRASTE
-@use './contraste';
 
 body {
 	color: var(--govrs-color-text-primary);

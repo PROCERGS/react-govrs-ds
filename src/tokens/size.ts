@@ -31,6 +31,10 @@ export const size = {
     foundation: '45rem',
     story: '65.3125rem',
     content: '75rem',
+    header: '100rem',
+    barraAtLg: '46.875rem',
+    barraAtXl: '60.625rem',
+    barraAtXxxl: '73.125rem',
   },
   card: {
     minWidth: '15.625rem',

@@ -7,7 +7,7 @@ import { MenuHamburger } from '../MenuHamburger/MenuHamburger'
 import { Search } from '../Search/Search'
 import './Header.scss'
 
-import defaultLogoSrc from './govrs-symbol.svg?url'
+import defaultLogoSrc from './brasao-RS.svg?url'
 
 type HeaderProps = {
   siteTitle: ReactNode

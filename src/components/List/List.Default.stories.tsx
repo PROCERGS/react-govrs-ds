@@ -403,6 +403,11 @@ export const Documentacao: Story = {
 export const Interativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     horizontal: {
       control: 'boolean',
       description: 'Reorganiza os itens em uma linha com quebra automática.',

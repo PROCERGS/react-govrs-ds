@@ -1,9 +1,15 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
 
 .govrs-search {
   --govrs-search-width: 22.5rem;
   --govrs-search-height: 3.5rem;
   --govrs-search-collapsed-size: 3.5rem;
+  --govrs-search-surface: var(--govrs-color-surface-base, #ffffff);
+  --govrs-search-surface-hover: var(--govrs-color-surface-alt, #f3f3f3);
+  --govrs-search-border: var(--govrs-color-border-subtle, #e6e6e6);
+  --govrs-search-foreground: var(--govrs-color-text-secondary, #333333);
+  --govrs-search-placeholder: var(--govrs-color-text-subtle, #666666);
+  --govrs-search-icon: var(--govrs-color-brand-primary, #1a7235);
 
   display: grid;
   width: 100%;
@@ -25,9 +31,9 @@
   overflow: hidden;
   box-sizing: border-box;
   padding: 0 var(--govrs-space-3-5, 0.875rem);
-  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-subtle, #e6e6e6);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-search-border);
   border-radius: var(--govrs-radius-md, 0.5rem);
-  background-color: var(--govrs-color-surface-base, #ffffff);
+  background-color: var(--govrs-search-surface);
   transition:
     border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
     box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
@@ -35,7 +41,7 @@
 }
 
 .govrs-search__wrapper:hover {
-  background-color: var(--govrs-color-surface-alt, #f3f3f3);
+  background-color: var(--govrs-search-surface-hover);
 }
 
 .govrs-search:focus-within .govrs-search__wrapper {
@@ -63,7 +69,7 @@
   padding: 0 var(--govrs-space-1-5, 0.375rem);
   border: none;
   background: transparent;
-  color: var(--govrs-color-text-secondary, #333333);
+  color: var(--govrs-search-foreground);
   font-family: inherit;
   font-size: var(--govrs-font-size-body-md, 1rem);
   font-weight: var(--govrs-font-weight-regular, 400);
@@ -71,7 +77,7 @@
 }
 
 .govrs-search__field::placeholder {
-  color: var(--govrs-color-text-subtle, #666666);
+  color: var(--govrs-search-placeholder);
   opacity: 1;
 }
 
@@ -97,7 +103,7 @@
   padding: 0 var(--govrs-space-2, 0.5rem);
   border: none;
   background: transparent;
-  color: var(--govrs-color-brand-primary, #1a7235);
+  color: var(--govrs-search-icon);
   cursor: pointer;
 }
 

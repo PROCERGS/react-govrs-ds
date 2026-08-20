@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 
+import { Pagination } from '../Pagination/Pagination'
 import './Table.scss'
 
 
@@ -188,17 +189,6 @@ function resolveItemKey<TItem extends TableItemBase>(item: TItem, allItems: TIte
   }
 
   return `__idx_${allItems.indexOf(item)}`
-}
-
-function ArrowLeftIcon() {
-  return (
-    <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        d="M0.281269 4.53125L4.53127 0.28125C4.84377 0 5.31252 0 5.59377 0.28125L6.31252 1C6.59377 1.28125 6.59377 1.78125 6.31252 2.0625L3.28127 5.0625L6.31252 8.09375C6.59377 8.375 6.59377 8.84375 6.31252 9.15625L5.59377 9.84375C5.31252 10.1562 4.84377 10.1562 4.53127 9.84375L0.281269 5.59375C1.90735e-05 5.3125 1.90735e-05 4.84375 0.281269 4.53125Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
 }
 
 function SearchIcon() {
@@ -449,7 +439,6 @@ function TableDefaultView<TItem extends TableItemBase>(props: TableDefaultViewPr
 
   const visibleItems = pageResult.items
   const hasVisibleSelection = visibleItems.length > 0 && visibleItems.every((item) => selectedKeys.has(resolveItemKey(item, resolvedItems)))
-  const displayStart = pageResult.totalFiltered > 0 ? pageResult.startIndex + 1 : 0
   const currentPage = pageResult.currentPage
 
   const classes = ['govrs-table', 'govrs-table--default', className].filter(Boolean).join(' ')
@@ -690,67 +679,25 @@ function TableDefaultView<TItem extends TableItemBase>(props: TableDefaultViewPr
         </table>
       </div>
 
-      <div className="govrs-table__footer">
-        <div className="govrs-table__footer-group">
-          <span className="govrs-table__footer-label">Exibir</span>
-
-          <select
-            className="govrs-table__select"
-            value={effectiveQuery.pageSize}
-            onChange={(event) => handlePageSizeChange(Number(event.target.value))}
-          >
-            {DEFAULT_PAGE_SIZES.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-
-          <span className="govrs-table__footer-info">
-            {displayStart}-{pageResult.endIndex} de {pageResult.totalFiltered} itens
-          </span>
-        </div>
-
-        <div className="govrs-table__footer-group">
-          {pageResult.totalFiltered > effectiveQuery.pageSize ? (
-            <>
-              <span className="govrs-table__footer-label">Página</span>
-
-              <select
-                className="govrs-table__select"
-                value={currentPage}
-                onChange={(event) => handlePageChange(Number(event.target.value))}
-              >
-                {Array.from({ length: pageResult.totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                  <option key={pageNumber} value={pageNumber}>
-                    {pageNumber}
-                  </option>
-                ))}
-              </select>
-
-              <button
-                type="button"
-                className="govrs-table__pager-button"
-                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                aria-label="Página anterior"
-                disabled={currentPage === 1}
-              >
-                <ArrowLeftIcon />
-              </button>
-
-              <button
-                type="button"
-                className="govrs-table__pager-button govrs-table__pager-button--next"
-                onClick={() => handlePageChange(Math.min(pageResult.totalPages, currentPage + 1))}
-                aria-label="Próxima página"
-                disabled={currentPage === pageResult.totalPages}
-              >
-                <ArrowLeftIcon />
-              </button>
-            </>
-          ) : null}
-        </div>
-      </div>
+      <Pagination
+        page={currentPage}
+        pageSize={effectiveQuery.pageSize}
+        totalItems={pageResult.totalFiltered}
+        pageSizeOptions={[...DEFAULT_PAGE_SIZES]}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+        className="govrs-table__pagination"
+      >
+        <Pagination.Group align="start">
+          <Pagination.PageSize />
+          <Pagination.Range />
+        </Pagination.Group>
+        {pageResult.totalFiltered > effectiveQuery.pageSize ? (
+          <Pagination.Group align="end">
+            <Pagination.Pages variant="jump" />
+          </Pagination.Group>
+        ) : null}
+      </Pagination>
     </div>
   )
 }

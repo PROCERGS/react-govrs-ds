@@ -574,6 +574,11 @@ export const DefaultInterativo: Story = {
     noArrowsMobile: true,
   },
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: false,
       table: { disable: true },
@@ -791,6 +796,11 @@ export const CardInterativo: Story = {
     showArrows: true,
   },
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: false,
       table: { disable: true },

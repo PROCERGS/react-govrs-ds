@@ -1,10 +1,19 @@
+@use '../../foundations/styles/layout-container' as layout;
+
 .govrs-footer {
   position: relative;
   z-index: var(--govrs-z-index-header);
-  padding: 24px;
+  padding-block: 24px;
+  padding-inline: 0;
   background: var(--govrs-color-brand-primary, #1a7235);
   color: var(--govrs-color-text-inverse, #ffffff);
   font-size: var(--govrs-font-size-body-md, 1rem);
+}
+
+.govrs-footer__container {
+  @include layout.govrs-layout-container;
+  padding-inline: 24px;
+  box-sizing: border-box;
 }
 
 .govrs-footer__brasao {
@@ -157,6 +166,31 @@
   text-align: center;
 }
 
+.govrs-footer__license-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: auto;
+  max-width: 100%;
+}
+
+.govrs-footer__brand {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--govrs-color-text-inverse, #ffffff);
+  margin-left: 12px;
+  padding-left: 12px;
+}
+
+.govrs-footer__brand-logo {
+  display: block;
+  width: 101px;
+  height: 21px;
+  object-fit: contain;
+}
+
 .govrs-footer__separator {
   border-top: 1px solid var(--govrs-color-text-inverse, #ffffff);
   height: 1px;
@@ -173,7 +207,7 @@
   color: inherit;
   font-size: 0.875rem;
   margin: 0;
-  max-width: 1200px;
+  flex: 0 0 auto;
 }
 
 .govrs-footer__license-link {
@@ -210,8 +244,8 @@
     background: var(--govrs-color-brand-primary-strong, #04290f);
   }
 
-  .govrs-footer[data-mobile='true'] {
-    padding: 16px;
+  .govrs-footer[data-mobile='true'] .govrs-footer__container {
+    padding-inline: 16px;
   }
 
   .govrs-footer[data-mobile='true'] .govrs-footer__sublist {
@@ -267,6 +301,28 @@
   .govrs-footer__images-list {
     margin-left: 0;
   }
+
+  .govrs-footer__license-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .govrs-footer__brand {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.govrs-footer[data-mobile='true'] .govrs-footer__license-row {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.govrs-footer[data-mobile='true'] .govrs-footer__brand {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 .govrs-footer[data-mobile='true'] .govrs-footer__sitemap {

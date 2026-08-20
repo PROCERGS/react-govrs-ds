@@ -1,4 +1,5 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
+@use '../../foundations/styles/layout-container' as layout;
 
 #rs-gov {
   color: var(--green-matriz-link);
@@ -57,12 +58,11 @@ input.barra-estado__checkbox,
 }
 
 .barra-estado__container {
+  @include layout.govrs-layout-container-barra;
   position: relative;
-  width: 100%;
-  max-width: none;
   height: 100%;
   padding: 0 var(--padding-default);
-  margin: 0;
+  margin-block: 0;
   box-sizing: border-box;
 }
 .barra-estado__container a {
@@ -81,7 +81,7 @@ input.barra-estado__checkbox,
   border-top: 1px solid #fff;
   margin-top: 0;
   background: #f8f8f8;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: var(--govrs-font-family-base, 'Noto Sans', sans-serif);
 }
 .barra-estado__nav {
   display: block;

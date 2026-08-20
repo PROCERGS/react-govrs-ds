@@ -1,4 +1,4 @@
-@use '../../foundations/styles/variables' as vars;
+@use '../../foundations/styles/sass-variables' as vars;
 
 .carousel-container {
   position: relative;
@@ -9,12 +9,22 @@
   font-family: var(--govrs-font-family-base);
 }
 
+.carousel-container.carousel-default {
+  --carousel-total-max-width: 85rem;
+  --carousel-slide-max-width: 79.375rem;
+  --carousel-arrow-size: var(--govrs-size-control-lg, 2.5rem);
+  --carousel-arrow-inline-padding: var(--govrs-space-1-5, 0.375rem);
+  max-width: var(--carousel-total-max-width);
+  width: 100%;
+  margin-inline: auto;
+}
+
 .carousel-video-thumbnail {
   position: relative;
   overflow: hidden;
   width: 100%;
   height: var(--govrs-size-media-carousel, 31.25rem);
-  background: var(--govrs-color-contrast-background, #000000);
+  background: var(--govrs-color-media-backdrop, #000000);
   cursor: pointer;
 }
 
@@ -34,8 +44,8 @@
   justify-content: center;
   background: linear-gradient(
     135deg,
-    var(--govrs-color-contrast-surface, #1a1a1a) 0%,
-    var(--govrs-color-contrast-surface-alt, #2d2d2d) 100%
+    var(--govrs-color-media-surface, #1a1a1a) 0%,
+    var(--govrs-color-media-surface-alt, #2d2d2d) 100%
   );
   color: var(--govrs-color-text-muted, #999999);
   gap: var(--govrs-space-4, 1rem);
@@ -91,17 +101,25 @@
 }
 
 .carousel-width-default {
-  max-width: 85%;
-  margin: 0 auto;
+  max-width: var(--carousel-slide-max-width, 79.375rem);
+  width: 100%;
+  flex: 1 1 auto;
+  margin: 0;
 }
 
 .carousel-width-full {
   max-width: 100%;
+  width: 100%;
+  flex: 1 1 auto;
 }
 
 .carousel-wrapper {
   position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: visible;
 }
 
 .carousel-content {
@@ -181,7 +199,7 @@
 }
 
 .carousel-video {
-  background-color: var(--govrs-color-contrast-background, #000000);
+  background-color: var(--govrs-color-media-backdrop, #000000);
 }
 
 .carousel-image-placeholder {
@@ -225,7 +243,7 @@
   bottom: 30px;
   left: var(--govrs-space-gutter, 5.25rem);
   max-width: calc(80% - var(--govrs-space-7-5, 2.5rem));
-  padding: 15px 25px;
+  padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-4, 1rem);
   border-radius: var(--govrs-radius-xs, 0.25rem);
   background: var(--govrs-color-surface-overlay, rgba(255, 255, 255, 0.85));
   box-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
@@ -235,8 +253,6 @@
 .carousel-title {
   margin: 0 0 var(--govrs-space-2, 0.5rem) 0;
   color: var(--govrs-color-text-secondary, #333333);
-  font-size: var(--govrs-font-size-28, 1.75rem);
-  font-weight: var(--govrs-font-weight-bold, 700);
 }
 
 .carousel-description {
@@ -245,25 +261,48 @@
   margin: 0;
   -webkit-box-orient: vertical;
   color: var(--govrs-color-text-subtle, #666666);
-  font-size: var(--govrs-font-size-18, 1.125rem);
   -webkit-line-clamp: 2;
   line-clamp: 2;
-  line-height: 1.5;
   text-overflow: ellipsis;
 }
 
-.carousel-button {
-  position: absolute;
+.carousel-arrow {
   z-index: 10;
-  top: 50%;
-  padding: var(--govrs-space-4, 1rem);
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow-prev {
+  padding-right: var(--carousel-arrow-inline-padding, 0.375rem);
+}
+
+.carousel-arrow-next {
+  padding-left: var(--carousel-arrow-inline-padding, 0.375rem);
+}
+
+.carousel-button {
+  display: inline-flex;
+  width: var(--carousel-arrow-size, 2.5rem);
+  height: var(--carousel-arrow-size, 2.5rem);
+  flex: 0 0 var(--carousel-arrow-size, 2.5rem);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   border: none;
+  border-radius: var(--govrs-radius-circle, 50%);
   background-color: transparent;
   color: var(--govrs-color-brand-primary, #1a7235);
   cursor: pointer;
-  font-size: var(--govrs-font-size-24, 1.5rem);
-  transform: translateY(-50%);
+  font-size: var(--govrs-font-size-16, 1rem);
+  line-height: 1;
   transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+}
+
+.carousel-button svg {
+  width: 1em;
+  height: 1em;
 }
 
 .carousel-button:hover:not(:disabled) {
@@ -276,18 +315,17 @@
   opacity: 0.3;
 }
 
-.carousel-button-prev {
-  left: var(--govrs-space-0, 0rem);
-  border-radius: 50%;
-}
-
+.carousel-button-prev,
 .carousel-button-next {
-  right: var(--govrs-space-0, 0rem);
-  border-radius: 50%;
+  position: static;
+  top: auto;
+  left: auto;
+  right: auto;
+  transform: none;
 }
 
 .icon-full {
-  padding: 100% var(--govrs-space-6, 1.5rem);
+  padding: 0;
 }
 
 .carousel-indicators {
@@ -430,7 +468,7 @@
 
 @media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
   .carousel-width-default {
-    max-width: 80%;
+    max-width: min(100%, var(--carousel-slide-max-width, 79.375rem));
   }
   .carousel-content {
     min-height: var(--govrs-size-media-carousel-2xs, 18.75rem);
@@ -482,35 +520,17 @@
   }
 
   .carousel-button {
-    padding: 2%;
-    font-size: var(--govrs-font-size-20, 1.25rem);
     opacity: 0.9;
   }
 
   .carousel-button.icon-full {
-    padding: 100% 2%;
-    border-radius: 0;
+    padding: 0;
+    border-radius: var(--govrs-radius-circle, 50%);
   }
 
   .carousel-button:hover:not(:disabled) {
     background-color: var(--govrs-color-brand-primary, #1a7235);
     opacity: 1;
-  }
-
-  .carousel-button-prev {
-    left: 0;
-  }
-
-  .carousel-button-next {
-    right: 0;
-  }
-
-  .carousel-title {
-    font-size: var(--govrs-font-size-24, 1.5rem);
-  }
-
-  .carousel-description {
-    font-size: var(--govrs-font-size-body-md, 1rem);
   }
 }
 
@@ -566,18 +586,11 @@
     max-width: calc(90% - 2rem);
     padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-3-75, 0.9375rem);
     background: var(--govrs-color-surface-overlay-strong, rgba(255, 255, 255, 0.9));
-    font-size: 0.9rem;
     pointer-events: auto;
   }
 
   .carousel-title {
     margin-bottom: 0.35rem;
-    font-size: 1.25rem;
-  }
-
-  .carousel-description {
-    font-size: 0.95rem;
-    line-height: 1.4;
   }
 
   .carousel-button:hover:not(:disabled) {
@@ -656,11 +669,6 @@
 
   .carousel-title {
     margin-bottom: 0.25rem;
-    font-size: 1.1rem;
-  }
-
-  .carousel-description {
-    font-size: 0.85rem;
   }
 
   .carousel-button:hover:not(:disabled) {

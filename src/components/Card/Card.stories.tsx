@@ -217,6 +217,7 @@ function CardPropsGuidePreview() {
           <li><code>children</code> compõe o corpo principal do card.</li>
           <li><code>acao</code> adiciona a chamada de rodapé.</li>
           <li><code>onLike</code> e <code>onShare</code> controlam as ações sociais.</li>
+          <li><code>tags</code> aparece como parágrafo verde abaixo do cabeçalho; sem tags, essa faixa não aparece.</li>
           <li><code>bodyImg</code> e <code>bodyImgAlt</code> adicionam imagem extra no corpo.</li>
         </ul>
       </StoryPreviewCard>
@@ -231,8 +232,10 @@ function CardPropsGuidePreview() {
 
       <StoryPreviewCard label="News">
         <ul style={storyDocsStyles.list}>
-          <li><code>children</code> é opcional e reorganiza a posição da imagem e do cabeçalho.</li>
-          <li><code>acao</code>, <code>itens</code>, <code>bodyImg</code>, <code>onLike</code> e <code>onShare</code> não entram na renderização desta variante.</li>
+          <li><code>children</code> é opcional e entra como corpo extra abaixo da descrição, sem alterar a ordem da imagem, das tags e do cabeçalho.</li>
+          <li><code>tags</code> e <code>tagsLimit</code> viram um parágrafo verde abaixo da imagem; sem tags, essa faixa não aparece.</li>
+          <li><code>onLike</code> e <code>onShare</code> exibem os ícones sociais e o menu do cabeçalho.</li>
+          <li><code>acao</code>, <code>itens</code> e <code>bodyImg</code> não entram na renderização desta variante.</li>
         </ul>
       </StoryPreviewCard>
 
@@ -246,19 +249,40 @@ function CardPropsGuidePreview() {
   )
 }
 
-function CardInteractivePreview(args: Card.Props) {
+function CardInteractivePreview({
+  showInteractive = true,
+  ...args
+}: Card.Props & { showInteractive?: boolean }) {
   const variant = args.variant ?? 'post'
 
   return (
-    <div style={{ padding: 12, maxWidth: 1200 }}>
+    <div
+      className={showInteractive ? undefined : 'govrs-story-card-no-interactive'}
+      style={{ padding: 12, maxWidth: 1200 }}
+    >
+      {!showInteractive ? (
+        <style>
+          {`.govrs-story-card-no-interactive .govrs-card-interactive { display: none; }`}
+        </style>
+      ) : null}
       <Card
         {...args}
         image={args.image || resolveCardImage(variant)}
         href={args.href || '#'}
         acao={variant === 'post' ? args.acao ?? postAction : undefined}
         itens={variant === 'list' ? args.itens ?? listItems : undefined}
-        onLike={variant === 'post' ? args.onLike : undefined}
-        onShare={variant === 'post' ? args.onShare : undefined}
+        tags={variant === 'icon' || variant === 'list' ? undefined : args.tags}
+        tagsLimit={variant === 'icon' || variant === 'list' ? undefined : args.tagsLimit}
+        onLike={
+          (variant === 'post' || variant === 'news') && showInteractive
+            ? args.onLike
+            : undefined
+        }
+        onShare={
+          (variant === 'post' || variant === 'news') && showInteractive
+            ? args.onShare
+            : undefined
+        }
       >
         {variant === 'icon' ? undefined : args.children}
       </Card>
@@ -347,6 +371,11 @@ export const CardDocumentacao: Story = {
         >
           <CardNewsIconPreview />
         </SandboxExample>
+        <p style={storyDocsStyles.text}>
+          Em <code>news</code> e <code>post</code>, <code>tags</code> é opcional e aparece
+          como um parágrafo na cor verde padrão, abaixo da imagem ou do cabeçalho. Sem tags,
+          essa faixa não é renderizada.
+        </p>
       </SectionCard>
 
       <SectionCard
@@ -380,6 +409,11 @@ export const CardDocumentacao: Story = {
 export const CardInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     variant: {
       control: { type: 'radio' },
       options: ['post', 'list', 'news', 'icon'],
@@ -427,6 +461,12 @@ export const CardInterativo: Story = {
       description: 'Destino do link principal do card.',
       table: { category: 'Composição' },
     },
+    showInteractive: {
+      control: 'boolean',
+      description:
+        'Mostra ou oculta os controles com a classe govrs-card-interactive (menu, ação, curtir e compartilhar).',
+      table: { category: 'Interação' },
+    },
     bodyImg: {
       control: 'text',
       description: 'Imagem adicional exibida no corpo das variantes baseadas em post.',
@@ -438,14 +478,26 @@ export const CardInterativo: Story = {
       table: { category: 'Estado visual' },
     },
     acao: {
-      control: false,
-      description: 'No modo post, a story usa uma ação fixa para manter o exemplo legível.',
-      table: { category: 'Composição' },
+      control: 'object',
+      description: 'Objeto da ação de rodapé na variante post (`label` e `url`).',
+      table: { category: 'Conteúdo' },
     },
     itens: {
-      control: false,
-      description: 'No modo list, a story injeta três itens de exemplo quando nenhum valor é informado.',
-      table: { category: 'Composição' },
+      control: 'object',
+      description: 'Lista de objetos exibidos na variante list.',
+      table: { category: 'Conteúdo' },
+    },
+    tags: {
+      control: 'object',
+      description:
+        'Tags opcionais nas variantes news e post. Aparecem como um parágrafo verde, não como o componente Tag. Sem tags, só os ícones (quando existirem) aparecem.',
+      table: { category: 'Conteúdo' },
+    },
+    tagsLimit: {
+      control: { type: 'select' },
+      options: [1, 2, 3],
+      description: 'Quantidade máxima de tags visíveis na variante news (1 a 3).',
+      table: { category: 'Conteúdo' },
     },
     onLike: {
       action: 'liked',
@@ -468,6 +520,11 @@ export const CardInterativo: Story = {
     href: '#',
     disabled: false,
     bodyImg: undefined,
+    showInteractive: true,
+    acao: postAction,
+    itens: listItems,
+    tags: ['noticias', 'Bento Gonçalves', 'comunicacao', 'enoturismo'],
+    tagsLimit: 3,
   },
   render: (args) => <CardInteractivePreview {...args} />,
 }

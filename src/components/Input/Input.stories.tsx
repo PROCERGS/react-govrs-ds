@@ -470,6 +470,11 @@ export const InputDocumentacao: Story = {
 export const InputInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     label: {
       control: 'text',
       description: 'Rótulo visível associado ao campo; e o principal nome acessível do input.',

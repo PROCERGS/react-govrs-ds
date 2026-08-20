@@ -279,6 +279,11 @@ export const TooltipDocumentacao: Story = {
 export const TooltipInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     children: {
       control: false,
       description: 'A story usa um botão fixo como trigger para manter a comparação consistente.',

@@ -6,6 +6,9 @@
   --govrs-loader-color: var(--govrs-color-brand-primary, #1a7235);
   --govrs-loader-track-color: var(--govrs-color-border-emphasis, #e0e0e0);
   --govrs-loader-label-color: var(--govrs-color-text-primary, #000000);
+  --govrs-loader-progress-color: var(--govrs-loader-color);
+  --govrs-loader-progress-center: var(--govrs-color-surface-base, #ffffff);
+  --govrs-loader-track-outline: transparent;
 
   display: inline-flex;
   align-items: center;
@@ -86,21 +89,24 @@
   fill: none;
   stroke: var(--govrs-loader-track-color);
   stroke-linecap: butt;
+  filter: drop-shadow(0 0 1px var(--govrs-loader-track-outline));
 }
 
 .govrs-loader__progress-bar {
   fill: none;
+  stroke: var(--govrs-loader-progress-color);
   stroke-linecap: round;
   transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: stroke-dashoffset;
 }
 
 .govrs-loader__progress-center {
-  fill: var(--govrs-color-surface-base, #ffffff);
+  fill: var(--govrs-loader-progress-center);
   stroke: none;
 }
 
 .govrs-loader__percentage-text {
+  fill: var(--govrs-loader-label-color);
   font-family: var(--govrs-font-family-base, sans-serif);
   font-size: var(--govrs-font-size-20, 1.25rem);
   font-weight: var(--govrs-font-weight-semibold, 600);

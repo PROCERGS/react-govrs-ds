@@ -1,6 +1,7 @@
 .govrs-tooltip {
   --tooltip-surface: var(--govrs-color-surface-base, #ffffff);
   --tooltip-text: var(--govrs-color-text-primary, #000000);
+  --tooltip-border: transparent;
   --tooltip-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
   --tooltip-trigger-color: var(--govrs-color-brand-primary, #1a7235);
   --tooltip-trigger-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
@@ -13,23 +14,23 @@
 }
 
 .govrs-tooltip[data-state='success'] {
-  --tooltip-surface: var(--govrs-color-success, #168821);
-  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+  --tooltip-surface: var(--govrs-tooltip-success-surface, var(--govrs-color-success, #168821));
+  --tooltip-text: var(--govrs-tooltip-success-text, var(--govrs-color-text-inverse, #ffffff));
 }
 
 .govrs-tooltip[data-state='error'] {
-  --tooltip-surface: var(--govrs-color-error, #e52207);
-  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+  --tooltip-surface: var(--govrs-tooltip-error-surface, var(--govrs-color-error, #e52207));
+  --tooltip-text: var(--govrs-tooltip-error-text, var(--govrs-color-text-inverse, #ffffff));
 }
 
 .govrs-tooltip[data-state='warning'] {
-  --tooltip-surface: var(--govrs-color-warning, #ffcd07);
-  --tooltip-text: var(--govrs-color-text-secondary, #333333);
+  --tooltip-surface: var(--govrs-tooltip-warning-surface, var(--govrs-color-warning, #ffcd07));
+  --tooltip-text: var(--govrs-tooltip-warning-text, var(--govrs-color-text-secondary, #333333));
 }
 
 .govrs-tooltip[data-state='info'] {
-  --tooltip-surface: var(--govrs-color-info, #2b86d8);
-  --tooltip-text: var(--govrs-color-text-inverse, #ffffff);
+  --tooltip-surface: var(--govrs-tooltip-info-surface, var(--govrs-color-info, #2b86d8));
+  --tooltip-text: var(--govrs-tooltip-info-text, var(--govrs-color-text-inverse, #ffffff));
 }
 
 .govrs-tooltip__trigger {
@@ -86,6 +87,7 @@
   min-width: 10rem;
   max-width: 20rem;
   padding: var(--govrs-space-3, 0.75rem);
+  border: var(--govrs-border-width-sm, 1px) solid var(--tooltip-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
   background: var(--tooltip-surface);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
@@ -102,7 +104,7 @@
 .govrs-tooltip__box,
 .govrs-tooltip__title,
 .govrs-tooltip__body {
-  color: inherit;
+  color: var(--tooltip-text);
 }
 
 .govrs-tooltip__box:not(.govrs-tooltip__box--with-icon) {

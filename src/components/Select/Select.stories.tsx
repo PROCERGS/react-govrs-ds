@@ -410,6 +410,11 @@ export const SelectDocumentacao: Story = {
 export const SelectInterativo: Story = {
   name: 'Interativo',
   argTypes: {
+    modoContraste: {
+      control: 'boolean',
+      description: 'Visualiza o componente no modo de alto contraste.',
+      table: { category: 'Acessibilidade' },
+    },
     label: {
       control: 'text',
       description: 'Rótulo principal exibido acima do controle.',

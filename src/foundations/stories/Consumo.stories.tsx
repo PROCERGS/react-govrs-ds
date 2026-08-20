@@ -70,7 +70,7 @@ EOF`}
       </SectionCard>
       <SectionCard
         title="Importação do Foundation"
-        description="O Foundation é o bloco responsável por fornecer os estilos base globais do design system, como reset de CSS, tipografia, cores e variáveis globais. Ele deve ser importado no projeto consumidor para garantir a consistência visual e o funcionamento correto dos componentes públicos. Para consultar cores base e como sobrescrever tokens no CSS do tema, veja a página Customização."
+        description="O Foundation fornece estilos globais opcionais do design system, como body, tipografia e utilitários das Foundations. Os componentes públicos já carregam tokens, incluindo o mapa de alto contraste, automaticamente. Para consultar cores base e como sobrescrever tokens no CSS do tema, veja a página Customização."
       >
         <div>Para importar o Foundation, basta adicionar a seguinte linha no arquivo de entrada do projeto consumidor (ex: <code>index.tsx</code> ou <code>App.tsx</code>):</div>
         <div style={storyDocsStyles.codeBlock}>
@@ -82,8 +82,20 @@ EOF`}
         </div>
       </SectionCard>
       <SectionCard
+        title="Tokens sem estilos globais"
+        description="Para disponibilizar explicitamente somente os tokens CSS e o modo de alto contraste, sem os estilos globais do Foundation, importe a entrada tokens:"
+      >
+        <div style={storyDocsStyles.codeBlock}>
+          <pre>
+            <code>
+              import '@procergs/react-govrs-ds/tokens';
+            </code>
+          </pre>
+        </div>
+      </SectionCard>
+      <SectionCard
         title="Consumo dos componentes públicos"
-        description="Após a instalação do pacote e a importação do Foundation, os componentes públicos do design system podem ser consumidos diretamente a partir do pacote principal. Por exemplo, para usar o componente Button, basta importar e usar normalmente em uma aplicação React:">
+        description="Após a instalação do pacote, os componentes públicos podem ser consumidos diretamente a partir do pacote principal. Cada componente disponibiliza os tokens necessários, inclusive para alto contraste. Por exemplo, para usar o componente Button, basta importar e usar normalmente em uma aplicação React:">
         <div style={storyDocsStyles.codeBlock}>
           <pre>
             <code>

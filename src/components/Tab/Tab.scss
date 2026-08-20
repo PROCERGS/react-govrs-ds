@@ -1,0 +1,91 @@
+.govrs-tab {
+  --govrs-tab-list-background: var(--govrs-color-surface-alt);
+  --govrs-tab-panel-background: var(--govrs-color-surface-base);
+  --govrs-tab-foreground: var(--govrs-color-text-primary);
+  --govrs-tab-border: var(--govrs-color-border-default);
+  --govrs-tab-active-foreground: var(--govrs-color-brand-primary);
+  --govrs-tab-active-border: var(--govrs-color-brand-primary);
+  --govrs-tab-hover-foreground: var(--govrs-color-brand-primary-hover);
+  --govrs-tab-focus: var(--govrs-color-focus);
+
+  display: block;
+}
+
+.govrs-tab__list {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: var(--govrs-border-width-sm) solid var(--govrs-tab-border);
+  background-color: var(--govrs-tab-list-background);
+}
+
+.govrs-tab__trigger {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--govrs-space-2);
+  padding: var(--govrs-space-3-5) var(--govrs-space-2) var(--govrs-space-3);
+  border: 0;
+  border-bottom: var(--govrs-border-width-lg) solid transparent;
+  background-color: transparent;
+  color: var(--govrs-tab-foreground);
+  cursor: pointer;
+  font-size: var(--govrs-font-size-body-lg);
+  font-weight: var(--govrs-font-weight-regular);
+  line-height: var(--govrs-line-height-body-md);
+  transition:
+    color var(--govrs-duration-fast) var(--govrs-easing-standard),
+    border-color var(--govrs-duration-fast) var(--govrs-easing-standard);
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    color: var(--govrs-tab-hover-foreground);
+  }
+
+  &:focus-visible {
+    outline: var(--govrs-border-width-md) solid var(--govrs-tab-focus);
+    outline-offset: calc(var(--govrs-border-width-lg) * -1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.govrs-tab__trigger--active {
+  border-bottom-color: var(--govrs-tab-active-border);
+  color: var(--govrs-tab-active-foreground);
+  font-weight: var(--govrs-font-weight-medium);
+}
+
+.govrs-tab__trigger--icon-top,
+.govrs-tab__trigger--icon-bottom {
+  flex-direction: column;
+  gap: var(--govrs-space-1);
+}
+
+.govrs-tab__trigger--icon-left,
+.govrs-tab__trigger--icon-right {
+  flex-direction: row;
+}
+
+.govrs-tab__icon {
+  flex: 0 0 auto;
+}
+
+.govrs-tab__panels {
+  background-color: var(--govrs-tab-panel-background);
+  color: var(--govrs-tab-foreground);
+}
+
+.govrs-tab__panel {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .govrs-tab__trigger {
+    padding: var(--govrs-space-3) var(--govrs-space-1) var(--govrs-space-2);
+    font-size: var(--govrs-font-size-body-md);
+  }
+}

@@ -1,282 +1,385 @@
-.high-contrast {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+/*
+ * High-contrast token map.
+ *
+ * Components consume these variables through their local semantic aliases.
+ * Consumer projects may override any --govrs-color-contrast-* token inside
+ * [data-govrs-contrast='high'] without replacing component styles.
+ */
+:root:is(.high-contrast, [data-govrs-contrast='high']),
+:is(.high-contrast, [data-govrs-contrast='high']) {
+  --govrs-color-brand-primary: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-strong: var(--govrs-color-contrast-control-foreground);
+  --govrs-color-brand-primary-hover: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-soft: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-soft-alt: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-alpha-08: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-alpha-10: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-alpha-20: var(--govrs-color-contrast-control-background);
+  --govrs-color-brand-primary-alpha-40: var(--govrs-color-contrast-control-background);
+
+  --govrs-color-interactive-link: var(--govrs-color-contrast-foreground);
+  --govrs-color-interactive-link-subtle: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-primary: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-secondary: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-muted: var(--govrs-color-contrast-muted);
+  --govrs-color-text-subtle: var(--govrs-color-contrast-muted);
+  --govrs-color-text-placeholder: var(--govrs-color-contrast-muted);
+  --govrs-color-text-inverse: var(--govrs-color-contrast-foreground);
+  --govrs-color-surface-base: var(--govrs-color-contrast-background);
+  --govrs-color-surface-muted: var(--govrs-color-contrast-surface);
+  --govrs-color-surface-soft: var(--govrs-color-contrast-surface);
+  --govrs-color-surface-raised: var(--govrs-color-contrast-surface);
+  --govrs-color-surface-canvas: var(--govrs-color-contrast-surface);
+  --govrs-color-surface-alt: var(--govrs-color-contrast-surface-alt);
+  --govrs-color-surface-alt-strong: var(--govrs-color-contrast-surface-alt);
+  --govrs-color-surface-overlay: var(--govrs-color-contrast-surface);
+  --govrs-color-surface-overlay-strong: var(--govrs-color-contrast-surface);
+  --govrs-color-border-subtle: var(--govrs-color-contrast-border);
+  --govrs-color-border-default: var(--govrs-color-contrast-border);
+  --govrs-color-border-muted: var(--govrs-color-contrast-border);
+  --govrs-color-border-strong: var(--govrs-color-contrast-border);
+  --govrs-color-border-emphasis: var(--govrs-color-contrast-border);
+  --govrs-color-success: var(--govrs-color-contrast-foreground);
+  --govrs-color-success-surface: var(--govrs-color-contrast-surface);
+  --govrs-color-warning: var(--govrs-color-contrast-foreground);
+  --govrs-color-warning-surface: var(--govrs-color-contrast-surface);
+  --govrs-color-error: var(--govrs-color-contrast-foreground);
+  --govrs-color-error-surface: var(--govrs-color-contrast-surface);
+  --govrs-color-info: var(--govrs-color-contrast-foreground);
+  --govrs-color-info-surface: var(--govrs-color-contrast-surface);
+  --govrs-color-focus: var(--govrs-color-contrast-accent);
+  --govrs-shadow-sm: none;
+  --govrs-shadow-card: none;
+  --govrs-shadow-card-hover: none;
+  --govrs-shadow-floating: none;
+  --govrs-shadow-overlay: none;
 }
 
-.high-contrast body {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-search {
+  --govrs-search-surface: var(--govrs-color-contrast-field-background);
+  --govrs-search-surface-hover: var(--govrs-color-contrast-field-background);
+  --govrs-search-border: var(--govrs-color-contrast-field-border);
+  --govrs-search-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-search-placeholder: var(--govrs-color-contrast-field-foreground);
+  --govrs-search-icon: var(--govrs-color-contrast-field-foreground);
 }
 
-//barra estado
-.high-contrast .barra-estado {
-  border-bottom: 1px solid var(--govrs-color-contrast-foreground, #04290f) !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-header__search-wrapper {
+  --govrs-header-search-background: var(--govrs-color-contrast-field-background);
+  --govrs-header-search-border: var(--govrs-color-contrast-field-border);
+  --govrs-header-search-mobile-background: var(--govrs-color-contrast-field-background);
+  --govrs-header-search-mobile-border: var(--govrs-color-contrast-field-border);
 }
 
-.high-contrast .barra-estado__menu > li > a > #GurIA path {
-  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-header-wrapper {
+  --govrs-header-title-foreground: var(--govrs-color-contrast-foreground);
+  --govrs-header-title-hover-foreground: var(--govrs-color-contrast-foreground);
 }
 
-.high-contrast .barra-estado__menu > li > a:focus {
-  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #04290f) !important;
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-button {
+  --govrs-button-background: var(--govrs-color-contrast-control-background);
+  --govrs-button-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-button-border: var(--govrs-color-contrast-control-border);
 }
 
-.high-contrast .barra-estado__menu > li > a:hover {
-  box-shadow: inset 0 5px var(--govrs-color-contrast-foreground, #04290f) !important;
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tab {
+  --govrs-tab-list-background: var(--govrs-color-contrast-control-background);
+  --govrs-tab-panel-background: var(--govrs-color-contrast-control-background);
+  --govrs-tab-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-border: var(--govrs-color-contrast-control-border);
+  --govrs-tab-active-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-active-border: var(--govrs-color-contrast-control-border);
+  --govrs-tab-hover-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tab-focus: var(--govrs-color-contrast-accent);
 }
 
-.high-contrast #rs-gov > path {
-  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-notification {
+  --govrs-notification-panel-background: var(--govrs-color-contrast-control-background);
+  --govrs-notification-panel-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-panel-muted: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-panel-border: var(--govrs-color-contrast-control-border);
+  --govrs-notification-tabs-background: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-hover: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-active: var(--govrs-color-contrast-control-background);
+  --govrs-notification-item-interaction-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-accent: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-accent-hover: var(--govrs-color-contrast-control-foreground);
+  --govrs-notification-new-indicator: var(--govrs-color-contrast-accent);
+  --govrs-notification-panel-shadow: none;
 }
 
-//a
-.high-contrast a {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-notification .govrs-tab {
+  --govrs-tab-list-background: var(--govrs-notification-tabs-background);
+  --govrs-tab-panel-background: var(--govrs-notification-panel-background);
+  --govrs-tab-foreground: var(--govrs-notification-panel-foreground);
+  --govrs-tab-border: var(--govrs-notification-panel-border);
+  --govrs-tab-active-foreground: var(--govrs-notification-accent);
+  --govrs-tab-active-border: var(--govrs-notification-accent);
+  --govrs-tab-hover-foreground: var(--govrs-notification-accent-hover);
 }
 
-.high-contrast a:hover {
-  color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-select {
+  --govrs-select-label: var(--govrs-color-contrast-foreground);
+  --govrs-select-control-background: var(--govrs-color-contrast-field-background);
+  --govrs-select-control-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-select-control-border: var(--govrs-color-contrast-field-border);
+  --govrs-select-list-background: var(--govrs-color-contrast-popover-background);
+  --govrs-select-list-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-select-list-border: var(--govrs-color-contrast-popover-border);
+  --govrs-select-icon: var(--govrs-color-contrast-field-foreground);
+  --govrs-select-placeholder: var(--govrs-color-contrast-field-foreground);
+  --govrs-select-selected-background: var(--govrs-color-contrast-control-background);
+  --govrs-select-selected-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-select-marker-background: var(--govrs-color-contrast-control-background);
+  --govrs-select-marker-border: var(--govrs-color-contrast-control-border);
 }
 
-//svg
-.high-contrast .acess-ul > li > a > svg {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-accordion {
+  --accordion-surface: var(--govrs-color-contrast-control-background);
+  --accordion-surface-hover: var(--govrs-color-contrast-control-background);
+  --accordion-border: var(--govrs-color-contrast-border);
+  --accordion-title-color: var(--govrs-color-contrast-foreground);
+  --accordion-content-color: var(--govrs-color-contrast-foreground);
+  --accordion-filter-surface: var(--govrs-color-contrast-field-background);
+  --accordion-filter-border: var(--govrs-color-contrast-field-border);
+  --accordion-filter-icon: var(--govrs-color-contrast-field-foreground);
+  --accordion-empty-surface: var(--govrs-color-contrast-control-background);
+  --accordion-empty-border: var(--govrs-color-contrast-border);
 }
 
-.high-contrast .acess-ul > * :hover {
-  fill: var(--govrs-color-contrast-muted, #cfc2ab) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tooltip {
+  --tooltip-surface: var(--govrs-color-contrast-popover-background);
+  --tooltip-text: var(--govrs-color-contrast-popover-foreground);
+  --tooltip-border: var(--govrs-color-contrast-popover-border);
+  --tooltip-trigger-color: var(--govrs-color-contrast-icon);
+  --tooltip-trigger-surface: var(--govrs-color-contrast-control-background);
+  --govrs-tooltip-success-surface: var(--govrs-color-contrast-popover-background);
+  --govrs-tooltip-success-text: var(--govrs-color-contrast-popover-foreground);
+  --govrs-tooltip-error-surface: var(--govrs-color-contrast-popover-background);
+  --govrs-tooltip-error-text: var(--govrs-color-contrast-popover-foreground);
+  --govrs-tooltip-warning-surface: var(--govrs-color-contrast-popover-background);
+  --govrs-tooltip-warning-text: var(--govrs-color-contrast-popover-foreground);
+  --govrs-tooltip-info-surface: var(--govrs-color-contrast-popover-background);
+  --govrs-tooltip-info-text: var(--govrs-color-contrast-popover-foreground);
 }
 
-.high-contrast #btn-contraste {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-modal {
+  --govrs-color-surface-base: var(--govrs-color-contrast-popover-background);
+  --govrs-color-surface-alt: var(--govrs-color-contrast-popover-background);
+  --govrs-color-text-primary: var(--govrs-color-contrast-popover-foreground);
+  --govrs-color-text-secondary: var(--govrs-color-contrast-popover-foreground);
+  --govrs-color-text-placeholder: var(--govrs-color-contrast-popover-foreground);
+  --govrs-color-border-emphasis: var(--govrs-color-contrast-popover-border);
+  --govrs-modal-dialog-background: var(--govrs-color-contrast-popover-background);
+  --govrs-modal-dialog-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-modal-dialog-border: var(--govrs-color-contrast-popover-border);
+  --govrs-modal-action-background: var(--govrs-color-contrast-control-background);
+  --govrs-modal-action-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-modal-action-border: var(--govrs-color-contrast-control-background);
 }
 
-//p
-.high-contrast p {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-date-picker {
+  --govrs-date-picker-trigger-background: var(--govrs-color-contrast-control-background);
+  --govrs-date-picker-trigger-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-date-picker-trigger-border: var(--govrs-color-contrast-control-border);
+  --govrs-date-picker-trigger-icon: var(--govrs-color-contrast-icon);
 }
 
-//h1
-.high-contrast h1 {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag {
+  --govrs-tag-background: var(--govrs-color-contrast-control-background);
+  --govrs-tag-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-tag-border: var(--govrs-color-contrast-control-border);
+  --govrs-tag-selected-background: var(--govrs-color-contrast-popover-background);
+  --govrs-tag-selected-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-tag-selected-border: var(--govrs-color-contrast-control-border);
 }
 
-//h2
-.high-contrast h2 {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) input[type='checkbox'].govrs-checkbox {
+  --govrs-checkbox-mark: var(--govrs-color-contrast-mark);
+  --govrs-checkbox-background: var(--govrs-color-contrast-control-background);
+  --govrs-checkbox-border: var(--govrs-color-contrast-control-border);
+  --govrs-checkbox-active-border: var(--govrs-color-contrast-control-border);
+  --govrs-checkbox-indeterminate-background: var(--govrs-color-contrast-control-background);
 }
 
-//h3
-.high-contrast h3 {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) input[type='radio'].govrs-radio {
+  --govrs-radio-active-color: var(--govrs-color-contrast-mark);
 }
 
-//span
-.high-contrast span {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high'])
+  input[type='checkbox'][role='switch'].govrs-switch {
+  --govrs-switch-track-background: var(--govrs-color-contrast-control-background);
+  --govrs-switch-track-border: var(--govrs-color-contrast-control-border);
+  --govrs-switch-thumb-background: var(--govrs-color-contrast-control-background);
+  --govrs-switch-thumb-border: var(--govrs-color-contrast-control-border);
+  --govrs-switch-checked-track-border: var(--govrs-color-contrast-control-border);
+  --govrs-switch-checked-thumb-background: var(--govrs-color-contrast-control-background);
 }
 
-//button
-.high-contrast button {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-upload {
+  --govrs-upload-trigger-background: var(--govrs-color-contrast-control-background);
+  --govrs-upload-trigger-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-upload-trigger-border: var(--govrs-color-contrast-control-border);
+  --govrs-upload-trigger-hover-background: var(--govrs-color-contrast-control-background);
+  --govrs-upload-item-background: var(--govrs-color-contrast-control-background);
+  --govrs-upload-item-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-upload-item-border: var(--govrs-color-contrast-control-border);
+  --govrs-upload-disabled-background: var(--govrs-color-contrast-control-background);
+  --govrs-upload-disabled-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-upload-disabled-border: var(--govrs-color-contrast-control-border);
 }
 
-//search
-.high-contrast .s-wrapper {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-  box-shadow: unset;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-slider {
+  --govrs-slider-label-color: var(--govrs-color-contrast-foreground);
+  --govrs-slider-input-background: var(--govrs-color-contrast-control-background);
+  --govrs-slider-input-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-slider-input-border: var(--govrs-color-contrast-control-border);
+  --govrs-slider-rail-color: var(--govrs-color-contrast-border);
+  --govrs-slider-range-background: var(--govrs-color-contrast-control-background);
+  --govrs-slider-thumb-background: var(--govrs-color-contrast-mark);
+  --govrs-slider-thumb-border: var(--govrs-color-contrast-control-background);
 }
 
-.search button {
-  background-color: unset !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-step-horizontal,
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-step-vertical {
+  --govrs-color-brand-primary: var(--govrs-color-contrast-border);
+  --govrs-step-active-background: var(--govrs-color-contrast-popover-background);
+  --govrs-step-active-foreground: var(--govrs-color-contrast-popover-foreground);
 }
 
-.high-contrast #buscageralTextBox {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-loader {
+  --govrs-loader-color: var(--govrs-color-contrast-mark);
+  --govrs-loader-track-color: var(--govrs-color-contrast-control-background);
+  --govrs-loader-label-color: var(--govrs-color-contrast-foreground);
+  --govrs-loader-progress-color: var(--govrs-color-contrast-mark);
+  --govrs-loader-progress-center: var(--govrs-color-contrast-control-background);
+  --govrs-loader-track-outline: var(--govrs-color-contrast-border);
 }
 
-//navigation
-.high-contrast .btn-scroll {
-  border: 3px solid var(--govrs-color-contrast-background, #f5efe6) !important;
-  background-color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  box-shadow: unset;
-  color: var(--govrs-color-contrast-background, #f5efe6) !important;
-  &:hover {
-    border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
-    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-    color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  }
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-table {
+  --govrs-table-foreground: var(--govrs-color-contrast-foreground);
+  --govrs-table-title: var(--govrs-color-contrast-foreground);
+  --govrs-table-header-background: var(--govrs-color-contrast-control-background);
+  --govrs-table-header-cell-background: var(--govrs-color-contrast-control-background);
+  --govrs-table-header-foreground: var(--govrs-color-contrast-foreground);
+  --govrs-table-border: var(--govrs-color-contrast-border);
+  --govrs-table-control-background: var(--govrs-color-contrast-control-background);
+  --govrs-table-control-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-table-control-border: var(--govrs-color-contrast-control-border);
+  --govrs-table-select-appearance: auto;
+  --govrs-table-select-icon: none;
+  color-scheme: dark;
 }
 
-.high-contrast .item.active::before {
-  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-pagination {
+  --govrs-pagination-foreground: var(--govrs-color-contrast-foreground);
+  --govrs-pagination-brand: var(--govrs-color-contrast-foreground);
+  --govrs-pagination-control-background: var(--govrs-color-contrast-field-background);
+  --govrs-pagination-control-foreground: var(--govrs-color-contrast-field-foreground);
+  --govrs-pagination-control-border: var(--govrs-color-contrast-field-border);
+  --govrs-pagination-select-appearance: auto;
+  --govrs-pagination-select-icon: none;
+  --govrs-pagination-page-default-background: var(--govrs-color-contrast-control-background);
+  --govrs-pagination-page-default-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-pagination-page-default-border: var(--govrs-color-contrast-control-border);
+  --govrs-pagination-page-active-background: var(--govrs-color-contrast-popover-background);
+  --govrs-pagination-page-active-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-pagination-page-active-border: var(--govrs-color-contrast-control-border);
+  --govrs-pagination-page-hover-background: var(--govrs-color-contrast-control-background);
+  --govrs-pagination-page-hover-border: var(--govrs-color-contrast-accent);
+  --govrs-pagination-page-pressed-background: var(--govrs-color-contrast-popover-background);
+  --govrs-pagination-page-pressed-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-pagination-page-pressed-border: var(--govrs-color-contrast-control-border);
+  color-scheme: dark;
 }
 
-.high-contrast .breadcrumbs {
-  a {
-    color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  }
-  a:hover {
-    color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
-  }
-  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  border-bottom: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-breadcrumbs {
+  --govrs-breadcrumbs-link: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-link-hover: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-current: var(--govrs-color-contrast-foreground);
+  --govrs-breadcrumbs-separator: var(--govrs-color-contrast-muted);
 }
 
-.high-contrast .section {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-list-link {
+  --govrs-list-link-border: var(--govrs-color-contrast-border);
+  --govrs-list-link-number: var(--govrs-color-contrast-foreground);
+  --govrs-list-link-icon: var(--govrs-color-contrast-icon);
+  --govrs-list-link-meta: var(--govrs-color-contrast-foreground);
+  --govrs-list-link-anchor: var(--govrs-color-contrast-foreground);
 }
 
-.high-contrast .section.active {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-card {
+  --govrs-card-border: var(--govrs-color-contrast-border);
+  --govrs-color-brand-primary: var(--govrs-color-contrast-foreground);
+  --govrs-color-brand-primary-hover: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-subtle: var(--govrs-color-contrast-muted);
 }
 
-.high-contrast .home > svg {
-  fill: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high'])
+  :where(.carousel-slide-panel-link, .carousel-button, .carousel-indicator) {
+  --govrs-color-brand-primary: var(--govrs-color-contrast-foreground);
+  --govrs-color-brand-primary-strong: var(--govrs-color-contrast-foreground);
+  --govrs-color-brand-primary-hover: var(--govrs-color-contrast-foreground);
 }
 
-.high-contrast .divider::before {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-alert {
+  --govrs-alert-border: var(--govrs-color-contrast-border);
 }
 
-//servicos grid item
-.high-contrast .servicos-grid-item {
-  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-badge {
+  --govrs-badge-background: var(--govrs-color-contrast-control-background);
+  --govrs-badge-foreground: var(--govrs-color-contrast-control-foreground);
+  --govrs-badge-border: var(--govrs-color-contrast-control-border);
 }
 
-.high-contrast .servicos-grid-image {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-menu-hamburger {
+  --govrs-menu-hamburger-toggle-background: var(--govrs-color-contrast-control-background);
+  --govrs-menu-hamburger-toggle-border: transparent;
+  --govrs-menu-hamburger-toggle-foreground: var(--govrs-color-contrast-icon);
+  --govrs-color-text-primary: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-subtle: var(--govrs-color-contrast-icon);
+  --govrs-color-text-inverse: var(--govrs-color-contrast-foreground);
 }
 
-.high-contrast .servicos-image {
-  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .acess-bar {
+  --govrs-acess-bar-foreground: var(--govrs-color-contrast-icon);
+  --govrs-acess-bar-hover-foreground: var(--govrs-color-contrast-icon);
 }
 
-//prog grid item
-.high-contrast .prog-grid-item {
-  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-.high-contrast .prog-grid-image {
-  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-//footer
-.high-contrast #footer {
-  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-.high-contrast .footer-logo {
-  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-date-picker__date-panel,
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-date-picker__time-panel,
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-date-picker__datetime-panel,
+:where(body:has(.high-contrast), body:has([data-govrs-contrast='high']))
+  :where(
+    .govrs-date-picker__date-panel,
+    .govrs-date-picker__time-panel,
+    .govrs-date-picker__datetime-panel
+  ) {
+  --govrs-date-picker-panel-background: var(--govrs-color-contrast-popover-background);
+  --govrs-date-picker-panel-foreground: var(--govrs-color-contrast-popover-foreground);
+  --govrs-date-picker-panel-border: var(--govrs-color-contrast-popover-border);
+  --govrs-date-picker-panel-icon: var(--govrs-color-contrast-popover-foreground);
 }
 
-//sitemap
-.high-contrast #page-sitemap {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--online {
+  --govrs-color-success: var(--govrs-color-contrast-status-online);
 }
 
-.high-contrast #page-sitemap a {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--offline {
+  --govrs-color-error: var(--govrs-color-contrast-status-offline);
 }
 
-.high-contrast #page-sitemap a:hover {
-  color: var(--govrs-color-contrast-muted, #cfc2ab) !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--away {
+  --govrs-color-warning: var(--govrs-color-contrast-status-away);
 }
 
-//submenu
-.high-contrast .submenu {
-  border-top: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  border-bottom: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
+/* Media contents retain their original rendering. */
+:is(.high-contrast, [data-govrs-contrast='high'])
+  :where(img, picture, video, canvas, iframe, .govrs-map, .govrs-map *) {
+  filter: none;
+  mix-blend-mode: normal;
 }
 
-.high-contrast .subitem-wrapper {
-  border-color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-//card container
-.high-contrast .card-container {
-  border: 2px var(--govrs-color-contrast-foreground, #04290f) solid !important;
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-//ui
-.high-contrast .ui.label {
-  background-color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-.high-contrast .ui.segment {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-  label {
-    color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  }
-  input {
-    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-    color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  }
-  textarea {
-    background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-    color: var(--govrs-color-contrast-foreground, #04290f) !important;
-  }
-}
-
-//menu hamburguer
-.high-contrast .menu-hamburger-content {
-  border-bottom: 2px solid var(--govrs-color-contrast-accent, #fecd3a);
-  background: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-.high-contrast .menu-hamburger-list {
-  border-right: 1px solid var(--govrs-color-contrast-border, #e6dcc9) !important;
-  background: var(--govrs-color-contrast-surface, #f7f2ea) !important;
-}
-
-.high-contrast .menu-hamburger-item a {
-  color: var(--govrs-color-contrast-foreground, #04290f) !important;
-}
-
-.high-contrast .menu-hamburger-item:hover {
-  background-color: var(--govrs-color-contrast-border, #e6dcc9) !important;
-}
-
-.menu-hamburger-expand-button {
-  background-color: transparent !important;
-}
-
-.menu-hamburger-item-content.level-odd {
-  background-color: var(--govrs-color-contrast-background, #f5efe6) !important;
-}
-
-.menu-hamburger-item-content.level-even {
-  background-color: var(--govrs-color-contrast-surface, #f7f2ea) !important;
-}
-
-.high-contrast img,
-.high-contrast picture,
-.high-contrast video,
-.high-contrast svg,
-.high-contrast .no-contrast,
-.high-contrast [data-no-contrast] {
-  filter: none !important;
-  -webkit-filter: none !important;
-  mix-blend-mode: normal !important;
-  opacity: 1 !important;
-  color: inherit !important;
-  fill: unset !important;
-  stroke: unset !important;
-}
-
-.high-contrast img *,
-.high-contrast svg * {
-  filter: none !important;
-  -webkit-filter: none !important;
-  opacity: 1 !important;
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-footer__socials img {
+  filter: brightness(0) invert(1);
 }
