@@ -336,7 +336,7 @@ input, button, select, textarea, label {
   align-items: center;
   padding: 0 13px;
   color: var(--barra-estado-text);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1;
   white-space: nowrap;
   transition: all .25s linear;
@@ -460,7 +460,7 @@ input, button, select, textarea, label {
   }
 
   .barra-estado__menu > li > a {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .barra-estado__menu > li > a:hover,
