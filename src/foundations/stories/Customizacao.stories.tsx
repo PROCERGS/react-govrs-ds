@@ -37,6 +37,7 @@ const baseColorsCode = `/* Cores base — valores padrão dos tokens CSS (:root)
 --govrs-color-text-subtle: ${colors.text.subtle.toLowerCase()};
 --govrs-color-text-placeholder: ${colors.text.placeholder.toLowerCase()};
 --govrs-color-text-inverse: ${colors.text.inverse.toLowerCase()};
+--govrs-color-neutral-text-subtle: ${colors.neutral.textSubtle.toLowerCase()};
 
 /* Superfície e borda */
 --govrs-color-surface-base: ${colors.neutral.surfaceBase.toLowerCase()};
