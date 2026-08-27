@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>@storybook/core - Storybook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    
+    <style>
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-regular.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-italic.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold-italic.woff2') format('woff2');
+      }
+    </style>
+
+    <link href="./sb-manager/runtime.js" rel="modulepreload" />
+
+    
+    <link href="./sb-addons/storybook-core-core-server-presets-0/common-manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-controls-1/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-actions-2/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-docs-3/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-backgrounds-4/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-viewport-5/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-toolbars-6/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-measure-7/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-outline-8/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/a11y-9/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/interactions-10/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/storybook-11/manager-bundle.js" rel="modulepreload" />
+      <link rel="icon" type="image/svg+xml" href="./matriz3-brand.svg" />
+<link rel="shortcut icon" href="./matriz3-brand.svg" />
+
+<style>
+  :root {
+    --matriz-sidebar-bg: #e6f2ea;
+    --matriz-sidebar-surface: #ffffff;
+    --matriz-sidebar-border: #e5e5e5;
+    --matriz-sidebar-text: #333333;
+    --matriz-sidebar-text-muted: #666666;
+    --matriz-sidebar-accent: #1a7235;
+    --matriz-sidebar-accent-strong: #04290f;
+    --matriz-sidebar-hover: #ddf9e3;
+    --matriz-sidebar-active: rgba(26, 114, 53, 0.1);
+    --matriz-sidebar-active-border: rgba(26, 114, 53, 0.2);
+    --matriz-sidebar-focus: #ffcd07;
+    --matriz-sidebar-focus-ring: #fff5c2;
+  }
+
+  .sidebar-container {
+    background: var(--matriz-sidebar-bg);
+    border-right: 1px solid var(--matriz-sidebar-border);
+  }
+
+  .sidebar-header a[title='Matriz 3'] {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    color: var(--matriz-sidebar-accent-strong) !important;
+    text-decoration: none !important;
+  }
+
+  .sidebar-header a[title='Matriz 3']::after {
+    content: attr(title);
+    color: var(--matriz-sidebar-accent-strong);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .sidebar-header a[title='Matriz 3'] img {
+    width: 36px;
+    height: 36px;
+    max-width: none !important;
+    max-height: none !important;
+    flex: 0 0 auto;
+  }
+
+  .sidebar-subheading {
+    color: var(--matriz-sidebar-text-muted) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-item {
+    border-radius: 12px !important;
+    color: var(--matriz-sidebar-text) !important;
+    margin: 2px 8px !important;
+  }
+
+  .sidebar-item:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+
+  .sidebar-item[data-selected='true'] {
+    background: var(--matriz-sidebar-active) !important;
+    box-shadow: inset 0 0 0 1px var(--matriz-sidebar-active-border);
+    color: var(--matriz-sidebar-accent-strong) !important;
+    font-weight: 700 !important;
+  }
+
+  .search-field {
+    background: var(--matriz-sidebar-surface) !important;
+    border: 1px solid var(--matriz-sidebar-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-text) !important;
+  }
+
+  .search-field:focus-within {
+    border-color: var(--matriz-sidebar-focus) !important;
+    box-shadow: 0 0 0 4px var(--matriz-sidebar-focus-ring) !important;
+  }
+
+  .sidebar-container .search-field + * {
+    display: none !important;
+  }
+
+  .search-result-item:hover,
+  .search-result-item[aria-selected='true'] {
+    background: var(--matriz-sidebar-hover) !important;
+  }
+
+  .search-result-item--label {
+    color: var(--matriz-sidebar-text) !important;
+  }
+
+  #storybook-panel-root [role='tablist'] {
+    box-shadow: none !important;
+    padding: 6px 10px 4px !important;
+  }
+
+  #storybook-panel-root .tabbutton {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-text-muted) !important;
+    margin: 4px 6px 4px 0 !important;
+    padding: 6px 10px !important;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  #storybook-panel-root .tabbutton:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    border-color: var(--matriz-sidebar-active-border) !important;
+    box-shadow: none !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+
+  #storybook-panel-root .tabbutton-active {
+    background: var(--matriz-sidebar-active) !important;
+    border-color: var(--matriz-sidebar-accent) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+    box-shadow: none !important;
+    font-weight: 700 !important;
+  }
+
+  #storybook-panel-root .tabbutton:focus-visible {
+    border-color: var(--matriz-sidebar-focus) !important;
+    box-shadow: 0 0 0 3px var(--matriz-sidebar-focus-ring) !important;
+    outline: none !important;
+  }
+
+  #storybook-panel-root .docblock-argstable input[type='checkbox'],
+  #storybook-panel-root .docblock-argstable input[type='radio'] {
+    accent-color: var(--matriz-sidebar-accent);
+  }
+
+  #storybook-panel-root button[title='Change addon orientation'],
+  #storybook-panel-root button[title*='Hide addons'] {
+    color: var(--matriz-sidebar-text-muted) !important;
+  }
+
+  #storybook-panel-root button[title='Change addon orientation']:hover,
+  #storybook-panel-root button[title*='Hide addons']:hover {
+    background: var(--matriz-sidebar-hover) !important;
+    color: var(--matriz-sidebar-accent-strong) !important;
+  }
+</style> 
+
+    <style>
+      #storybook-root[hidden] {
+        display: none !important;
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    <div id="root"></div>
+
+    
+    <script>
+      
+        
+          window['FEATURES'] = {
+  "argTypeTargetsV7": true,
+  "legacyDecoratorFileOrder": false,
+  "disallowImplicitActionsInRenderV8": true
+};
+        
+      
+        
+          window['REFS'] = {};
+        
+      
+        
+          window['LOGLEVEL'] = "info";
+        
+      
+        
+          window['DOCS_OPTIONS'] = {
+  "defaultName": "Docs",
+  "autodocs": false
+};
+        
+      
+        
+          window['CONFIG_TYPE'] = "PRODUCTION";
+        
+      
+        
+      
+        
+      
+        
+          window['TAGS_OPTIONS'] = {
+  "dev-only": {
+    "excludeFromDocsStories": true
+  },
+  "docs-only": {
+    "excludeFromSidebar": true
+  },
+  "test-only": {
+    "excludeFromSidebar": true,
+    "excludeFromDocsStories": true
+  }
+};
+        
+      
+        
+          window['STORYBOOK_RENDERER'] = "react";
+        
+      
+        
+          window['STORYBOOK_BUILDER'] = "@storybook/builder-vite";
+        
+      
+        
+          window['STORYBOOK_FRAMEWORK'] = "@storybook/react-vite";
+        
+      
+    </script>
+    
+
+    <script type="module">
+      import './sb-manager/globals-runtime.js';
+      
+      
+        import './sb-addons/storybook-core-core-server-presets-0/common-manager-bundle.js';
+      
+        import './sb-addons/essentials-controls-1/manager-bundle.js';
+      
+        import './sb-addons/essentials-actions-2/manager-bundle.js';
+      
+        import './sb-addons/essentials-docs-3/manager-bundle.js';
+      
+        import './sb-addons/essentials-backgrounds-4/manager-bundle.js';
+      
+        import './sb-addons/essentials-viewport-5/manager-bundle.js';
+      
+        import './sb-addons/essentials-toolbars-6/manager-bundle.js';
+      
+        import './sb-addons/essentials-measure-7/manager-bundle.js';
+      
+        import './sb-addons/essentials-outline-8/manager-bundle.js';
+      
+        import './sb-addons/a11y-9/manager-bundle.js';
+      
+        import './sb-addons/interactions-10/manager-bundle.js';
+      
+        import './sb-addons/storybook-11/manager-bundle.js';
+      
+      
+      import './sb-manager/runtime.js';
+    </script>
+  </body>
+</html>
