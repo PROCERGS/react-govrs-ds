@@ -72,6 +72,44 @@ function sanitizeUrl(url = '') {
   }
 }
 
+// Remove tags/atributos perigosos de SVGs vindos de props/atributos externos (proteção contra XSS via `links`).
+function sanitizeSvgMarkup(svgMarkup = '') {
+  if (typeof window === 'undefined' || typeof DOMParser === 'undefined') return '';
+
+  const normalized = normalizeEscapedHtml(String(svgMarkup));
+  let doc;
+  try {
+    doc = new DOMParser().parseFromString(normalized, 'image/svg+xml');
+  } catch {
+    return '';
+  }
+
+  const root = doc.documentElement;
+  if (!root || root.nodeName.toLowerCase() !== 'svg' || doc.querySelector('parsererror')) {
+    return '';
+  }
+
+  const DISALLOWED_TAGS = new Set(['script', 'foreignobject', 'iframe', 'embed', 'object']);
+  const UNSAFE_URL = /^\s*javascript:/i;
+
+  root.querySelectorAll('*').forEach((el) => {
+    if (DISALLOWED_TAGS.has(el.nodeName.toLowerCase())) {
+      el.remove();
+      return;
+    }
+    [...el.attributes].forEach((attr) => {
+      const name = attr.name.toLowerCase();
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      } else if ((name === 'href' || name === 'xlink:href') && UNSAFE_URL.test(attr.value)) {
+        el.removeAttribute(attr.name);
+      }
+    });
+  });
+
+  return root.outerHTML;
+}
+
 const LOGO_SVG = normalizeEscapedHtml(`
 <svg version="1.1" id="rs-gov-br" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="77px" height="16px"
      viewBox="0 0 77 16" enable-background="new 0 0 77 16" xml:space="preserve" aria-hidden="true" focusable="false">
@@ -103,6 +141,49 @@ const GURIA_SVG = normalizeEscapedHtml(`
 </svg>
 `);
 
+// Fontes usadas pelo @font-face abaixo. Também são carregadas via FontFace API (ver ensureRobotoFontsLoaded)
+// porque alguns navegadores não disparam o download de um @font-face declarado dentro de um Shadow Root
+// quando o texto que o usa também está apenas dentro da shadow tree, deixando o fallback (Arial/serif) ativo.
+const ROBOTO_FONT_FACES = [
+  {
+    url: 'https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmaiArmlw.woff2',
+    unicodeRange: 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF',
+  },
+  {
+    url: 'https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmUiAo.woff2',
+    unicodeRange: 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD',
+  },
+];
+
+let robotoFontsLoadPromise = null;
+
+function ensureRobotoFontsLoaded() {
+  if (typeof document === 'undefined' || typeof FontFace === 'undefined' || !('fonts' in document)) {
+    return Promise.resolve();
+  }
+  if (robotoFontsLoadPromise) return robotoFontsLoadPromise;
+
+  robotoFontsLoadPromise = Promise.all(
+    ROBOTO_FONT_FACES.map(({ url, unicodeRange }) => {
+      const face = new FontFace('Roboto', `url(${url}) format('woff2')`, {
+        style: 'normal',
+        weight: '400',
+        unicodeRange,
+      });
+      return face
+        .load()
+        .then((loaded) => {
+          document.fonts.add(loaded);
+          return loaded;
+        })
+        // falha de rede/CSP não deve quebrar o componente: o CSS @font-face e o fallback (Arial, sans-serif) continuam válidos
+        .catch(() => null);
+    })
+  );
+
+  return robotoFontsLoadPromise;
+}
+
 const DEFAULT_LINKS = [
   { href: 'https://estado.rs.gov.br/agencia-de-noticias', label: 'Notícias', srPrefix: 'Estado ' },
   { href: 'https://www.rs.gov.br/', label: 'Serviços', srPrefix: 'Estado ' },
@@ -114,7 +195,23 @@ const DEFAULT_LINKS = [
 ];
 
 const CSS_TEXT = normalizeEscapedHtml(`
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* @font-face declarado direto (sem @import) para funcionar de forma confiável dentro do Shadow DOM */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmaiArmlw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmUiAo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :host {
   --barra-estado-height: 32px;
@@ -128,13 +225,19 @@ const CSS_TEXT = normalizeEscapedHtml(`
   --barra-estado-container-max-992: 970px;
   --barra-estado-container-max-1200: 1170px;
   display: block;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   -webkit-animation: bugfix infinite 1s;
   animation: bugfix infinite 1s;
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+/* Alguns navegadores aplicam uma font-family de UA stylesheet a controles de formulário,
+   ignorando a herança normal do Shadow DOM; força o uso da Roboto nesses elementos. */
+input, button, select, textarea, label {
+  font-family: inherit;
 }
 
 @keyframes bugfix {
@@ -220,6 +323,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
   list-style: none;
+  font-family: "Roboto", Arial, sans-serif;
 }
 
 .barra-estado__menu > li {
@@ -232,17 +336,16 @@ const CSS_TEXT = normalizeEscapedHtml(`
   align-items: center;
   padding: 0 13px;
   color: var(--barra-estado-text);
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
   line-height: 1;
   white-space: nowrap;
-  transition: box-shadow .25s linear, color .25s linear;
+  transition: all .25s linear;
 }
 
 
 .barra-estado__menu > li > a:visited,
 .barra-estado__menu > li > a:active {
-  color: var(--barra-estado-text) !important;
+
 }
 
 .barra-estado__menu > li > a:hover,
@@ -357,7 +460,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   }
 
   .barra-estado__menu > li > a {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .barra-estado__menu > li > a:hover,
@@ -385,7 +488,15 @@ function createMenuHtml(links) {
 
     
     if (typeof item.svgHtml === 'string' && item.svgHtml.trim()) {
-      const svg = normalizeEscapedHtml(item.svgHtml);
+      const svg = sanitizeSvgMarkup(item.svgHtml);
+      if (!svg) {
+        return `
+      <li>
+        <a target="${target}" href="${href}"${rel}>
+          <span class="sr-only">${srPrefix}</span>${label}
+        </a>
+      </li>`;
+      }
       return `
       <li>
         <a target="${target}" href="${href}"${rel}>
@@ -445,7 +556,7 @@ class BarraEstado extends HTMLElement {
   constructor() {
   super();
 
-  this._shadow = this.attachShadow({ mode: 'closed' });
+  this._shadow = this.attachShadow({ mode: 'open' });
 
   this._links = null;
   this._onToggleChange = null;
@@ -479,6 +590,7 @@ class BarraEstado extends HTMLElement {
   }
 
   connectedCallback() {
+    ensureRobotoFontsLoaded();
     this.render();
   }
 
@@ -491,13 +603,20 @@ class BarraEstado extends HTMLElement {
 
   this.removeA11yListeners();
 
-  const safeCss = normalizeEscapedHtml(CSS_TEXT);
-  const safeHtml = createMenuHtml(this.links);
+  // O <style> (com o @font-face da Roboto) é criado uma única vez para evitar
+  // reparse/refetch da fonte a cada atualização de `links`.
+  if (!this._styleEl) {
+    this._styleEl = document.createElement('style');
+    this._styleEl.textContent = normalizeEscapedHtml(CSS_TEXT);
+    this._shadow.appendChild(this._styleEl);
+  }
 
-  this._shadow.innerHTML = `
-    <style>${safeCss}</style>
-    ${safeHtml}
-  `;
+  if (!this._contentEl) {
+    this._contentEl = document.createElement('div');
+    this._shadow.appendChild(this._contentEl);
+  }
+
+  this._contentEl.innerHTML = createMenuHtml(this.links);
 
   this.setupA11y();
 }
