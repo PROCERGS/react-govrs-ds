@@ -20,7 +20,8 @@ const DEFAULT_BLOCKED_HOSTS = [
             "sitedigx01.hml.rs.gov.br",
             "sitedigx03.rs.gov.br",
             "conversasdigitais.rs.gov.br",
-            "www.conversasdigitais.rs.gov.br"];
+            "www.conversasdigitais.rs.gov.br",
+            "https://st3modelo.hml.rs.gov.br/"];
 
 function normalizeEscapedHtml(input = '') {
   if (typeof input !== 'string') return input;
