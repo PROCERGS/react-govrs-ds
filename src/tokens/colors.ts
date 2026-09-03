@@ -40,7 +40,7 @@ export const colors = {
     black: '#000000',
     textStrong: '#333333',
     text: '#555555',
-    textSubtle: '#666666',
+    textSubtle: '#757575',
     textMuted: '#999999',
     surfaceBase: '#FFFFFF',
     surfaceMuted: '#F8F8F8',

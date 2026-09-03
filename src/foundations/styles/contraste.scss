@@ -25,6 +25,7 @@
   --govrs-color-text-subtle: var(--govrs-color-contrast-muted);
   --govrs-color-text-placeholder: var(--govrs-color-contrast-muted);
   --govrs-color-text-inverse: var(--govrs-color-contrast-foreground);
+  --govrs-color-neutral-text-subtle: var(--govrs-color-contrast-muted);
   --govrs-color-surface-base: var(--govrs-color-contrast-background);
   --govrs-color-surface-muted: var(--govrs-color-contrast-surface);
   --govrs-color-surface-soft: var(--govrs-color-contrast-surface);
@@ -313,6 +314,13 @@
   --govrs-color-brand-primary: var(--govrs-color-contrast-foreground);
   --govrs-color-brand-primary-hover: var(--govrs-color-contrast-foreground);
   --govrs-color-text-subtle: var(--govrs-color-contrast-muted);
+}
+
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-list-default {
+  --govrs-color-brand-primary: var(--govrs-color-contrast-foreground);
+  --govrs-color-brand-primary-hover: var(--govrs-color-contrast-foreground);
+  --govrs-color-text-subtle: var(--govrs-color-contrast-muted);
+  --govrs-color-neutral-text-subtle: var(--govrs-color-contrast-muted);
 }
 
 :is(.high-contrast, [data-govrs-contrast='high'])
