@@ -1,0 +1,36 @@
+.govrs-divisor {
+  --govrs-divisor-color: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-divisor-thickness: var(--govrs-border-width-sm, 1px);
+
+  display: block;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: var(--govrs-divisor-thickness) solid var(--govrs-divisor-color);
+  box-sizing: border-box;
+}
+
+.govrs-divisor--2 {
+  --govrs-divisor-thickness: var(--govrs-border-width-md, 2px);
+}
+
+.govrs-divisor--4 {
+  --govrs-divisor-thickness: var(--govrs-border-width-lg, 4px);
+}
+
+.govrs-divisor--dashed {
+  border-top-style: dashed;
+}
+
+.govrs-divisor--vertical {
+  align-self: stretch;
+  width: 0;
+  height: auto;
+  border-top: 0;
+  border-left: var(--govrs-divisor-thickness) solid var(--govrs-divisor-color);
+}
+
+.govrs-divisor--vertical.govrs-divisor--dashed {
+  border-left-style: dashed;
+}

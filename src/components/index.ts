@@ -10,6 +10,8 @@ export { Icon } from './Icon/Icon';
 export { Card } from './Card/Card';
 export { Carousel } from './Carousel/Carousel';
 export { DatePicker } from './DatePicker/DatePicker';
+export { Divisor } from './Divisor/Divisor';
+export type { DivisorProps, DivisorVariant, DivisorThickness, DivisorOrientation } from './Divisor/Divisor';
 export { Input } from './Input/Input';
 export { Header } from './Header/Header';
 export { Map } from './Map/Map';
