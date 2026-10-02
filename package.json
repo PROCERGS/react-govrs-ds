@@ -1,6 +1,6 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.3.46",
+  "version": "0.3.48",
   "private": false,
   "type": "module",
   "sideEffects": [

@@ -5,7 +5,7 @@ import { Card } from '../Card/Card'
 import './List.scss'
 
 
-type ListVariant = 'default' | 'check' | 'link' | 'card'
+type ListVariant = 'default' | 'check' | 'link' | 'card' | 'file'
 type ListMediaPreset = 'mixed' | 'images' | 'icons' | 'none'
 type ListLinkMediaPreset = 'icons' | 'none'
 type ListMediaPosition = 'above' | 'left'
@@ -38,6 +38,17 @@ type ListLinkItem = ListItemIdentity & {
   meta?: string
   href?: string
   icon?: ReactNode
+}
+
+type ListFileItem = ListItemIdentity & {
+  title: string
+  /** Nome alternativo exibido no link. Sem valor, usa title. */
+  displayTitle?: string
+  href: string
+  filename?: string
+  extension?: string
+  /** Tamanho do arquivo em bytes. */
+  size?: number
 }
 
 type ListCardItem = Card.Props & ListItemIdentity
@@ -89,7 +100,11 @@ type ListCardProps = ListBaseProps<ListCardItem> & {
   overflow?: ListCardOverflow
 }
 
-type ListProps = ListDefaultProps | ListCheckProps | ListLinkProps | ListCardProps
+type ListFileProps = ListBaseProps<ListFileItem> & {
+  variant: 'file'
+}
+
+type ListProps = ListDefaultProps | ListCheckProps | ListLinkProps | ListCardProps | ListFileProps
 
 type ListGroup<T> = {
   label: string | null
@@ -666,6 +681,81 @@ function LinkVariant({
   )
 }
 
+const fileSizeFormat = new Intl.NumberFormat('pt-BR', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
+function formatFileSize(size?: number) {
+  if (size == null || !Number.isFinite(size) || size < 0) {
+    return ''
+  }
+
+  if (size < 1024) {
+    return `${size} Bytes`
+  }
+
+  const unit = size < 1024 ** 2 ? 'KBytes' : size < 1024 ** 3 ? 'MBytes' : 'GBytes'
+  const divisor = size < 1024 ** 2 ? 1024 : size < 1024 ** 3 ? 1024 ** 2 : 1024 ** 3
+  return `${fileSizeFormat.format(size / divisor)} ${unit}`
+}
+
+function FilePaperclip() {
+  return (
+    <svg
+      className="govrs-list-file__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      focusable="false"
+    >
+      <path d="m21.4 11.6-8.8 8.8a5 5 0 0 1-7.1-7.1L15 3.8a3.5 3.5 0 0 1 5 5L10.5 18a2 2 0 0 1-2.8-2.8l8.5-8.5" />
+    </svg>
+  )
+}
+
+function FileVariant({ items = [], itemKey, className }: ListFileProps) {
+  return (
+    <ul className={joinClassNames('govrs-list__base', 'govrs-list-file', className)}>
+      {items.map((item, index) => {
+        const extension = (
+          item.extension?.trim() ||
+          item.filename?.match(/\.([^.]+)$/)?.[1] ||
+          ''
+        ).replace(/^\.+/, '').toLowerCase()
+        const details = [extension && `.${extension}`, formatFileSize(item.size)]
+          .filter(Boolean)
+          .join(' ')
+
+        return (
+          <li key={getListItemKey(item, index, itemKey)} className="govrs-list-file__item">
+            <a
+              className="govrs-list-file__anchor"
+              href={item.href}
+              download={item.filename || true}
+            >
+              <FilePaperclip />
+              <span className="govrs-list-file__content">
+                {item.displayTitle?.trim() || item.title}
+                {details ? (
+                  <>
+                    {' '}
+                    <span className="govrs-list-file__details">({details})</span>
+                  </>
+                ) : null}
+              </span>
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 function CardVariant({
   items = [],
   itemKey,
@@ -705,6 +795,10 @@ function CardVariant({
 }
 
 export function List(props: ListProps) {
+  if (props.variant === 'file') {
+    return <FileVariant {...props} />
+  }
+
   if (props.variant === 'check') {
     return <CheckVariant {...props} />
   }
@@ -729,6 +823,7 @@ export namespace List {
   export type DefaultItem = ListDefaultItem
   export type CheckItem = ListCheckItem
   export type LinkItem = ListLinkItem
+  export type FileItem = ListFileItem
   export type CardItem = ListCardItem
   export type CardOverflow = ListCardOverflow
 }

@@ -489,3 +489,58 @@ a.govrs-list-default__inner:focus-visible {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+
+.govrs-list-file {
+  display: flex;
+  flex-direction: column;
+  gap: var(--govrs-space-6, 1.5rem);
+}
+
+.govrs-list-file__item {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.govrs-list-file__anchor {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: baseline;
+  gap: var(--govrs-space-1, 0.25rem);
+  color: var(--govrs-color-interactive-link, #1351b4);
+  font-size: var(--govrs-font-size-24, 1.5rem);
+  font-weight: var(--govrs-font-weight-regular, 400);
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.govrs-list-file__anchor:visited {
+  color: var(--govrs-color-interactive-link, #1351b4);
+}
+
+.govrs-list-file__anchor:hover,
+.govrs-list-file__anchor:focus-visible {
+  text-decoration: underline;
+}
+
+.govrs-list-file__anchor:focus-visible {
+  outline: 2px solid var(--govrs-color-focus-ring, #0f62fe);
+  outline-offset: 2px;
+}
+
+.govrs-list-file__icon {
+  position: relative;
+  top: 0.125em;
+  width: 0.875em;
+  height: 0.875em;
+  flex: none;
+}
+
+.govrs-list-file__content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.govrs-list-file__details {
+  font-size: var(--govrs-font-size-20, 1.25rem);
+}
