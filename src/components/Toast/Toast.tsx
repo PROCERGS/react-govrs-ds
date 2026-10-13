@@ -10,7 +10,6 @@ type ToastPosition = 'bottom-center' | 'bottom-left' | 'bottom-right' | 'top-cen
 type ToastProps = {
   variant?: Alerts.Variant
   message?: ReactNode
-  children?: ReactNode
   duration?: number
   dismissible?: boolean
   onClose?: () => void
@@ -25,7 +24,6 @@ type ToastProps = {
 export function Toast({
   variant = 'info',
   message,
-  children,
   duration = 5000,
   dismissible = true,
   onClose,
@@ -60,9 +58,7 @@ export function Toast({
         onClose={dismiss}
         role={effectiveRole}
         icon={icon}
-      >
-        {children}
-      </Alerts>
+      />
     </div>
   )
 }
