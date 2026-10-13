@@ -1,5 +1,6 @@
 export { Accordion } from './Accordion/Accordion';
 export { Alerts } from './Alerts/Alerts';
+export { Toast } from './Toast/Toast';
 export { Avatar } from './Avatar/Avatar';
 export { Banner } from './Banner/Banner';
 export { Badges } from './Badges/Badges';
