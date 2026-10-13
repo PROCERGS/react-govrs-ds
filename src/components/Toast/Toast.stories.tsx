@@ -89,6 +89,7 @@ export const Interativo: Story = {
       control: 'radio',
       options: ['success', 'warning', 'info', 'error'],
       description: 'Define o tom visual e o contexto semântico do toast.',
+      table: { category: 'Estado visual' },
     },
     position: {
       control: 'radio',
@@ -101,29 +102,39 @@ export const Interativo: Story = {
         'top-right',
       ],
       description: 'Posição do toast na tela.',
+      table: { category: 'Estado visual' },
     },
     message: {
       control: 'text',
       description: 'Mensagem exibida dentro do alerta.',
+      table: { category: 'Conteúdo' },
     },
     duration: {
       control: { type: 'number', min: 0, step: 1000 },
       description: 'Tempo em milissegundos até fechar; zero desativa o fechamento automático.',
+      table: { category: 'Comportamento' },
     },
     dismissible: {
       control: 'boolean',
       description: 'Exibe um botão para fechar o toast manualmente.',
+      table: { category: 'Comportamento' },
     },
     icon: {
       control: 'boolean',
       description: 'Exibe o ícone do variant. Passe `false` para ocultar.',
+      table: { category: 'Estado visual' },
     },
     ariaRole: {
       control: 'radio',
       options: ['status', 'alert'],
       description: 'Role ARIA explícito para o container do toast.',
+      table: { category: 'Acessibilidade' },
     },
-    onClose: { action: 'closed' },
+    onClose: {
+      action: 'closed',
+      description: 'Disparado quando o toast é fechado manualmente ou pelo tempo limite.',
+      table: { category: 'Eventos' },
+    },
   },
   args: {
     variant: 'info',
