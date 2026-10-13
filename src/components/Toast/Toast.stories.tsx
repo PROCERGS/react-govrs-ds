@@ -7,10 +7,23 @@ import './Toast.scss'
 import '../../foundations/styles/index.scss'
 
 const meta = {
-  title: 'Feedback/Toast',
+  title: 'Feedback/Notificação temporária',
   component: Toast,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      description: {
+        component: `
+Notificação temporária para confirmar ações, informar sobre eventos ou comunicar erros sem interromper o fluxo da página.
+
+- **Variant:** define o contexto visual e semântico (sucesso, atenção, informação ou erro).
+- **Position:** permite exibir a notificação em seis posições fixas na janela.
+- **Duration:** fecha automaticamente após o tempo configurado; use zero para desativar o fechamento automático.
+- **Dismissible:** permite que a pessoa feche a notificação manualmente.
+- **Acessibilidade:** anuncia o conteúdo como status ou alerta. O papel padrão acompanha a variant; use \`ariaRole\` para sobrescrevê-lo.
+        `,
+      },
+    },
     controls: {
       expanded: true,
       sort: 'requiredFirst',
@@ -29,8 +42,8 @@ function ToastPreview(args: Toast.Props) {
   return (
     <div style={{ minHeight: '70vh', padding: 24 }}>
       <p>
-        O toast aparece fixo na posição definida. Duração zero mantém o toast
-        aberto até o fechamento manual. Use o botão para reexibir.
+        A notificação temporária aparece fixa na posição definida. Duração zero
+        mantém a notificação aberta até o fechamento manual. Use o botão para reexibir.
       </p>
       <Button
         variant="secondary"
@@ -61,7 +74,7 @@ function CustomIconPreview() {
         size="small"
         onClick={() => setKey((current) => current + 1)}
       >
-        Exibir toast com ícone customizado
+        Exibir notificação com ícone customizado
       </Button>
       <Toast
         key={key}
@@ -88,7 +101,7 @@ export const Interativo: Story = {
     variant: {
       control: 'radio',
       options: ['success', 'warning', 'info', 'error'],
-      description: 'Define o tom visual e o contexto semântico do toast.',
+      description: 'Define o tom visual e o contexto semântico da notificação.',
       table: { category: 'Estado visual' },
     },
     position: {
@@ -101,7 +114,7 @@ export const Interativo: Story = {
         'top-left',
         'top-right',
       ],
-      description: 'Posição do toast na tela.',
+      description: 'Posição da notificação na tela.',
       table: { category: 'Estado visual' },
     },
     message: {
@@ -116,7 +129,7 @@ export const Interativo: Story = {
     },
     dismissible: {
       control: 'boolean',
-      description: 'Exibe um botão para fechar o toast manualmente.',
+      description: 'Exibe um botão para fechar a notificação manualmente.',
       table: { category: 'Comportamento' },
     },
     icon: {
@@ -127,12 +140,12 @@ export const Interativo: Story = {
     ariaRole: {
       control: 'radio',
       options: ['status', 'alert'],
-      description: 'Role ARIA explícito para o container do toast.',
+      description: 'Role ARIA explícito para o container da notificação.',
       table: { category: 'Acessibilidade' },
     },
     onClose: {
       action: 'closed',
-      description: 'Disparado quando o toast é fechado manualmente ou pelo tempo limite.',
+      description: 'Disparado quando a notificação é fechada manualmente ou pelo tempo limite.',
       table: { category: 'Eventos' },
     },
   },
@@ -151,7 +164,7 @@ export const Interativo: Story = {
 export const Posicoes: Story = {
   render: () => (
     <div style={{ minHeight: '70vh', padding: 24 }}>
-      <p>Exemplo com toasts em todas as 6 posições disponíveis.</p>
+      <p>Exemplo com notificações temporárias em todas as 6 posições disponíveis.</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
         {(
           [
@@ -167,7 +180,7 @@ export const Posicoes: Story = {
             <strong style={{ display: 'block', marginBottom: 8, fontSize: 13 }}>{pos}</strong>
             <Toast
               variant="info"
-              message={`Toast em ${pos}`}
+              message={`Notificação em ${pos}`}
               duration={0}
               dismissible
               position={pos}
