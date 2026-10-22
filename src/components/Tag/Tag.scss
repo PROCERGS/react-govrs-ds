@@ -51,15 +51,17 @@
   --govrs-tag-interactive-background: var(--govrs-color-brand-primary, #1a7235);
 
   min-height: 2.25rem;
+  border: 0;
   background-color: var(--govrs-tag-interactive-background);
+  cursor: pointer;
   transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
 }
 
-.govrs-tag--interactive:hover:not(.govrs-tag--disabled) {
+.govrs-tag--interactive:hover:not(:disabled) {
   background-color: color-mix(in srgb, var(--govrs-tag-interactive-background) 70%, #ffffff);
 }
 
-.govrs-tag--interactive:active:not(.govrs-tag--disabled) {
+.govrs-tag--interactive:active:not(:disabled) {
   background-color: color-mix(in srgb, var(--govrs-tag-interactive-background) 35%, #ffffff);
 }
 
@@ -69,6 +71,10 @@
 
 .govrs-tag--disabled {
   opacity: 0.45;
+}
+
+.govrs-tag--interactive:disabled {
+  cursor: not-allowed;
 }
 
 .govrs-tag__action {
@@ -90,7 +96,7 @@
   pointer-events: none;
 }
 
-.govrs-tag__action:focus-visible {
+.govrs-tag--interactive:focus-visible {
   outline: var(--govrs-border-width-md, 2px) solid var(--govrs-color-focus, #ffcd07);
   outline-offset: var(--govrs-border-width-sm, 1px);
 }

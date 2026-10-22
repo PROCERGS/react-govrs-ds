@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { faCar, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
@@ -19,17 +20,23 @@ const docsVariantTags = ['interactive', 'text', 'icon', 'score', 'status']
 const docsHeroStats = [
   {
     title: 'Quando usar',
-    text: 'Para identificar itens curtos, remover uma classificação já aplicada ou exibir uma informação compacta de status, ícone ou pontuação.',
+    text: 'Para selecionar filtros ou identificar itens curtos e exibir uma informação compacta de status, ícone ou pontuação.',
   },
   {
     title: 'Comportamento',
-    text: 'A tag não é um controle de seleção. A variante interactive apenas oferece a ação de remover e a representação visual de um estado selecionado.',
+    text: 'A variante interactive é um botão de alternância controlado. O estado default não exibe indicador; selected mostra uma confirmação e disabled mostra X.',
   },
 ]
 
-const interactiveExampleCode = `<Tag label="Veículo" Icon={faCar} onClose={() => removeTag()} />
-<Tag label="Sem ícone" showIcon={false} onClose={() => removeTag()} />
-<Tag label="Veículo" Icon={faCar} selected />
+const interactiveExampleCode = `const [selected, setSelected] = useState(false)
+
+<Tag
+  label="Veículo"
+  Icon={faCar}
+  selected={selected}
+  onSelectedChange={setSelected}
+/>
+
 <Tag label="Veículo" Icon={faCar} disabled />`
 
 const typesExampleCode = `<Tag variant="text" label="Veículo" Icon={faCar} />
@@ -65,6 +72,21 @@ function TypesPreview() {
   )
 }
 
+function TagInteractivePreview(args: React.ComponentProps<typeof Tag>) {
+  const [selected, setSelected] = useState(Boolean(args.selected))
+
+  return (
+    <Tag
+      {...args}
+      selected={selected}
+      onSelectedChange={(nextSelected) => {
+        setSelected(nextSelected)
+        args.onSelectedChange?.(nextSelected)
+      }}
+    />
+  )
+}
+
 export const TagDocumentacao: Story = {
   name: 'Documentação',
   parameters: {
@@ -87,21 +109,22 @@ export const TagDocumentacao: Story = {
 
       <SectionCard
         title="Tag interativa"
-        description="A tag interativa exibe ícone, rótulo e, por padrão, um botão para remover a própria tag. O estado selected é apenas visual e substitui o botão por uma confirmação."
+        description="A tag interativa é um botão de alternância. No estado default, ela exibe ícone e rótulo; selected mostra uma confirmação, e disabled mostra X."
       >
         <SandboxExample
-          title="Remoção, seleção e desabilitada"
-          description="Use onClose para sincronizar a remoção com o estado da aplicação. selected é útil para representar uma seleção já determinada pela interface, não para criar grupos de opções."
+          title="Seleção controlada e desabilitada"
+          description="Use selected e onSelectedChange para sincronizar a seleção com o estado da aplicação."
           code={interactiveExampleCode}
           notes={[
-            'O botão de remover tem nome acessível configurável por closeButtonLabel.',
-            'disabled impede exclusivamente a ação de remoção.',
-            'showButton, showIcon e showLabel permitem ocultar partes da anatomia do Figma.',
+            'O botão informa seu estado com aria-pressed e pode ser acionado com teclado.',
+            'disabled impede a alteração da seleção.',
+            'O estado desabilitado aplica a opacidade definida no Figma.',
+            'O estado default não exibe indicador após o rótulo.',
           ]}
         >
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
-            <Tag label="Veículo" Icon={faCar} onClose={() => undefined} />
-            <Tag label="Sem ícone" showIcon={false} onClose={() => undefined} />
+            <Tag label="Veículo" Icon={faCar} />
+            <Tag label="Sem ícone" showIcon={false} />
             <Tag label="Selecionada" Icon={faCar} selected />
             <Tag label="Desabilitada" Icon={faCar} disabled />
           </div>
@@ -138,12 +161,12 @@ export const TagDocumentacao: Story = {
 
       <SectionCard
         title="Limites de uso"
-        description="Tags devem manter textos curtos. Para seleção exclusiva ou múltipla, use os controles de formulário adequados; para mensagens, prefira Alerts ou Badges."
+        description="Tags devem manter textos curtos. Para valores submetidos por formulário, use os controles de formulário adequados; para mensagens, prefira Alerts ou Badges."
       >
         <ul style={storyDocsStyles.list}>
-          <li>Não use Tag como radio, checkbox ou grupo de filtros.</li>
+          <li>O consumidor define se as tags formam uma seleção exclusiva ou múltipla.</li>
           <li>Não use a variante icon sem um <code>label</code> que explique o ícone.</li>
-          <li>Use <code>onClose</code> para tratar a remoção na aplicação; o componente não oculta a tag automaticamente.</li>
+          <li>Use <code>selected</code> e <code>onSelectedChange</code> para sincronizar o estado externo.</li>
         </ul>
       </SectionCard>
     </DocsStoryLayout>
@@ -171,18 +194,13 @@ export const TagInterativo: Story = {
     },
     selected: {
       control: 'boolean',
-      description: 'Mostra a confirmação visual na variante interactive.',
+      description: 'Exibe o estado selected com confirmação na variante interactive.',
       table: { category: 'Estado' },
     },
     disabled: {
       control: 'boolean',
-      description: 'Desabilita o botão de remoção na variante interactive.',
+      description: 'Desabilita a alteração de seleção na variante interactive.',
       table: { category: 'Estado' },
-    },
-    showButton: {
-      control: 'boolean',
-      description: 'Exibe o botão de remoção na variante interactive.',
-      table: { category: 'Estrutura' },
     },
     showIcon: {
       control: 'boolean',
@@ -199,6 +217,11 @@ export const TagInterativo: Story = {
       description: 'Valor exibido pela variante score.',
       table: { category: 'Conteúdo' },
     },
+    onSelectedChange: {
+      action: 'selected changed',
+      description: 'Recebe o próximo estado de seleção da variante interactive.',
+      table: { category: 'Eventos' },
+    },
   },
   args: {
     variant: 'interactive',
@@ -206,13 +229,12 @@ export const TagInterativo: Story = {
     Icon: faMagnifyingGlass,
     showIcon: true,
     showLabel: true,
-    showButton: true,
     selected: false,
     disabled: false,
     score: 9,
   },
   parameters: {
-    controls: { exclude: ['children', 'className', 'closeButtonLabel', 'onClose'] },
+    controls: { exclude: ['children', 'className', 'onClick'] },
   },
-  render: (args) => <Tag {...args} onClose={() => undefined} />,
+  render: (args) => <TagInteractivePreview key={String(args.selected)} {...args} />,
 }

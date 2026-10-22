@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
@@ -22,14 +22,15 @@ export type TagIconProps = {
   showIcon?: boolean
 }
 
-export type TagInteractiveProps = TagContentProps & TagIconProps & {
+export type TagInteractiveProps = TagContentProps & TagIconProps & Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'className' | 'disabled' | 'type'
+> & {
   variant?: 'interactive'
   disabled?: boolean
   selected?: boolean
-  showButton?: boolean
   showLabel?: boolean
-  closeButtonLabel?: string
-  onClose?: () => void
+  onSelectedChange?: (selected: boolean) => void
 }
 
 export type TagTextProps = TagContentProps & TagIconProps & {
@@ -111,18 +112,21 @@ function InteractiveTag({
   children,
   disabled = false,
   selected = false,
-  showButton = true,
   showIcon = true,
   showLabel = true,
   Icon,
-  closeButtonLabel = 'Remover tag',
-  onClose,
   className,
+  onClick,
+  onSelectedChange,
+  ...buttonProps
 }: TagInteractiveProps) {
   const content = resolveContent(label, children, 'Label')
+  const accessibleName = typeof content === 'string' ? content : undefined
 
   return (
-    <span
+    <button
+      {...buttonProps}
+      type="button"
       className={joinClasses(
         'govrs-tag',
         'govrs-tag--interactive',
@@ -131,26 +135,25 @@ function InteractiveTag({
         (!showIcon || !Icon) && 'govrs-tag--without-icon',
         className,
       )}
-      aria-disabled={disabled || undefined}
+      aria-label={buttonProps['aria-label'] ?? (showLabel ? undefined : accessibleName)}
+      aria-pressed={selected}
+      disabled={disabled}
+      onClick={(event) => {
+        onClick?.(event)
+
+        if (!event.defaultPrevented) {
+          onSelectedChange?.(!selected)
+        }
+      }}
     >
       {showIcon && Icon && <TagLeadingIcon Icon={Icon} />}
       {showLabel && <span className="govrs-tag__label">{content}</span>}
-      {selected ? (
+      {(disabled || selected) && (
         <span className="govrs-tag__action govrs-tag__action--indicator" aria-hidden="true">
-          <CheckIcon />
+          {disabled ? <CloseIcon /> : <CheckIcon />}
         </span>
-      ) : showButton ? (
-        <button
-          type="button"
-          className="govrs-tag__action"
-          aria-label={closeButtonLabel}
-          disabled={disabled}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </button>
-      ) : null}
-    </span>
+      )}
+    </button>
   )
 }
 
@@ -180,7 +183,11 @@ function TextTag({
 
 function IconTag({ Icon, label = 'Tag', className }: TagIconOnlyProps) {
   return (
-    <span className={joinClasses('govrs-tag', 'govrs-tag--icon', className)} aria-label={label}>
+    <span
+      className={joinClasses('govrs-tag', 'govrs-tag--icon', className)}
+      role="img"
+      aria-label={label}
+    >
       {Icon && <TagLeadingIcon Icon={Icon} />}
     </span>
   )
@@ -188,7 +195,11 @@ function IconTag({ Icon, label = 'Tag', className }: TagIconOnlyProps) {
 
 function ScoreTag({ score = 9, className }: TagScoreProps) {
   return (
-    <span className={joinClasses('govrs-tag', 'govrs-tag--score', className)} aria-label={`Pontuação ${score}`}>
+    <span
+      className={joinClasses('govrs-tag', 'govrs-tag--score', className)}
+      role="img"
+      aria-label={`Pontuação ${score}`}
+    >
       <span className="govrs-tag__label">{score}</span>
     </span>
   )
@@ -200,6 +211,7 @@ function StatusTag({ label, children, showLabel = true, className }: TagStatusPr
   return (
     <span
       className={joinClasses('govrs-tag-status', className)}
+      role={showLabel ? undefined : 'img'}
       aria-label={showLabel ? undefined : typeof content === 'string' ? content : 'Status'}
     >
       <span className="govrs-tag-status__dot" aria-hidden="true" />
