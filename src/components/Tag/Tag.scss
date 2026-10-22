@@ -43,10 +43,6 @@
   padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-2, 0.5rem);
 }
 
-.govrs-tag--interactive.govrs-tag--without-icon {
-  padding-inline-start: var(--govrs-space-3, 0.75rem);
-}
-
 .govrs-tag--interactive {
   --govrs-tag-interactive-background: var(--govrs-color-brand-primary, #1a7235);
 
