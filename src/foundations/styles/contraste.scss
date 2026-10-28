@@ -187,12 +187,13 @@
 }
 
 :is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag {
-  --govrs-tag-background: var(--govrs-color-contrast-control-background);
-  --govrs-tag-foreground: var(--govrs-color-contrast-control-foreground);
-  --govrs-tag-border: var(--govrs-color-contrast-control-border);
-  --govrs-tag-selected-background: var(--govrs-color-contrast-popover-background);
-  --govrs-tag-selected-foreground: var(--govrs-color-contrast-popover-foreground);
-  --govrs-tag-selected-border: var(--govrs-color-contrast-control-border);
+  --govrs-tag-interactive-background: var(--govrs-color-contrast-control-background);
+  --govrs-tag-selected-background: var(--govrs-color-contrast-control-background);
+  --govrs-tag-text-background: var(--govrs-color-contrast-control-background);
+  --govrs-tag-icon-background: var(--govrs-color-contrast-control-background);
+  --govrs-tag-score-background: var(--govrs-color-contrast-control-background);
+  --govrs-color-text-inverse: var(--govrs-color-contrast-control-foreground);
+  --govrs-color-surface-base: var(--govrs-color-contrast-control-border);
 }
 
 :is(.high-contrast, [data-govrs-contrast='high']) input[type='checkbox'].govrs-checkbox {
@@ -369,16 +370,10 @@
   --govrs-date-picker-panel-icon: var(--govrs-color-contrast-popover-foreground);
 }
 
-:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--online {
-  --govrs-color-success: var(--govrs-color-contrast-status-online);
-}
-
-:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--offline {
-  --govrs-color-error: var(--govrs-color-contrast-status-offline);
-}
-
-:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status--away {
-  --govrs-color-warning: var(--govrs-color-contrast-status-away);
+:is(.high-contrast, [data-govrs-contrast='high']) .govrs-tag-status {
+  --govrs-color-success: var(--govrs-color-contrast-mark);
+  --govrs-color-text-secondary: var(--govrs-color-contrast-foreground);
+  --govrs-color-surface-base: var(--govrs-color-contrast-control-border);
 }
 
 /* Media contents retain their original rendering. */
