@@ -1,0 +1,14 @@
+import { breakpointsDefinitions as breakpoints } from './breakpoints';
+import { colorsDefinitions as colors } from './colors';
+import { spacingDefinitions as spacing } from './spacing';
+import { typographyDefinitions as typography } from './typography';
+import { bordersDefinitions as borders } from './borders';
+import { radiiDefinitions as radii } from './radii';
+import { shadowsDefinitions as shadows } from './shadows';
+import { motionDefinitions as motion } from './motion';
+import { sizesDefinitions as sizes } from './sizes';
+import { layoutDefinitions as layout } from './layout';
+import { layersDefinitions as layers } from './layers';
+import { interactionDefinitions as interaction } from './interaction';
+import { extensions } from './web';
+export default { $description: "Tokens PROCERGS; fonte TypeScript por responsabilidade.", $extensions: extensions, breakpoints, colors, spacing, typography, borders, radii, shadows, motion, sizes, layout, layers, interaction };

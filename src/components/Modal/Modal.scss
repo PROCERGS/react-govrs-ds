@@ -10,17 +10,17 @@
 
   position: fixed;
   inset: 0;
-  z-index: var(--govrs-z-index-modal);
+  z-index: var(--govrs-layer-modal);
   display: grid;
   place-items: center;
-  padding: var(--govrs-space-4, 1rem);
+  padding: var(--govrs-space-scale-4, 1rem);
   background: var(--govrs-color-overlay-backdrop, rgba(0, 0, 0, 0.48));
 }
 
 .govrs-modal__dialog {
   display: grid;
   width: min(100%, 31.25rem);
-  max-height: calc(100vh - (var(--govrs-space-4, 1rem) * 2));
+  max-height: calc(100vh - (var(--govrs-space-scale-4, 1rem) * 2));
   min-width: 0;
   grid-template-rows: auto minmax(0, 1fr) auto;
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
@@ -36,8 +36,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--govrs-space-4, 1rem);
-  padding: var(--govrs-space-5, 1.25rem) var(--govrs-space-5, 1.25rem) var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-4, 1rem);
+  padding: var(--govrs-space-scale-5, 1.25rem) var(--govrs-space-scale-5, 1.25rem) var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-modal__title {
@@ -83,9 +83,9 @@
 
 .govrs-modal__body {
   display: grid;
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
   min-height: 0;
-  padding: 0 var(--govrs-space-5, 1.25rem) var(--govrs-space-5, 1.25rem);
+  padding: 0 var(--govrs-space-scale-5, 1.25rem) var(--govrs-space-scale-5, 1.25rem);
   overflow-y: auto;
 }
 
@@ -99,7 +99,7 @@
 
 .govrs-modal__lead {
   display: grid;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
   color: var(--govrs-modal-dialog-foreground);
   font-family: var(--govrs-font-family-base, sans-serif);
   font-size: var(--govrs-font-size-body-md, 1rem);
@@ -117,8 +117,8 @@
 
 .govrs-modal__item {
   display: grid;
-  gap: var(--govrs-space-3, 0.75rem);
-  padding-block: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
+  padding-block: var(--govrs-space-scale-3, 0.75rem);
   border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
 }
 
@@ -132,8 +132,8 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  gap: var(--govrs-space-3, 0.75rem);
-  padding: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
+  padding: var(--govrs-space-scale-2, 0.5rem);
   border: none;
   border-radius: var(--govrs-radius-md, 0.5rem);
   background: transparent;
@@ -150,7 +150,7 @@
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-modal__item-image,
@@ -188,50 +188,50 @@
 }
 
 .govrs-modal__item-content {
-  padding-left: calc(3rem + var(--govrs-space-3, 0.75rem) + var(--govrs-space-2, 0.5rem));
+  padding-left: calc(3rem + var(--govrs-space-scale-3, 0.75rem) + var(--govrs-space-scale-2, 0.5rem));
   color: var(--govrs-modal-dialog-foreground);
 }
 
 .govrs-modal__form-fields {
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-modal__footer {
   display: flex;
   justify-content: flex-end;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
   flex-wrap: wrap;
-  padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-5, 1.25rem) var(--govrs-space-5, 1.25rem);
+  padding: var(--govrs-space-scale-3, 0.75rem) var(--govrs-space-scale-5, 1.25rem) var(--govrs-space-scale-5, 1.25rem);
   border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-modal-dialog-border);
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .govrs-modal {
-    padding: var(--govrs-space-3, 0.75rem);
+    padding: var(--govrs-space-scale-3, 0.75rem);
   }
 
   .govrs-modal__dialog {
     width: 100%;
-    max-height: calc(100vh - (var(--govrs-space-3, 0.75rem) * 2));
+    max-height: calc(100vh - (var(--govrs-space-scale-3, 0.75rem) * 2));
   }
 
   .govrs-modal__header,
   .govrs-modal__body,
   .govrs-modal__footer {
-    padding-inline: var(--govrs-space-4, 1rem);
+    padding-inline: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-modal__header {
-    padding-top: var(--govrs-space-4, 1rem);
+    padding-top: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-modal__body {
-    padding-bottom: var(--govrs-space-4, 1rem);
+    padding-bottom: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-modal__footer {
     justify-content: stretch;
-    padding-bottom: var(--govrs-space-4, 1rem);
+    padding-bottom: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-modal__footer > * {

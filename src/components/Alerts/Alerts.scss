@@ -7,14 +7,14 @@
   height: var(--govrs-size-alert-height, 4.375rem);
   box-sizing: border-box;
   align-items: center;
-  padding: 0 var(--govrs-space-2, 0.5rem) 0 var(--govrs-space-4, 1rem);
+  padding: 0 var(--govrs-space-scale-2, 0.5rem) 0 var(--govrs-space-scale-4, 1rem);
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-alert-border);
   border-radius: var(--govrs-radius-md, 0.5rem);
   color: var(--govrs-color-text-secondary, #333333);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-body-md, 1rem);
   font-weight: var(--govrs-font-weight-regular, 400);
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-alert__icon {
@@ -35,7 +35,7 @@
 
 .govrs-alert__close {
   flex: 0 0 auto;
-  padding: var(--govrs-space-1, 0.25rem) var(--govrs-space-2, 0.5rem);
+  padding: var(--govrs-space-scale-1, 0.25rem) var(--govrs-space-scale-2, 0.5rem);
   border: none;
   background: transparent;
   color: var(--govrs-color-text-secondary, #333333);
@@ -44,35 +44,35 @@
 }
 
 .govrs-alert--success {
-  background-color: var(--govrs-color-success-surface, #e6f7ed);
+  background-color: var(--govrs-color-status-success-surface, #e6f7ed);
 }
 .govrs-alert--success .govrs-alert__icon {
-  color: var(--govrs-color-success, #168821);
+  color: var(--govrs-color-status-success-default, #168821);
 }
 
 .govrs-alert--warning {
-  background-color: var(--govrs-color-warning-surface, #fff8e6);
+  background-color: var(--govrs-color-status-warning-surface, #fff8e6);
 }
 .govrs-alert--warning .govrs-alert__icon {
   color: var(--govrs-color-text-secondary, #333333);
 }
 
 .govrs-alert--error {
-  background-color: var(--govrs-color-error-surface, #fdecea);
+  background-color: var(--govrs-color-status-error-surface, #fdecea);
 }
 .govrs-alert--error .govrs-alert__icon {
-  color: var(--govrs-color-error, #e52207);
+  color: var(--govrs-color-status-error-default, #e52207);
 }
 
 .govrs-alert--info {
-  background-color: var(--govrs-color-info-surface, #e9f5ff);
+  background-color: var(--govrs-color-status-info-surface, #e9f5ff);
 }
 .govrs-alert--info .govrs-alert__icon {
-  color: var(--govrs-color-info, #2b86d8);
+  color: var(--govrs-color-status-info-default, #2b86d8);
 }
 
 .govrs-alert--info .govrs-alert__close {
-  color: var(--govrs-color-info, #2b86d8);
+  color: var(--govrs-color-status-info-default, #2b86d8);
 }
 
 .govrs-alert__icon svg {
@@ -105,7 +105,7 @@
 }
 
 .govrs-alert--success .govrs-alert__close {
-  color: var(--govrs-color-success, #168821);
+  color: var(--govrs-color-status-success-default, #168821);
 }
 
 .govrs-alert--warning .govrs-alert__close {
@@ -113,5 +113,5 @@
 }
 
 .govrs-alert--error .govrs-alert__close {
-  color: var(--govrs-color-error, #e52207);
+  color: var(--govrs-color-status-error-default, #e52207);
 }

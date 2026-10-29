@@ -1,3 +1,4 @@
+@use '../../foundations/styles/sass-variables' as vars;
 .govrs-list {
   width: 100%;
 }
@@ -12,26 +13,26 @@
 .govrs-list__base--horizontal {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--govrs-space-4, 1rem);
+  gap: 0 var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-list__group {
   display: block;
-  margin: 0 0 var(--govrs-space-4, 1rem);
+  margin: 0 0 var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-list__group-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 0 var(--govrs-space-2, 0.5rem);
-  gap: var(--govrs-space-3, 0.75rem);
+  margin: 0 0 var(--govrs-space-scale-2, 0.5rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-list__group-header-left {
   display: flex;
   align-items: center;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-list__group-label {
@@ -55,7 +56,7 @@
   color: inherit;
   cursor: pointer;
   font: inherit;
-  gap: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
 }
 
 .govrs-list__group-toggle-label {
@@ -76,7 +77,7 @@
 }
 
 .govrs-list__chevron {
-  transition: transform var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+  transition: transform var(--govrs-motion-duration-base, 0.3s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-list__chevron--expanded {
@@ -86,7 +87,7 @@
 .govrs-list-default {
   display: grid;
   width: 100%;
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-list-default--horizontal {
@@ -148,7 +149,7 @@ a.govrs-list-default__inner:focus-visible {
   display: block;
   width: 100%;
   height: var(--govrs-size-media-card, 12.5rem);
-  margin-bottom: var(--govrs-space-3, 0.75rem);
+  margin-bottom: var(--govrs-space-scale-3, 0.75rem);
   object-fit: cover;
 }
 
@@ -205,7 +206,7 @@ a.govrs-list-default__inner:focus-visible {
 .govrs-list-default__inner--media-left {
   flex-direction: row;
   align-items: flex-start;
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 
   .govrs-list-default__media {
     width: auto;
@@ -218,7 +219,7 @@ a.govrs-list-default__inner:focus-visible {
   }
 
   .govrs-list-default__tags {
-    margin-bottom: var(--govrs-space-2, 0.5rem);
+    margin-bottom: var(--govrs-space-scale-2, 0.5rem);
     padding-top: 0;
   }
 }
@@ -280,7 +281,7 @@ a.govrs-list-default__inner:focus-visible {
 }
 
 .govrs-list-check__text {
-  margin-top: var(--govrs-space-1, 0.25rem);
+  margin-top: var(--govrs-space-scale-1, 0.25rem);
   color: var(--govrs-color-text-primary, #000000);
   font-size: var(--govrs-font-size-14, 0.875rem);
   line-height: 1.5;
@@ -291,12 +292,12 @@ a.govrs-list-default__inner:focus-visible {
   max-width: 18.4375rem;
   box-sizing: border-box;
   flex: 0 0 18.4375rem;
-  padding: var(--govrs-space-3, 0.75rem);
+  padding: var(--govrs-space-scale-3, 0.75rem);
   border-top: 1px solid var(--govrs-color-border-default, #cccccc);
   border-bottom: 1px solid var(--govrs-color-border-default, #cccccc);
 }
 
-@media (max-width: 45rem) {
+@media (max-width: #{vars.$govrs-breakpoint-tablet-lg - 3rem}) {
   .govrs-list-default--horizontal,
   .govrs-list-default--by-column {
     grid-auto-flow: row;
@@ -311,7 +312,7 @@ a.govrs-list-default__inner:focus-visible {
 }
 
 .govrs-list-check__title {
-  margin: 0 0 var(--govrs-space-2, 0.5rem);
+  margin: 0 0 var(--govrs-space-scale-2, 0.5rem);
   color: var(--govrs-color-text-primary, #000000);
   font-size: var(--govrs-font-size-24, 1.5rem);
   font-weight: var(--govrs-font-weight-regular, 400);
@@ -319,7 +320,7 @@ a.govrs-list-default__inner:focus-visible {
 
 .govrs-list-check__item {
   display: block;
-  padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-4, 1rem);
+  padding: var(--govrs-space-scale-3, 0.75rem) var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-list-check__item:not(:first-child) {
@@ -329,7 +330,7 @@ a.govrs-list-default__inner:focus-visible {
 .govrs-list-check__inner {
   display: flex;
   align-items: center;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-list-check__image {
@@ -372,15 +373,15 @@ a.govrs-list-default__inner:focus-visible {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
   list-style: none;
 }
 
 .govrs-list-link__item {
   display: flex;
   align-items: center;
-  padding: var(--govrs-space-2, 0.5rem) 0;
-  gap: var(--govrs-space-3, 0.75rem);
+  padding: var(--govrs-space-scale-2, 0.5rem) 0;
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-list-link__item:not(:first-child) {
@@ -420,7 +421,7 @@ a.govrs-list-default__inner:focus-visible {
 }
 
 .govrs-list-link__meta {
-  margin: 0 0 var(--govrs-space-1, 0.25rem);
+  margin: 0 0 var(--govrs-space-scale-1, 0.25rem);
   color: var(--govrs-list-link-meta);
   font-size: var(--govrs-font-size-16, 1rem);
   line-height: 1.5;
@@ -450,7 +451,7 @@ a.govrs-list-default__inner:focus-visible {
   width: 100%;
   padding: 0;
   margin: 0;
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
   grid-template-columns: repeat(var(--govrs-list-card-cols, 3), minmax(0, 1fr));
 }
 
@@ -479,12 +480,12 @@ a.govrs-list-default__inner:focus-visible {
 .govrs-list-card--scroll .govrs-list-card__item {
   flex: 0 0
     calc(
-      (100% - ((var(--govrs-list-card-cols, 3) - 1) * var(--govrs-space-4, 1rem))) /
+      (100% - ((var(--govrs-list-card-cols, 3) - 1) * var(--govrs-space-scale-4, 1rem))) /
         var(--govrs-list-card-cols, 3)
     );
 }
 
-@media (max-width: 45rem) {
+@media (max-width: #{vars.$govrs-breakpoint-tablet-lg - 3rem}) {
   .govrs-list-card:not(.govrs-list-card--scroll) {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -493,7 +494,7 @@ a.govrs-list-default__inner:focus-visible {
 .govrs-list-file {
   display: flex;
   flex-direction: column;
-  gap: var(--govrs-space-6, 1.5rem);
+  gap: var(--govrs-space-scale-6, 1.5rem);
 }
 
 .govrs-list-file__item {
@@ -506,7 +507,7 @@ a.govrs-list-default__inner:focus-visible {
   display: inline-flex;
   max-width: 100%;
   align-items: baseline;
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
   color: var(--govrs-color-interactive-link, #1351b4);
   font-size: var(--govrs-font-size-24, 1.5rem);
   font-weight: var(--govrs-font-weight-regular, 400);

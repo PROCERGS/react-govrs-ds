@@ -4,20 +4,20 @@
   &-demo {
     display: grid;
     align-items: center;
-    margin-bottom: var(--govrs-space-4-5, 1.125rem);
-    gap: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
+    margin-bottom: var(--govrs-space-scale-4-5, 1.125rem);
+    gap: var(--govrs-space-scale-2, 0.5rem) var(--govrs-space-scale-4, 1rem);
     grid-template-columns: 1fr 160px;
   }
 
   &-container {
     max-width: var(--govrs-size-container-foundation, 45rem);
-    padding: var(--govrs-space-4, 1rem);
+    padding: var(--govrs-space-scale-4, 1rem);
   }
 }
 
 .headers-12 h1,
 h1.headers-12 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-3xl, 2.5625rem);
@@ -27,7 +27,7 @@ h1.headers-12 {
 
 .headers-12 h2,
 h2.headers-12 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-2xl, 2.25rem);
@@ -37,7 +37,7 @@ h2.headers-12 {
 
 .headers-12 h3,
 h3.headers-12 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-xl, 1.875rem);
@@ -47,7 +47,7 @@ h3.headers-12 {
 
 .headers-12 h4,
 h4.headers-12 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-lg, 1.5rem);
@@ -57,7 +57,7 @@ h4.headers-12 {
 
 .headers-4 h1,
 h1.headers-4 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-xl, 1.875rem);
@@ -67,7 +67,7 @@ h1.headers-4 {
 
 .headers-4 h2,
 h2.headers-4 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-lg, 1.5rem);
@@ -77,7 +77,7 @@ h2.headers-4 {
 
 .headers-4 h3,
 h3.headers-4 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-md, 1.25rem);
@@ -87,7 +87,7 @@ h3.headers-4 {
 
 .headers-4 h4,
 h4.headers-4 {
-  margin: 0 0 var(--govrs-space-5, 1.25rem) 0;
+  margin: 0 0 var(--govrs-space-scale-5, 1.25rem) 0;
   color: var(--govrs-color-text-primary);
   font-family: var(--govrs-font-family-base);
   font-size: var(--govrs-font-size-heading-sm, 1.125rem);
@@ -98,17 +98,17 @@ h4.headers-4 {
 .headers-demo {
   display: grid;
   align-items: center;
-  margin-bottom: var(--govrs-space-4-5, 1.125rem);
-  gap: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
+  margin-bottom: var(--govrs-space-scale-4-5, 1.125rem);
+  gap: var(--govrs-space-scale-2, 0.5rem) var(--govrs-space-scale-4, 1rem);
   grid-template-columns: 1fr 160px;
 }
 
 .headers-container {
   max-width: var(--govrs-size-container-foundation, 45rem);
-  padding: var(--govrs-space-4, 1rem);
+  padding: var(--govrs-space-scale-4, 1rem);
 }
 
-@media (max-width: #{variables.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(variables.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .headers-demo {
     grid-template-columns: 1fr;
   }

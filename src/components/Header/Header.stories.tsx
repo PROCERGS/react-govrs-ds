@@ -495,19 +495,19 @@ export const HeaderDocumentacao: Story = {
         </div>
 
         <ul style={storyDocsStyles.list}>
-          <li><code>--govrs-z-index-header</code> (10): barra do header em scroll normal.</li>
-          <li><code>--govrs-z-index-navigation</code> (50): painel do menu aberto; o wrapper recebe <code>data-menu-open=&quot;true&quot;</code> e sobe para esta camada.</li>
-          <li><code>--govrs-z-index-dropdown</code> (60): popovers e dropdowns do header (ex.: Select, Tooltip).</li>
-          <li><code>--govrs-z-index-overlay</code> (100): fade/backdrop de tela inteira — sobrescrevível no consumidor.</li>
-          <li><code>--govrs-z-index-modal</code> (110) e <code>--govrs-z-index-toast</code> (120): modais e notificações acima do overlay.</li>
+          <li><code>--govrs-layer-header</code> (10): barra do header em scroll normal.</li>
+          <li><code>--govrs-layer-navigation</code> (50): painel do menu aberto; o wrapper recebe <code>data-menu-open=&quot;true&quot;</code> e sobe para esta camada.</li>
+          <li><code>--govrs-layer-dropdown</code> (60): popovers e dropdowns do header (ex.: Select, Tooltip).</li>
+          <li><code>--govrs-layer-overlay</code> (100): fade/backdrop de tela inteira — sobrescrevível no consumidor.</li>
+          <li><code>--govrs-layer-modal</code> (110) e <code>--govrs-layer-toast</code> (120): modais e notificações acima do overlay.</li>
         </ul>
 
         <div style={storyDocsStyles.codeBlock}>
           <pre>
             <code>{`:root {
-  --govrs-z-index-overlay: 1000;
-  --govrs-z-index-modal: 1010;
-  --govrs-z-index-toast: 1020;
+  --govrs-layer-overlay: 1000;
+  --govrs-layer-modal: 1010;
+  --govrs-layer-toast: 1020;
 }
 
 .govrs-overlay-backdrop {
@@ -517,7 +517,7 @@ export const HeaderDocumentacao: Story = {
 
         <ul style={storyDocsStyles.list}>
           <li>Integração com editores de blocos: com o menu aberto, links do painel ficam acima de handles de arrastar que usam z-index ~10.</li>
-          <li>O botão de voltar ao topo usa <code>--govrs-z-index-toast</code> para permanecer acessível em páginas longas.</li>
+          <li>O botão de voltar ao topo usa <code>--govrs-layer-toast</code> para permanecer acessível em páginas longas.</li>
         </ul>
       </SectionCard>
 

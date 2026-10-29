@@ -82,10 +82,10 @@ export function CarouselCard({
   useEffect(() => {
     const updatePerView = () => {
       const isSmartphonePortrait = window.matchMedia(
-        `(max-width: ${breakpoints.smartphonePortraitMax})`,
+        `(max-width: ${Number.parseFloat(breakpoints.tabletSm) - 0.0625}rem)`,
       ).matches;
       const isIntermediateViewport = window.matchMedia(
-        `(max-width: ${breakpoints.tabletLandscapeMax})`,
+        `(max-width: ${Number.parseFloat(breakpoints.desktopSm) - 0.0625}rem)`,
       ).matches;
 
       setIsSmartphonePortrait(isSmartphonePortrait);

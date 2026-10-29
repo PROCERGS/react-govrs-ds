@@ -1,6 +1,6 @@
 .govrs-toast {
   position: fixed;
-  z-index: var(--govrs-z-index-toast, 120);
+  z-index: var(--govrs-layer-toast, 120);
   width: min(32rem, calc(100vw - 2rem));
   box-sizing: border-box;
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -11,42 +11,42 @@
 /* Bottom center (default) */
 .govrs-toast[data-position='bottom-center'] {
   inset-inline-start: 50%;
-  inset-block-end: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-bottom));
+  inset-block-end: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-bottom));
   transform: translateX(-50%);
 }
 
 /* Bottom left */
 .govrs-toast[data-position='bottom-left'] {
-  inset-inline-start: var(--govrs-space-4, 1rem);
-  inset-block-end: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-bottom));
+  inset-inline-start: var(--govrs-space-scale-4, 1rem);
+  inset-block-end: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-bottom));
   transform: none;
 }
 
 /* Bottom right */
 .govrs-toast[data-position='bottom-right'] {
-  inset-inline-end: var(--govrs-space-4, 1rem);
-  inset-block-end: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-bottom));
+  inset-inline-end: var(--govrs-space-scale-4, 1rem);
+  inset-block-end: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-bottom));
   transform: none;
 }
 
 /* Top center */
 .govrs-toast[data-position='top-center'] {
   inset-inline-start: 50%;
-  inset-block-start: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-top));
+  inset-block-start: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-top));
   transform: translateX(-50%);
 }
 
 /* Top left */
 .govrs-toast[data-position='top-left'] {
-  inset-inline-start: var(--govrs-space-4, 1rem);
-  inset-block-start: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-top));
+  inset-inline-start: var(--govrs-space-scale-4, 1rem);
+  inset-block-start: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-top));
   transform: none;
 }
 
 /* Top right */
 .govrs-toast[data-position='top-right'] {
-  inset-inline-end: var(--govrs-space-4, 1rem);
-  inset-block-start: max(var(--govrs-space-6, 1.5rem), env(safe-area-inset-top));
+  inset-inline-end: var(--govrs-space-scale-4, 1rem);
+  inset-block-start: max(var(--govrs-space-scale-6, 1.5rem), env(safe-area-inset-top));
   transform: none;
 }
 

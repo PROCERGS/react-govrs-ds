@@ -1,345 +1,160 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-
-import {
-  DocsHero,
-  DocsStoryLayout,
-  SectionCard,
-  storyDocsStyles,
-} from '../../../.storybook/docs/storyDocs';
+import { DocsHero, DocsStoryLayout, SectionCard, storyDocsStyles } from '../../../.storybook/docs/storyDocs';
 import { Button } from '../../components/Button/Button';
-import { colors } from '../../tokens/colors';
 import '../styles/runtime-tokens.scss';
 import '../styles/index.scss';
 
 function CodeBlock({ code }: { code: string }) {
-  return (
-    <div style={storyDocsStyles.codeBlock}>
-      <pre>
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
+  return <div style={storyDocsStyles.codeBlock}><pre><code>{code}</code></pre></div>;
 }
 
-const baseColorsCode = `/* Cores base — valores padrão dos tokens CSS (:root) */
+const installation = `// Entrada do projeto consumidor (React, Volto/Plone etc.)
+import '@procergs/react-govrs-ds/tokens';
+import './tema.css'; // depois dos estilos do Design System
 
-/* Brand */
---govrs-color-brand-primary: ${colors.brand.primary.toLowerCase()};
---govrs-color-brand-primary-strong: ${colors.brand.primaryStrong.toLowerCase()};
---govrs-color-brand-primary-hover: ${colors.brand.primaryHover.toLowerCase()};
---govrs-color-brand-primary-soft: ${colors.brand.primarySoft.toLowerCase()};
+// Os componentes também carregam os tokens necessários.
+// Use /foundation somente se desejar os estilos globais adicionais.`;
 
-/* Texto */
---govrs-color-text-primary: ${colors.text.primary.toLowerCase()};
---govrs-color-text-secondary: ${colors.text.secondary.toLowerCase()};
---govrs-color-text-muted: ${colors.text.muted.toLowerCase()};
---govrs-color-text-subtle: ${colors.text.subtle.toLowerCase()};
---govrs-color-text-placeholder: ${colors.text.placeholder.toLowerCase()};
---govrs-color-text-inverse: ${colors.text.inverse.toLowerCase()};
---govrs-color-neutral-text-subtle: ${colors.neutral.textSubtle.toLowerCase()};
+const globalTheme = `/* tema.css — valores do projeto externo */
+:root {
+  --govrs-color-brand-primary: #6d28d9;
+  --govrs-color-brand-primary-hover: #5b21b6;
+  --govrs-color-brand-primary-strong: #4c1d95;
+  --govrs-color-text-primary: #241333;
+  --govrs-color-text-inverse: #ffffff;
 
-/* Superfície e borda */
---govrs-color-surface-base: ${colors.neutral.surfaceBase.toLowerCase()};
---govrs-color-surface-muted: ${colors.neutral.surfaceMuted.toLowerCase()};
---govrs-color-border-default: ${colors.neutral.borderDefault.toLowerCase()};
+  /* Base da escala rem: escala 4 = base × 4; escala 6 = base × 6 */
+  --govrs-space-scale-1: 0.3125rem;
+  /* Base independente da escala em pixels */
+  --govrs-space-pixels-base: 10px;
 
-/* Interação */
---govrs-color-interactive-link: ${colors.interactive.link.toLowerCase()};
---govrs-color-focus: ${colors.interactive.focus.toLowerCase()};`;
+  --govrs-font-family-base: 'Noto Sans', sans-serif;
+  --govrs-font-size-body-md: 1.0625rem;
+  --govrs-size-control-lg: 2.75rem;
+  --govrs-radius-md: 0.75rem;
+  --govrs-layout-container-header: 85rem;
+  --govrs-motion-duration-fast: 0.15s;
+}`;
 
-const highContrastTokensCode = `/* O componente já carrega os tokens e o mapa de contraste.
-   Este é um override opcional do tema consumidor. */
+const scopedTheme = `/* Uma seção: não altera o restante do site */
+.tema-editorial {
+  --govrs-color-brand-primary: #6d28d9;
+  --govrs-color-brand-primary-hover: #5b21b6;
+  --govrs-color-brand-primary-strong: #4c1d95;
+  --govrs-color-text-inverse: #ffffff;
+  --govrs-radius-pill: 0.5rem;
+}
+
+/* React */
+<div className="tema-editorial">
+  <Button>Publicar conteúdo</Button>
+</div>`;
+
+const scopedDerived = `.bloco-compacto {
+  --govrs-space-scale-1: 0.2rem;
+  /* Redeclare as derivações usadas neste escopo. */
+  --govrs-space-scale-4: calc(var(--govrs-space-scale-1) * 4);
+  --govrs-space-scale-6: calc(var(--govrs-space-scale-1) * 6);
+
+  /* O mesmo vale para um token semântico que referencia outra cor. */
+  --govrs-color-palette-yellow: #ffd166;
+  --govrs-color-focus: var(--govrs-color-palette-yellow);
+}`;
+
+const componentTheme = `/* Variáveis locais: aplique no próprio elemento do componente. */
+.tema-editorial .govrs-button {
+  --govrs-button-height: 3rem;
+  --govrs-button-padding-inline: calc(var(--govrs-space-scale-4) + 0.25rem);
+}
+
+/* Ajuste específico de layout, usando bases já existentes. */
+.tema-editorial .acoes {
+  gap: var(--govrs-space-scale-4);
+  padding-inline: calc(var(--govrs-space-scale-6) - 0.25rem);
+}`;
+
+const contrastTheme = `/* Coloque depois dos estilos do DS e preserve os pares de contraste. */
 :root:is(.high-contrast, [data-govrs-contrast='high']) {
-  /* Superfície principal, texto, ícones e bordas */
   --govrs-color-contrast-background: #101010;
   --govrs-color-contrast-foreground: #ffffff;
-  --govrs-color-contrast-muted: #ffffff;
-  --govrs-color-contrast-icon: #ffffff;
   --govrs-color-contrast-border: #ffffff;
-
-  /* Botões e controles no fundo escuro */
   --govrs-color-contrast-control-background: #101010;
   --govrs-color-contrast-control-foreground: #ffffff;
   --govrs-color-contrast-control-border: #ffffff;
-
-  /* Campos e popovers invertidos */
-  --govrs-color-contrast-field-background: #ffffff;
-  --govrs-color-contrast-field-foreground: #000000;
-  --govrs-color-contrast-field-border: #000000;
-  --govrs-color-contrast-popover-background: #ffffff;
-  --govrs-color-contrast-popover-foreground: #000000;
-  --govrs-color-contrast-popover-border: #000000;
 }`;
 
-const contrastActivationCode = `/* A BarraAcessibilidade faz isso automaticamente.
-   Para uma ativação controlada em React, use o hook do DS. */
-import { useHighContrast } from '@procergs/react-govrs-ds';
+const sassExample = `/* Sass do projeto consumidor: valores disponíveis na compilação. */
+@use '@procergs/react-govrs-ds/tokens.scss' as tokens;
 
-function Exemplo() {
-  const { setEnabled } = useHighContrast();
-
-  return <button onClick={() => setEnabled(true)}>Ativar contraste</button>;
+@media (max-width: #{tokens.$govrs-breakpoint-tablet-sm - 0.0625rem}) {
+  .acoes {
+    padding-inline: var(--govrs-space-scale-4);
+  }
 }`;
 
-const globalOverrideCode = `/* tema-global.css — carregue este CSS depois do bundle do DS */
+const families = `Cores:       --govrs-color-*
+Espaçamento: --govrs-space-scale-*, --govrs-space-pixels-*
+Tipografia:  --govrs-font-family-*, --govrs-font-size-*,
+             --govrs-font-weight-*, --govrs-line-height-*
+Dimensões:   --govrs-size-*
+Layout:      --govrs-layout-*
+Bordas:      --govrs-border-*
+Raios:       --govrs-radius-*
+Sombras:     --govrs-shadow-*
+Movimento:   --govrs-motion-*
+Camadas:     --govrs-layer-*
+Interação:   --govrs-interaction-*
+Breakpoints: --govrs-breakpoint-* (media queries usam Sass ou JavaScript)`;
 
-:root {
-  /* Cores: afeta body, headers-*, paragraph-*, componentes */
-  --govrs-color-text-primary: #2a123d;
-  --govrs-color-text-muted: #5b3c70;
-  --govrs-color-brand-primary: #6d28d9;
-
-  /* Espaçamento: afeta margin/padding/gap que usam --govrs-space-* */
-  --govrs-space-3: 0.75rem;
-  --govrs-space-4: 1.25rem;
-  --govrs-space-6: 1.75rem;
-
-  /* Tipografia */
-  --govrs-font-size-body-md: 1.0625rem;
-  --govrs-line-height-body-sm: 1.625rem;
-
-  /* Raio e borda */
-  --govrs-radius-sm: 0.5rem;
-  --govrs-border-width-sm: 1px;
-}`;
-
-const componentOverrideCode = `/* tema-editorial.css — customização limitada a este bloco */
-.exemplo-botao-editorial {
-  --govrs-color-brand-primary: #6d28d9;
-  --govrs-color-brand-primary-hover: #5b21b6;
-  --govrs-color-text-inverse: #ffffff;
-  --govrs-radius-sm: 999px;
-}
-
-/* O Button dentro do bloco usa os tokens acima.
-   Outros componentes e o restante do site não são alterados. */`;
-
-const componentPreviewStyle: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  padding: '1.5rem',
+const previewStyle = {
+  display: 'flex', flexWrap: 'wrap', gap: '1rem', padding: '1.5rem',
   border: '1px solid var(--govrs-color-border-default)',
   borderRadius: 'var(--govrs-radius-md)',
-  background: 'var(--govrs-color-surface-muted)',
   '--govrs-color-brand-primary': '#6d28d9',
   '--govrs-color-brand-primary-hover': '#5b21b6',
+  '--govrs-color-brand-primary-strong': '#4c1d95',
   '--govrs-color-text-inverse': '#ffffff',
-  '--govrs-radius-sm': '999px',
+  '--govrs-radius-pill': '0.5rem',
 } as CSSProperties;
 
-const classScopeCode = `/* tema-portal.css — override por classe, sem alterar o pacote */
-
-/* Aplique a classe no html ou em um wrapper do layout */
-.tema-portal {
-  --govrs-color-text-primary: #0d3d1f;
-  --govrs-color-text-secondary: #1a5c34;
-  --govrs-space-4: 1.5rem;
-  --govrs-font-size-body-md: 1rem;
-}
-
-/* Fundações e componentes dentro do escopo herdam os novos valores */
-.tema-portal .headers-12 h1,
-.tema-portal .paragraph-12-long,
-.tema-portal .govrs-button {
-  /* não é obrigatório redeclarar cor/tamanho —
-     basta que o ancestral tenha redefinido as variáveis */
-}`;
-
-const htmlScopeCode = `<!-- index.html ou layout raiz do tema Volto/Plone -->
-<html class="tema-portal">
-  <body>
-    <h1 class="headers-12">Título</h1>
-    <p class="paragraph-12-long">Parágrafo</p>
-  </body>
-</html>`;
-
-const colorOverrideCode = `/* Sobrescrever só cores em uma seção */
-.secao-destaque {
-  --govrs-color-text-primary: #135428;
-  --govrs-color-text-muted: #4a7560;
-  --govrs-color-surface-base: #f8f8f8;
-  background: var(--govrs-color-surface-base);
-}
-
-.secao-destaque .headers-12 h2 {
-  color: var(--govrs-color-text-primary);
-}
-
-.secao-destaque .paragraph-12-long {
-  color: var(--govrs-color-text-muted);
-}`;
-
-const spacingOverrideCode = `/* Sobrescrever margin, padding e gap via tokens de espaço */
-.bloco-editorial {
-  --govrs-space-2: 0.375rem;
-  --govrs-space-3: 0.875rem;
-  --govrs-space-4: 1.5rem;
-  padding: var(--govrs-space-4);
-}
-
-/* headers e paragraphs já usam --govrs-space-* internamente */
-.bloco-editorial .headers-12 h1 {
-  margin-bottom: var(--govrs-space-3);
-}
-
-.bloco-editorial .paragraph-12-long {
-  margin-bottom: var(--govrs-space-4);
-}`;
-
-const typographyOverrideCode = `/* Sobrescrever escala tipográfica em um bloco */
-.bloco-legislacao {
-  --govrs-font-size-heading-3xl: 2.25rem;
-  --govrs-line-height-heading-3xl: 3.25rem;
-  --govrs-font-size-body-md: 1.125rem;
-  --govrs-line-height-body-sm: 1.75rem;
-}
-
-/* classes da fundação consomem as variáveis automaticamente */
-.bloco-legislacao .headers-12 h1 { }
-.bloco-legislacao .paragraph-12-long { }`;
-
-const radiusAndBorderCode = `/* Raio, borda e sombra em cards ou formulários locais */
-.painel-formulario {
-  --govrs-radius-sm: 0.5rem;
-  --govrs-border-width-sm: 2px;
-  --govrs-color-border-default: #cccccc;
-  --govrs-shadow-card: 0 2px 12px rgba(4, 41, 15, 0.08);
-}
-
-.painel-formulario .govrs-input,
-.painel-formulario .govrs-card {
-  border-radius: var(--govrs-radius-sm);
-  box-shadow: var(--govrs-shadow-card);
-}`;
-
-const tokenReferenceCode = `/* Referência rápida de famílias customizáveis */
-
-/* Cores      */ --govrs-color-*
-/* Espaço     */ --govrs-space-*     (margin, padding, gap)
-/* Tipografia */ --govrs-font-size-*, --govrs-line-height-*, --govrs-font-weight-*
-/* Raio       */ --govrs-radius-*
-/* Borda      */ --govrs-border-width-*, --govrs-color-border-*
-/* Sombra     */ --govrs-shadow-*
-/* Layout     */ --govrs-layout-container-header-max-width (Header e Footer)
-/* Camadas    */ --govrs-z-index-*   (header, navigation, overlay, modal, toast)
-/* Motion     */ --govrs-duration-*, --govrs-easing-*`;
-
-const meta = {
-  title: 'Customização',
-  id: 'customizacao',
-  parameters: {
-    layout: 'padded',
-  },
-} satisfies Meta;
-
+const meta = { title: 'Customização', id: 'customizacao', parameters: { layout: 'padded' } } satisfies Meta;
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
 export const Page: Story = {
   name: 'Customização',
-  parameters: {
-    docsOnly: true,
-  },
+  parameters: { docsOnly: true },
   render: () => (
     <DocsStoryLayout>
-      <DocsHero
-        eyebrow="Tokens e tema"
-        title={<h3 style={storyDocsStyles.heroTitle}>Customização</h3>}
-        description="Referência dos tokens CSS do design system e exemplos de como sobrescrevê-los no projeto consumidor — globalmente ou por classe — sem editar o pacote. Componentes carregam automaticamente os tokens necessários; Foundation é opcional e acrescenta estilos globais."
-      />
-
-      <SectionCard
-        title="Cores base do projeto"
-        description="Valores padrão disponibilizados pelos componentes e pela entrada tokens em :root. Use como referência ao montar overrides no CSS do tema."
-      >
-        <CodeBlock code={baseColorsCode} />
+      <DocsHero eyebrow="Tokens e tema" title={<h3 style={storyDocsStyles.heroTitle}>Customização</h3>}
+        description="Personalize o Design System no CSS do projeto consumidor. As definições TypeScript pertencem à biblioteca; o tema externo sobrescreve as custom properties publicadas, sem editar o pacote ou executar o gerador." />
+      <SectionCard title="1. Carregue o tema externo" description="Importe os estilos do tema depois dos estilos do DS. Esse é o padrão para aplicações React e temas como o procergs-tema.">
+        <CodeBlock code={installation} />
       </SectionCard>
-
-      <SectionCard
-        title="Tokens do modo de alto contraste"
-        description="Quando a Barra de Acessibilidade ativa o contraste, ela marca o html e os componentes passam automaticamente a consumir os tokens de contraste. Personalize os tokens fonte --govrs-color-contrast-*; o DS remapeia os tokens semânticos e locais dos componentes."
-      >
-        <CodeBlock code={highContrastTokensCode} />
-        <p style={storyDocsStyles.statText}>Ativação programática, quando necessária:</p>
-        <CodeBlock code={contrastActivationCode} />
-        <ul style={storyDocsStyles.list}>
-          <li>
-            Use <code>:root:is(.high-contrast, [data-govrs-contrast='high'])</code> no override. Ele tem a mesma prioridade do mapa interno do DS e mantém a customização estável mesmo quando componentes carregam depois.
-          </li>
-          <li>
-            Preserve os pares de background, foreground e border para cada superfície. O DS não calcula essas combinações automaticamente; a responsabilidade de manter contraste suficiente é do tema consumidor.
-          </li>
-          <li>
-            Imagens, vídeos, mapas e demais mídias não são recoloridos. Ícones funcionais seguem o token de ícone, exceto o ícone preto em campos de busca com superfície branca.
-          </li>
-        </ul>
+      <SectionCard title="2. Sobrescreva os tokens globais" description="Em :root, altere as bases compartilhadas e as decisões semânticas necessárias. Hover, texto e superfícies são decisões próprias: alterar uma cor não cria automaticamente uma nova paleta.">
+        <CodeBlock code={globalTheme} />
+        <p style={storyDocsStyles.statText}>As escalas rem e px são independentes. Alterar a base rem atualiza suas derivações em :root; sobrescrever somente --govrs-space-scale-4 altera apenas esse passo. A fonte tipográfica escolhida deve ser carregada pelo projeto.</p>
       </SectionCard>
-
-      <SectionCard
-        title="Override no projeto inteiro"
-        description="Redefina variáveis em :root no CSS do tema. Isso afeta componentes e Foundations que dependem desses tokens; carregue o CSS do tema depois do bundle do DS."
-      >
-        <CodeBlock code={globalOverrideCode} />
+      <SectionCard title="3. Limite a customização a uma seção" description="Tokens herdados podem ser sobrescritos em um wrapper. Neste exemplo, somente os botões da seção recebem a paleta roxa e o raio de 0.5rem.">
+        <CodeBlock code={scopedTheme} />
+        <div className="tema-editorial" style={previewStyle}><Button>Publicar conteúdo</Button></div>
+        <p style={storyDocsStyles.statText}>Referências var() são resolvidas onde a variável é declarada. Uma derivação declarada em :root e herdada pelo wrapper não é recalculada apenas porque sua base mudou no wrapper. Redeclare as derivações necessárias no mesmo escopo:</p>
+        <CodeBlock code={scopedDerived} />
       </SectionCard>
-
-      <SectionCard
-        title="Customização pontual de componente"
-        description="Aplique tokens em um wrapper para alterar somente os componentes dentro dele. A demonstração abaixo personaliza apenas este Button, sem afetar os demais Buttons ou o tema global."
-      >
-        <CodeBlock code={componentOverrideCode} />
-        <p style={storyDocsStyles.statText}>Resultado:</p>
-        <div className="exemplo-botao-editorial" style={componentPreviewStyle}>
-          <Button>Publicar conteúdo</Button>
-        </div>
+      <SectionCard title="4. Ajuste um componente" description="Variáveis locais declaradas pelo componente devem ser sobrescritas no próprio elemento, com uma regra do tema mais específica. Uma variável global afeta todos os consumidores; uma variável local afeta somente o componente selecionado.">
+        <CodeBlock code={componentTheme} />
       </SectionCard>
-
-      <SectionCard
-        title="Override por classe"
-        description="Para customizar só um portal, tema ou seção, declare as variáveis na classe e aplique-a no html ou em um wrapper. Filhos com classes da fundação ou componentes do DS herdam os novos valores."
-      >
-        <p style={storyDocsStyles.statText}>CSS da classe:</p>
-        <CodeBlock code={classScopeCode} />
-        <p style={storyDocsStyles.statText}>Uso no markup:</p>
-        <CodeBlock code={htmlScopeCode} />
+      <SectionCard title="5. Preserve o alto contraste" description="A BarraAcessibilidade e o hook useHighContrast ativam o mapa do DS. Personalize os tokens de contraste nesse contexto, mantendo legibilidade entre texto, controles e fundos.">
+        <CodeBlock code={contrastTheme} />
+        <p style={storyDocsStyles.statText}>Evite !important e cores fixadas diretamente em estados de contraste. O mapa do DS precisa continuar remapeando os tokens dos componentes.</p>
       </SectionCard>
-
-      <SectionCard
-        title="Exemplos por tipo de token"
-        description="Mesmo padrão para cores, espaçamento, tipografia e demais famílias: redefina --govrs-* no escopo desejado e use var() nas regras locais quando necessário."
-      >
-        <p style={storyDocsStyles.statText}>Cores</p>
-        <CodeBlock code={colorOverrideCode} />
-
-        <p style={storyDocsStyles.statText}>Espaçamento (margin, padding, gap)</p>
-        <CodeBlock code={spacingOverrideCode} />
-
-        <p style={storyDocsStyles.statText}>Tipografia</p>
-        <CodeBlock code={typographyOverrideCode} />
-
-        <p style={storyDocsStyles.statText}>Raio, borda e sombra</p>
-        <CodeBlock code={radiusAndBorderCode} />
+      <SectionCard title="6. Use os breakpoints na compilação" description="Custom properties CSS não podem substituir valores em condições @media. Para regras do projeto externo, importe os breakpoints Sass e derive o limite necessário.">
+        <CodeBlock code={sassExample} />
+        <p style={storyDocsStyles.statText}>Sobrescrever --govrs-breakpoint-* no CSS não altera as media queries já compiladas da biblioteca. Os objetos TypeScript também representam valores padrão: não acompanham sobrescritas feitas no CSS do tema.</p>
       </SectionCard>
-
-      <SectionCard
-        title="Famílias de variáveis disponíveis"
-        description="Qualquer token --govrs-* exposto pelo runtime tokens pode ser sobrescrito da mesma forma."
-      >
-        <CodeBlock code={tokenReferenceCode} />
-        <ul style={storyDocsStyles.list}>
-          <li>
-            Prefira sobrescrever o token (<code>--govrs-color-text-primary</code>) em vez de fixar hex
-            direto em <code>body</code> ou <code>h1</code>.
-          </li>
-          <li>
-            Aliases legados (<code>--pure-100</code>, <code>--color-dark</code>, <code>--color-text</code>)
-            apontam para os tokens text; redefinir o token fonte costuma ser suficiente.
-          </li>
-          <li>
-            Consulte a página Consumo para decidir entre componentes, tokens e foundation.
-          </li>
-        </ul>
+      <SectionCard title="Famílias atuais" description="Use os nomes publicados pelo pacote para sobrescrever os tokens no CSS do tema. As entradas TypeScript e Sass oferecem os valores padrão para uso no código e na compilação.">
+        <CodeBlock code={families} />
       </SectionCard>
     </DocsStoryLayout>
   ),

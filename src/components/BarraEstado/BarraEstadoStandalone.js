@@ -117,16 +117,16 @@ const CSS_TEXT = normalizeEscapedHtml(`
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 :host {
-  --barra-estado-height: 32px;
-  --barra-estado-bg: #4f4f4f;
-  --barra-estado-menu-bg: #737474;
-  --barra-estado-text: #e4e4e4;
-  --barra-estado-text-hover: #ffffff;
-  --barra-estado-alt-text: #bcbcbb;
-  --barra-estado-logo-fill: #f4f4f1;
-  --barra-estado-container-max-768: 750px;
-  --barra-estado-container-max-992: 970px;
-  --barra-estado-container-max-1200: 1170px;
+  --govrs-barra-estado-height: 32px;
+  --govrs-barra-estado-bg: #4f4f4f;
+  --govrs-barra-estado-menu-bg: #737474;
+  --govrs-barra-estado-text: #e4e4e4;
+  --govrs-barra-estado-text-hover: #ffffff;
+  --govrs-barra-estado-alt-text: #bcbcbb;
+  --govrs-barra-estado-logo-fill: #f4f4f1;
+  --govrs-barra-estado-container-max-768: 750px;
+  --govrs-barra-estado-container-max-992: 970px;
+  --govrs-barra-estado-container-max-1200: 1170px;
   display: block;
   font-family: Roboto, Arial, sans-serif;
   -webkit-animation: bugfix infinite 1s;
@@ -154,8 +154,8 @@ const CSS_TEXT = normalizeEscapedHtml(`
 }
 
 .barra-estado {
-  block-size: var(--barra-estado-height);
-  background-color: var(--barra-estado-bg);
+  block-size: var(--govrs-barra-estado-height);
+  background-color: var(--govrs-barra-estado-bg);
 }
 
 .barra-estado__container {
@@ -188,7 +188,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
 }
 
 .barra-estado__logo svg path {
-  fill: var(--barra-estado-logo-fill);
+  fill: var(--govrs-barra-estado-logo-fill);
 }
 
 .barra-estado__nav {
@@ -216,7 +216,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   block-size: 100%;
   display: flex;
   align-items: stretch;
-  background: var(--barra-estado-menu-bg);
+  background: var(--govrs-barra-estado-menu-bg);
   border-block-start: 1px solid #fff;
   text-transform: uppercase;
   list-style: none;
@@ -231,7 +231,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   display: flex;
   align-items: center;
   padding: 0 13px;
-  color: var(--barra-estado-text);
+  color: var(--govrs-barra-estado-text);
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
@@ -242,13 +242,13 @@ const CSS_TEXT = normalizeEscapedHtml(`
 
 .barra-estado__menu > li > a:visited,
 .barra-estado__menu > li > a:active {
-  color: var(--barra-estado-text) !important;
+  color: var(--govrs-barra-estado-text) !important;
 }
 
 .barra-estado__menu > li > a:hover,
 .barra-estado__menu > li > a:focus-visible {
   box-shadow: inset 5px 0 #fff;
-  color: var(--barra-estado-text-hover);
+  color: var(--govrs-barra-estado-text-hover);
   outline: none;
 }
 
@@ -278,7 +278,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
   inline-size: 45px;
   block-size: 32px;
   padding-inline-end: 4px;
-  color: var(--barra-estado-alt-text);
+  color: var(--govrs-barra-estado-alt-text);
   font-size: 18px;
   line-height: 1;
   transition: color .5s linear;
@@ -306,7 +306,7 @@ const CSS_TEXT = normalizeEscapedHtml(`
     block-size: auto;
     padding-block: 4px;
     opacity: 0;
-    background: var(--barra-estado-menu-bg);
+    background: var(--govrs-barra-estado-menu-bg);
     border-block-start: 1px solid #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
@@ -342,13 +342,13 @@ const CSS_TEXT = normalizeEscapedHtml(`
 
 @media (min-width: 768px) {
   .barra-estado__container {
-    max-inline-size: var(--barra-estado-container-max-768);
+    max-inline-size: var(--govrs-barra-estado-container-max-768);
   }
 }
 
 @media (min-width: 992px) {
   .barra-estado__container {
-    max-inline-size: var(--barra-estado-container-max-992);
+    max-inline-size: var(--govrs-barra-estado-container-max-992);
   }
 
   .barra-estado__menu {
@@ -363,13 +363,13 @@ const CSS_TEXT = normalizeEscapedHtml(`
   .barra-estado__menu > li > a:hover,
   .barra-estado__menu > li > a:focus-visible {
     box-shadow: inset 0 2px #fff;
-    color: var(--barra-estado-text-hover);
+    color: var(--govrs-barra-estado-text-hover);
   }
 }
 
 @media (min-width: 1200px) {
   .barra-estado__container {
-    max-inline-size: var(--barra-estado-container-max-1200);
+    max-inline-size: var(--govrs-barra-estado-container-max-1200);
   }
 }
 `);

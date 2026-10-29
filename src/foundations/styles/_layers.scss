@@ -1,6 +1,6 @@
 .govrs-overlay-backdrop {
   position: fixed;
   inset: 0;
-  z-index: var(--govrs-z-index-overlay);
+  z-index: var(--govrs-layer-overlay);
   pointer-events: auto;
 }

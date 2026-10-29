@@ -2,7 +2,7 @@
   display: grid;
   width: 100%;
   font-family: var(--govrs-font-family-base);
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .govrs-input__label {
@@ -16,14 +16,14 @@
   display: flex;
   min-height: var(--govrs-size-control-lg, 2.5rem);
   align-items: center;
-  padding: 0 var(--govrs-space-1, 0.25rem);
+  padding: 0 var(--govrs-space-scale-1, 0.25rem);
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-text-placeholder, #999999);
   border-radius: var(--govrs-radius-sm, 0.375rem);
   background-color: var(--govrs-color-surface-base, #ffffff);
   transition:
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-input__control:hover {
@@ -37,23 +37,23 @@
 }
 
 .govrs-input--danger .govrs-input__control {
-  border-color: var(--govrs-color-error, #e52207);
-  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-error, #e52207);
+  border-color: var(--govrs-color-status-error-default, #e52207);
+  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-status-error-default, #e52207);
 }
 
 .govrs-input--success .govrs-input__control {
-  border-color: var(--govrs-color-success, #168821);
-  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-success, #168821);
+  border-color: var(--govrs-color-status-success-default, #168821);
+  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-status-success-default, #168821);
 }
 
 .govrs-input--warning .govrs-input__control {
-  border-color: var(--govrs-color-warning, #ffcd07);
-  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-warning, #ffcd07);
+  border-color: var(--govrs-color-status-warning-default, #ffcd07);
+  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-status-warning-default, #ffcd07);
 }
 
 .govrs-input--info .govrs-input__control {
-  border-color: var(--govrs-color-info, #2b86d8);
-  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-info, #2b86d8);
+  border-color: var(--govrs-color-status-info-default, #2b86d8);
+  box-shadow: inset 0 0 0 var(--govrs-border-width-sm, 1px) var(--govrs-color-status-info-default, #2b86d8);
 }
 
 .govrs-input--disabled {
@@ -71,16 +71,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 var(--govrs-space-2, 0.5rem);
+  padding: 0 var(--govrs-space-scale-2, 0.5rem);
   color: var(--govrs-color-text-placeholder, #999999);
 }
 
 .govrs-input__field {
   width: 100%;
   min-width: 0;
-  min-height: calc(var(--govrs-size-control-lg, 2.5rem) - var(--govrs-space-2, 0.5rem));
+  min-height: calc(var(--govrs-size-control-lg, 2.5rem) - var(--govrs-space-scale-2, 0.5rem));
   flex: 1 1 auto;
-  padding: 0 var(--govrs-space-2, 0.5rem);
+  padding: 0 var(--govrs-space-scale-2, 0.5rem);
   border: none;
   background: transparent;
   color: var(--govrs-color-text-secondary, #333333);
@@ -101,7 +101,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 var(--govrs-space-2, 0.5rem);
+  padding: 0 var(--govrs-space-scale-2, 0.5rem);
   border: none;
   background: none;
   color: var(--govrs-color-brand-primary, #1a7235);
@@ -126,5 +126,5 @@
 .govrs-input__feedback {
   display: flex;
   align-items: center;
-  padding-top: var(--govrs-space-1, 0.25rem);
+  padding-top: var(--govrs-space-scale-1, 0.25rem);
 }

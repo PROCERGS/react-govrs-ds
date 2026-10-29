@@ -1,9 +1,21 @@
-@use './sass-variables' as *;
+// Gerado de src/tokens/*.ts. Não editar.
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  /* Color tokens */
+  /* breakpoints */
+  --govrs-breakpoint-xl: 62rem;
+  --govrs-breakpoint-tablet-sm: 36rem;
+  --govrs-breakpoint-desktop-sm: 80rem;
+  --govrs-breakpoint-tv-sm: 100rem;
+  --govrs-breakpoint-smartphone-sm: 25rem;
+  --govrs-breakpoint-smartphone-md: 26.25rem;
+  --govrs-breakpoint-tablet-md: 40rem;
+  --govrs-breakpoint-tablet-lg: 48rem;
+  --govrs-breakpoint-tablet-xxl: 64rem;
+  --govrs-breakpoint-tablet-xxxl: 75rem;
+
+  /* colors */
   --govrs-color-brand-primary: #1a7235;
   --govrs-color-brand-primary-strong: #04290f;
   --govrs-color-brand-primary-hover: #135428;
@@ -13,30 +25,50 @@
   --govrs-color-brand-primary-alpha-10: rgba(26, 114, 53, 0.1);
   --govrs-color-brand-primary-alpha-20: rgba(26, 114, 53, 0.2);
   --govrs-color-brand-primary-alpha-40: rgba(26, 114, 53, 0.4);
-
-  --govrs-color-interactive-link: #1351b4; /* GovBR; ponto de extensão para futura troca para verde de marca */
+  --govrs-color-focus: var(--govrs-color-palette-yellow);
+  --govrs-color-neutral-text-subtle: #757575;
+  --govrs-color-neutral-white: #ffffff;
+  --govrs-color-neutral-black: #000000;
+  --govrs-color-neutral-text-strong: #333333;
+  --govrs-color-neutral-text: #555555;
+  --govrs-color-neutral-text-muted: #999999;
+  --govrs-color-avatar-tones-0: #ff6b6b;
+  --govrs-color-avatar-tones-1: #4ecdc4;
+  --govrs-color-avatar-tones-2: #45b7d1;
+  --govrs-color-avatar-tones-3: #ffa07a;
+  --govrs-color-avatar-tones-4: #98d8c8;
+  --govrs-color-avatar-tones-5: #f7dc6f;
+  --govrs-color-avatar-tones-6: #bb8fce;
+  --govrs-color-avatar-tones-7: #85c1e2;
+  --govrs-color-avatar-tones-8: #f8b500;
+  --govrs-color-avatar-tones-9: #52b788;
+  --govrs-color-avatar-tones-10: #e07a5f;
+  --govrs-color-avatar-tones-11: #81b29a;
+  --govrs-color-avatar-tones-12: #f4a261;
+  --govrs-color-avatar-tones-13: #e76f51;
+  --govrs-color-avatar-tones-14: #2a9d8f;
+  --govrs-color-media-backdrop: var(--govrs-color-neutral-black);
+  --govrs-color-media-surface: #1a1a1a;
+  --govrs-color-media-surface-alt: #2d2d2d;
+  --govrs-color-overlay-backdrop: rgba(0, 0, 0, 0.48);
+  --govrs-color-interactive-link: #1351b4;
   --govrs-color-interactive-link-subtle: #c5d4eb;
-  --govrs-color-focus: #ffcd07;
   --govrs-color-warning-tint: #fff5c2;
-
-  --govrs-color-success: #168821;
-  --govrs-color-success-surface: #e6f7ed;
-  --govrs-color-warning: #ffcd07;
-  --govrs-color-warning-surface: #fff8e6;
-  --govrs-color-error: #e52207;
-  --govrs-color-error-surface: #fdecea;
-  --govrs-color-info: #2b86d8;
-  --govrs-color-info-surface: #e9f5ff;
-
+  --govrs-color-status-success-default: var(--govrs-color-palette-green);
+  --govrs-color-status-success-surface: #e6f7ed;
+  --govrs-color-status-warning-default: var(--govrs-color-palette-yellow);
+  --govrs-color-status-warning-surface: #fff8e6;
+  --govrs-color-status-error-default: var(--govrs-color-palette-red);
+  --govrs-color-status-error-surface: #fdecea;
+  --govrs-color-status-info-default: #2b86d8;
+  --govrs-color-status-info-surface: #e9f5ff;
   --govrs-color-text-primary: var(--govrs-color-brand-primary-strong);
   --govrs-color-text-secondary: var(--govrs-color-brand-primary-hover);
   --govrs-color-text-muted: #2f5c40;
   --govrs-color-text-subtle: #4a7560;
   --govrs-color-text-placeholder: #6b8f7a;
-  --govrs-color-text-inverse: #ffffff;
-  --govrs-color-neutral-text-subtle: #757575;
-
-  --govrs-color-surface-base: #ffffff;
+  --govrs-color-text-inverse: var(--govrs-color-neutral-white);
+  --govrs-color-surface-base: var(--govrs-color-neutral-white);
   --govrs-color-surface-muted: #f8f8f8;
   --govrs-color-surface-soft: #f6f6f6;
   --govrs-color-surface-raised: #f5f5f5;
@@ -45,107 +77,95 @@
   --govrs-color-surface-alt-strong: #e9e9e9;
   --govrs-color-surface-overlay: rgba(255, 255, 255, 0.85);
   --govrs-color-surface-overlay-strong: rgba(255, 255, 255, 0.9);
-
   --govrs-color-border-subtle: #e6e6e6;
   --govrs-color-border-default: #e5e5e5;
   --govrs-color-border-muted: #dcdcdc;
   --govrs-color-border-strong: #d8d8d8;
   --govrs-color-border-emphasis: #cccccc;
-
-  --govrs-color-avatar-tone-0: #ff6b6b;
-  --govrs-color-avatar-tone-1: #4ecdc4;
-  --govrs-color-avatar-tone-2: #45b7d1;
-  --govrs-color-avatar-tone-3: #ffa07a;
-  --govrs-color-avatar-tone-4: #98d8c8;
-  --govrs-color-avatar-tone-5: #f7dc6f;
-  --govrs-color-avatar-tone-6: #bb8fce;
-  --govrs-color-avatar-tone-7: #85c1e2;
-  --govrs-color-avatar-tone-8: #f8b500;
-  --govrs-color-avatar-tone-9: #52b788;
-  --govrs-color-avatar-tone-10: #e07a5f;
-  --govrs-color-avatar-tone-11: #81b29a;
-  --govrs-color-avatar-tone-12: #f4a261;
-  --govrs-color-avatar-tone-13: #e76f51;
-  --govrs-color-avatar-tone-14: #2a9d8f;
-
-  /* High-contrast semantic tokens. */
-  --govrs-color-contrast-background: #000000;
-  --govrs-color-contrast-foreground: #ffffff;
-  --govrs-color-contrast-muted: #ffffff;
+  --govrs-color-contrast-background: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-foreground: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-muted: var(--govrs-color-neutral-white);
   --govrs-color-contrast-accent: var(--govrs-color-focus);
-  --govrs-color-contrast-surface: #000000;
-  --govrs-color-contrast-surface-alt: #000000;
-  --govrs-color-contrast-border: #ffffff;
-  --govrs-color-contrast-icon: #ffffff;
-  --govrs-color-contrast-mark: #ffffff;
-  --govrs-color-contrast-control-background: #000000;
-  --govrs-color-contrast-control-foreground: #ffffff;
-  --govrs-color-contrast-control-border: #ffffff;
-  --govrs-color-contrast-field-background: #ffffff;
-  --govrs-color-contrast-field-foreground: #000000;
-  --govrs-color-contrast-field-border: #000000;
-  --govrs-color-contrast-popover-background: #ffffff;
-  --govrs-color-contrast-popover-foreground: #000000;
-  --govrs-color-contrast-popover-border: #000000;
+  --govrs-color-contrast-surface: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-surface-alt: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-border: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-icon: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-mark: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-control-background: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-control-foreground: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-control-border: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-field-background: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-field-foreground: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-field-border: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-popover-background: var(--govrs-color-neutral-white);
+  --govrs-color-contrast-popover-foreground: var(--govrs-color-neutral-black);
+  --govrs-color-contrast-popover-border: var(--govrs-color-neutral-black);
   --govrs-color-contrast-search-background: var(--govrs-color-contrast-field-background);
   --govrs-color-contrast-search-foreground: var(--govrs-color-contrast-field-foreground);
-  --govrs-color-contrast-status-online: #168821;
-  --govrs-color-contrast-status-offline: #e52207;
-  --govrs-color-contrast-status-away: #ffcd07;
+  --govrs-color-contrast-status-online: var(--govrs-color-palette-green);
+  --govrs-color-contrast-status-offline: var(--govrs-color-palette-red);
+  --govrs-color-contrast-status-away: var(--govrs-color-palette-yellow);
+  --govrs-color-palette-yellow: #ffcd07;
+  --govrs-color-palette-green: #168821;
+  --govrs-color-palette-red: #e52207;
 
-  /* Media chrome stays independent from the high-contrast palette. */
-  --govrs-color-media-backdrop: #000000;
-  --govrs-color-media-surface: #1a1a1a;
-  --govrs-color-media-surface-alt: #2d2d2d;
-  --govrs-color-overlay-backdrop: rgba(0, 0, 0, 0.48);
+  /* spacing */
+  --govrs-space-scale-0: calc(var(--govrs-space-scale-1) * 0);
+  --govrs-space-scale-1: 0.25rem;
+  --govrs-space-scale-2: calc(var(--govrs-space-scale-1) * 2);
+  --govrs-space-scale-3: calc(var(--govrs-space-scale-1) * 3);
+  --govrs-space-scale-4: calc(var(--govrs-space-scale-1) * 4);
+  --govrs-space-scale-5: calc(var(--govrs-space-scale-1) * 5);
+  --govrs-space-scale-6: calc(var(--govrs-space-scale-1) * 6);
+  --govrs-space-scale-7: calc(var(--govrs-space-scale-1) * 8);
+  --govrs-space-scale-8: calc(var(--govrs-space-scale-1) * 12);
+  --govrs-space-scale-1-5: calc(var(--govrs-space-scale-1) * 1.5);
+  --govrs-space-scale-2-5: calc(var(--govrs-space-scale-1) * 2.5);
+  --govrs-space-scale-3-5: calc(var(--govrs-space-scale-1) * 3.5);
+  --govrs-space-scale-3-75: calc(var(--govrs-space-scale-1) * 3.75);
+  --govrs-space-scale-4-5: calc(var(--govrs-space-scale-1) * 4.5);
+  --govrs-space-scale-7-5: calc(var(--govrs-space-scale-1) * 10);
+  --govrs-space-scale-gutter: calc(var(--govrs-space-scale-1) * 21);
+  --govrs-space-section-spacious: 5rem;
+  --govrs-space-focus-offset: 2px;
+  --govrs-space-pixels-base: 8px;
+  --govrs-space-pixels-half: calc(var(--govrs-space-pixels-base) * 0.5);
+  --govrs-space-pixels-1x: calc(var(--govrs-space-pixels-base) * 1);
+  --govrs-space-pixels-2x: calc(var(--govrs-space-pixels-base) * 2);
+  --govrs-space-pixels-3x: calc(var(--govrs-space-pixels-base) * 3);
+  --govrs-space-pixels-4x: calc(var(--govrs-space-pixels-base) * 4);
+  --govrs-space-pixels-5x: calc(var(--govrs-space-pixels-base) * 5);
+  --govrs-space-pixels-6x: calc(var(--govrs-space-pixels-base) * 6);
+  --govrs-space-pixels-7x: calc(var(--govrs-space-pixels-base) * 7);
+  --govrs-space-pixels-8x: calc(var(--govrs-space-pixels-base) * 8);
 
-  /* Breakpoint tokens */
-  --govrs-breakpoint-smartphone-portrait-max: #{$govrs-breakpoint-smartphone-portrait-max};
-  --govrs-breakpoint-smartphone-landscape-tablet-portrait-min: #{$govrs-breakpoint-smartphone-landscape-tablet-portrait-min};
-  --govrs-breakpoint-smartphone-landscape-tablet-portrait-max: #{$govrs-breakpoint-smartphone-landscape-tablet-portrait-max};
-  --govrs-breakpoint-tablet-landscape-min: #{$govrs-breakpoint-tablet-landscape-min};
-  --govrs-breakpoint-tablet-landscape-max: #{$govrs-breakpoint-tablet-landscape-max};
-  --govrs-breakpoint-desktop-min: #{$govrs-breakpoint-desktop-min};
-  --govrs-breakpoint-desktop-max: #{$govrs-breakpoint-desktop-max};
-  --govrs-breakpoint-tv-min: #{$govrs-breakpoint-tv-min};
-  --govrs-breakpoint-xs: #{$govrs-breakpoint-xs};
-  --govrs-breakpoint-xs-wide: #{$govrs-breakpoint-xs-wide};
-  --govrs-breakpoint-sm: #{$govrs-breakpoint-sm};
-  --govrs-breakpoint-md: #{$govrs-breakpoint-md};
-  --govrs-breakpoint-lg: #{$govrs-breakpoint-lg};
-  --govrs-breakpoint-xl: #{$govrs-breakpoint-xl};
-  --govrs-breakpoint-xxl: #{$govrs-breakpoint-xxl};
-  --govrs-breakpoint-xxxl: #{$govrs-breakpoint-xxxl};
-
-  --govrs-layout-container-barra-max-lg: #{$govrs-layout-container-barra-max-lg};
-  --govrs-layout-container-barra-max-xl: #{$govrs-layout-container-barra-max-xl};
-  --govrs-layout-container-barra-max-xxxl: #{$govrs-layout-container-barra-max-xxxl};
-  --govrs-layout-container-header-max-width: #{$govrs-layout-container-header-max-width};
-  --govrs-layout-container-max-width: var(--govrs-layout-container-header-max-width);
-  --layout-container-width: var(--govrs-layout-container-header-max-width);
-
-  /* Spacing tokens */
-  --govrs-space-0: 0rem;
-  --govrs-space-1: 0.25rem;
-  --govrs-space-1-5: 0.375rem;
-  --govrs-space-2: 0.5rem;
-  --govrs-space-2-5: 0.625rem;
-  --govrs-space-3: 0.75rem;
-  --govrs-space-3-5: 0.875rem;
-  --govrs-space-3-75: 0.9375rem;
-  --govrs-space-4: 1rem;
-  --govrs-space-4-5: 1.125rem;
-  --govrs-space-5: 1.25rem;
-  --govrs-space-6: 1.5rem;
-  --govrs-space-7: 2rem;
-  --govrs-space-7-5: 2.5rem;
-  --govrs-space-8: 3rem;
-  --govrs-space-gutter: 5.25rem;
-
-  /* Typography tokens */
-  --govrs-font-family-base: #{$font-family-base};
-  --govrs-font-family-display: #{$font-family-display};
-
+  /* typography */
+  --govrs-font-family-base: 'Noto Sans', sans-serif;
+  --govrs-line-height-24: 1.5rem;
+  --govrs-line-height-28: 1.75rem;
+  --govrs-line-height-30: 1.875rem;
+  --govrs-line-height-32: 2rem;
+  --govrs-line-height-36: 2.25rem;
+  --govrs-line-height-42: 2.625rem;
+  --govrs-line-height-52: 3.25rem;
+  --govrs-line-height-58: 3.625rem;
+  --govrs-line-height-body-sm: var(--govrs-line-height-24);
+  --govrs-line-height-body-md: var(--govrs-line-height-24);
+  --govrs-line-height-body-lg: var(--govrs-line-height-28);
+  --govrs-line-height-body-xl: var(--govrs-line-height-32);
+  --govrs-line-height-heading-sm: var(--govrs-line-height-28);
+  --govrs-line-height-heading-md: var(--govrs-line-height-32);
+  --govrs-line-height-heading-lg: var(--govrs-line-height-36);
+  --govrs-line-height-heading-xl: var(--govrs-line-height-42);
+  --govrs-line-height-heading-2xl: var(--govrs-line-height-52);
+  --govrs-line-height-heading-3xl: var(--govrs-line-height-58);
+  --govrs-line-height-tight: 1.2;
+  --govrs-line-height-medium: 1.5;
+  --govrs-line-height-loose: 1.75;
+  --govrs-font-weight-regular: 400;
+  --govrs-font-weight-medium: 500;
+  --govrs-font-weight-semibold: 600;
+  --govrs-font-weight-bold: 700;
   --govrs-font-size-12: 0.75rem;
   --govrs-font-size-14: 0.875rem;
   --govrs-font-size-16: 1rem;
@@ -159,16 +179,6 @@
   --govrs-font-size-40: 2.5rem;
   --govrs-font-size-41: 2.5625rem;
   --govrs-font-size-48: 3rem;
-
-  --govrs-line-height-24: 1.5rem;
-  --govrs-line-height-28: 1.75rem;
-  --govrs-line-height-30: 1.875rem;
-  --govrs-line-height-32: 2rem;
-  --govrs-line-height-36: 2.25rem;
-  --govrs-line-height-42: 2.625rem;
-  --govrs-line-height-52: 3.25rem;
-  --govrs-line-height-58: 3.625rem;
-
   --govrs-font-size-body-sm: var(--govrs-font-size-14);
   --govrs-font-size-body-md: var(--govrs-font-size-16);
   --govrs-font-size-body-lg: var(--govrs-font-size-18);
@@ -180,27 +190,14 @@
   --govrs-font-size-heading-2xl: var(--govrs-font-size-36);
   --govrs-font-size-heading-3xl: var(--govrs-font-size-41);
 
-  --govrs-line-height-body-sm: var(--govrs-line-height-24);
-  --govrs-line-height-body-md: var(--govrs-line-height-24);
-  --govrs-line-height-body-lg: var(--govrs-line-height-28);
-  --govrs-line-height-body-xl: var(--govrs-line-height-32);
-  --govrs-line-height-heading-sm: var(--govrs-line-height-28);
-  --govrs-line-height-heading-md: var(--govrs-line-height-32);
-  --govrs-line-height-heading-lg: var(--govrs-line-height-36);
-  --govrs-line-height-heading-xl: var(--govrs-line-height-42);
-  --govrs-line-height-heading-2xl: var(--govrs-line-height-52);
-  --govrs-line-height-heading-3xl: var(--govrs-line-height-58);
-
-  --govrs-font-weight-regular: 400;
-  --govrs-font-weight-medium: 500;
-  --govrs-font-weight-semibold: 600;
-  --govrs-font-weight-bold: 700;
-
-  /* Radius and borders */
+  /* borders */
   --govrs-border-width-sm: 1px;
   --govrs-border-width-md: 2px;
   --govrs-border-width-lg: 4px;
+  --govrs-border-focus-width: 2px;
+  --govrs-border-focus-style: solid;
 
+  /* radii */
   --govrs-radius-xs: 0.25rem;
   --govrs-radius-sm: 0.375rem;
   --govrs-radius-md: 0.5rem;
@@ -209,30 +206,30 @@
   --govrs-radius-pill: 999px;
   --govrs-radius-circle: 50%;
 
-  /* Shadow tokens */
-  --govrs-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --govrs-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --govrs-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
-  --govrs-shadow-floating: 0 4px 10px rgba(0, 0, 0, 0.08);
-  --govrs-shadow-carousel-card: 0 8px 30px rgba(0, 0, 0, 0.04);
-  --govrs-shadow-overlay: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* shadows */
+  --govrs-shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --govrs-shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  --govrs-shadow-card-hover: 0px 4px 16px rgba(0, 0, 0, 0.15);
+  --govrs-shadow-floating: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  --govrs-shadow-carousel-card: 0px 8px 30px rgba(0, 0, 0, 0.04);
+  --govrs-shadow-overlay: 0px 2px 10px rgba(0, 0, 0, 0.1);
 
-  /* Motion tokens */
-  --govrs-duration-fast: 0.2s;
-  --govrs-duration-base: 0.3s;
-  --govrs-duration-slow: 0.45s;
-  --govrs-duration-slower: 0.5s;
-  --govrs-easing-standard: ease;
-  --govrs-easing-emphasized: ease-in-out;
+  /* motion */
+  --govrs-motion-duration-fast: 0.2s;
+  --govrs-motion-duration-base: 0.3s;
+  --govrs-motion-duration-slow: 0.45s;
+  --govrs-motion-duration-slower: 0.5s;
+  --govrs-motion-easing-standard: ease;
+  --govrs-motion-easing-emphasized: ease-in-out;
   --govrs-motion-scale-hover: 1.1;
   --govrs-motion-scale-subtle: 1.02;
   --govrs-motion-offset-lift: -2px;
   --govrs-motion-offset-slide: -10px;
-  --govrs-transition-base: all var(--govrs-duration-base) var(--govrs-easing-standard);
-  --govrs-transition-fast: all var(--govrs-duration-fast) var(--govrs-easing-standard);
-  --govrs-transition-slow: all var(--govrs-duration-slower) var(--govrs-easing-standard);
+  --govrs-motion-transition-base: all var(--govrs-motion-duration-base) var(--govrs-motion-easing-standard);
+  --govrs-motion-transition-fast: all var(--govrs-motion-duration-fast) var(--govrs-motion-easing-standard);
+  --govrs-motion-transition-slow: all var(--govrs-motion-duration-slower) var(--govrs-motion-easing-standard);
 
-  /* Size tokens */
+  /* sizes */
   --govrs-size-control-xs: 1.75rem;
   --govrs-size-control-sm: 2rem;
   --govrs-size-control-md: 2.25rem;
@@ -242,22 +239,15 @@
   --govrs-size-control-hero-md: 4.375rem;
   --govrs-size-control-hero-sm: 3.75rem;
   --govrs-size-control-hero-xs: 3.125rem;
-
   --govrs-size-icon-xs: 1rem;
   --govrs-size-icon-sm: 1.75rem;
   --govrs-size-icon-md: 2rem;
   --govrs-size-icon-lg: 2.5rem;
   --govrs-size-icon-xl: 3rem;
-
   --govrs-size-media-card: 12.5rem;
   --govrs-size-media-card-sm: 9.375rem;
   --govrs-size-media-card-lg: 15.625rem;
   --govrs-size-media-carousel: 31.25rem;
-  --govrs-size-media-carousel-md: 28.125rem;
-  --govrs-size-media-carousel-sm: 25rem;
-  --govrs-size-media-carousel-xs: 21.875rem;
-  --govrs-size-media-carousel-2xs: 18.75rem;
-
   --govrs-size-container-foundation: 45rem;
   --govrs-size-container-story: 65.3125rem;
   --govrs-size-container-content: 75rem;
@@ -270,128 +260,37 @@
   --govrs-size-card-icon-height: 9.6875rem;
   --govrs-size-alert-height: 4.375rem;
 
-  /* Z-index tokens */
-  --govrs-z-index-base: 0;
-  --govrs-z-index-raised: 1;
-  --govrs-z-index-sticky: 5;
-  --govrs-z-index-header: 10;
-  --govrs-z-index-navigation: 50;
-  --govrs-z-index-dropdown: 60;
-  --govrs-z-index-overlay: 100;
-  --govrs-z-index-modal: 110;
-  --govrs-z-index-toast: 120;
+  /* layout */
+  --govrs-layout-container-barra-lg: 46.875rem;
+  --govrs-layout-container-barra-xl: 60.625rem;
+  --govrs-layout-container-barra-xxxl: 73.125rem;
+  --govrs-layout-container-header: 90rem;
 
-  /* Legacy aliases kept for compatibility */
-  --blue-warm-vivid-70: var(--govrs-color-interactive-link);
-  --blue-warm-20: var(--govrs-color-interactive-link-subtle);
-  --yellow-vivid-20: var(--govrs-color-warning-tint);
-  --yellow-vivid-5: var(--govrs-color-focus);
-  --yellow-vivid-05: var(--govrs-color-warning-surface);
-  --green-rs-60: var(--govrs-color-brand-primary);
-  --green-rs-90: var(--govrs-color-brand-primary-strong);
-  --green-rs-10: var(--govrs-color-brand-primary-alpha-20);
-  --green-rs-50: var(--govrs-color-success);
-  --green-rs-05: var(--govrs-color-brand-primary-soft);
-  --green-cool-vivid-05: var(--govrs-color-success-surface);
-  --green-cool-vivid-50: var(--govrs-color-success);
-  --green-cool-vivid-60: var(--govrs-color-success);
-  --pure-0: var(--govrs-color-surface-base);
-  --gray-2: var(--govrs-color-surface-muted);
-  --gray-20: var(--govrs-color-border-emphasis);
-  --gray-80: var(--govrs-color-text-muted);
-  --pure-100: var(--govrs-color-text-primary);
-  --red-vivid-10: var(--govrs-color-error-surface);
-  --red-vivid-50: var(--govrs-color-error);
-  --red-vivid-60: var(--govrs-color-error);
-  --gold-vivid-20: var(--govrs-color-warning);
-  --blue-vivid-40: var(--govrs-color-info);
-  --blue-cool-vivid-05: var(--govrs-color-info-surface);
-  --blue-cool-vivid-50: var(--govrs-color-info);
-  --blue-cool-vivid-60: var(--govrs-color-info);
-  --interactive: var(--govrs-color-interactive-link);
-  --interactive-rgb: 19, 81, 180;
-  --interactive-light: var(--govrs-color-brand-primary);
-  --interactive-dark: var(--govrs-color-interactive-link-subtle);
-  --interactive-dark-rgb: 197, 212, 235;
-  --color: var(--govrs-color-text-muted);
-  --color-rgb: 47, 92, 64;
-  --color-dark: var(--govrs-color-text-primary);
-  --color-dark-rgb: 4, 41, 15;
-  --color-light: var(--govrs-color-text-inverse);
-  --color-light-rgb: 255, 255, 255;
-  --text-color: var(--govrs-color-text-muted);
-  --color-text: var(--govrs-color-text-secondary);
-  --background: var(--govrs-color-surface-base);
-  --background-rgb: 255, 255, 255;
-  --background-light: var(--govrs-color-surface-muted);
-  --background-light-rgb: 248, 248, 248;
-  --background-dark: var(--govrs-color-contrast-background);
-  --background-dark-rgb: 0, 0, 0;
-  --danger: var(--govrs-color-error);
-  --success: var(--govrs-color-success);
-  --warning: var(--govrs-color-warning);
-  --info: var(--govrs-color-info);
-  --visited: var(--govrs-color-interactive-link);
-  --visited-dark: var(--govrs-color-interactive-link-subtle);
-  --hover: 0.08;
-  --hover-dark: 0.16;
-  --hover-light: 0.04;
-  --pressed: 0.24;
-  --pressed-dark: 0.32;
-  --active: var(--govrs-color-interactive-link-subtle);
-  --active-rgb: 197, 212, 235;
-  --focus: var(--govrs-color-focus);
-  --focus-color: var(--govrs-color-focus);
-  --focus-color-dark: var(--govrs-color-focus);
-  --focus-offset: 2px;
-  --focus-width: 2px;
-  --focus-style: solid;
-  --spacing-scale-base: 8px;
-  --spacing-scale-half: 4px;
-  --spacing-scale-1x: 8px;
-  --spacing-scale-2x: 16px;
-  --spacing-scale-3x: 24px;
-  --spacing-scale-4x: 32px;
-  --spacing-scale-5x: 40px;
-  --spacing-scale-6x: 48px;
-  --spacing-scale-7x: 56px;
-  --spacing-scale-8x: 64px;
-  --font-family-base: var(--govrs-font-family-base);
-  --font-family-secondary: var(--govrs-font-family-display);
-  --font-size-scale-base: var(--govrs-font-size-16);
-  --font-size-scale-down-01: var(--govrs-font-size-14);
-  --font-size-scale-down-02: var(--govrs-font-size-12);
-  --font-size-scale-up-01: var(--govrs-font-size-16);
-  --font-size-scale-up-02: var(--govrs-font-size-18);
-  --font-size-scale-up-03: var(--govrs-font-size-20);
-  --font-size-scale-up-04: var(--govrs-font-size-24);
-  --font-size-scale-up-05: var(--govrs-font-size-32);
-  --font-size-scale-up-06: var(--govrs-font-size-48);
-  --font-weight-regular: var(--govrs-font-weight-regular);
-  --font-weight-medium: var(--govrs-font-weight-medium);
-  --font-weight-semi-bold: var(--govrs-font-weight-semibold);
-  --font-weight-bold: var(--govrs-font-weight-bold);
-  --line-height-tight: 1.2;
-  --line-height-medium: 1.5;
-  --line-height-loose: 1.75;
-  --border-width-sm: var(--govrs-border-width-sm);
-  --border-width-md: var(--govrs-border-width-md);
-  --border-width-lg: var(--govrs-border-width-lg);
-  --border-radius-sm: var(--govrs-radius-xs);
-  --border-radius-md: var(--govrs-radius-md);
-  --border-radius-lg: var(--govrs-radius-xl);
-  --border-radius-pill: var(--govrs-radius-pill);
-  --border-radius-circle: var(--govrs-radius-circle);
-  --shadow-sm: var(--govrs-shadow-sm);
-  --shadow-md: var(--govrs-shadow-card);
-  --shadow-lg: var(--govrs-shadow-carousel-card);
-  --shadow-xl: var(--govrs-shadow-overlay);
-  --z-index-layer-1: var(--govrs-z-index-header);
-  --z-index-layer-2: var(--govrs-z-index-navigation);
-  --z-index-layer-3: var(--govrs-z-index-dropdown);
-  --z-index-layer-4: var(--govrs-z-index-overlay);
-  --z-index-layer-5: var(--govrs-z-index-modal);
-  --z-index-overlay: var(--govrs-z-index-overlay);
-  --z-index-modal: var(--govrs-z-index-modal);
-  --z-index-toast: var(--govrs-z-index-toast);
+  /* layers */
+  --govrs-layer-base: 0;
+  --govrs-layer-raised: 1;
+  --govrs-layer-sticky: 5;
+  --govrs-layer-header: 10;
+  --govrs-layer-navigation: 50;
+  --govrs-layer-dropdown: 60;
+  --govrs-layer-overlay: 100;
+  --govrs-layer-modal: 110;
+  --govrs-layer-toast: 120;
+
+  /* interaction */
+  --govrs-interaction-opacity-hover: 0.08;
+  --govrs-interaction-opacity-hover-dark: 0.16;
+  --govrs-interaction-opacity-hover-light: 0.04;
+  --govrs-interaction-opacity-pressed: 0.24;
+  --govrs-interaction-opacity-pressed-dark: 0.32;
+
+  /* Serialização web derivada */
+  --govrs-color-interactive-link-rgb: 19, 81, 180;
+  --govrs-color-interactive-link-subtle-rgb: 197, 212, 235;
+  --govrs-color-text-muted-rgb: 47, 92, 64;
+  --govrs-color-text-primary-rgb: 4, 41, 15;
+  --govrs-color-text-inverse-rgb: 255, 255, 255;
+  --govrs-color-surface-base-rgb: 255, 255, 255;
+  --govrs-color-surface-muted-rgb: 248, 248, 248;
+  --govrs-color-contrast-background-rgb: 0, 0, 0;
 }

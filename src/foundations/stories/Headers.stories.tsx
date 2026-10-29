@@ -153,7 +153,7 @@ export const Documentacao: Story = {
             'A semântica continua sendo definida pelas tags h1 a h4.',
             'A classe controla apenas a escala visual associada ao contexto.',
             'Cor do texto: --govrs-color-text-primary (verde institucional RS).',
-            'Ritmo vertical: todos os títulos usam margin-bottom de 1,25rem (--govrs-space-5).',
+            'Ritmo vertical: todos os títulos usam margin-bottom de 1,25rem (--govrs-space-scale-5).',
           ]}
         >
           <HeadersScalePreview />

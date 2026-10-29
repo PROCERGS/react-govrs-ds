@@ -1,6 +1,6 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.3.49",
+  "version": "0.3.5",
   "private": false,
   "type": "module",
   "sideEffects": [
@@ -37,19 +37,22 @@
       "require": "./dist/tokens.cjs",
       "default": "./dist/tokens.js"
     },
-    "./components/*": "./dist/components/*"
+    "./components/*": "./dist/components/*",
+    "./tokens.scss": "./dist/tokens.scss"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
-    "storybook": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
-    "build-storybook": "storybook build",
+    "dev": "npm run tokens:generate && storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "storybook": "npm run tokens:generate && storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "build-storybook": "npm run tokens:generate && storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
-    "build": "vite build && npm run build:types",
+    "build": "npm run tokens:generate && vite build && npm run build:types",
     "prepack": "npm run build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tokens:generate": "node scripts/generate-tokens.mjs",
+    "tokens:check": "node scripts/generate-tokens.mjs --check"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

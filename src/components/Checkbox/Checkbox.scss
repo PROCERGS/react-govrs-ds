@@ -7,7 +7,7 @@ $svg-group-mask: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='4
   align-items: flex-start;
   color: var(--govrs-color-text-primary, #000000);
   cursor: pointer;
-  gap: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
 }
 
 .govrs-checkbox-field--disabled {
@@ -16,7 +16,7 @@ $svg-group-mask: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='4
 
 .govrs-checkbox-field__content {
   display: grid;
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .govrs-checkbox-field__label {
@@ -36,13 +36,13 @@ input[type='checkbox'].govrs-checkbox {
   --govrs-checkbox-background: var(--govrs-color-surface-base, #ffffff);
   --govrs-checkbox-border: var(--govrs-color-border-emphasis, #cccccc);
   --govrs-checkbox-active-border: var(--govrs-color-brand-primary, #1a7235);
-  --govrs-checkbox-indeterminate-background: var(--govrs-color-success, #168821);
+  --govrs-checkbox-indeterminate-background: var(--govrs-color-status-success-default, #168821);
 
   position: relative;
   display: inline-block;
-  width: var(--govrs-space-6, 1.5rem);
-  height: var(--govrs-space-6, 1.5rem);
-  flex: 0 0 var(--govrs-space-6, 1.5rem);
+  width: var(--govrs-space-scale-6, 1.5rem);
+  height: var(--govrs-space-scale-6, 1.5rem);
+  flex: 0 0 var(--govrs-space-scale-6, 1.5rem);
   padding: 0;
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-checkbox-border);
   border-radius: var(--govrs-radius-xs, 0.25rem);
@@ -50,9 +50,9 @@ input[type='checkbox'].govrs-checkbox {
   background-color: var(--govrs-checkbox-background);
   cursor: pointer;
   transition:
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
   vertical-align: middle;
 }
 
@@ -74,8 +74,8 @@ input[type='checkbox'].govrs-checkbox::after {
   opacity: 0;
   transform: translate(-50%, -50%);
   transition:
-    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    transform var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+    opacity var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    transform var(--govrs-motion-duration-base, 0.3s) var(--govrs-motion-easing-standard, ease);
 }
 
 input[type='checkbox'].govrs-checkbox:checked::after {
@@ -126,11 +126,11 @@ input[type='checkbox'].govrs-checkbox:focus-visible {
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--danger {
-  border-color: var(--govrs-color-error, #e52207);
+  border-color: var(--govrs-color-status-error-default, #e52207);
 }
 
 input[type='checkbox'].govrs-checkbox.govrs-checkbox--success {
-  border-color: var(--govrs-color-success, #168821);
+  border-color: var(--govrs-color-status-success-default, #168821);
 }
 
 input[type='checkbox'].govrs-checkbox:disabled {

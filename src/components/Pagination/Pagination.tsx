@@ -14,8 +14,8 @@ import { breakpoints } from '../../tokens'
 import './Pagination.scss'
 
 const DEFAULT_PAGE_SIZES = [20, 50, 100] as const
-const PAGINATION_MOBILE_MEDIA_QUERY = `(max-width: ${breakpoints.smartphonePortraitMax})`
-const PAGINATION_DESKTOP_MEDIA_QUERY = `(min-width: ${breakpoints.desktopMin})`
+const PAGINATION_MOBILE_MEDIA_QUERY = `(max-width: ${Number.parseFloat(breakpoints.tabletSm) - 0.0625}rem)`
+const PAGINATION_DESKTOP_MEDIA_QUERY = `(min-width: ${breakpoints.desktopSm})`
 const NUMBERS_SIBLING_COUNT_DESKTOP = 2
 const NUMBERS_SIBLING_COUNT_COMPACT = 1
 

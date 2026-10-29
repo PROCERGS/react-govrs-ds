@@ -6,7 +6,7 @@
   --govrs-header-title-hover-foreground: var(--green-matriz-link-activated, var(--govrs-color-brand-primary-hover, #135428));
 
   position: relative;
-  z-index: var(--govrs-z-index-header);
+  z-index: var(--govrs-layer-header);
   width: 100%;
   background: var(--govrs-color-surface-base, #ffffff);
   font-family: var(--govrs-font-family-base, sans-serif);
@@ -15,12 +15,12 @@
 }
 
 .govrs-header-wrapper[data-menu-open='true'] {
-  z-index: var(--govrs-z-index-navigation);
+  z-index: var(--govrs-layer-navigation);
 }
 
 .govrs-header {
   @include layout.govrs-layout-container-header;
-  padding-inline: var(--govrs-header-padding-inline, var(--govrs-space-2-5, 0.625rem));
+  padding-inline: var(--govrs-header-padding-inline, var(--govrs-space-scale-2-5, 0.625rem));
   margin-block: 0;
   box-sizing: border-box;
 }
@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--govrs-space-5, 1.25rem);
+  gap: var(--govrs-space-scale-5, 1.25rem);
 }
 
 .govrs-header__identity {
@@ -38,12 +38,12 @@
   flex: 1 1 auto;
   flex-direction: row;
   align-items: center;
-  gap: var(--govrs-space-2-5, 0.625rem);
+  gap: var(--govrs-space-scale-2-5, 0.625rem);
 }
 
 .govrs-header__identity .govrs-menu-hamburger__toggle {
-  padding: 0 var(--govrs-space-2-5, 0.625rem) 0 0;
-  color: var(--govrs-menu-hamburger-toggle-foreground, var(--green-rs-60, var(--govrs-color-brand-primary, #1a7235)));
+  padding: 0 var(--govrs-space-scale-2-5, 0.625rem) 0 0;
+  color: var(--govrs-menu-hamburger-toggle-foreground, var(--govrs-color-brand-primary, var(--govrs-color-brand-primary, #1a7235)));
   font-size: var(--govrs-font-size-heading-lg, 1.5rem);
 }
 
@@ -76,7 +76,7 @@
 
 .govrs-header__title {
   min-width: 0;
-  margin-left: var(--govrs-space-2-5, 0.625rem);
+  margin-left: var(--govrs-space-scale-2-5, 0.625rem);
   color: var(--govrs-header-title-foreground);
   font-size: var(--govrs-font-size-heading-lg, 1.5rem);
   font-weight: 375;
@@ -125,7 +125,7 @@
 
 .govrs-header__scroll-top {
   position: fixed;
-  z-index: var(--govrs-z-index-toast);
+  z-index: var(--govrs-layer-toast);
   right: 10%;
   bottom: 2.8125rem;
   display: inline-flex;
@@ -135,7 +135,7 @@
   justify-content: center;
   border: 0.1875rem solid transparent;
   border-radius: var(--govrs-radius-pill, 999px);
-  background-color: var(--green-rs-60, var(--govrs-color-brand-primary, #1a7235));
+  background-color: var(--govrs-color-brand-primary, var(--govrs-color-brand-primary, #1a7235));
   box-shadow: var(--govrs-shadow-card-hover, 0 4px 16px rgba(0, 0, 0, 0.15));
   color: var(--govrs-color-text-inverse, #ffffff);
   cursor: pointer;
@@ -143,30 +143,30 @@
 
 .govrs-header__scroll-top:hover {
   border-color: var(--govrs-color-surface-base, #ffffff);
-  background-color: var(--green-rs-60, var(--govrs-color-brand-primary, #1a7235));
+  background-color: var(--govrs-color-brand-primary, var(--govrs-color-brand-primary, #1a7235));
 }
 
 body.has-sidebar .govrs-header__scroll-top {
   right: 24.0625rem;
 }
 
-@media (min-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-min}) {
+@media (min-width: #{vars.$govrs-breakpoint-tablet-sm}) {
   .govrs-header__logo-image {
     width: 3.8125rem;
     height: 4.9375rem;
   }
 }
 
-@media (min-width: #{vars.$govrs-breakpoint-tablet-landscape-min}) {
+@media (min-width: #{vars.$govrs-breakpoint-xl}) {
   .govrs-header__logo-image {
     width: 5.3125rem;
     height: 6.9375rem;
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-xl - 0.0625rem)}) {
   .govrs-header__logo-nav-wrapper {
-    gap: var(--govrs-space-3, 0.75rem);
+    gap: var(--govrs-space-scale-3, 0.75rem);
   }
 
   .govrs-header__identity--hidden {
@@ -180,12 +180,12 @@ body.has-sidebar .govrs-header__scroll-top {
   }
 
   .govrs-header__scroll-top {
-    right: var(--govrs-space-5, 1.25rem);
-    bottom: var(--govrs-space-5, 1.25rem);
+    right: var(--govrs-space-scale-5, 1.25rem);
+    bottom: var(--govrs-space-scale-5, 1.25rem);
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .govrs-header__title {
     font-size: var(--govrs-font-size-heading-md, 1.25rem);
     line-height: var(--govrs-line-height-heading-md, 2rem);
@@ -202,7 +202,7 @@ body.has-sidebar .govrs-header__scroll-top {
     display: block;
     flex: 1 1 auto;
     min-width: 0;
-    margin-left: var(--govrs-space-2-5, 0.625rem);
+    margin-left: var(--govrs-space-scale-2-5, 0.625rem);
     white-space: normal;
     overflow-wrap: break-word;
     word-break: normal;

@@ -1,12 +1,12 @@
 .govrs-loader {
   --govrs-loader-size-default: 3rem;
   --govrs-loader-size-percentage: 5.25rem;
-  --govrs-loader-gap-inline: var(--govrs-space-2, 0.5rem);
-  --govrs-loader-gap-block: var(--govrs-space-1-5, 0.375rem);
+  --govrs-loader-gap-inline: var(--govrs-space-scale-2, 0.5rem);
+  --govrs-loader-gap-block: var(--govrs-space-scale-1-5, 0.375rem);
   --govrs-loader-color: var(--govrs-color-brand-primary, #1a7235);
   --govrs-loader-track-color: var(--govrs-color-border-emphasis, #e0e0e0);
   --govrs-loader-label-color: var(--govrs-color-text-primary, #000000);
-  --govrs-loader-progress-color: var(--govrs-loader-color);
+  --govrs-loader-progress-color: var(--govrs-loader-custom-color, var(--govrs-loader-color));
   --govrs-loader-progress-center: var(--govrs-color-surface-base, #ffffff);
   --govrs-loader-track-outline: transparent;
 
@@ -71,6 +71,8 @@
 }
 
 .govrs-loader--percentage {
+  --govrs-loader-label-color: var(--govrs-loader-custom-color, var(--govrs-color-text-primary, #000000));
+
   min-width: 0;
   min-height: 0;
   width: var(--govrs-loader-size-percentage);

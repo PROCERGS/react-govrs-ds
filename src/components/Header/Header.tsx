@@ -1,3 +1,4 @@
+import { breakpoints } from '../../tokens'
 import { useEffect, useId, useState, type ReactNode } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -117,9 +118,9 @@ export function Header({
     }
 
     const rawBreakpoint = getComputedStyle(document.documentElement).getPropertyValue(
-      '--govrs-breakpoint-smartphone-landscape-tablet-portrait-max',
+      '--govrs-breakpoint-xl',
     )
-    const breakpoint = (rawBreakpoint || '48rem').trim()
+    const breakpoint = `calc(${rawBreakpoint.trim() || breakpoints.xl} - 0.0625rem)`
 
     const mediaQuery = window.matchMedia(`(max-width: ${breakpoint})`)
 

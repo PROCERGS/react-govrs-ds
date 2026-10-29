@@ -1,18 +1,17 @@
-export const breakpoints = {
-  smartphonePortraitMax: '35.9375rem',
-  smartphoneLandscapeTabletPortraitMin: '36rem',
-  smartphoneLandscapeTabletPortraitMax: '61.9375rem',
-  tabletLandscapeMin: '62rem',
-  tabletLandscapeMax: '79.9375rem',
-  desktopMin: '80rem',
-  desktopMax: '99.9375rem',
-  tvMin: '100rem',
-  xs: '25rem',
-  xsWide: '26.25rem',
-  sm: '36rem',
-  md: '40rem',
-  lg: '48rem',
-  xl: '62rem',
-  xxl: '64rem',
-  xxxl: '75rem',
-} as const
+import { resolveFamily } from './helpers';
+import { dimension } from './helpers';
+export const breakpointsDefinitions = {
+    "xl": dimension('62rem', "breakpoints: xl. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tabletSm": dimension('36rem', "breakpoints: tabletSm. Valor preservado da implementação anterior.", { "role": "base" }),
+    "desktopSm": dimension('80rem', "breakpoints: desktopSm. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tvSm": dimension('100rem', "breakpoints: tvSm. Valor preservado da implementação anterior.", { "role": "base" }),
+    "smartphoneSm": dimension('25rem', "breakpoints: smartphoneSm. Valor preservado da implementação anterior.", { "role": "base" }),
+    "smartphoneMd": dimension('26.25rem', "breakpoints: smartphoneMd. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tabletMd": dimension('40rem', "breakpoints: tabletMd. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tabletLg": dimension('48rem', "breakpoints: tabletLg. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tabletXxl": dimension('64rem', "breakpoints: tabletXxl. Valor preservado da implementação anterior.", { "role": "base" }),
+    "tabletXxxl": dimension('75rem', "breakpoints: tabletXxxl. Valor preservado da implementação anterior.", { "role": "base" }),
+    "$description": "Tamanhos base de viewport; ajustes pertencem aos consumidores."
+};
+
+export const breakpoints = resolveFamily('breakpoints', breakpointsDefinitions);

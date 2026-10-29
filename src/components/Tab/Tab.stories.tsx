@@ -116,7 +116,7 @@ const docsHeroStats = [
 
 function TabContent({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section style={{ padding: 'var(--govrs-space-4)' }}>
+    <section style={{ padding: 'var(--govrs-space-scale-4)' }}>
       <h4 style={{ marginTop: 0 }}>{title}</h4>
       {children}
     </section>
