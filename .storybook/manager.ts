@@ -2,8 +2,8 @@ import { addons } from '@storybook/manager-api'
 import { create } from '@storybook/theming'
 
 import { colors } from '../src/tokens/colors'
-import { radius } from '../src/tokens/radius'
-import { fontFamilyBase } from '../src/tokens/typography'
+import { radii } from '../src/tokens/radii'
+import { typography } from '../src/tokens/typography'
 
 function remToPx(value: string) {
   return Math.round(Number.parseFloat(value) * 16)
@@ -14,14 +14,14 @@ const managerTheme = create({
   brandTitle: 'Matriz 3',
   brandImage: './matriz3-brand.svg',
   brandTarget: '_self',
-  fontBase: fontFamilyBase,
+  fontBase: typography.fontFamily.base,
   colorPrimary: colors.brand.primary,
   colorSecondary: colors.brand.primaryStrong,
   appBg: colors.brand.primarySoftAlt,
   appContentBg: colors.brand.primarySoftAlt,
-  appPreviewBg: colors.neutral.surfaceCanvas,
-  appBorderColor: colors.neutral.borderDefault,
-  appBorderRadius: remToPx(radius.xl),
+  appPreviewBg: colors.surface.canvas,
+  appBorderColor: colors.border.default,
+  appBorderRadius: remToPx(radii.xl),
   textColor: colors.neutral.textStrong,
   textInverseColor: colors.neutral.white,
   barTextColor: colors.neutral.textSubtle,
@@ -29,9 +29,9 @@ const managerTheme = create({
   barHoverColor: colors.brand.primaryHover,
   barBg: colors.brand.primarySoftAlt,
   inputBg: colors.brand.primarySoft,
-  inputBorder: colors.neutral.borderEmphasis,
+  inputBorder: colors.border.emphasis,
   inputTextColor: colors.neutral.textStrong,
-  inputBorderRadius: remToPx(radius.sm),
+  inputBorderRadius: remToPx(radii.sm),
 })
 
 addons.setConfig({

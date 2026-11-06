@@ -12,8 +12,8 @@
   font-size: 1rem; /* 16px default */
   text-decoration: none;
   transition: 
-    color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    opacity var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 
   &:focus {
     outline: none;

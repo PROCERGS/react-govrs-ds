@@ -1,8 +1,9 @@
 @use '../../foundations/styles/layout-container' as layout;
+@use '../../foundations/styles/sass-variables' as vars;
 
 .govrs-footer {
   position: relative;
-  z-index: var(--govrs-z-index-header);
+  z-index: var(--govrs-layer-header);
   padding-block: 24px;
   padding-inline: 0;
   background: var(--govrs-color-brand-primary, #1a7235);
@@ -101,7 +102,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 160ms var(--govrs-easing-standard, ease);
+  transition: transform 160ms var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-footer__sublist {
@@ -239,7 +240,7 @@
   align-items: center;
 }
 
-@media (max-width: var(--govrs-breakpoint-smartphone-landscape-tablet-portrait-max)) {
+@media (max-width: #{vars.$govrs-breakpoint-xl - 0.0625rem}) {
   .govrs-footer {
     background: var(--govrs-color-brand-primary-strong, #04290f);
   }

@@ -1,6 +1,6 @@
 {
   "name": "@procergs/react-govrs-ds",
-  "version": "0.3.44",
+  "version": "0.3.5",
   "private": false,
   "type": "module",
   "sideEffects": [
@@ -37,19 +37,22 @@
       "require": "./dist/tokens.cjs",
       "default": "./dist/tokens.js"
     },
-    "./components/*": "./dist/components/*"
+    "./components/*": "./dist/components/*",
+    "./tokens.scss": "./dist/tokens.scss"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
-    "storybook": "storybook dev -p 6006 --initial-path /docs/apresentacao--page",
-    "build-storybook": "storybook build",
+    "dev": "npm run tokens:generate && storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "storybook": "npm run tokens:generate && storybook dev -p 6006 --initial-path /docs/apresentacao--page",
+    "build-storybook": "npm run tokens:generate && storybook build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
-    "build": "vite build && npm run build:types",
+    "build": "npm run tokens:generate && vite build && npm run build:types",
     "prepack": "npm run build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tokens:generate": "node scripts/generate-tokens.mjs",
+    "tokens:check": "node scripts/generate-tokens.mjs --check"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
@@ -60,6 +63,7 @@
     "@storybook/addon-a11y": "^8.6.18",
     "@storybook/addon-essentials": "^8.6.18",
     "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/react": "8.6.19",
     "@storybook/react-vite": "^8.6.18",
     "@storybook/test": "^8.6.18",
     "@types/node": "^24.10.1",
@@ -85,5 +89,6 @@
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
     "@react-google-maps/api": "^2.16.1"
-  }
+  },
+  "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
 }

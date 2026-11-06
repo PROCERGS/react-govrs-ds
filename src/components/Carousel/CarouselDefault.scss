@@ -10,11 +10,11 @@
 }
 
 .carousel-container.carousel-default {
-  --carousel-total-max-width: 85rem;
-  --carousel-slide-max-width: 79.375rem;
-  --carousel-arrow-size: var(--govrs-size-control-lg, 2.5rem);
-  --carousel-arrow-inline-padding: var(--govrs-space-1-5, 0.375rem);
-  max-width: var(--carousel-total-max-width);
+  --govrs-carousel-total-max-width: 85rem;
+  --govrs-carousel-slide-max-width: 79.375rem;
+  --govrs-carousel-arrow-size: var(--govrs-size-control-lg, 2.5rem);
+  --govrs-carousel-arrow-inline-padding: var(--govrs-space-scale-1-5, 0.375rem);
+  max-width: var(--govrs-carousel-total-max-width);
   width: 100%;
   margin-inline: auto;
 }
@@ -48,7 +48,7 @@
     var(--govrs-color-media-surface-alt, #2d2d2d) 100%
   );
   color: var(--govrs-color-text-muted, #999999);
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .carousel-thumbnail-placeholder svg {
@@ -79,7 +79,7 @@
   justify-items: center;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: var(--govrs-transition-base, all 0.3s ease);
+  transition: var(--govrs-motion-transition-base, all 0.3s ease);
 }
 
 .carousel-video-thumbnail:hover .carousel-play-overlay {
@@ -88,20 +88,20 @@
 }
 
 .carousel-video-thumbnail:hover .carousel-play-overlay .play-icon {
-  border-left: var(--govrs-space-5, 1.25rem) solid var(--govrs-color-text-inverse, #ffffff);
+  border-left: var(--govrs-space-scale-5, 1.25rem) solid var(--govrs-color-text-inverse, #ffffff);
 }
 
 .carousel-play-overlay .play-icon {
   width: 0;
   height: 0;
-  border-top: var(--govrs-space-3, 0.75rem) solid transparent;
-  border-bottom: var(--govrs-space-3, 0.75rem) solid transparent;
-  border-left: var(--govrs-space-5, 1.25rem) solid var(--govrs-color-brand-primary, #1a7235);
-  margin-left: var(--govrs-space-1, 0.25rem);
+  border-top: var(--govrs-space-scale-3, 0.75rem) solid transparent;
+  border-bottom: var(--govrs-space-scale-3, 0.75rem) solid transparent;
+  border-left: var(--govrs-space-scale-5, 1.25rem) solid var(--govrs-color-brand-primary, #1a7235);
+  margin-left: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .carousel-width-default {
-  max-width: var(--carousel-slide-max-width, 79.375rem);
+  max-width: var(--govrs-carousel-slide-max-width, 79.375rem);
   width: 100%;
   flex: 1 1 auto;
   margin: 0;
@@ -215,7 +215,7 @@
     var(--govrs-color-border-muted, #dcdcdc) 100%
   );
   color: var(--govrs-color-text-muted, #999999);
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .carousel-image-placeholder svg {
@@ -241,9 +241,9 @@
   position: absolute;
   z-index: 5;
   bottom: 30px;
-  left: var(--govrs-space-gutter, 5.25rem);
-  max-width: calc(80% - var(--govrs-space-7-5, 2.5rem));
-  padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-4, 1rem);
+  left: var(--govrs-space-scale-gutter, 5.25rem);
+  max-width: calc(80% - var(--govrs-space-scale-7-5, 2.5rem));
+  padding: var(--govrs-space-scale-2-5, 0.625rem) var(--govrs-space-scale-4, 1rem);
   border-radius: var(--govrs-radius-xs, 0.25rem);
   background: var(--govrs-color-surface-overlay, rgba(255, 255, 255, 0.85));
   box-shadow: var(--govrs-shadow-overlay, 0 2px 10px rgba(0, 0, 0, 0.1));
@@ -251,7 +251,7 @@
 }
 
 .carousel-title {
-  margin: 0 0 var(--govrs-space-2, 0.5rem) 0;
+  margin: 0 0 var(--govrs-space-scale-2, 0.5rem) 0;
   color: var(--govrs-color-text-secondary, #333333);
 }
 
@@ -275,18 +275,18 @@
 }
 
 .carousel-arrow-prev {
-  padding-right: var(--carousel-arrow-inline-padding, 0.375rem);
+  padding-right: var(--govrs-carousel-arrow-inline-padding, 0.375rem);
 }
 
 .carousel-arrow-next {
-  padding-left: var(--carousel-arrow-inline-padding, 0.375rem);
+  padding-left: var(--govrs-carousel-arrow-inline-padding, 0.375rem);
 }
 
 .carousel-button {
   display: inline-flex;
-  width: var(--carousel-arrow-size, 2.5rem);
-  height: var(--carousel-arrow-size, 2.5rem);
-  flex: 0 0 var(--carousel-arrow-size, 2.5rem);
+  width: var(--govrs-carousel-arrow-size, 2.5rem);
+  height: var(--govrs-carousel-arrow-size, 2.5rem);
+  flex: 0 0 var(--govrs-carousel-arrow-size, 2.5rem);
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -297,7 +297,7 @@
   cursor: pointer;
   font-size: var(--govrs-font-size-16, 1rem);
   line-height: 1;
-  transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-base, 0.3s) var(--govrs-motion-easing-standard, ease);
 }
 
 .carousel-button svg {
@@ -331,18 +331,18 @@
 .carousel-indicators {
   display: flex;
   justify-content: center;
-  padding: var(--govrs-space-4, 1rem);
-  gap: var(--govrs-space-2, 0.5rem);
+  padding: var(--govrs-space-scale-4, 1rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
 }
 
 .carousel-indicator {
-  width: var(--govrs-space-3, 0.75rem);
-  height: var(--govrs-space-3, 0.75rem);
+  width: var(--govrs-space-scale-3, 0.75rem);
+  height: var(--govrs-space-scale-3, 0.75rem);
   border: none;
   border-radius: var(--govrs-radius-circle, 50%);
   background-color: var(--govrs-color-border-emphasis, #cccccc);
   cursor: pointer;
-  transition: background-color var(--govrs-duration-base, 0.3s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-base, 0.3s) var(--govrs-motion-easing-standard, ease);
 }
 
 .carousel-indicator.active {
@@ -361,9 +361,9 @@
 .carousel-indicators-inside {
   position: absolute;
   z-index: 10;
-  bottom: var(--govrs-space-5, 1.25rem);
+  bottom: var(--govrs-space-scale-5, 1.25rem);
   left: 50%;
-  padding: var(--govrs-space-2, 0.5rem);
+  padding: var(--govrs-space-scale-2, 0.5rem);
   border-radius: var(--govrs-radius-pill, 999px);
   transform: translateX(-50%);
 }
@@ -386,14 +386,14 @@
 }
 
 .carousel-indicator-numbers {
-  padding: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
+  padding: var(--govrs-space-scale-2, 0.5rem) var(--govrs-space-scale-4, 1rem);
   border-radius: var(--govrs-radius-pill, 999px);
   color: var(--govrs-color-text-secondary, #333333);
   font-size: var(--govrs-font-size-16, 1rem);
 }
 
 .carousel-placeholder {
-  padding: var(--govrs-space-8, 3rem);
+  padding: var(--govrs-space-scale-8, 3rem);
   border: var(--govrs-border-width-md, 2px) dashed var(--govrs-color-border-muted, #dcdcdc);
   border-radius: var(--govrs-radius-md, 0.5rem);
   background-color: var(--govrs-color-surface-canvas, #fafafa);
@@ -447,43 +447,43 @@
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-tablet-landscape-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-desktop-sm - 0.0625rem)}) {
   .carousel-text {
-    max-width: calc(60% - var(--govrs-space-7-5, 2.5rem));
+    max-width: calc(60% - var(--govrs-space-scale-7-5, 2.5rem));
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-xl - 0.0625rem)}) {
   .carousel-text {
-    left: var(--govrs-space-8, 3rem);
-    max-width: calc(70% - var(--govrs-space-7-5, 2.5rem));
+    left: var(--govrs-space-scale-8, 3rem);
+    max-width: calc(70% - var(--govrs-space-scale-7-5, 2.5rem));
   }
 
   .carousel-image,
   .carousel-video,
   .carousel-iframe {
-    max-height: var(--govrs-size-media-carousel-md, 28.125rem);
+    max-height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.9);
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-landscape-tablet-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-xl - 0.0625rem)}) {
   .carousel-width-default {
-    max-width: min(100%, var(--carousel-slide-max-width, 79.375rem));
+    max-width: min(100%, var(--govrs-carousel-slide-max-width, 79.375rem));
   }
   .carousel-content {
-    min-height: var(--govrs-size-media-carousel-2xs, 18.75rem);
+    min-height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.6);
     touch-action: pan-y pinch-zoom;
   }
 
   .carousel-image,
   .carousel-video,
   .carousel-iframe {
-    max-height: var(--govrs-size-media-carousel-sm, 25rem);
+    max-height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.8);
     pointer-events: none;
   }
 
   .carousel-video-thumbnail {
-    height: var(--govrs-size-media-carousel-sm, 25rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.8);
     pointer-events: auto;
   }
 
@@ -493,13 +493,13 @@
   }
 
   .carousel-play-overlay .play-icon {
-    border-top: var(--govrs-space-2-5, 0.625rem) solid transparent;
-    border-bottom: var(--govrs-space-2-5, 0.625rem) solid transparent;
-    border-left: var(--govrs-space-4-5, 1.125rem) solid var(--govrs-color-text-inverse, #ffffff);
+    border-top: var(--govrs-space-scale-2-5, 0.625rem) solid transparent;
+    border-bottom: var(--govrs-space-scale-2-5, 0.625rem) solid transparent;
+    border-left: var(--govrs-space-scale-4-5, 1.125rem) solid var(--govrs-color-text-inverse, #ffffff);
   }
 
   .carousel-image-placeholder {
-    height: var(--govrs-size-media-carousel-sm, 25rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.8);
   }
 
   .carousel-image-placeholder svg {
@@ -513,9 +513,9 @@
 
   .carousel-text {
     bottom: 50px;
-    left: var(--govrs-space-6, 1.5rem);
+    left: var(--govrs-space-scale-6, 1.5rem);
     max-width: calc(80% - 30px);
-    padding: var(--govrs-space-3, 0.75rem) var(--govrs-space-5, 1.25rem);
+    padding: var(--govrs-space-scale-3, 0.75rem) var(--govrs-space-scale-5, 1.25rem);
     pointer-events: auto;
   }
 
@@ -534,9 +534,9 @@
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .carousel-container {
-    margin: var(--govrs-space-4, 1rem) auto;
+    margin: var(--govrs-space-scale-4, 1rem) auto;
   }
 
   .carousel-content {
@@ -546,12 +546,12 @@
   .carousel-image,
   .carousel-video,
   .carousel-iframe {
-    max-height: var(--govrs-size-media-carousel-xs, 21.875rem);
+    max-height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.7);
     pointer-events: none;
   }
 
   .carousel-video-thumbnail {
-    height: var(--govrs-size-media-carousel-xs, 21.875rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.7);
     pointer-events: auto;
   }
 
@@ -563,11 +563,11 @@
   .carousel-play-overlay .play-icon {
     border-top: 9px solid transparent;
     border-bottom: 9px solid transparent;
-    border-left: var(--govrs-space-4, 1rem) solid var(--govrs-color-text-inverse, #ffffff);
+    border-left: var(--govrs-space-scale-4, 1rem) solid var(--govrs-color-text-inverse, #ffffff);
   }
 
   .carousel-image-placeholder {
-    height: var(--govrs-size-media-carousel-xs, 21.875rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.7);
   }
 
   .carousel-image-placeholder svg {
@@ -582,9 +582,9 @@
   .carousel-text {
     position: absolute;
     bottom: 45px;
-    left: var(--govrs-space-4, 1rem);
+    left: var(--govrs-space-scale-4, 1rem);
     max-width: calc(90% - 2rem);
-    padding: var(--govrs-space-2-5, 0.625rem) var(--govrs-space-3-75, 0.9375rem);
+    padding: var(--govrs-space-scale-2-5, 0.625rem) var(--govrs-space-scale-3-75, 0.9375rem);
     background: var(--govrs-color-surface-overlay-strong, rgba(255, 255, 255, 0.9));
     pointer-events: auto;
   }
@@ -598,7 +598,7 @@
   }
 
   .carousel-indicators {
-    padding: var(--govrs-space-3, 0.75rem);
+    padding: var(--govrs-space-scale-3, 0.75rem);
     gap: 0.35rem;
   }
 
@@ -608,7 +608,7 @@
   }
 
   .carousel-indicators-inside {
-    bottom: var(--govrs-space-3-75, 0.9375rem);
+    bottom: var(--govrs-space-scale-3-75, 0.9375rem);
     padding: 0.35rem;
   }
 
@@ -618,7 +618,7 @@
   }
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .carousel-content {
     touch-action: pan-y pinch-zoom;
   }
@@ -626,12 +626,12 @@
   .carousel-image,
   .carousel-video,
   .carousel-iframe {
-    max-height: var(--govrs-size-media-carousel-2xs, 18.75rem);
+    max-height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.6);
     pointer-events: none;
   }
 
   .carousel-video-thumbnail {
-    height: var(--govrs-size-media-carousel-2xs, 18.75rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.6);
     pointer-events: auto;
   }
 
@@ -641,13 +641,13 @@
   }
 
   .carousel-play-overlay .play-icon {
-    border-top: var(--govrs-space-2, 0.5rem) solid transparent;
-    border-bottom: var(--govrs-space-2, 0.5rem) solid transparent;
-    border-left: var(--govrs-space-3-5, 0.875rem) solid var(--govrs-color-text-inverse, #ffffff);
+    border-top: var(--govrs-space-scale-2, 0.5rem) solid transparent;
+    border-bottom: var(--govrs-space-scale-2, 0.5rem) solid transparent;
+    border-left: var(--govrs-space-scale-3-5, 0.875rem) solid var(--govrs-color-text-inverse, #ffffff);
   }
 
   .carousel-image-placeholder {
-    height: var(--govrs-size-media-carousel-2xs, 18.75rem);
+    height: calc(var(--govrs-size-media-carousel, 31.25rem) * 0.6);
   }
 
   .carousel-image-placeholder svg {
@@ -660,10 +660,10 @@
   }
 
   .carousel-text {
-    bottom: var(--govrs-space-7-5, 2.5rem);
+    bottom: var(--govrs-space-scale-7-5, 2.5rem);
     left: 0.75rem;
     max-width: calc(95% - 1.5rem);
-    padding: var(--govrs-space-2, 0.5rem) var(--govrs-space-3, 0.75rem);
+    padding: var(--govrs-space-scale-2, 0.5rem) var(--govrs-space-scale-3, 0.75rem);
     pointer-events: auto;
   }
 

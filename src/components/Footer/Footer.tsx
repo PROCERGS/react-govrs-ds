@@ -1,3 +1,4 @@
+import { breakpoints } from '../../tokens'
 import { useEffect, useState } from 'react';
 import './Footer.scss'
 
@@ -52,13 +53,13 @@ export function Footer({ items = [], images = [], className = '', navigationLabe
 
   useEffect(() => {
     const root = document.documentElement;
-    const raw = getComputedStyle(root).getPropertyValue('--govrs-breakpoint-smartphone-landscape-tablet-portrait-max') || '48rem';
-    const bp = raw.trim() || '48rem';
+    const raw = getComputedStyle(root).getPropertyValue('--govrs-breakpoint-xl') || breakpoints.xl;
+    const bp = `calc(${raw.trim() || breakpoints.xl} - 0.0625rem)`;
     let mq: MediaQueryList;
     try {
       mq = window.matchMedia(`(max-width: ${bp})`);
     } catch (e) {
-      mq = window.matchMedia('(max-width: 48rem)');
+      mq = window.matchMedia(`(max-width: calc(${breakpoints.xl} - 0.0625rem))`);
     }
 
     const onChange = () => setIsMobile(mq.matches);

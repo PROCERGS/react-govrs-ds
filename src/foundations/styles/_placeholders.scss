@@ -11,7 +11,7 @@
 .placeholder-demo {
   display: grid;
   align-items: center;
-  margin-bottom: var(--govrs-space-4-5, 1.125rem);
-  gap: var(--govrs-space-2, 0.5rem) var(--govrs-space-4, 1rem);
+  margin-bottom: var(--govrs-space-scale-4-5, 1.125rem);
+  gap: var(--govrs-space-scale-2, 0.5rem) var(--govrs-space-scale-4, 1rem);
   grid-template-columns: 1fr 160px;
 }

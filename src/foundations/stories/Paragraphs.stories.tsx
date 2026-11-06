@@ -117,7 +117,7 @@ ${paragraphs4Code}`}
             'A variação longa em 12 col compartilha a mesma escala do parágrafo curto, mas permanece nomeada separadamente por clareza de uso.',
             'No sistema 4 col, a variação curta cobre o caso que historicamente se aproximava do parágrafo pequeno.',
             'Cor do texto: --govrs-color-text-primary (verde institucional RS).',
-            'Ritmo vertical: todos os parágrafos usam margin-bottom de 1,25rem (--govrs-space-5).',
+            'Ritmo vertical: todos os parágrafos usam margin-bottom de 1,25rem (--govrs-space-scale-5).',
           ]}
         >
           <ParagraphsScalePreview />

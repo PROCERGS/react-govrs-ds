@@ -1,6 +1,6 @@
 @for $index from 0 through 14 {
   .govrs-avatar--tone-#{$index} {
-    --govrs-avatar-tone: var(--govrs-color-avatar-tone-#{$index});
+    --govrs-avatar-tone: var(--govrs-color-avatar-tones-#{$index});
   }
 }
 
@@ -53,12 +53,12 @@
   align-items: center;
   padding: 0.625rem;
   border-radius: var(--govrs-radius-pill, 999px);
-  background-color: var(--gray-2, var(--govrs-color-surface-muted, #f8f8f8));
+  background-color: var(--govrs-color-surface-muted, var(--govrs-color-surface-muted, #f8f8f8));
   gap: 1.25rem;
 }
 
 .govrs-avatar-dropdown:hover {
-  background-color: var(--green-rs-10, var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2)));
+  background-color: var(--govrs-color-brand-primary-alpha-20, var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2)));
 }
 
 .govrs-avatar-dropdown__content {
@@ -82,9 +82,9 @@
   padding: 0.25rem;
   border: none;
   background: none;
-  color: var(--green-rs-60, var(--govrs-color-brand-primary, #1a7235));
+  color: var(--govrs-color-brand-primary, var(--govrs-color-brand-primary, #1a7235));
   cursor: pointer;
-  transition: transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: transform var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-avatar-dropdown__trigger:hover {
@@ -104,7 +104,7 @@
   width: 100%;
   min-width: 12.5rem;
   border: var(--govrs-border-width-sm, 1px) solid var(--gray-3, #dddddd);
-  margin-top: var(--govrs-space-2, 0.5rem);
+  margin-top: var(--govrs-space-scale-2, 0.5rem);
   background-color: var(--govrs-color-surface-base, #ffffff);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
 }
@@ -120,7 +120,7 @@
   font-family: var(--govrs-font-family-base, sans-serif);
   font-size: var(--govrs-font-size-14, 0.875rem);
   text-align: left;
-  transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-avatar-dropdown__menu-item:hover {
@@ -128,11 +128,11 @@
 }
 
 .govrs-avatar-dropdown__menu-item:active {
-  background-color: var(--gray-2, #e5e5e5);
+  background-color: var(--govrs-color-surface-muted, #e5e5e5);
 }
 
 .govrs-avatar-dropdown__menu-item + .govrs-avatar-dropdown__menu-item {
-  border-top: var(--govrs-border-width-sm, 1px) solid var(--gray-2, #e5e5e5);
+  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-surface-muted, #e5e5e5);
 }
 
 .govrs-avatar__image {

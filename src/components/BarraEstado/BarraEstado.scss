@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../../foundations/styles/sass-variables' as vars;
 @use '../../foundations/styles/layout-container' as layout;
 
@@ -15,7 +16,7 @@ input.barra-estado__checkbox,
   list-style: none;
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: #{math.div(vars.$govrs-breakpoint-xl, 1rem) * 16px - 1px}) {
   .barra-estado__menu {
     position: absolute;
     z-index: 999;
@@ -142,7 +143,7 @@ input.barra-estado__checkbox,
 input.barra-estado__checkbox:checked + label.barra-estado__toggle:after {
   content: attr(data-close);
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: #{math.div(vars.$govrs-breakpoint-xl, 1rem) * 16px}) {
   .barra-estado__menu {
     padding: 0;
     border-top: none;

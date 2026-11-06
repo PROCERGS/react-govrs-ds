@@ -1,3 +1,5 @@
+@use 'sass:math';
+@use '../../foundations/styles/sass-variables' as vars;
 .govrs-notification {
   --govrs-notification-panel-background: var(--govrs-color-surface-base);
   --govrs-notification-panel-foreground: var(--govrs-color-text-primary);
@@ -18,7 +20,7 @@
 
 .govrs-notification__modal {
   position: absolute;
-  top: calc(100% + var(--govrs-space-2, 0.5rem));
+  top: calc(100% + var(--govrs-space-scale-2, 0.5rem));
   z-index: var(--govrs-z-popover, 1200);
   width: 400px;
   border: var(--govrs-border-width-sm) solid var(--govrs-notification-panel-border);
@@ -43,7 +45,7 @@
 .govrs-notification--docs-inline .govrs-notification__modal {
   position: static;
   width: min(32rem, 100%);
-  margin-top: var(--govrs-space-3, 0.75rem);
+  margin-top: var(--govrs-space-scale-3, 0.75rem);
   z-index: 9999;
 }
 
@@ -68,7 +70,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0;
-  transition: all var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: all var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
   z-index: 2;
 
   &:hover {
@@ -99,7 +101,7 @@
 .govrs-notification__user-info {
   display: flex;
   flex-direction: column;
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .govrs-notification__user-name {
@@ -117,7 +119,7 @@
 }
 
 .govrs-notification__tabs--with-close {
-  padding-top: var(--govrs-space-8);
+  padding-top: var(--govrs-space-scale-8);
 }
 
 .govrs-notification .govrs-tab {
@@ -155,7 +157,7 @@
   border-radius: 0;
   background-color: var(--govrs-notification-panel-background);
   cursor: pointer;
-  transition: all var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: all var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 
   &:hover {
     background-color: var(--govrs-notification-item-hover);
@@ -250,27 +252,27 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{math.div(vars.$govrs-breakpoint-tablet-lg, 1rem) * 16px}) {
   .govrs-notification__modal {
     position: fixed;
     top: auto;
-    right: var(--govrs-space-4, 1rem);
-    left: var(--govrs-space-4, 1rem);
-    bottom: var(--govrs-space-4, 1rem);
+    right: var(--govrs-space-scale-4, 1rem);
+    left: var(--govrs-space-scale-4, 1rem);
+    bottom: var(--govrs-space-scale-4, 1rem);
     width: auto;
   }
 
   .govrs-notification__modal--left,
   .govrs-notification__modal--right {
-    left: var(--govrs-space-4, 1rem);
-    right: var(--govrs-space-4, 1rem);
+    left: var(--govrs-space-scale-4, 1rem);
+    right: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-notification--docs-inline .govrs-notification__modal {
     position: static;
     width: min(32rem, 100%);
     max-height: none;
-    margin-top: var(--govrs-space-3, 0.75rem);
+    margin-top: var(--govrs-space-scale-3, 0.75rem);
     left: auto;
     right: auto;
     bottom: auto;

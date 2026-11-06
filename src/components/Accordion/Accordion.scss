@@ -1,33 +1,34 @@
+@use '../../foundations/styles/sass-variables' as vars;
 .govrs-accordion {
-  --accordion-surface: var(--govrs-color-surface-base, #ffffff);
-  --accordion-surface-hover: var(--govrs-color-brand-primary-soft, #ddf9e3);
-  --accordion-border: var(--govrs-color-border-default, #e5e5e5);
-  --accordion-title-color: var(--govrs-color-brand-primary, #1a7235);
-  --accordion-content-color: var(--govrs-color-text-secondary, #333333);
-  --accordion-filter-surface: var(--govrs-color-surface-base, #ffffff);
-  --accordion-filter-border: var(--govrs-color-border-emphasis, #cccccc);
-  --accordion-filter-icon: var(--govrs-color-brand-primary, #1a7235);
-  --accordion-empty-surface: var(--govrs-color-surface-soft, #f6f6f6);
-  --accordion-empty-border: var(--govrs-color-border-default, #e5e5e5);
-  --accordion-list-gap: 0;
+  --govrs-accordion-surface: var(--govrs-color-surface-base, #ffffff);
+  --govrs-accordion-surface-hover: var(--govrs-color-brand-primary-soft, #ddf9e3);
+  --govrs-accordion-border: var(--govrs-color-border-default, #e5e5e5);
+  --govrs-accordion-title-color: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-accordion-content-color: var(--govrs-color-text-secondary, #333333);
+  --govrs-accordion-filter-surface: var(--govrs-color-surface-base, #ffffff);
+  --govrs-accordion-filter-border: var(--govrs-color-border-emphasis, #cccccc);
+  --govrs-accordion-filter-icon: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-accordion-empty-surface: var(--govrs-color-surface-soft, #f6f6f6);
+  --govrs-accordion-empty-border: var(--govrs-color-border-default, #e5e5e5);
+  --govrs-accordion-list-gap: 0;
 
   display: grid;
   width: 100%;
   font-family: var(--govrs-font-family-base);
-  gap: var(--govrs-space-4, 1rem);
+  gap: var(--govrs-space-scale-4, 1rem);
 }
 
 .govrs-accordion[data-theme='dark'] {
-  --accordion-surface: var(--govrs-color-brand-primary, #1a7235);
-  --accordion-surface-hover: var(--govrs-color-brand-primary-hover, #135428);
-  --accordion-border: var(--govrs-color-brand-primary-hover, #135428);
-  --accordion-title-color: var(--govrs-color-text-inverse, #ffffff);
-  --accordion-content-color: var(--govrs-color-text-inverse, #ffffff);
-  --accordion-filter-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
-  --accordion-filter-border: var(--govrs-color-brand-primary-hover, #135428);
-  --accordion-empty-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
-  --accordion-empty-border: var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2));
-  --accordion-list-gap: 1px;
+  --govrs-accordion-surface: var(--govrs-color-brand-primary, #1a7235);
+  --govrs-accordion-surface-hover: var(--govrs-color-brand-primary-hover, #135428);
+  --govrs-accordion-border: var(--govrs-color-brand-primary-hover, #135428);
+  --govrs-accordion-title-color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-accordion-content-color: var(--govrs-color-text-inverse, #ffffff);
+  --govrs-accordion-filter-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
+  --govrs-accordion-filter-border: var(--govrs-color-brand-primary-hover, #135428);
+  --govrs-accordion-empty-surface: var(--govrs-color-brand-primary-soft-alt, #e6f2ea);
+  --govrs-accordion-empty-border: var(--govrs-color-brand-primary-alpha-20, rgba(26, 114, 53, 0.2));
+  --govrs-accordion-list-gap: 1px;
 }
 
 .govrs-accordion__headline {
@@ -49,13 +50,13 @@
   display: flex;
   min-height: var(--govrs-size-control-lg, 2.5rem);
   align-items: center;
-  border: var(--govrs-border-width-sm, 1px) solid var(--accordion-filter-border);
+  border: var(--govrs-border-width-sm, 1px) solid var(--govrs-accordion-filter-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
-  background: var(--accordion-filter-surface);
+  background: var(--govrs-accordion-filter-surface);
   transition:
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-accordion__filter-control:focus-within {
@@ -70,19 +71,19 @@
   min-width: var(--govrs-size-control-sm, 2rem);
   align-items: center;
   justify-content: center;
-  color: var(--accordion-filter-icon);
+  color: var(--govrs-accordion-filter-icon);
 }
 
 .govrs-accordion__filter-icon {
-  padding-left: var(--govrs-space-3, 0.75rem);
+  padding-left: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-accordion__filter-input {
   width: 100%;
   min-width: 0;
-  min-height: calc(var(--govrs-size-control-lg, 2.5rem) - var(--govrs-space-2, 0.5rem));
+  min-height: calc(var(--govrs-size-control-lg, 2.5rem) - var(--govrs-space-scale-2, 0.5rem));
   flex: 1 1 auto;
-  padding: 0 var(--govrs-space-3, 0.75rem);
+  padding: 0 var(--govrs-space-scale-3, 0.75rem);
   border: none;
   background: transparent;
   color: var(--govrs-color-text-secondary, #333333);
@@ -103,7 +104,7 @@
 }
 
 .govrs-accordion__filter-clear {
-  padding-right: var(--govrs-space-3, 0.75rem);
+  padding-right: var(--govrs-space-scale-3, 0.75rem);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -121,25 +122,25 @@
 
 .govrs-accordion__list {
   display: grid;
-  gap: var(--accordion-list-gap);
+  gap: var(--govrs-accordion-list-gap);
 }
 
 .govrs-accordion__item {
   display: block;
   overflow: hidden;
   border: none;
-  background: var(--accordion-surface);
-  color: var(--accordion-title-color);
+  background: var(--govrs-accordion-surface);
+  color: var(--govrs-accordion-title-color);
   transition:
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-accordion[data-theme='default'] .govrs-accordion__item {
-  border-bottom: var(--govrs-border-width-sm, 1px) solid var(--accordion-border);
+  border-bottom: var(--govrs-border-width-sm, 1px) solid var(--govrs-accordion-border);
 }
 
 .govrs-accordion[data-theme='default'] .govrs-accordion__item:first-child {
-  border-top: var(--govrs-border-width-sm, 1px) solid var(--accordion-border);
+  border-top: var(--govrs-border-width-sm, 1px) solid var(--govrs-accordion-border);
 }
 
 .govrs-accordion__item[data-disabled='true'] {
@@ -159,7 +160,7 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
-  transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-accordion__trigger::marker {
@@ -175,12 +176,12 @@
   box-sizing: border-box;
   min-width: 0;
   align-items: center;
-  gap: var(--govrs-space-3, 0.75rem);
-  padding: var(--govrs-space-3-75, 0.9375rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
+  padding: var(--govrs-space-scale-3-75, 0.9375rem);
 }
 
 .govrs-accordion__item:not([data-disabled='true']) .govrs-accordion__trigger:hover {
-  background: var(--accordion-surface-hover);
+  background: var(--govrs-accordion-surface-hover);
 }
 
 .govrs-accordion__item[data-disabled='true'] .govrs-accordion__trigger {
@@ -198,7 +199,7 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  transition: transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: transform var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-accordion__item[open] .govrs-accordion__icon {
@@ -206,7 +207,7 @@
 }
 
 .govrs-accordion__title {
-  color: var(--accordion-title-color);
+  color: var(--govrs-accordion-title-color);
   font-weight: var(--govrs-font-weight-regular, 400);
 }
 
@@ -236,12 +237,12 @@
 }
 
 .govrs-accordion__content-body {
-  padding: 0 3.125rem var(--govrs-space-3-75, 0.9375rem);
-  color: var(--accordion-content-color);
+  padding: 0 3.125rem var(--govrs-space-scale-3-75, 0.9375rem);
+  color: var(--govrs-accordion-content-color);
 }
 
 .govrs-accordion__content-body > :first-child {
-  margin-top: var(--govrs-space-3-75, 0.9375rem);
+  margin-top: var(--govrs-space-scale-3-75, 0.9375rem);
 }
 
 .govrs-accordion__content-body > :last-child {
@@ -255,10 +256,10 @@
 }
 
 .govrs-accordion__empty {
-  padding: var(--govrs-space-4, 1rem) var(--govrs-space-5, 1.25rem);
-  border: var(--govrs-border-width-sm, 1px) dashed var(--accordion-empty-border);
+  padding: var(--govrs-space-scale-4, 1rem) var(--govrs-space-scale-5, 1.25rem);
+  border: var(--govrs-border-width-sm, 1px) dashed var(--govrs-accordion-empty-border);
   border-radius: var(--govrs-radius-md, 0.5rem);
-  background: var(--accordion-empty-surface);
+  background: var(--govrs-accordion-empty-surface);
   color: var(--govrs-color-text-secondary, #333333);
 }
 
@@ -274,7 +275,7 @@
   white-space: nowrap;
 }
 
-@media (max-width: 61.9375rem) {
+@media (max-width: #{vars.$govrs-breakpoint-xl - 0.0625rem}) {
   .govrs-accordion__headline {
     font-size: var(--govrs-font-size-heading-lg, 1.5rem);
     line-height: var(--govrs-line-height-heading-lg, 2.25rem);
@@ -282,8 +283,8 @@
 
   .govrs-accordion__heading-content,
   .govrs-accordion__content-body {
-    padding-right: var(--govrs-space-4, 1rem);
-    padding-left: var(--govrs-space-4, 1rem);
+    padding-right: var(--govrs-space-scale-4, 1rem);
+    padding-left: var(--govrs-space-scale-4, 1rem);
   }
 
   .govrs-accordion__heading--h2 .govrs-accordion__title,

@@ -1,3 +1,4 @@
+@use '../../foundations/styles/sass-variables' as vars;
 .govrs-date-picker,
 .govrs-date-picker__date-panel,
 .govrs-date-picker__datetime-panel {
@@ -92,9 +93,9 @@
   appearance: none;
   -webkit-appearance: none;
   transition:
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-date-picker__input:hover {
@@ -167,7 +168,7 @@
   color: inherit;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-date-picker__action-button:hover,
@@ -265,7 +266,7 @@
   background: none;
   color: var(--govrs-date-picker-panel-icon);
   cursor: pointer;
-  transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-date-picker__date-nav-button svg {
@@ -414,8 +415,8 @@
   font-size: var(--govrs-date-picker-calendar-font-size);
   font-variant-numeric: tabular-nums;
   transition:
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-date-picker__day-button:hover {
@@ -521,7 +522,7 @@
   gap: 0.75rem;
 }
 
-@media (max-width: 48rem) {
+@media (max-width: #{vars.$govrs-breakpoint-tablet-lg}) {
   .govrs-date-picker__datetime-panel {
     grid-template-columns: 1fr;
     width: min(var(--govrs-date-picker-panel-width), calc(100vw - 2rem));
@@ -555,7 +556,7 @@
   background: none;
   color: var(--govrs-date-picker-panel-icon);
   cursor: pointer;
-  transition: background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+  transition: background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-date-picker__time-step-button:hover {

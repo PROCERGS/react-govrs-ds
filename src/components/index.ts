@@ -1,5 +1,6 @@
 export { Accordion } from './Accordion/Accordion';
 export { Alerts } from './Alerts/Alerts';
+export { Toast } from './Toast/Toast';
 export { Avatar } from './Avatar/Avatar';
 export { Banner } from './Banner/Banner';
 export { Badges } from './Badges/Badges';
@@ -10,6 +11,8 @@ export { Icon } from './Icon/Icon';
 export { Card } from './Card/Card';
 export { Carousel } from './Carousel/Carousel';
 export { DatePicker } from './DatePicker/DatePicker';
+export { Divisor } from './Divisor/Divisor';
+export type { DivisorProps, DivisorVariant, DivisorThickness, DivisorOrientation } from './Divisor/Divisor';
 export { Input } from './Input/Input';
 export { Header } from './Header/Header';
 export { Map } from './Map/Map';
