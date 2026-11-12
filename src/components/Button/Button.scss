@@ -1,6 +1,6 @@
 .govrs-button {
   --govrs-button-height: var(--govrs-size-control-lg, 2.5rem);
-  --govrs-button-padding-inline: var(--govrs-space-6, 1.5rem);
+  --govrs-button-padding-inline: var(--govrs-space-scale-6, 1.5rem);
   --govrs-button-background: transparent;
   --govrs-button-foreground: var(--govrs-color-brand-primary, #1a7235);
   --govrs-button-border: transparent;
@@ -25,11 +25,11 @@
   vertical-align: middle;
   white-space: nowrap;
   transition:
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    transform var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-button__label {
@@ -63,7 +63,7 @@
 
 .govrs-button--small {
   --govrs-button-height: var(--govrs-size-control-sm, 2rem);
-  --govrs-button-padding-inline: var(--govrs-space-4, 1rem);
+  --govrs-button-padding-inline: var(--govrs-space-scale-4, 1rem);
   font-size: var(--govrs-font-size-14, 0.875rem);
 }
 
@@ -72,8 +72,8 @@
 }
 
 .govrs-button--large {
-  --govrs-button-height: calc(var(--govrs-size-control-xl, 2.625rem) + var(--govrs-space-1-5, 0.375rem));
-  --govrs-button-padding-inline: var(--govrs-space-7, 2rem);
+  --govrs-button-height: calc(var(--govrs-size-control-xl, 2.625rem) + var(--govrs-space-scale-1-5, 0.375rem));
+  --govrs-button-padding-inline: var(--govrs-space-scale-7, 2rem);
   font-size: var(--govrs-font-size-18, 1.125rem);
 }
 
@@ -191,8 +191,8 @@
   border: var(--govrs-border-width-md, 2px) solid currentColor;
   border-right-color: transparent;
   border-radius: var(--govrs-radius-circle, 50%);
-  margin-top: calc(var(--govrs-space-2, 0.5rem) * -1);
-  margin-left: calc(var(--govrs-space-2, 0.5rem) * -1);
+  margin-top: calc(var(--govrs-space-scale-2, 0.5rem) * -1);
+  margin-left: calc(var(--govrs-space-scale-2, 0.5rem) * -1);
   animation: govrs-button-spin 0.6s linear infinite;
   content: '';
 }

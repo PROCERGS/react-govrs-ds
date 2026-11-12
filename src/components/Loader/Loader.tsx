@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react'
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react'
 
 import './Loader.scss'
 
@@ -25,7 +25,6 @@ const PROGRESS_CENTER = PROGRESS_SIZE / 2
 const PROGRESS_RADIUS = PROGRESS_SIZE / 2 - PROGRESS_STROKE_WIDTH / 2
 const PROGRESS_INNER_RADIUS = PROGRESS_RADIUS - PROGRESS_STROKE_WIDTH / 2 - PROGRESS_SPACING
 const PROGRESS_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_RADIUS
-const DEFAULT_PROGRESS_COLOR = 'var(--govrs-color-brand-primary, #1A7235)'
 
 function clampPercentage(value: number | string | undefined): number {
   const normalizedValue = Number(String(value ?? 0).replace(/[^0-9.-]/g, '')) || 0
@@ -118,7 +117,7 @@ function DefaultLoader({
   )
 }
 
-function PercentageLoader({ value = 65, color = DEFAULT_PROGRESS_COLOR, className, ...props }: PercentageLoaderProps) {
+function PercentageLoader({ value = 65, color, className, style, ...props }: PercentageLoaderProps) {
   const percentage = clampPercentage(value)
   const roundedPercentage = Math.round(percentage)
   const targetOffset = PROGRESS_CIRCUMFERENCE - (percentage / 100) * PROGRESS_CIRCUMFERENCE
@@ -143,6 +142,7 @@ function PercentageLoader({ value = 65, color = DEFAULT_PROGRESS_COLOR, classNam
       {...props}
       {...accessibilityProps}
       className={getLoaderClassName('govrs-loader', 'govrs-loader--percentage', className)}
+      style={{ '--govrs-loader-custom-color': color, ...style } as CSSProperties}
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
@@ -171,7 +171,6 @@ function PercentageLoader({ value = 65, color = DEFAULT_PROGRESS_COLOR, classNam
           r={PROGRESS_RADIUS}
           transform={`rotate(270 ${PROGRESS_CENTER} ${PROGRESS_CENTER})`}
           strokeWidth={PROGRESS_STROKE_WIDTH}
-          stroke={color}
           strokeDasharray={PROGRESS_CIRCUMFERENCE}
           strokeDashoffset={offset}
         />
@@ -187,7 +186,6 @@ function PercentageLoader({ value = 65, color = DEFAULT_PROGRESS_COLOR, classNam
           className="govrs-loader__percentage-text"
           x={PROGRESS_CENTER}
           y={PROGRESS_CENTER}
-          fill={color}
         >
           {roundedPercentage}%
         </text>

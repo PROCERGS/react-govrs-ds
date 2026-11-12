@@ -74,7 +74,7 @@ export const Documentacao: Story = {
           code={listCode}
           notes={[
             'Essa fundação cobre listas textuais simples; listas com comportamento adicional devem subir para um componente ou pattern.',
-            'Ritmo vertical: a lista usa margin-bottom de 1,25rem (--govrs-space-5); o espaçamento entre itens permanece próprio da lista.',
+            'Ritmo vertical: a lista usa margin-bottom de 1,25rem (--govrs-space-scale-5); o espaçamento entre itens permanece próprio da lista.',
           ]}
         >
           <ListsPreview />

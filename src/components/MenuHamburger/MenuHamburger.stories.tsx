@@ -221,7 +221,7 @@ export const MenuHamburgerDocumentacao: Story = {
           <li><code>items</code> define a árvore de navegação que será exibida no painel.</li>
           <li><code>open</code> e <code>onOpenChange</code> permitem controlar o estado de abertura externamente.</li>
           <li><code>defaultOpen</code> inicializa o estado quando o componente é usado de forma não controlada.</li>
-          <li>O breakpoint responsivo é controlado pelo token CSS <code>--govrs-breakpoint-smartphone-landscape-tablet-portrait-max</code>.</li>
+          <li>O breakpoint responsivo é controlado pelo token CSS <code>--govrs-breakpoint-xl</code>.</li>
         </ul>
 
         <SandboxExample
@@ -262,24 +262,24 @@ export const MenuHamburgerDocumentacao: Story = {
 
       <SectionCard
         title="Camadas de z-index"
-        description="O painel aberto usa --govrs-z-index-navigation (50). Quando integrado ao Header, o wrapper pai também recebe data-menu-open para escapar de stacking contexts baixos."
+        description="O painel aberto usa --govrs-layer-navigation (50). Quando integrado ao Header, o wrapper pai também recebe data-menu-open para escapar de stacking contexts baixos."
       >
         <ul style={storyDocsStyles.list}>
           <li><code>.govrs-header-wrapper[data-menu-open='true']</code> eleva o header inteiro para a camada de navegação.</li>
           <li>O root do menu usa <code>position: static</code> para o painel absoluto ancorar no header (largura total), não só no botão toggle.</li>
-          <li><code>.govrs-menu-hamburger__content</code> usa o mesmo token; o toggle fica em <code>calc(var(--govrs-z-index-navigation) + 1)</code>.</li>
+          <li><code>.govrs-menu-hamburger__content</code> usa o mesmo token; o toggle fica em <code>calc(var(--govrs-layer-navigation) + 1)</code>.</li>
           <li>Em editores drag-and-drop, prefira estes tokens em vez de valores mágicos (ex.: 99, 101) para permitir override no tema consumidor.</li>
-          <li>Backdrops globais devem usar <code>--govrs-z-index-overlay</code> (ou a classe <code>.govrs-overlay-backdrop</code>) acima da navegação.</li>
+          <li>Backdrops globais devem usar <code>--govrs-layer-overlay</code> (ou a classe <code>.govrs-overlay-backdrop</code>) acima da navegação.</li>
         </ul>
 
         <div style={storyDocsStyles.codeBlock}>
           <pre>
             <code>{`.govrs-header-wrapper[data-menu-open='true'] {
-  z-index: var(--govrs-z-index-navigation);
+  z-index: var(--govrs-layer-navigation);
 }
 
 .govrs-menu-hamburger__content {
-  z-index: var(--govrs-z-index-navigation);
+  z-index: var(--govrs-layer-navigation);
 }`}</code>
           </pre>
         </div>

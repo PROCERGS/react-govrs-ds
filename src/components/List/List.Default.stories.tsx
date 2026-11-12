@@ -47,6 +47,12 @@ function SampleIcon() {
   )
 }
 
+const LONG_TITLE =
+  'Título longo o suficiente para ultrapassar cento e quarenta caracteres e demonstrar o truncamento com reticências no item da lista default'
+
+const LONG_TEXT =
+  'Descrição também longa o bastante para ser cortada em cento e quarenta caracteres, exatamente como o Card news faz com título e texto de apoio na listagem.'
+
 const defaultItems: List.DefaultItem[] = [
   {
     id: 'd1',
@@ -57,6 +63,7 @@ const defaultItems: List.DefaultItem[] = [
     imageAlt: 'Foto de exemplo',
     icon: <SampleIcon />,
     label: 'Guias',
+    tags: ['noticias', 'Bento', 'comunicacao'],
   },
   {
     id: 'd2',
@@ -64,24 +71,39 @@ const defaultItems: List.DefaultItem[] = [
     text: 'Item com ícone SVG na coluna esquerda.',
     icon: <SampleIcon />,
     label: 'Guias',
+    tags: ['enoturismo', 'Serra Gaúcha'],
   },
   {
     id: 'd3',
     title: 'Item sem mídia',
     text: 'Item que não possui imagem nem ícone.',
     label: 'Atendimento',
+    tags: ['Matriz3'],
   },
   {
     id: 'd4',
-    title: 'Item grande com imagem',
-    text: 'Um texto mais longo para demonstrar quebra de linha e comportamento responsivo na lista horizontal.',
+    title: LONG_TITLE,
+    text: LONG_TEXT,
     image:
       'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Outra foto',
     icon: <SampleIcon />,
     label: 'Atendimento',
+    tags: ['noticias', 'Bento Gonçalves', 'comunicacao', 'extra'],
   },
 ]
+
+const densityItems: List.DefaultItem[] = Array.from({ length: 7 }, (_, index) => ({
+  id: `density-${index + 1}`,
+  title: `Item ${index + 1}`,
+  text: `Descrição curta do item ${index + 1}.`,
+  image:
+    index % 2 === 0
+      ? 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0'
+      : 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
+  imageAlt: `Imagem do item ${index + 1}`,
+  tags: ['editoria', 'porto alegre'],
+}))
 
 const horizontalPresetItems: List.DefaultItem[] = [
   {
@@ -92,6 +114,7 @@ const horizontalPresetItems: List.DefaultItem[] = [
       'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Imagem do cartão 1',
     icon: <SampleIcon />,
+    tags: ['noticias', 'Bento'],
   },
   {
     id: 'h2',
@@ -101,6 +124,7 @@ const horizontalPresetItems: List.DefaultItem[] = [
       'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Imagem do cartão 2',
     icon: <SampleIcon />,
+    tags: ['enoturismo'],
   },
   {
     id: 'h3',
@@ -110,16 +134,18 @@ const horizontalPresetItems: List.DefaultItem[] = [
       'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0',
     imageAlt: 'Imagem do cartão 3',
     icon: <SampleIcon />,
+    tags: ['Matriz3'],
   },
 ]
 
-function createDefaultItems(labeled: boolean) {
+function createDefaultItems(labeled: boolean, tagsLimit = 3) {
   return labeled
-    ? defaultItems
+    ? defaultItems.map((item) => ({ ...item, tagsLimit }))
     : defaultItems.map((item, index) => ({
         ...item,
         id: `default-${index}`,
         label: undefined,
+        tagsLimit,
       }))
 }
 
@@ -137,8 +163,12 @@ function DefaultVariantGalleryPreview() {
         />
       </StoryPreviewCard>
 
-      <StoryPreviewCard label="Horizontal com mídia">
-        <List items={defaultItems} horizontal mediaPreset="mixed" />
+      <StoryPreviewCard label="Horizontal 3 por linha">
+        <List items={densityItems} horizontal perRow={3} mediaPreset="images" />
+      </StoryPreviewCard>
+
+      <StoryPreviewCard label="Vertical 3 por coluna">
+        <List items={densityItems} perColumn={3} mediaPreset="images" />
       </StoryPreviewCard>
 
       <StoryPreviewCard label="Agrupada e recolhível">
@@ -148,7 +178,7 @@ function DefaultVariantGalleryPreview() {
   )
 }
 
-const docsVariantTags = ['vertical', 'horizontal', 'labeled', 'collapsible', 'mediaPreset']
+const docsVariantTags = ['vertical', 'horizontal', 'perRow', 'perColumn', 'tags', 'labeled']
 
 const docsHeroStats = [
   {
@@ -157,11 +187,11 @@ const docsHeroStats = [
   },
   {
     title: 'Melhor exploração',
-    text: "Use o story 'Interativo' para testar mídia, horizontalidade, agrupamento e colapso. A documentação compara os formatos mais comuns dessa variante.",
+    text: "Use o story 'Interativo' para testar mídia, densidade, tags, agrupamento e colapso. A documentação compara os formatos mais comuns dessa variante.",
   },
   {
     title: 'Comportamento',
-    text: 'A variante default aceita imagem ou ícone por item, pode quebrar em uma linha horizontal e só usa colapso quando a lista está agrupada por label.',
+    text: 'A variante default replica o conteúdo do Card news (imagem, tags e truncamento de 140 caracteres), sem caixa. Em horizontal usa perRow; em vertical, perColumn preenche coluna a coluna.',
   },
 ]
 
@@ -234,6 +264,9 @@ type ListDefaultInteractiveArgs = {
   labeled: boolean
   collapsible: boolean
   mediaPreset: MediaPreset
+  mediaPosition: List.MediaPosition
+  perRow: number
+  tagsLimit: number
 }
 
 const meta = {
@@ -244,6 +277,9 @@ const meta = {
     labeled: false,
     collapsible: false,
     mediaPreset: 'mixed',
+    mediaPosition: 'left',
+    perRow: 3,
+    tagsLimit: 3,
   },
   parameters: {
     layout: 'padded',
@@ -259,18 +295,28 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 function getDefaultInteractivePreviewKey(args: ListDefaultInteractiveArgs) {
-  return [args.horizontal, args.labeled, args.collapsible, args.mediaPreset].join('::')
+  return [
+    args.horizontal,
+    args.labeled,
+    args.collapsible,
+    args.mediaPreset,
+    args.mediaPosition,
+    args.perRow,
+    args.tagsLimit,
+  ].join('::')
 }
 
 function ListDefaultInteractivePreview(args: ListDefaultInteractiveArgs) {
   return (
     <div style={{ ...storyDocsStyles.previewStage, justifyItems: 'stretch' }}>
       <List
-        items={createDefaultItems(args.labeled)}
+        items={createDefaultItems(args.labeled, args.tagsLimit)}
         horizontal={args.horizontal}
         labeled={args.labeled}
         collapsible={args.collapsible}
         mediaPreset={args.mediaPreset}
+        mediaPosition={args.mediaPosition}
+        perRow={args.perRow}
       />
     </div>
   )
@@ -281,10 +327,10 @@ function DefaultItemGuidePreview() {
     <div style={storyDocsStyles.cardGrid}>
       <StoryPreviewCard label="Campos principais">
         <ul style={storyDocsStyles.list}>
-          <li><code>title</code> é o conteúdo obrigatório de cada item.</li>
-          <li><code>text</code> adiciona uma linha de apoio abaixo do título.</li>
-          <li><code>image</code> e <code>icon</code> ocupam a coluna lateral, com prioridade para imagem.</li>
-          <li><code>mediaPreset</code> controla se a variante exibe mídia mista, só imagens, só ícones ou nenhuma mídia.</li>
+          <li><code>title</code> e <code>text</code> são truncados em 140 caracteres, como no Card news.</li>
+          <li><code>tags</code> e <code>tagsLimit</code> (1 a 3) aparecem em maiúsculas abaixo da mídia, ou acima do título quando não há imagem.</li>
+          <li><code>image</code> ocupa a largura do item; <code>icon</code> só entra se não houver imagem.</li>
+          <li><code>perRow</code> vale no layout horizontal; <code>perColumn</code> no vertical (preenchimento de cima para baixo).</li>
         </ul>
       </StoryPreviewCard>
 
@@ -310,7 +356,7 @@ function HorizontalPresetPreview() {
     <div style={{ display: 'grid', gap: 16 }}>
       {rows.map((row) => (
         <StoryPreviewCard key={row.label} label={row.label}>
-          <List horizontal mediaPreset={row.mediaPreset} items={horizontalPresetItems} />
+          <List horizontal perRow={3} mediaPreset={row.mediaPreset} items={horizontalPresetItems} />
         </StoryPreviewCard>
       ))}
     </div>
@@ -329,9 +375,9 @@ export const Documentacao: Story = {
         title={<h3 style={storyDocsStyles.heroTitle}>List Default</h3>}
         description={
           <>
-            A variante <code>default</code> cobre listas de leitura simples com imagem,
-            ícone, texto de apoio e agrupamento opcional. É a base visual reutilizada
-            também pela variante <code>check</code>.
+            A variante <code>default</code> cobre listas de leitura com o mesmo conteúdo do Card
+            news (imagem, tags e truncamento), sem borda nem sombra. Densidade vem de
+            <code>perRow</code> (horizontal) ou <code>perColumn</code> (vertical).
           </>
         }
         variantTags={docsVariantTags}
@@ -340,12 +386,12 @@ export const Documentacao: Story = {
 
       <SectionCard
         title="Formas principais"
-        description="A mesma variante pode aparecer como lista vertical tradicional, como linha de cartões com quebra automática ou como lista agrupada por rótulo."
+        description="A mesma variante pode aparecer como lista vertical, grade horizontal com perRow, colunas verticais com perColumn ou lista agrupada por rótulo."
       >
         <SandboxExample
           title="Visão comparativa"
-          description="Os três cenários abaixo cobrem a leitura mais comum da variante default: simples, horizontal e agrupada."
-          code={`<List variant="default" items={items} />\n<List variant="default" horizontal items={items} />\n<List variant="default" labeled collapsible items={items} />`}
+          description="Os cenários abaixo cobrem leitura simples, densidade horizontal, densidade vertical e agrupamento."
+          code={`<List variant="default" items={items} />\n<List variant="default" horizontal perRow={3} items={items} />\n<List variant="default" perColumn={3} items={items} />\n<List variant="default" labeled collapsible items={items} />`}
         >
           <DefaultVariantGalleryPreview />
         </SandboxExample>
@@ -373,15 +419,40 @@ export const Documentacao: Story = {
 
         <SandboxExample
           title="Horizontal"
-          description="Em horizontal, a mesma coleção pode ser apresentada só com ícones, só com imagens ou sem nenhuma mídia, de acordo com o mediaPreset."
+          description="Em horizontal, perRow define quantos itens cabem por linha. A coleção ainda pode ser apresentada só com ícones, só com imagens ou sem mídia."
           code={horizontalExampleCode}
           notes={[
+            'perRow controla as colunas do grid; o padrão é 3.',
             'mediaPreset="icons" preserva apenas os ícones da coleção.',
             'mediaPreset="images" preserva apenas as imagens; se um item tiver image e icon, a imagem continua tendo prioridade.',
-            'mediaPreset="none" remove toda a mídia e mantém apenas o conteúdo textual.',
+            'mediaPreset="none" remove toda a mídia e mantém tags e conteúdo textual.',
           ]}
         >
           <HorizontalPresetPreview />
+        </SandboxExample>
+
+        <SandboxExample
+          title="Mídia à esquerda"
+          description="Na lista vertical, mediaPosition='left' coloca a imagem ou o ícone ao lado do título."
+          code={`<List variant="default" mediaPosition="left" items={items} />`}
+          notes={[
+            'O padrão continua above: mídia acima do texto, igual ao Card news.',
+            'Em horizontal, mediaPosition é ignorada.',
+          ]}
+        >
+          <List items={densityItems} mediaPosition="left" mediaPreset="images" />
+        </SandboxExample>
+
+        <SandboxExample
+          title="Vertical por coluna"
+          description="Com perColumn, os itens preenchem de cima para baixo e só depois abrem a próxima coluna."
+          code={`<List variant="default" perColumn={3} items={items} />`}
+          notes={[
+            'Sem perColumn, a lista vertical permanece em uma coluna.',
+            'O preenchimento é coluna a coluna, não linha a linha.',
+          ]}
+        >
+          <List items={densityItems} perColumn={3} mediaPreset="images" />
         </SandboxExample>
 
         <SandboxExample
@@ -410,8 +481,19 @@ export const Interativo: Story = {
     },
     horizontal: {
       control: 'boolean',
-      description: 'Reorganiza os itens em uma linha com quebra automática.',
+      description: 'Reorganiza os itens em um grid preenchido da esquerda para a direita.',
       table: { category: 'Layout' },
+    },
+    perRow: {
+      if: { arg: 'horizontal', eq: true },
+      control: { type: 'number', min: 1, max: 6, step: 1 },
+      description: 'Quantos itens aparecem por linha quando horizontal está ativo.',
+      table: { category: 'Layout' },
+    },
+    tagsLimit: {
+      control: { type: 'number', min: 1, max: 3, step: 1 },
+      description: 'Quantidade máxima de tags visíveis por item (1 a 3).',
+      table: { category: 'Conteúdo' },
     },
     labeled: {
       control: 'boolean',
@@ -419,6 +501,7 @@ export const Interativo: Story = {
       table: { category: 'Agrupamento' },
     },
     collapsible: {
+      if: { arg: 'labeled', eq: true },
       control: 'boolean',
       description: 'Permite expandir ou recolher grupos quando labeled está ativo.',
       table: { category: 'Agrupamento' },
@@ -433,6 +516,17 @@ export const Interativo: Story = {
         none: 'Sem mídia',
       },
       description: 'Controla se a variante mostra mídia mista, só imagens, só ícones ou nenhuma mídia.',
+      table: { category: 'Mídia' },
+    },
+    mediaPosition: {
+      if: { arg: 'horizontal', eq: false },
+      control: { type: 'select' },
+      options: ['above', 'left'],
+      labels: {
+        above: 'Acima do texto',
+        left: 'À esquerda do texto',
+      },
+      description: 'Na lista vertical, posiciona a mídia acima ou à esquerda do título.',
       table: { category: 'Mídia' },
     },
   },

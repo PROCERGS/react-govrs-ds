@@ -13,6 +13,10 @@ type AlertsProps = {
   children?: ReactNode
   dismissible?: boolean
   onClose?: (event: MouseEvent<HTMLButtonElement>) => void
+  /** Accessible announcement urgency. Defaults according to the variant. */
+  role?: 'status' | 'alert'
+  /** Visual icon to display. Pass `false` to hide the icon entirely. Defaults to the variant icon. */
+  icon?: ReactNode | false
 }
 
 const SuccessIcon = () => (
@@ -57,8 +61,10 @@ export function Alerts({
   children,
   dismissible = false,
   onClose,
+  role: roleOverride,
+  icon = true,
 }: AlertsProps) {
-  const role = variant === 'error' ? 'alert' : 'status'
+  const role = roleOverride ?? (variant === 'error' ? 'alert' : 'status')
   const [visible, setVisible] = useState(true)
 
   const content = message != null ? message : children
@@ -73,12 +79,20 @@ export function Alerts({
 
   return (
     <Stack className={`govrs-alert govrs-alert--${variant}`} role={role} direction="row" align="center" gap={2}>
-      <div className="govrs-alert__icon" aria-hidden>
-        {variant === 'success' && <SuccessIcon />}
-        {variant === 'warning' && <WarningIcon />}
-        {variant === 'error' && <ErrorIcon />}
-        {variant === 'info' && <InfoIcon />}
-      </div>
+      {icon !== false && (
+        <div className="govrs-alert__icon" aria-hidden>
+          {icon !== true ? (
+            icon
+          ) : (
+            <>
+              {variant === 'success' && <SuccessIcon />}
+              {variant === 'warning' && <WarningIcon />}
+              {variant === 'error' && <ErrorIcon />}
+              {variant === 'info' && <InfoIcon />}
+            </>
+          )}
+        </div>
+      )}
 
       <Stack className="govrs-alert__content" justify="center">
         <Text>{content}</Text>

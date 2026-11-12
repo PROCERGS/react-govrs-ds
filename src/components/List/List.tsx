@@ -5,9 +5,10 @@ import { Card } from '../Card/Card'
 import './List.scss'
 
 
-type ListVariant = 'default' | 'check' | 'link' | 'card'
+type ListVariant = 'default' | 'check' | 'link' | 'card' | 'file'
 type ListMediaPreset = 'mixed' | 'images' | 'icons' | 'none'
 type ListLinkMediaPreset = 'icons' | 'none'
+type ListMediaPosition = 'above' | 'left'
 type ListItemIdentity = {
   id?: string | number
   key?: string | number
@@ -22,7 +23,11 @@ type ListGroupedItem = ListItemIdentity & {
   label?: string
 }
 
-type ListDefaultItem = ListGroupedItem
+type ListDefaultItem = ListGroupedItem & {
+  tags?: string[]
+  tagsLimit?: number
+  href?: string
+}
 
 type ListCheckItem = ListGroupedItem & {
   checked?: boolean
@@ -33,6 +38,17 @@ type ListLinkItem = ListItemIdentity & {
   meta?: string
   href?: string
   icon?: ReactNode
+}
+
+type ListFileItem = ListItemIdentity & {
+  title: string
+  /** Nome alternativo exibido no link. Sem valor, usa title. */
+  displayTitle?: string
+  href: string
+  filename?: string
+  extension?: string
+  /** Tamanho do arquivo em bytes. */
+  size?: number
 }
 
 type ListCardItem = Card.Props & ListItemIdentity
@@ -51,6 +67,10 @@ type ListDefaultProps = ListBaseProps<ListDefaultItem> & {
   labeled?: boolean
   collapsible?: boolean
   mediaPreset?: ListMediaPreset
+  mediaPosition?: ListMediaPosition
+  perRow?: number
+  perColumn?: number
+  showTags?: boolean
 }
 
 type ListCheckProps = ListBaseProps<ListCheckItem> & {
@@ -80,15 +100,67 @@ type ListCardProps = ListBaseProps<ListCardItem> & {
   overflow?: ListCardOverflow
 }
 
-type ListProps = ListDefaultProps | ListCheckProps | ListLinkProps | ListCardProps
+type ListFileProps = ListBaseProps<ListFileItem> & {
+  variant: 'file'
+}
+
+type ListProps = ListDefaultProps | ListCheckProps | ListLinkProps | ListCardProps | ListFileProps
 
 type ListGroup<T> = {
   label: string | null
   items: T[]
 }
 
+const DEFAULT_TAGS_LIMIT = 3
+const MAX_TAGS_LIMIT = 3
+const LIST_TEXT_MAX_LENGTH = 140
+const DEFAULT_PER_ROW = 3
+
 function joinClassNames(...classNames: Array<string | false | null | undefined>) {
   return classNames.filter(Boolean).join(' ')
+}
+
+function sanitizePositiveInt(value: unknown, fallback?: number) {
+  const parsed = Number(value)
+
+  if (!Number.isFinite(parsed) || parsed < 1) {
+    return fallback
+  }
+
+  return Math.round(parsed)
+}
+
+function resolveTagsLimit(limit?: number) {
+  const value = Number(limit)
+
+  if (!Number.isFinite(value)) {
+    return DEFAULT_TAGS_LIMIT
+  }
+
+  return Math.min(MAX_TAGS_LIMIT, Math.max(1, Math.round(value)))
+}
+
+function truncateText(value?: string, maxLength = LIST_TEXT_MAX_LENGTH) {
+  const text = value?.trim() ?? ''
+
+  if (text.length <= maxLength) {
+    return text
+  }
+
+  const ellipsis = '...'
+  return `${text.slice(0, Math.max(0, maxLength - ellipsis.length)).trimEnd()}${ellipsis}`
+}
+
+function getVisibleTags(tags?: string[], tagsLimit?: number) {
+  return (tags?.filter(Boolean) ?? []).slice(0, resolveTagsLimit(tagsLimit))
+}
+
+function formatTagsText(tags: string[]) {
+  return tags
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+    .map((tag) => tag.toLocaleUpperCase('pt-BR'))
+    .join(', ')
 }
 
 function getListItemKey<T extends ListItemIdentity>(
@@ -224,48 +296,102 @@ function ListGroupHeader({
   )
 }
 
+function DefaultItemTags({
+  tags,
+  tagsLimit,
+  showTags,
+}: Pick<ListDefaultItem, 'tags' | 'tagsLimit'> & { showTags?: boolean }) {
+  const tagsText = formatTagsText(getVisibleTags(tags, tagsLimit))
+
+  if (showTags === false) {
+    return null
+  }
+
+  if (!tagsText && showTags !== true && tags == null) {
+    return null
+  }
+
+  return (
+    <p className="govrs-list-default__tags" aria-hidden={!tagsText}>
+      {tagsText || '\u00A0'}
+    </p>
+  )
+}
+
 function DefaultItem({
   item,
   mediaPreset = 'mixed',
+  mediaPosition = 'left',
+  showTags,
 }: {
   item: ListDefaultItem
   mediaPreset?: ListMediaPreset
+  mediaPosition?: ListMediaPosition
+  showTags?: boolean
 }) {
   const media = resolveMediaPreset(item, mediaPreset)
   const hasImage = Boolean(media.image)
   const hasIcon = Boolean(media.icon) && !hasImage
+  const displayTitle = truncateText(item.title)
+  const displayText = truncateText(item.text)
+  const fullTitle = item.title?.trim() ?? ''
+  const fullText = item.text?.trim() ?? ''
+  const isMediaLeft = mediaPosition === 'left'
+  const href = item.href?.trim() || undefined
+  const InnerTag = href ? 'a' : 'div'
 
   return (
-    <div
+    <InnerTag
       className={joinClassNames(
         'govrs-list-default__inner',
-        hasImage && 'govrs-list-default__inner--with-image',
+        isMediaLeft && 'govrs-list-default__inner--media-left',
       )}
+      {...(href ? { href } : {})}
     >
-      {hasImage || hasIcon ? (
+      {hasImage ? (
+        <div className="govrs-list-default__media">
+          <img
+            src={media.image}
+            alt={media.imageAlt || item.title || ''}
+            className="govrs-list-default__image"
+          />
+        </div>
+      ) : hasIcon ? (
         <div className="govrs-list-default__media" aria-hidden>
-          {hasImage ? (
-            <img
-              src={media.image}
-              alt={media.imageAlt || item.title || ''}
-              className="govrs-list-default__image"
-            />
-          ) : (
-            <span className="govrs-list-default__icon">{media.icon}</span>
-          )}
+          <span className="govrs-list-default__icon">{media.icon}</span>
         </div>
       ) : null}
 
-      <div
-        className={joinClassNames(
-          'govrs-list-default__content',
-          !item.text && 'govrs-list-default__content--no-text',
-        )}
-      >
-        <div className="govrs-list-default__title">{item.title}</div>
-        {item.text ? <div className="govrs-list-default__text">{item.text}</div> : null}
+      <div className="govrs-list-default__body">
+        <DefaultItemTags
+          tags={item.tags}
+          tagsLimit={item.tagsLimit}
+          showTags={showTags}
+        />
+
+        <div
+          className={joinClassNames(
+            'govrs-list-default__content',
+            !displayText && 'govrs-list-default__content--no-text',
+          )}
+        >
+          <div
+            className="govrs-list-default__title"
+            title={fullTitle !== displayTitle ? fullTitle : undefined}
+          >
+            {displayTitle}
+          </div>
+          {displayText ? (
+            <div
+              className="govrs-list-default__text"
+              title={fullText !== displayText ? fullText : undefined}
+            >
+              {displayText}
+            </div>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </InnerTag>
   )
 }
 
@@ -277,11 +403,26 @@ function DefaultVariant({
   labeled = false,
   collapsible = false,
   mediaPreset = 'mixed',
+  mediaPosition = 'left',
+  perRow,
+  perColumn,
+  showTags,
 }: ListDefaultProps) {
   const groups = useMemo(() => buildGroups(items, labeled), [items, labeled])
   const [openMap, setOpenMap] = useState<Map<string, boolean>>(() => new Map())
+  const columns = horizontal ? sanitizePositiveInt(perRow, DEFAULT_PER_ROW) : undefined
+  const rows = horizontal ? undefined : sanitizePositiveInt(perColumn)
+  const gridStyle = {
+    ...(columns ? { '--govrs-list-default-cols': columns } : {}),
+    ...(rows ? { '--govrs-list-default-rows': rows } : {}),
+  } as CSSProperties
 
   const isCollapsible = labeled && collapsible
+  const resolvedMediaPosition = horizontal
+    ? 'above'
+    : mediaPosition === 'above'
+      ? 'above'
+      : 'left'
 
   function toggleGroup(label: string) {
     setOpenMap((previousState) => {
@@ -316,15 +457,23 @@ function DefaultVariant({
                 className={joinClassNames(
                   'govrs-list__base',
                   'govrs-list-default',
-                  horizontal && 'govrs-list__base--horizontal',
+                  horizontal && 'govrs-list-default--horizontal',
+                  Boolean(rows) && 'govrs-list-default--by-column',
+                  showTags && 'govrs-list-default--show-tags',
                 )}
+                style={gridStyle}
               >
                 {group.items.map((item, index) => (
                   <li
                     key={getListItemKey(item, index, itemKey)}
                     className="govrs-list-default__item"
                   >
-                    <DefaultItem item={item} mediaPreset={mediaPreset} />
+                    <DefaultItem
+                      item={item}
+                      mediaPreset={mediaPreset}
+                      mediaPosition={resolvedMediaPosition}
+                      showTags={showTags}
+                    />
                   </li>
                 ))}
               </ul>
@@ -532,6 +681,81 @@ function LinkVariant({
   )
 }
 
+const fileSizeFormat = new Intl.NumberFormat('pt-BR', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
+function formatFileSize(size?: number) {
+  if (size == null || !Number.isFinite(size) || size < 0) {
+    return ''
+  }
+
+  if (size < 1024) {
+    return `${size} Bytes`
+  }
+
+  const unit = size < 1024 ** 2 ? 'KBytes' : size < 1024 ** 3 ? 'MBytes' : 'GBytes'
+  const divisor = size < 1024 ** 2 ? 1024 : size < 1024 ** 3 ? 1024 ** 2 : 1024 ** 3
+  return `${fileSizeFormat.format(size / divisor)} ${unit}`
+}
+
+function FilePaperclip() {
+  return (
+    <svg
+      className="govrs-list-file__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      focusable="false"
+    >
+      <path d="m21.4 11.6-8.8 8.8a5 5 0 0 1-7.1-7.1L15 3.8a3.5 3.5 0 0 1 5 5L10.5 18a2 2 0 0 1-2.8-2.8l8.5-8.5" />
+    </svg>
+  )
+}
+
+function FileVariant({ items = [], itemKey, className }: ListFileProps) {
+  return (
+    <ul className={joinClassNames('govrs-list__base', 'govrs-list-file', className)}>
+      {items.map((item, index) => {
+        const extension = (
+          item.extension?.trim() ||
+          item.filename?.match(/\.([^.]+)$/)?.[1] ||
+          ''
+        ).replace(/^\.+/, '').toLowerCase()
+        const details = [extension && `.${extension}`, formatFileSize(item.size)]
+          .filter(Boolean)
+          .join(' ')
+
+        return (
+          <li key={getListItemKey(item, index, itemKey)} className="govrs-list-file__item">
+            <a
+              className="govrs-list-file__anchor"
+              href={item.href}
+              download={item.filename || true}
+            >
+              <FilePaperclip />
+              <span className="govrs-list-file__content">
+                {item.displayTitle?.trim() || item.title}
+                {details ? (
+                  <>
+                    {' '}
+                    <span className="govrs-list-file__details">({details})</span>
+                  </>
+                ) : null}
+              </span>
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 function CardVariant({
   items = [],
   itemKey,
@@ -571,6 +795,10 @@ function CardVariant({
 }
 
 export function List(props: ListProps) {
+  if (props.variant === 'file') {
+    return <FileVariant {...props} />
+  }
+
   if (props.variant === 'check') {
     return <CheckVariant {...props} />
   }
@@ -591,9 +819,11 @@ export namespace List {
   export type Variant = ListVariant
   export type MediaPreset = ListMediaPreset
   export type LinkMediaPreset = ListLinkMediaPreset
+  export type MediaPosition = ListMediaPosition
   export type DefaultItem = ListDefaultItem
   export type CheckItem = ListCheckItem
   export type LinkItem = ListLinkItem
+  export type FileItem = ListFileItem
   export type CardItem = ListCardItem
   export type CardOverflow = ListCardOverflow
 }

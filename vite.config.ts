@@ -183,6 +183,8 @@ function copyComponentAssets() {
       const srcRoot = resolve(__dirname, 'src')
       const componentsDir = resolve(srcRoot, 'components')
       const distRoot = resolve(__dirname, 'dist')
+      mkdirSync(distRoot, { recursive: true })
+      cpSync(resolve(srcRoot, 'foundations/styles/_sass-variables.scss'), resolve(distRoot, 'tokens.scss'))
 
       for (const assetPath of collectComponentAssetFiles(componentsDir)) {
         const distPath = resolve(distRoot, relative(srcRoot, assetPath))

@@ -1,3 +1,4 @@
+@use '../../foundations/styles/sass-variables' as vars;
 .govrs-table {
   --govrs-table-foreground: var(--govrs-color-text-primary, #111111);
   --govrs-table-title: var(--govrs-color-brand-primary, #1a7235);
@@ -21,8 +22,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--govrs-space-3, 0.75rem);
-  padding: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
+  padding: var(--govrs-space-scale-3, 0.75rem);
   border-bottom: var(--govrs-border-width-sm, 1px) solid var(--govrs-table-border);
   background: var(--govrs-table-header-background);
 }
@@ -37,14 +38,14 @@
 .govrs-table__search {
   display: flex;
   align-items: center;
-  gap: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
   margin-left: auto;
 }
 
 .govrs-table__search-controls {
   display: none;
   align-items: center;
-  gap: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
 }
 
 .govrs-table__search-controls--open {
@@ -55,7 +56,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--govrs-space-1-5, 0.375rem);
+  padding: var(--govrs-space-scale-1-5, 0.375rem);
   border: none;
   background: transparent;
   color: var(--govrs-color-brand-primary, #1a7235);
@@ -74,7 +75,7 @@
 .govrs-table__input,
 .govrs-table__select {
   min-height: 2.25rem;
-  padding: var(--govrs-space-1-5, 0.375rem) var(--govrs-space-2, 0.5rem);
+  padding: var(--govrs-space-scale-1-5, 0.375rem) var(--govrs-space-scale-2, 0.5rem);
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-table-control-border);
   border-radius: var(--govrs-radius-sm, 0.375rem);
   background: var(--govrs-table-control-background);
@@ -142,7 +143,7 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  gap: var(--govrs-space-2, 0.5rem);
+  gap: var(--govrs-space-scale-2, 0.5rem);
   padding: 0.625rem 0.75rem;
   border: none;
   background: transparent;
@@ -209,7 +210,7 @@
 }
 
 .govrs-table__pagination {
-  padding-top: var(--govrs-space-3, 0.75rem);
+  padding-top: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-table--irregular .govrs-table__wrapper table {
@@ -260,7 +261,7 @@
   border-bottom: var(--govrs-border-width-sm, 1px) solid var(--govrs-color-border-emphasis, #cccccc);
 }
 
-@media (max-width: 36rem) {
+@media (max-width: #{vars.$govrs-breakpoint-tablet-sm}) {
   .govrs-table__header {
     align-items: stretch;
   }

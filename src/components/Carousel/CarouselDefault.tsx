@@ -75,7 +75,7 @@ export function CarouselDefault({
   useEffect(() => {
     const updateViewportState = () => {
       setIsSmartphonePortrait(
-        window.matchMedia(`(max-width: ${breakpoints.smartphonePortraitMax})`).matches,
+        window.matchMedia(`(max-width: ${Number.parseFloat(breakpoints.tabletSm) - 0.0625}rem)`).matches,
       );
     };
 

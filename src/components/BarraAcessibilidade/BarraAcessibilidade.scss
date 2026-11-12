@@ -1,7 +1,7 @@
 @use '../../foundations/styles/sass-variables' as vars;
 @use '../../foundations/styles/layout-container' as layout;
 
-@media (max-width: calc(#{vars.$govrs-breakpoint-lg} - 0.0625rem)) {
+@media (max-width: calc(#{vars.$govrs-breakpoint-tablet-lg} - 0.0625rem)) {
   .acess-bar {
     display: none !important;
   }

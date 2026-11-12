@@ -6,7 +6,7 @@ $svg-unchecked: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' 
   align-items: flex-start;
   color: var(--govrs-color-text-primary, #000000);
   cursor: pointer;
-  gap: var(--govrs-space-3, 0.75rem);
+  gap: var(--govrs-space-scale-3, 0.75rem);
 }
 
 .govrs-switch-field--disabled {
@@ -15,7 +15,7 @@ $svg-unchecked: "%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' 
 
 .govrs-switch-field__content {
   display: grid;
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .govrs-switch-field__label {
@@ -50,9 +50,9 @@ input[type='checkbox'][role='switch'].govrs-switch {
   cursor: pointer;
   outline: none;
   transition:
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
   vertical-align: middle;
 }
 
@@ -72,9 +72,9 @@ input[type='checkbox'][role='switch'].govrs-switch::after {
   box-shadow: var(--govrs-shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
   content: '';
   transition:
-    transform var(--govrs-duration-fast, 0.2s) var(--govrs-easing-emphasized, ease-in-out),
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    opacity var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    transform var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-emphasized, ease-in-out),
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    opacity var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 input[type='checkbox'][role='switch'].govrs-switch:hover:not(:disabled) {

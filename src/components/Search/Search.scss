@@ -30,14 +30,14 @@
   align-items: center;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 0 var(--govrs-space-3-5, 0.875rem);
+  padding: 0 var(--govrs-space-scale-3-5, 0.875rem);
   border: var(--govrs-border-width-sm, 1px) solid var(--govrs-search-border);
   border-radius: var(--govrs-radius-md, 0.5rem);
   background-color: var(--govrs-search-surface);
   transition:
-    border-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    box-shadow var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease),
-    background-color var(--govrs-duration-fast, 0.2s) var(--govrs-easing-standard, ease);
+    border-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    box-shadow var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease),
+    background-color var(--govrs-motion-duration-fast, 0.2s) var(--govrs-motion-easing-standard, ease);
 }
 
 .govrs-search__wrapper:hover {
@@ -66,7 +66,7 @@
   min-width: 0;
   height: 100%;
   flex: 1 1 auto;
-  padding: 0 var(--govrs-space-1-5, 0.375rem);
+  padding: 0 var(--govrs-space-scale-1-5, 0.375rem);
   border: none;
   background: transparent;
   color: var(--govrs-search-foreground);
@@ -92,7 +92,7 @@
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: var(--govrs-space-1, 0.25rem);
+  gap: var(--govrs-space-scale-1, 0.25rem);
 }
 
 .govrs-search__button {
@@ -100,7 +100,7 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  padding: 0 var(--govrs-space-2, 0.5rem);
+  padding: 0 var(--govrs-space-scale-2, 0.5rem);
   border: none;
   background: transparent;
   color: var(--govrs-search-icon);
@@ -144,7 +144,7 @@
 
 .govrs-search[data-collapsible='true'][data-active='false'] .govrs-search__wrapper {
   justify-content: center;
-  padding-inline: var(--govrs-space-2, 0.5rem);
+  padding-inline: var(--govrs-space-scale-2, 0.5rem);
 }
 
 .govrs-search[data-collapsible='true'][data-active='false'] .govrs-search__field {
@@ -157,16 +157,16 @@
 }
 
 .govrs-search[data-collapsible='true'][data-active='false'] .govrs-search__button {
-  padding-inline: var(--govrs-space-1, 0.25rem);
+  padding-inline: var(--govrs-space-scale-1, 0.25rem);
 }
 
-@media (max-width: #{vars.$govrs-breakpoint-smartphone-portrait-max}) {
+@media (max-width: #{(vars.$govrs-breakpoint-tablet-sm - 0.0625rem)}) {
   .govrs-search__wrapper {
-    padding-inline: var(--govrs-space-2, 0.5rem);
+    padding-inline: var(--govrs-space-scale-2, 0.5rem);
   }
 
   .govrs-search__field {
-    padding-inline: var(--govrs-space-1, 0.25rem);
+    padding-inline: var(--govrs-space-scale-1, 0.25rem);
     font-size: var(--govrs-font-size-body-sm, 0.875rem);
   }
 
@@ -175,7 +175,7 @@
   }
 
   .govrs-search--with-voice .govrs-search__button {
-    padding-inline: var(--govrs-space-1, 0.25rem);
+    padding-inline: var(--govrs-space-scale-1, 0.25rem);
   }
 
   .govrs-search--with-voice .govrs-search__button--voice svg {
