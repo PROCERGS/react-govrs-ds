@@ -19,6 +19,7 @@ type HeaderProps = {
   menuItems?: MenuHamburger.Item[]
   menuOpen?: boolean
   onMenuOpenChange?: (open: boolean) => void
+  mobileAccessibility?: MenuHamburger.Props['mobileAccessibility']
   searchValue?: string
   defaultSearchValue?: string
   onSearchValueChange?: Search.Props['onChange']
@@ -51,6 +52,7 @@ export function Header({
   menuOpen,
   
   onMenuOpenChange,
+  mobileAccessibility,
   searchValue,
   defaultSearchValue = '',
   onSearchValueChange,
@@ -156,6 +158,7 @@ export function Header({
                 items={menuItems}
                 open={menuOpen}
                 onOpenChange={handleMenuOpenChange}
+                mobileAccessibility={mobileAccessibility}
               />
             ) : null}
 

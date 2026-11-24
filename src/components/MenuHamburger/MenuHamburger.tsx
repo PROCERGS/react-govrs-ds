@@ -10,7 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import './MenuHamburger.scss'
+import { AccessibilityActions, type AccessibilityActionsProps } from '../BarraAcessibilidade/AccessibilityActions'
 
+const defaultMobileAccessibility: AccessibilityActionsProps = { hrefSitemap: '/sitemap' }
 
 type MenuHamburgerItem = {
   id?: string | number
@@ -36,6 +38,7 @@ type MenuHamburgerProps = {
   expandButtonLabel?: string
   collapseButtonLabel?: string
   maxDesktopLevels?: number
+  mobileAccessibility?: AccessibilityActionsProps | false
 }
 
 function getClassName(...classes: Array<string | false | null | undefined>) {
@@ -96,6 +99,7 @@ export function MenuHamburger({
   expandButtonLabel = 'Expandir submenu',
   collapseButtonLabel = 'Recolher submenu',
   maxDesktopLevels = 4,
+  mobileAccessibility = defaultMobileAccessibility,
 }: MenuHamburgerProps) {
   const generatedId = useId().replace(/:/g, '')
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -367,6 +371,11 @@ export function MenuHamburger({
               </div>
             )}
           </nav>
+          {isMobile && mobileAccessibility !== false ? (
+            <div className="govrs-menu-hamburger__accessibility">
+              <AccessibilityActions {...mobileAccessibility} showLabels />
+            </div>
+          ) : null}
         </div>
       ) : null}
     </div>

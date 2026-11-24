@@ -271,6 +271,9 @@ type InteractiveArgs = Header.Props & {
   barraAcessibilidadeHrefAccessibility?: string
   barraAcessibilidadeHrefContact?: string
   barraAcessibilidadeHrefSitemap?: string
+  barraAcessibilidadeSecretariatName?: string
+  barraAcessibilidadeSecretariatImageSrc?: string
+  barraAcessibilidadeSecretariatImageAlt?: string
 }
 
 function HeaderInteractivePreview(args: InteractiveArgs) {
@@ -293,14 +296,22 @@ function HeaderInteractivePreview(args: InteractiveArgs) {
       <BarraAcessibilidade
         shortcuts={shortcuts}
         hrefAccessibility={args.barraAcessibilidadeHrefAccessibility ?? '/acessibilidade'}
-        hrefContact={args.barraAcessibilidadeHrefContact ?? '/contato'}
+        hrefContact={args.barraAcessibilidadeHrefContact}
         hrefSitemap={args.barraAcessibilidadeHrefSitemap ?? '/sitemap'}
+        secretariatName={args.barraAcessibilidadeSecretariatName}
+        secretariatImageSrc={args.barraAcessibilidadeSecretariatImageSrc}
+        secretariatImageAlt={args.barraAcessibilidadeSecretariatImageAlt}
         disableHighContrastToggle
       />
 
       <Header
         key={headerKey}
         {...args}
+        mobileAccessibility={args.mobileAccessibility ?? {
+          hrefContact: args.barraAcessibilidadeHrefContact,
+          hrefSitemap: args.barraAcessibilidadeHrefSitemap ?? '/sitemap',
+          disableHighContrastToggle: true,
+        }}
         onSearch={(term, event) => {
           setLastSearch(term)
           args.onSearch?.(term, event)
@@ -732,6 +743,9 @@ export const HeaderInterativo: Story = {
         'barraAcessibilidadeHrefAccessibility',
         'barraAcessibilidadeHrefContact',
         'barraAcessibilidadeHrefSitemap',
+        'barraAcessibilidadeSecretariatName',
+        'barraAcessibilidadeSecretariatImageSrc',
+        'barraAcessibilidadeSecretariatImageAlt',
         'siteTitle',
         'homeHref',
         'logoHref',
@@ -771,6 +785,21 @@ export const HeaderInterativo: Story = {
     barraAcessibilidadeHrefAccessibility: { control: 'text', table: { category: 'BarraAcessibilidade' } },
     barraAcessibilidadeHrefContact: { control: 'text', table: { category: 'BarraAcessibilidade' } },
     barraAcessibilidadeHrefSitemap: { control: 'text', table: { category: 'BarraAcessibilidade' } },
+    barraAcessibilidadeSecretariatName: {
+      control: 'text',
+      description: 'Nome da secretaria vinculada. Mantém a identificação visível no mobile.',
+      table: { category: 'BarraAcessibilidade' },
+    },
+    barraAcessibilidadeSecretariatImageSrc: {
+      control: 'text',
+      description: 'URL da imagem da secretaria vinculada, inclusive quando não houver nome.',
+      table: { category: 'BarraAcessibilidade' },
+    },
+    barraAcessibilidadeSecretariatImageAlt: {
+      control: 'text',
+      description: 'Texto alternativo da imagem; deixe vazio quando o nome já identificar a secretaria.',
+      table: { category: 'BarraAcessibilidade' },
+    },
 
     // Header props
     siteTitle: { control: 'text', table: { category: 'Header' } },
