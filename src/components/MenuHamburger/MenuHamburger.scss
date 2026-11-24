@@ -55,6 +55,11 @@
   width: 100%;
 }
 
+.govrs-menu-hamburger__accessibility {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--govrs-color-border-default, #e5e5e5);
+}
+
 .govrs-menu-hamburger__levels {
   display: flex;
   max-width: var(--govrs-layout-container-header, var(--govrs-size-container-content, 75rem));

@@ -1,14 +1,9 @@
 import { useEffect, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCircleHalfStroke,
-  faEnvelope,
-  faSitemap,
-  faUniversalAccess,
-} from '@fortawesome/free-solid-svg-icons'
+import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons'
 import './BarraAcessibilidade.scss'
 
-import { useHighContrast } from '../../hooks/useHighContrast'
+import { AccessibilityActions, type AccessibilityActionsProps } from './AccessibilityActions'
 
 type AccessibilityShortcut = {
   title: string
@@ -16,13 +11,12 @@ type AccessibilityShortcut = {
   onActivate?: () => void
 }
 
-type BarraAcessibilidadeProps = {
-  defaultHighContrast?: boolean
-  disableHighContrastToggle?: boolean
+type BarraAcessibilidadeProps = AccessibilityActionsProps & {
   hrefAccessibility?: string
-  hrefContact?: string
-  hrefSitemap?: string
   shortcuts?: AccessibilityShortcut[]
+  secretariatName?: string
+  secretariatImageSrc?: string
+  secretariatImageAlt?: string
 }
 
 export function BarraAcessibilidade({
@@ -32,12 +26,11 @@ export function BarraAcessibilidade({
   hrefContact,
   hrefSitemap,
   shortcuts,
+  secretariatName,
+  secretariatImageSrc,
+  secretariatImageAlt = '',
 }: BarraAcessibilidadeProps) {
-  const { enabled: isHighContrast, toggle: toggleContrast } = useHighContrast(
-    Boolean(defaultHighContrast),
-    undefined,
-    { sync: !disableHighContrastToggle },
-  )
+  const hasSecretariat = Boolean(secretariatName?.trim() || secretariatImageSrc)
 
   const shortcutItems = useMemo(() => {
     if (Array.isArray(shortcuts) && shortcuts.length > 0) return shortcuts
@@ -84,8 +77,16 @@ export function BarraAcessibilidade({
   }, [shortcutItems])
 
   return (
-    <div className="acess-bar">
+    <div className={`acess-bar${hasSecretariat ? ' acess-bar--secretariat' : ''}`}>
       <div className="acess-wrapper">
+        {hasSecretariat ? (
+          <div className="acess-secretariat">
+            {secretariatImageSrc ? (
+              <img className="acess-secretariat__image" src={secretariatImageSrc} alt={secretariatImageAlt} />
+            ) : null}
+            {secretariatName ? <span className="acess-secretariat__name">{secretariatName}</span> : null}
+          </div>
+        ) : null}
         <div className="acess-right">
           <ul className="acess-ul">
             {shortcutItems.map((item, idx) => (
@@ -115,37 +116,13 @@ export function BarraAcessibilidade({
         </div>
 
         <div className="acess-left">
-          <ul className="acess-ul">
-            <li>
-              <button
-                id="btn-contraste"
-                type="button"
-                aria-pressed={isHighContrast}
-                aria-label={isHighContrast ? 'Desativar alto contraste' : 'Ativar alto contraste'}
-                disabled={disableHighContrastToggle}
-                onClick={disableHighContrastToggle ? undefined : toggleContrast}
-                className="acess-contrast-btn"
-              >
-                <FontAwesomeIcon icon={faCircleHalfStroke} height={'16px'} width={'16px'} />
-              </button>
-            </li>
-
-            {hrefContact ? (
-              <li>
-                <a href={hrefContact} aria-label="Contato">
-                  <FontAwesomeIcon icon={faEnvelope} height={'16px'} width={'16px'} />
-                </a>
-              </li>
-            ) : null}
-
-            {hrefSitemap ? (
-              <li>
-                <a href={hrefSitemap} aria-label="Mapa do site">
-                  <FontAwesomeIcon icon={faSitemap} height={'16px'} width={'16px'} />
-                </a>
-              </li>
-            ) : null}
-          </ul>
+          <AccessibilityActions
+            defaultHighContrast={defaultHighContrast}
+            disableHighContrastToggle={disableHighContrastToggle}
+            hrefContact={hrefContact}
+            hrefSitemap={hrefSitemap}
+            contrastButtonId="btn-contraste"
+          />
         </div>
       </div>
     </div>
