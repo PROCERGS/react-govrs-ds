@@ -42,7 +42,7 @@
 
 .acess-bar--secretariat .acess-wrapper {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 0.75rem 1.5rem;
 
@@ -68,7 +68,7 @@
 
   &__name {
     min-width: 0;
-    font-size: 1rem;
+    font-size: 0.7rem;
     line-height: 1.25;
     overflow-wrap: anywhere;
   }
